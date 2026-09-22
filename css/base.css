@@ -1,0 +1,36 @@
+/* ==========================================================================
+   Base Styles & Reset
+   ========================================================================== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Strict full-viewport presentation */
+}
+
+body {
+    background: radial-gradient(circle at center, var(--bg-inner) 0%, var(--bg-mid) 50%, var(--bg-outer) 100%);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    transition: background var(--duration-bg-transition) var(--ease-standard);
+    user-select: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font-family: inherit;
+    outline: none;
+    border: none;
+    background: none;
+}

@@ -1,0 +1,15 @@
+# Dependency & logs
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# System files
+.DS_Store
+Thumbs.db
+*.tmp
+
+# Raw large 3D sources (optional)
+*.blend
+*.blend1

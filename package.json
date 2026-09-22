@@ -1,0 +1,21 @@
+{
+  "name": "matcha-sparkling-showcase",
+  "version": "1.0.0",
+  "description": "Artisan Sparkling Matcha 3D Interactive Landing Page",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python3 -m http.server 3000 --directory .",
+    "serve": "npx serve -l 3000 .",
+    "convert-obj": "npx obj2gltf -i assets/models/raw.obj -o assets/models/matcha.glb -b"
+  },
+  "keywords": [
+    "matcha",
+    "3d",
+    "model-viewer",
+    "webgl",
+    "gsap",
+    "interactive"
+  ],
+  "author": "",
+  "license": "MIT"
+}

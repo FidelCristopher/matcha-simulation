@@ -1,0 +1,45 @@
+/* ==========================================================================
+   Design Tokens & CSS Variables
+   ========================================================================== */
+:root {
+    /* Brand Colors */
+    --color-primary: #1f4f2c;
+    --color-primary-dark: #102d18;
+    --color-primary-deep: #040e07;
+    --color-accent: #fbcfe8; /* Soft Sakura Pink */
+    --color-accent-contrast: #041d0f;
+
+    /* Text & UI Colors */
+    --text-primary: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.75);
+    --text-dim: rgba(255, 255, 255, 0.45);
+
+    /* Glassmorphism Tokens */
+    --glass-bg: rgba(255, 255, 255, 0.06);
+    --glass-bg-hover: rgba(255, 255, 255, 0.12);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --glass-border-highlight: rgba(255, 255, 255, 0.25);
+    --glass-blur: 20px;
+
+    /* Typography */
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-heading: 'Galada', cursive;
+    --font-ui: 'Manrope', sans-serif;
+
+    /* Dynamic Radial Gradient Tokens (Ceremonial Uji Default) */
+    --bg-inner: #1f4f2c;
+    --bg-mid: #102d18;
+    --bg-outer: #040e07;
+
+    /* Motion Defaults */
+    --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --duration-bg-transition: 1.2s;
+}
+
+/* Flavor Theme: Matcha Yuzu */
+body.yuzu-theme {
+    --bg-inner: #3a5818;
+    --bg-mid: #22370c;
+    --bg-outer: #091203;
+}
