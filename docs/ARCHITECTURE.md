@@ -24,6 +24,7 @@ matcha-showcase/
 │   ├── base.css                  # Reset CSS & root typography
 │   ├── components.css            # Komponen: Navigasi, tombol, kartu rasa, award badge
 │   ├── hero.css                  # Layout hero, layering Z-index, dan positioning 3D
+│   ├── menu.css                  # Layout & kartu menu racikan matcha (iPad optimized)
 │   └── animations.css            # Keyframes CSS: floating loop, bubble ascent, shine
 │
 ├── js/                           # JavaScript ES Modules (ESM)
@@ -31,6 +32,7 @@ matcha-showcase/
 │   ├── bubbles.js                # Generator partikel mikro-karbonasi dinamis
 │   ├── model-controller.js       # Kontroler 3D: orientasi kamera, shader, tinting
 │   ├── interactions.js           # Fisika pointer, tolakan magnetik, transisi GSAP
+│   ├── page-navigation.js        # Controller navigasi horizontal & swipe gesture iPad
 │   └── main.js                   # Application bootstrap & orchestrator
 │
 ├── docs/                         # Dokumentasi developer & panduan update

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artisan Sparkling Matcha | 3-Layer Interactive Simulation</title>
-    <meta name="description" content="Experience the crisp, revitalizing taste of pure ceremonial sparkling matcha. Zero sugar, sustained zen energy. Interactive 3D pinch simulation.">
+    <title>Artisan Sparkling Matcha | 3D Simulation & Curated Menu</title>
+    <meta name="description" content="Experience the crisp, revitalizing taste of pure ceremonial sparkling matcha. Zero sugar, sustained zen energy. Interactive 3D pinch simulation and curated concoctions.">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/hero.css">
+    <link rel="stylesheet" href="css/menu.css">
     <link rel="stylesheet" href="css/animations.css">
 
     <!-- Libraries (CDN) -->
@@ -24,163 +25,284 @@
 </head>
 <body>
 
-    <!-- 1. Background Micro-bubbles Container -->
+    <!-- Micro-bubbles Container -->
     <div id="bubbles-container"></div>
 
-    <!-- 2. Header & Glass Navigation -->
+    <!-- Header & Glass Navigation -->
     <header class="header">
         <div class="logo">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
                 <path d="M12 7V17M7 12C7 9.5 9.5 7 12 7C14.5 7 17 9.5 17 12C17 14.5 14.5 17 12 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
             </svg>
-            <span>Matcha Tcih</span>
+            <span>Matcha</span>
         </div>
         <nav class="nav glass">
-            <a href="#" class="nav-item active">Home</a>
+            <a href="#home" class="nav-item active" data-target="#home">Home</a>
+            <a href="#menu" class="nav-item" data-target="#menu">Menu Racikan</a>
             <a href="#" class="nav-item">Ceremonial Grade</a>
-            <a href="#" class="nav-item">Taste</a>
             <a href="#" class="nav-item">Origin</a>
             <a href="#" class="nav-item">Reviews</a>
         </nav>
-        <button class="contact-btn">Simulate Now</button>
+        <button class="contact-btn">Reserve Now</button>
     </header>
 
-    <!-- 3. Hero Main Section -->
-    <main class="hero">
-        <div class="hero-content">
+    <!-- iPad Swipe Hint Indicator -->
+    <div class="swipe-hint-pill" id="swipe-to-menu-hint" title="Geser ke kanan untuk melihat menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Swipe → Menu Racikan</span>
+    </div>
 
-            <!-- 3a. Deep Background Floating Tea Leaves -->
-            <div class="leaves-container">
-                <model-viewer class="leaf l1" src="assets/models/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="45deg 75deg 105%"></model-viewer>
-                <model-viewer class="leaf l2" src="assets/models/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="-30deg 60deg 105%"></model-viewer>
-                <model-viewer class="leaf l3" src="assets/models/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="120deg 85deg 105%"></model-viewer>
-                <model-viewer class="leaf l4" src="assets/models/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="10deg 45deg 105%"></model-viewer>
-            </div>
+    <!-- Horizontal Pages Viewport & Slider -->
+    <div id="app-viewport">
+        <div id="pages-slider">
 
-            <!-- 3b. Left Column: Branding, Typography & CTA -->
-            <div class="hero-left">
-                <h1 class="main-title">
-                    <span class="outline">Custom</span><br>
-                    Your
-                </h1>
-                <p class="description">
-                    Unleash the ceremonial taste of first-harvest Uji matcha.<br>
-                    Sustained zen clarity in every crisp bubble —<br>
-                    pinch or drag the model to explore its 3 layers.
-                </p>
-                <div class="cta-group">
-                    <button class="primary-btn">
-                        Order Ceremonial
-                        <span class="plus-icon">+</span>
-                    </button>
-                </div>
-                <div class="award-badge">
-                    <div class="award-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 15L15 18L19 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <!-- PAGE 0: MENU RACIKAN MATCHA (Left Page) -->
+            <section id="menu-page" class="page">
+                <div class="menu-container">
+                    <button class="back-to-showcase-btn" id="back-to-showcase">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                            <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                    </div>
-                    <div class="award-text">
-                        <span class="award-title">GLOBAL TEA AWARDS</span>
-                        <span class="award-subtitle">PREMIUM BOTANICAL SODA 2025</span>
+                        <span>Kembali ke 3D Showcase (Swipe ←)</span>
+                    </button>
+
+                    <header class="menu-header">
+                        <span class="menu-badge">Curated Collection • First-Harvest Uji</span>
+                        <h1 class="menu-title">Menu Racikan Matcha</h1>
+                        <p class="menu-subtitle">
+                            Eksplorasi kreasi racikan seremonial otentik dari Uji, Kyoto. 
+                            Dipadukan dengan bahan botani alami dan gelembung mikro-karbonasi penyegar.
+                        </p>
+                    </header>
+
+                    <div class="menu-grid">
+                        <!-- Card 1 -->
+                        <article class="menu-card">
+                            <div class="menu-card-header">
+                                <span class="menu-card-tag">Signature Cold</span>
+                                <span class="menu-card-price">$4.80</span>
+                            </div>
+                            <div class="menu-card-visual">
+                                <div class="menu-card-icon-placeholder">
+                                    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h3 class="menu-card-title">Ceremonial Cold Foam</h3>
+                            <p class="menu-card-desc">Seduhan dingin matcha murni Uji dilapisi busa susu vanila lembut dan taburan bubuk matcha pekat.</p>
+                            <div class="menu-card-meta">
+                                <span>Zero Sugar</span> • <span>Umami Level 5/5</span>
+                            </div>
+                        </article>
+
+                        <!-- Card 2 -->
+                        <article class="menu-card">
+                            <div class="menu-card-header">
+                                <span class="menu-card-tag">Citrus Botanical</span>
+                                <span class="menu-card-price">$5.20</span>
+                            </div>
+                            <div class="menu-card-visual">
+                                <div class="menu-card-icon-placeholder">
+                                    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <path d="M12 2a14.5 14.5 0 0 0 0 20M2 12h20"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h3 class="menu-card-title">Matcha Yuzu Sparkle</h3>
+                            <p class="menu-card-desc">Kesegaran sari jeruk Yuzu pegunungan Jepang berpadu dengan karbonasi mikro dan matcha seremonial.</p>
+                            <div class="menu-card-meta">
+                                <span>Crisp & Tangy</span> • <span>Vitamin C Rich</span>
+                            </div>
+                        </article>
+
+                        <!-- Card 3 -->
+                        <article class="menu-card">
+                            <div class="menu-card-header">
+                                <span class="menu-card-tag">Floral Fusion</span>
+                                <span class="menu-card-price">$5.50</span>
+                            </div>
+                            <div class="menu-card-visual">
+                                <div class="menu-card-icon-placeholder">
+                                    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <path d="M12 2c2 4 6 5 6 9a6 6 0 1 1-12 0c0-4 4-5 6-9z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h3 class="menu-card-title">Sakura Cloud Latte</h3>
+                            <p class="menu-card-desc">Infusi kelopak bunga Sakura Kyoto dengan oat milk lembut dan ceremonial grade matcha.</p>
+                            <div class="menu-card-meta">
+                                <span>Spring Edition</span> • <span>Floral Aroma</span>
+                            </div>
+                        </article>
+
+                        <!-- Card 4 -->
+                        <article class="menu-card">
+                            <div class="menu-card-header">
+                                <span class="menu-card-tag">Roasted Blend</span>
+                                <span class="menu-card-price">$4.90</span>
+                            </div>
+                            <div class="menu-card-visual">
+                                <div class="menu-card-icon-placeholder">
+                                    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h3 class="menu-card-title">Hojicha & Matcha Duo</h3>
+                            <p class="menu-card-desc">Lapisan ganda teh panggang Hojicha beraroma nutty dan matcha hijau pekat dengan susu gandum.</p>
+                            <div class="menu-card-meta">
+                                <span>Low Caffeine</span> • <span>Warm Notes</span>
+                            </div>
+                        </article>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- 3c. Background Floating Botanicals, Whisk & Matcha Leaves (Behind Can) -->
-            <div class="berries-container-bg">
-                <model-viewer class="berry b7" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="-20deg 110deg 105%"></model-viewer>
-                <model-viewer class="berry b8" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="160deg 45deg 105%"></model-viewer>
-                <model-viewer class="berry b9" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="45deg 20deg 105%"></model-viewer>
-                <model-viewer class="chasen c-bg" src="assets/models/chasen.glb" environment-image="neutral" exposure="1.1" interaction-prompt="none" camera-orbit="40deg 75deg 105%"></model-viewer>
-                <model-viewer class="daun-matcha dm-bg" src="assets/models/daun_matcha.glb" environment-image="neutral" exposure="1.1" interaction-prompt="none" camera-orbit="45deg 65deg 105%"></model-viewer>
-            </div>
+            <!-- PAGE 1: 3D LANDING SHOWCASE (Right Page) -->
+            <section id="landing-page" class="page">
+                <main class="hero">
+                    <div class="hero-content">
 
-            <!-- 3d. Center 3D Matcha Layer Simulation (Three.js WebGL Stage) -->
-            <div class="hero-center">
-                <div id="matcha-canvas-container" class="main-product-3d" title="Cubit (Pinch) atau Drag vertikal untuk memecah layer"></div>
-            </div>
+                        <!-- 3a. Deep Background Floating Tea Leaves -->
+                        <div class="leaves-container">
+                            <model-viewer class="leaf l1" src="assets/models/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="45deg 75deg 105%"></model-viewer>
+                            <model-viewer class="leaf l2" src="assets/models/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="-30deg 60deg 105%"></model-viewer>
+                            <model-viewer class="leaf l3" src="assets/models/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="120deg 85deg 105%"></model-viewer>
+                            <model-viewer class="leaf l4" src="assets/models/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="10deg 45deg 105%"></model-viewer>
+                        </div>
 
-            <!-- Floating 3D Layer Annotations (Active when exploded) -->
-            <div class="layer-annotation annotation-topping">
-                <span class="badge">Layer 1 • Topping</span>
-                <h4>Matcha Foam & Dust</h4>
-                <p>Busa seremonial lembut beraroma umami pekat dengan taburan micro-powder.</p>
-            </div>
-
-            <div class="layer-annotation annotation-isi">
-                <span class="badge">Layer 2 • Isi / Infusion</span>
-                <h4>First-Harvest Uji Extract</h4>
-                <p>Seduhan dingin daun teh Tencha pilihan Kyoto dengan zero sugar.</p>
-            </div>
-
-            <div class="layer-annotation annotation-base">
-                <span class="badge">Layer 3 • Base Foundation</span>
-                <h4>Zen Mineral Soda Base</h4>
-                <p>Air mata air pegunungan dengan gelembung mikro-karbonasi penyegar.</p>
-            </div>
-
-            <!-- 3e. Foreground Floating Botanicals, Chasen & Daun Matcha (Above Can & Text) -->
-            <div class="berries-container">
-                <model-viewer class="berry b1" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="45deg 120deg 105%"></model-viewer>
-                <model-viewer class="berry b2" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="-120deg 45deg 105%"></model-viewer>
-                <model-viewer class="berry b3" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="200deg 90deg 105%"></model-viewer>
-                <model-viewer class="berry b4" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="10deg 20deg 105%"></model-viewer>
-                <model-viewer class="berry b5" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="-45deg 160deg 105%"></model-viewer>
-                <model-viewer class="berry b6" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="80deg 75deg 105%"></model-viewer>
-                <model-viewer class="chasen c1" src="assets/models/chasen.glb" environment-image="neutral" exposure="1.3" interaction-prompt="none" camera-orbit="30deg 75deg 105%"></model-viewer>
-                <model-viewer class="chasen c2" src="assets/models/chasen.glb" environment-image="neutral" exposure="1.3" interaction-prompt="none" camera-orbit="-50deg 80deg 105%"></model-viewer>
-                <model-viewer class="daun-matcha dm1" src="assets/models/daun_matcha.glb" environment-image="neutral" exposure="1.3" interaction-prompt="none" camera-orbit="25deg 70deg 105%"></model-viewer>
-                <model-viewer class="daun-matcha dm2" src="assets/models/daun_matcha.glb" environment-image="neutral" exposure="1.3" interaction-prompt="none" camera-orbit="-60deg 75deg 105%"></model-viewer>
-                <model-viewer class="daun-matcha dm3" src="assets/models/daun_matcha.glb" environment-image="neutral" exposure="1.3" interaction-prompt="none" camera-orbit="110deg 80deg 105%"></model-viewer>
-            </div>
-
-            <!-- 3f. Right Column: Flavor Carousel & Side Title -->
-            <div class="hero-right">
-                <div class="product-carousel">
-                    <div class="carousel-cards">
-                        <div class="card active" data-flavor="classic">
-                            <img src="assets/textures/texture_20250901.png" alt="Ceremonial Uji">
-                            <div class="card-info">
-                                <span>Ceremonial Uji</span>
-                                <span>$3.49</span>
+                        <!-- 3b. Left Column: Branding, Typography & CTA -->
+                        <div class="hero-left">
+                            <h1 class="main-title">
+                                <span class="outline">Pure</span><br>
+                                Zen
+                            </h1>
+                            <p class="description">
+                                Unleash the ceremonial taste of first-harvest Uji matcha.<br>
+                                Sustained zen clarity in every crisp bubble —<br>
+                                pinch or drag the model to explore its 3 layers.
+                            </p>
+                            <div class="cta-group">
+                                <button class="primary-btn">
+                                    Order Ceremonial
+                                    <span class="plus-icon">+</span>
+                                </button>
+                            </div>
+                            <div class="award-badge">
+                                <div class="award-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 15L15 18L19 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+                                <div class="award-text">
+                                    <span class="award-title">GLOBAL TEA AWARDS</span>
+                                    <span class="award-subtitle">PREMIUM BOTANICAL SODA 2025</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="card" data-flavor="yuzu">
-                            <img src="assets/textures/texture_20250901.png" alt="Matcha Yuzu" style="filter: hue-rotate(45deg) saturate(1.2);">
-                            <div class="card-info">
-                                <span>Matcha Yuzu</span>
-                                <span>$3.49</span>
-                            </div>
+
+                        <!-- 3c. Background Floating Botanicals, Whisk & Matcha Leaves (Behind Can) -->
+                        <div class="berries-container-bg">
+                            <model-viewer class="berry b7" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="-20deg 110deg 105%"></model-viewer>
+                            <model-viewer class="berry b8" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="160deg 45deg 105%"></model-viewer>
+                            <model-viewer class="berry b9" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="45deg 20deg 105%"></model-viewer>
+                            <model-viewer class="chasen c-bg" src="assets/models/chasen.glb" environment-image="neutral" exposure="1.1" interaction-prompt="none" camera-orbit="40deg 75deg 105%"></model-viewer>
+                            <model-viewer class="daun-matcha dm-bg" src="assets/models/daun_matcha.glb" environment-image="neutral" exposure="1.1" interaction-prompt="none" camera-orbit="45deg 65deg 105%"></model-viewer>
                         </div>
+
+                        <!-- 3d. Center 3D Matcha Layer Simulation (Three.js WebGL Stage) -->
+                        <div class="hero-center">
+                            <div id="matcha-canvas-container" class="main-product-3d" title="Cubit (Pinch) atau Drag vertikal untuk memecah layer"></div>
+                        </div>
+
+                        <!-- Floating 3D Layer Annotations (Active when exploded) -->
+                        <div class="layer-annotation annotation-topping">
+                            <span class="badge">Layer 1 • Topping</span>
+                            <h4>Matcha Foam & Dust</h4>
+                            <p>Busa seremonial lembut beraroma umami pekat dengan taburan micro-powder.</p>
+                        </div>
+
+                        <div class="layer-annotation annotation-isi">
+                            <span class="badge">Layer 2 • Isi / Infusion</span>
+                            <h4>First-Harvest Uji Extract</h4>
+                            <p>Seduhan dingin daun teh Tencha pilihan Kyoto dengan zero sugar.</p>
+                        </div>
+
+                        <div class="layer-annotation annotation-base">
+                            <span class="badge">Layer 3 • Base Foundation</span>
+                            <h4>Zen Mineral Soda Base</h4>
+                            <p>Air mata air pegunungan dengan gelembung mikro-karbonasi penyegar.</p>
+                        </div>
+
+                        <!-- 3e. Foreground Floating Botanicals, Chasen & Daun Matcha (Above Can & Text) -->
+                        <div class="berries-container">
+                            <model-viewer class="berry b1" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="45deg 120deg 105%"></model-viewer>
+                            <model-viewer class="berry b2" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="-120deg 45deg 105%"></model-viewer>
+                            <model-viewer class="berry b3" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="200deg 90deg 105%"></model-viewer>
+                            <model-viewer class="berry b4" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="10deg 20deg 105%"></model-viewer>
+                            <model-viewer class="berry b5" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="-45deg 160deg 105%"></model-viewer>
+                            <model-viewer class="berry b6" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" camera-orbit="80deg 75deg 105%"></model-viewer>
+                            <model-viewer class="chasen c1" src="assets/models/chasen.glb" environment-image="neutral" exposure="1.3" interaction-prompt="none" camera-orbit="30deg 75deg 105%"></model-viewer>
+                            <model-viewer class="chasen c2" src="assets/models/chasen.glb" environment-image="neutral" exposure="1.3" interaction-prompt="none" camera-orbit="-50deg 80deg 105%"></model-viewer>
+                            <model-viewer class="daun-matcha dm1" src="assets/models/daun_matcha.glb" environment-image="neutral" exposure="1.3" interaction-prompt="none" camera-orbit="25deg 70deg 105%"></model-viewer>
+                            <model-viewer class="daun-matcha dm2" src="assets/models/daun_matcha.glb" environment-image="neutral" exposure="1.3" interaction-prompt="none" camera-orbit="-60deg 75deg 105%"></model-viewer>
+                            <model-viewer class="daun-matcha dm3" src="assets/models/daun_matcha.glb" environment-image="neutral" exposure="1.3" interaction-prompt="none" camera-orbit="110deg 80deg 105%"></model-viewer>
+                        </div>
+
+                        <!-- 3f. Right Column: Flavor Carousel & Side Title -->
+                        <div class="hero-right">
+                            <div class="product-carousel">
+                                <div class="carousel-cards">
+                                    <div class="card active" data-flavor="classic">
+                                        <img src="assets/textures/texture_20250901.png" alt="Ceremonial Uji">
+                                        <div class="card-info">
+                                            <span>Ceremonial Uji</span>
+                                            <span>$3.49</span>
+                                        </div>
+                                    </div>
+                                    <div class="card" data-flavor="yuzu">
+                                        <img src="assets/textures/texture_20250901.png" alt="Matcha Yuzu" style="filter: hue-rotate(45deg) saturate(1.2);">
+                                        <div class="card-info">
+                                            <span>Matcha Yuzu</span>
+                                            <span>$3.49</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-nav">
+                                    <button class="nav-arrow" id="prev-card" aria-label="Previous Flavor">←</button>
+                                    <button class="nav-arrow" id="next-card" aria-label="Next Flavor">→</button>
+                                </div>
+                            </div>
+                            <h2 class="side-title">
+                                <span class="outline">Refreshingly</span><br>
+                                Calm
+                            </h2>
+                        </div>
+
                     </div>
-                    <div class="carousel-nav">
-                        <button class="nav-arrow" id="prev-card" aria-label="Previous Flavor">←</button>
-                        <button class="nav-arrow" id="next-card" aria-label="Next Flavor">→</button>
+                </main>
+
+                <!-- Interactive Simulation HUD Controls -->
+                <div class="simulation-hud">
+                    <button id="explode-toggle-btn" class="explode-btn" aria-label="Pinch / Split Simulation">
+                        <span>Pinch / Split Layers</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="hud-slider-group">
+                        <span class="hud-label">Explode:</span>
+                        <input type="range" id="explode-slider" class="explode-slider" min="0" max="100" value="0">
                     </div>
                 </div>
-                <h2 class="side-title">
-                    <span class="outline">Own</span><br>
-                    Matcha
-                </h2>
-            </div>
+            </section>
 
-        </div>
-    </main>
-
-    <!-- 4. Interactive Simulation HUD Controls -->
-    <div class="simulation-hud">
-        <button id="explode-toggle-btn" class="explode-btn" aria-label="Pinch / Split Simulation">
-            <span>Pinch / Split Layers</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-        </button>
-        <div class="hud-slider-group">
-            <span class="hud-label">Explode:</span>
-            <input type="range" id="explode-slider" class="explode-slider" min="0" max="100" value="0">
         </div>
     </div>
 
