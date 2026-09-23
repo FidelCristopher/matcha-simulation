@@ -14,6 +14,7 @@ export class InteractionManager {
         this.leavesBG = document.querySelector('.leaves-container');
         this.allBerries = document.querySelectorAll('.berry');
         this.allChasen = document.querySelectorAll('.chasen');
+        this.allDaunMatcha = document.querySelectorAll('.daun-matcha');
         this.allLeaves = document.querySelectorAll('.leaf');
         this.cards = document.querySelectorAll('.card');
         this.heroCenter = document.querySelector('.hero-center');
@@ -52,6 +53,14 @@ export class InteractionManager {
             chasen.dataset.angle = Math.random() * 360;
             chasen.dataset.baseX = 0;
             chasen.dataset.baseY = 0;
+        });
+
+        this.allDaunMatcha.forEach(leaf => {
+            leaf.dataset.rx = 0;
+            leaf.dataset.ry = 0;
+            leaf.dataset.angle = Math.random() * 360;
+            leaf.dataset.baseX = 0;
+            leaf.dataset.baseY = 0;
         });
     }
 
@@ -283,6 +292,28 @@ export class InteractionManager {
                     }
                 });
         });
+
+        // Also animate Daun Matcha during flavor swap
+        this.allDaunMatcha.forEach(leaf => {
+            const nextBaseX = (Math.random() - 0.5) * 160;
+            const nextBaseY = (Math.random() - 0.5) * 160;
+
+            gsap.timeline()
+                .to(leaf, { scale: 0.2, opacity: 0, duration: 0.5, ease: 'power2.in' })
+                .to(leaf, { duration: 0.3 })
+                .to(leaf, {
+                    scale: 1,
+                    opacity: 1,
+                    duration: 0.9,
+                    ease: 'back.out(1.5)',
+                    onComplete: () => {
+                        leaf.dataset.baseX = nextBaseX;
+                        leaf.dataset.baseY = nextBaseY;
+                        leaf.dataset.rx = 0;
+                        leaf.dataset.ry = 0;
+                    }
+                });
+        });
     }
 
     startRenderLoop() {
@@ -394,6 +425,49 @@ export class InteractionManager {
                     chasen.dataset.angle = angle;
 
                     chasen.style.transform = `translate(calc(${rx + baseX + orbitX}px), calc(${ry + baseY + orbitY}px)) rotate(calc(${angle + orbitAngle}deg))`;
+                });
+
+                // Circular Orbit Motion + Repulsion for Authentic 3D Daun Matcha
+                this.allDaunMatcha.forEach((leaf, i) => {
+                    const orbitSpeed = 0.65 + i * 0.2;
+                    const phase = (time * orbitSpeed) + (i * 1.7);
+
+                    const radiusX = 30 + (i * 10);
+                    const radiusY = 22 + (i * 8);
+                    const orbitX = Math.cos(phase) * radiusX;
+                    const orbitY = Math.sin(phase) * radiusY;
+                    const orbitAngle = Math.sin(phase * 0.6) * 24;
+
+                    const rect = leaf.getBoundingClientRect();
+                    const leafX = rect.left + rect.width / 2;
+                    const leafY = rect.top + rect.height / 2;
+                    const diffX = this.mouse.px - leafX;
+                    const diffY = this.mouse.py - leafY;
+                    const distance = Math.sqrt(diffX * diffX + diffY * diffY);
+
+                    let targetRx = 0, targetRy = 0, speedMult = 1;
+                    if (distance < 420) {
+                        const force = (420 - distance) / 420;
+                        targetRx = (diffX / distance) * force * -80;
+                        targetRy = (diffY / distance) * force * -80;
+                        speedMult = 1 + force * 4.5;
+                    }
+
+                    let rx = parseFloat(leaf.dataset.rx) || 0;
+                    let ry = parseFloat(leaf.dataset.ry) || 0;
+                    let angle = parseFloat(leaf.dataset.angle) || 0;
+                    let baseX = parseFloat(leaf.dataset.baseX) || 0;
+                    let baseY = parseFloat(leaf.dataset.baseY) || 0;
+
+                    rx += (targetRx - rx) * 0.1;
+                    ry += (targetRy - ry) * 0.1;
+                    angle += 0.25 * speedMult;
+
+                    leaf.dataset.rx = rx;
+                    leaf.dataset.ry = ry;
+                    leaf.dataset.angle = angle;
+
+                    leaf.style.transform = `translate(calc(${rx + baseX + orbitX}px), calc(${ry + baseY + orbitY}px)) rotate(calc(${angle + orbitAngle}deg))`;
                 });
             }
 

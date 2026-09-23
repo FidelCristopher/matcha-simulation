@@ -202,6 +202,49 @@
     z-index: 0;
 }
 
+/* Authentic 3D Daun Matcha Elements */
+.daun-matcha {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    outline: none;
+    --progress-bar-color: transparent;
+    filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.4));
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    pointer-events: none;
+    z-index: 109;
+}
+
+.dm1 {
+    top: 32%;
+    left: 17%;
+    width: 165px;
+    height: 165px;
+}
+
+.dm2 {
+    top: 75%;
+    left: 70%;
+    width: 150px;
+    height: 150px;
+}
+
+.dm3 {
+    top: 14%;
+    left: 48%;
+    width: 135px;
+    height: 135px;
+}
+
+.dm-bg {
+    top: 60%;
+    left: 38%;
+    width: 120px;
+    height: 120px;
+    opacity: 0.7;
+    z-index: 0;
+}
+
 /* Botanical Items Coordinates */
 .berry {
     position: absolute;

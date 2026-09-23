@@ -24,6 +24,7 @@ Untuk memastikan website tetap berjalan ringan di 60 FPS pada semua perangkat (d
 | **Model Sekunder / Daun (`leaves.glb`)** | 1.000 – 5.000 Tris | < 500 KB | Latar belakang berulang |
 | **Model Botanical (`cherry.glb`, `blueberry.glb`)** | 3.000 – 10.000 Tris | < 2 MB | Elemen interaktif melayang |
 | **Model Chasen (`chasen.glb`)** | ~40.000 Tris | < 14 MB | Pengocok bambu matcha bergerak melingkar |
+| **Model Daun Matcha Asli (`daun_matcha.glb`)** | ~28.000 Tris | < 12 MB | Daun teh Tencha otentik bergerak melingkar & repulsi |
 
 ---
 
