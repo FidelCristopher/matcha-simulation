@@ -13,6 +13,7 @@ export class InteractionManager {
         this.berriesBG = document.querySelector('.berries-container-bg');
         this.leavesBG = document.querySelector('.leaves-container');
         this.allBerries = document.querySelectorAll('.berry');
+        this.allChasen = document.querySelectorAll('.chasen');
         this.allLeaves = document.querySelectorAll('.leaf');
         this.cards = document.querySelectorAll('.card');
         this.heroCenter = document.querySelector('.hero-center');
@@ -43,6 +44,14 @@ export class InteractionManager {
             berry.dataset.angle = Math.random() * 360;
             berry.dataset.baseX = 0;
             berry.dataset.baseY = 0;
+        });
+
+        this.allChasen.forEach(chasen => {
+            chasen.dataset.rx = 0;
+            chasen.dataset.ry = 0;
+            chasen.dataset.angle = Math.random() * 360;
+            chasen.dataset.baseX = 0;
+            chasen.dataset.baseY = 0;
         });
     }
 
@@ -252,6 +261,28 @@ export class InteractionManager {
                 }
             });
         });
+
+        // Also animate Chasen during flavor swap
+        this.allChasen.forEach(chasen => {
+            const nextBaseX = (Math.random() - 0.5) * 150;
+            const nextBaseY = (Math.random() - 0.5) * 150;
+
+            gsap.timeline()
+                .to(chasen, { scale: 0.2, opacity: 0, duration: 0.5, ease: 'power2.in' })
+                .to(chasen, { duration: 0.3 })
+                .to(chasen, {
+                    scale: 1,
+                    opacity: 1,
+                    duration: 0.9,
+                    ease: 'back.out(1.5)',
+                    onComplete: () => {
+                        chasen.dataset.baseX = nextBaseX;
+                        chasen.dataset.baseY = nextBaseY;
+                        chasen.dataset.rx = 0;
+                        chasen.dataset.ry = 0;
+                    }
+                });
+        });
     }
 
     startRenderLoop() {
@@ -318,6 +349,51 @@ export class InteractionManager {
                     const floatAngle = Math.cos(phase) * 6;
 
                     berry.style.transform = `translate(calc(${rx + baseX}px), calc(${ry + baseY}px + ${floatY}px)) rotate(calc(${angle}deg + ${floatAngle}deg))`;
+                });
+
+                // Circular Orbit Motion + Repulsion for Chasen (Traditional Bamboo Whisk)
+                this.allChasen.forEach((chasen, i) => {
+                    const orbitSpeed = 0.75 + i * 0.25;
+                    const phase = (time * orbitSpeed) + (i * 2.1);
+
+                    // Elliptical circular orbit radius
+                    const radiusX = 35 + (i * 12);
+                    const radiusY = 26 + (i * 9);
+                    const orbitX = Math.cos(phase) * radiusX;
+                    const orbitY = Math.sin(phase) * radiusY;
+                    const orbitAngle = Math.sin(phase * 0.7) * 22;
+
+                    // Mouse repulsion physics
+                    const rect = chasen.getBoundingClientRect();
+                    const chasenX = rect.left + rect.width / 2;
+                    const chasenY = rect.top + rect.height / 2;
+                    const diffX = this.mouse.px - chasenX;
+                    const diffY = this.mouse.py - chasenY;
+                    const distance = Math.sqrt(diffX * diffX + diffY * diffY);
+
+                    let targetRx = 0, targetRy = 0, speedMult = 1;
+                    if (distance < 420) {
+                        const force = (420 - distance) / 420;
+                        targetRx = (diffX / distance) * force * -85;
+                        targetRy = (diffY / distance) * force * -85;
+                        speedMult = 1 + force * 4.5;
+                    }
+
+                    let rx = parseFloat(chasen.dataset.rx) || 0;
+                    let ry = parseFloat(chasen.dataset.ry) || 0;
+                    let angle = parseFloat(chasen.dataset.angle) || 0;
+                    let baseX = parseFloat(chasen.dataset.baseX) || 0;
+                    let baseY = parseFloat(chasen.dataset.baseY) || 0;
+
+                    rx += (targetRx - rx) * 0.1;
+                    ry += (targetRy - ry) * 0.1;
+                    angle += 0.3 * speedMult;
+
+                    chasen.dataset.rx = rx;
+                    chasen.dataset.ry = ry;
+                    chasen.dataset.angle = angle;
+
+                    chasen.style.transform = `translate(calc(${rx + baseX + orbitX}px), calc(${ry + baseY + orbitY}px)) rotate(calc(${angle + orbitAngle}deg))`;
                 });
             }
 

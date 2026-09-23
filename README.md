@@ -7,7 +7,7 @@ Landing page interaktif berbasis WebGL & 3D real-time untuk minuman seremonial *
 ## Fitur Utama
 
 - **Real-time 3D Viewport**: Menggunakan Google `<model-viewer>` dengan kemampuan tilt interaktif mengikuti kursor mouse.
-- **Aset 3D Matcha Lokal**: Mengintegrasikan aset 3D matcha dari file OBJ/MTL/PNG lokal yang telah dikonversi ke format WebGL `.glb`.
+- **Aset 3D Matcha & Chasen Bambu**: Mengintegrasikan kaleng matcha 3 layer dan pengocok bambu tradisional (*chasen*) yang melayang dalam orbit melingkar.
 - **Fisika Tolakan (Force-Field Repulsion)**: Elemen botanical melayang bereaksi menjauh ketika didekati kursor pengguna.
 - **Choreographed Flavor Transition**: Perubahan varian rasa memicu putaran kaleng 720° dengan efek motion blur, perubahan warna background dinamis, dan animasi implosi/eksplosi elemen botanical.
 - **Partikel Mikro-Karbonasi**: Gelembung karbonasi naik perlahan tanpa henti dari bagian bawah layar.
