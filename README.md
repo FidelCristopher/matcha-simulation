@@ -7,7 +7,11 @@ Landing page interaktif berbasis WebGL & 3D real-time untuk minuman seremonial *
 ## Fitur Utama
 
 - **Real-time 3D Viewport**: Menggunakan Google `<model-viewer>` dengan kemampuan tilt interaktif mengikuti kursor mouse.
-- **Navigasi Swipe Horizontal (iPad & Laptop Cursor Mode)**: Transisi layar horizontal mulus antara 3D Showcase dan Page Menu Racikan Matcha menggunakan gesture swipe sentuhan jari iPad, **klik & drag kursor mouse laptop**, serta scroll dua jari trackpad (`drag/swipe right` $\leftrightarrow$ `drag/swipe left`).
+- **Navigasi 3-Halaman Horizontal (iPad & Laptop Cursor Mode)**:
+  - Swipe Kiri $\rightarrow$ Kanan: Masuk ke **Menu Racikan Matcha** (Page 0).
+  - Halaman Tengah: **3D Showcase & Layer Pinch Simulation** (Page 1).
+  - Swipe Kanan $\rightarrow$ Kiri: Masuk ke **Simulation Page / Matcha Crafting Lab** (Page 2).
+- **Matcha Crafting Simulation Sandbox**: Workbench interaktif untuk meracik formula matcha (pilih base teh, atur gramatur bubuk teh 1g s/d 4.5g, jenis busa susu, serta metrik rasa umami & antioksidan EGCG real-time).
 - **Aset 3D Otentik (Matcha, Chasen & Daun Matcha)**: Mengintegrasikan kaleng matcha 3-layer simulation, pengocok bambu *chasen*, dan daun teh matcha asli (*Tencha leaves*) yang melayang dalam orbit melingkar harmonis.
 - **Fisika Tolakan (Force-Field Repulsion)**: Elemen botanical melayang bereaksi menjauh ketika didekati kursor pengguna.
 - **Choreographed Flavor Transition**: Perubahan varian rasa memicu putaran kaleng 720° dengan efek motion blur, perubahan warna background dinamis, dan animasi implosi/eksplosi elemen botanical.

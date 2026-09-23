@@ -5,6 +5,7 @@ import { initBubbles } from './bubbles.js';
 import { ModelController } from './model-controller.js';
 import { InteractionManager } from './interactions.js';
 import { PageNavigator } from './page-navigation.js';
+import { MatchaSimulator } from './matcha-simulation.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Initialize Micro-carbonation Bubbles
@@ -16,6 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Initialize Interactive Physics & Flavor Transitions
     new InteractionManager(modelController);
 
-    // 4. Initialize iPad Swipe & Page Navigation
+    // 4. Initialize iPad Swipe & Page Navigation (Menu <-> Landing <-> Simulation)
     new PageNavigator();
+
+    // 5. Initialize Interactive Matcha Crafting Simulation Lab
+    new MatchaSimulator();
 });

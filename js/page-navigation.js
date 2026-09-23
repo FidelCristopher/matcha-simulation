@@ -1,6 +1,10 @@
 /**
- * Horizontal Page Navigation (iPad Touch Swipe & Laptop Mouse/Trackpad Gestures)
- * Handles smooth transitions between #landing-page and #menu-page.
+ * Horizontal 3-Page Navigation (Menu <-> Landing <-> Simulation)
+ * Handles iPad Touch Swipe & Laptop Mouse/Trackpad Gestures.
+ *
+ * Page 0: #menu-page (x: 0)
+ * Page 1: #landing-page (x: -100vw) [Default]
+ * Page 2: #simulation-page (x: -200vw)
  */
 export class PageNavigator {
     constructor() {
@@ -8,11 +12,18 @@ export class PageNavigator {
         this.viewport = document.querySelector('#app-viewport');
         this.menuPage = document.querySelector('#menu-page');
         this.landingPage = document.querySelector('#landing-page');
+        this.simulationPage = document.querySelector('#simulation-page');
         this.navLinks = document.querySelectorAll('.nav-item');
-        this.swipeHint = document.querySelector('#swipe-to-menu-hint');
-        this.backBtn = document.querySelector('#back-to-showcase');
 
-        // Current Active Page: 'landing' or 'menu'
+        // Floating Swipe Pills
+        this.swipeHintMenu = document.querySelector('#swipe-to-menu-hint');
+        this.swipeHintSim = document.querySelector('#swipe-to-sim-hint');
+
+        // Back Buttons
+        this.backBtnMenu = document.querySelector('#back-to-showcase');
+        this.backBtnSim = document.querySelector('#back-to-showcase-from-sim');
+
+        // State: 'menu' | 'landing' | 'simulation'
         this.activePage = 'landing';
         this.isTransitioning = false;
 
@@ -37,7 +48,7 @@ export class PageNavigator {
     init() {
         if (!this.slider) return;
 
-        // Default initial position: Landing page is active
+        // Default initial position: Landing page is active (center)
         this.goToPage('landing', false);
 
         this.bindTouchGestures();
@@ -57,15 +68,24 @@ export class PageNavigator {
             }, 700);
         }
 
+        const body = document.body;
+
         if (pageId === 'menu') {
             this.activePage = 'menu';
-            document.body.classList.add('menu-active');
-            // Menu is at x: 0 (left page)
+            body.classList.add('menu-active');
+            body.classList.remove('simulation-active');
+            // Page 0 (Left): 0vw
             this.setSliderPosition(0, animate);
+        } else if (pageId === 'simulation') {
+            this.activePage = 'simulation';
+            body.classList.add('simulation-active');
+            body.classList.remove('menu-active');
+            // Page 2 (Right): -200vw
+            this.setSliderPosition(-200, animate);
         } else {
             this.activePage = 'landing';
-            document.body.classList.remove('menu-active');
-            // Landing is at x: -100vw (right page)
+            body.classList.remove('menu-active', 'simulation-active');
+            // Page 1 (Center): -100vw
             this.setSliderPosition(-100, animate);
         }
 
@@ -104,17 +124,31 @@ export class PageNavigator {
             const deltaX = currentX - this.touchStartX;
             const deltaY = currentY - this.touchStartY;
 
-            // Ensure horizontal intent
+            // Ensure clear horizontal intent
             if (Math.abs(deltaX) > Math.abs(deltaY) * 1.3 && Math.abs(deltaX) > this.dragThreshold) {
-                // Swipe Left-to-Right: Go to Menu
-                if (this.activePage === 'landing' && deltaX > this.dragThreshold) {
-                    this.goToPage('menu');
-                    this.isTouchSwiping = false;
-                }
-                // Swipe Right-to-Left: Go to Landing
-                else if (this.activePage === 'menu' && deltaX < -this.dragThreshold) {
-                    this.goToPage('landing');
-                    this.isTouchSwiping = false;
+                if (this.activePage === 'landing') {
+                    // Swipe Left-to-Right (deltaX > 0): Open Menu
+                    if (deltaX > this.dragThreshold) {
+                        this.goToPage('menu');
+                        this.isTouchSwiping = false;
+                    }
+                    // Swipe Right-to-Left (deltaX < 0): Open Simulation
+                    else if (deltaX < -this.dragThreshold) {
+                        this.goToPage('simulation');
+                        this.isTouchSwiping = false;
+                    }
+                } else if (this.activePage === 'menu') {
+                    // Swipe Right-to-Left: Back to Landing
+                    if (deltaX < -this.dragThreshold) {
+                        this.goToPage('landing');
+                        this.isTouchSwiping = false;
+                    }
+                } else if (this.activePage === 'simulation') {
+                    // Swipe Left-to-Right: Back to Landing
+                    if (deltaX > this.dragThreshold) {
+                        this.goToPage('landing');
+                        this.isTouchSwiping = false;
+                    }
                 }
             }
         }, { passive: true });
@@ -125,12 +159,12 @@ export class PageNavigator {
     }
 
     /**
-     * 2. Laptop / Desktop Mouse Cursor Drag Gesture (Swipe with cursor)
+     * 2. Laptop / Desktop Mouse Cursor Drag Gesture
      */
     bindMouseGestures() {
         window.addEventListener('mousedown', (e) => {
-            // Ignore if clicking interactive controls like buttons, inputs, slider
-            if (e.target.closest('button, input, a, .card, .explode-slider')) {
+            // Ignore clicks on form inputs, buttons, sliders, links
+            if (e.target.closest('button, input, a, .card, .sim-pill, .explode-slider, .sim-slider')) {
                 return;
             }
 
@@ -146,35 +180,48 @@ export class PageNavigator {
             const deltaX = e.clientX - this.mouseStartX;
             const deltaY = e.clientY - this.mouseStartY;
 
-            // Check if user is dragging horizontally with intent
             if (Math.abs(deltaX) > Math.abs(deltaY) * 1.2 && Math.abs(deltaX) > 15) {
                 this.isMouseDragging = true;
                 document.body.style.cursor = 'ew-resize';
             }
 
             if (this.isMouseDragging && Math.abs(deltaX) > this.dragThreshold) {
-                // Cursor dragged from Left to Right: Go to Menu
-                if (this.activePage === 'landing' && deltaX > this.dragThreshold) {
-                    this.goToPage('menu');
-                    this.isMouseDown = false;
-                    this.isMouseDragging = false;
-                    document.body.style.cursor = '';
-                }
-                // Cursor dragged from Right to Left: Go to Landing
-                else if (this.activePage === 'menu' && deltaX < -this.dragThreshold) {
-                    this.goToPage('landing');
-                    this.isMouseDown = false;
-                    this.isMouseDragging = false;
-                    document.body.style.cursor = '';
+                if (this.activePage === 'landing') {
+                    // Dragged Left to Right: Go to Menu
+                    if (deltaX > this.dragThreshold) {
+                        this.goToPage('menu');
+                        this.resetMouse();
+                    }
+                    // Dragged Right to Left: Go to Simulation
+                    else if (deltaX < -this.dragThreshold) {
+                        this.goToPage('simulation');
+                        this.resetMouse();
+                    }
+                } else if (this.activePage === 'menu') {
+                    // Dragged Right to Left: Back to Landing
+                    if (deltaX < -this.dragThreshold) {
+                        this.goToPage('landing');
+                        this.resetMouse();
+                    }
+                } else if (this.activePage === 'simulation') {
+                    // Dragged Left to Right: Back to Landing
+                    if (deltaX > this.dragThreshold) {
+                        this.goToPage('landing');
+                        this.resetMouse();
+                    }
                 }
             }
         });
 
         window.addEventListener('mouseup', () => {
-            this.isMouseDown = false;
-            this.isMouseDragging = false;
-            document.body.style.cursor = '';
+            this.resetMouse();
         });
+    }
+
+    resetMouse() {
+        this.isMouseDown = false;
+        this.isMouseDragging = false;
+        document.body.style.cursor = '';
     }
 
     /**
@@ -185,33 +232,58 @@ export class PageNavigator {
             const now = Date.now();
             if (now - this.lastWheelTime < 700 || this.isTransitioning) return;
 
-            // Detect horizontal trackpad intent
             if (Math.abs(e.deltaX) > Math.abs(e.deltaY) * 1.4 && Math.abs(e.deltaX) > 30) {
-                // Trackpad swipe to right (negative deltaX): Go to Menu
-                if (this.activePage === 'landing' && e.deltaX < -30) {
-                    this.lastWheelTime = now;
-                    this.goToPage('menu');
-                }
-                // Trackpad swipe to left (positive deltaX): Go to Landing
-                else if (this.activePage === 'menu' && e.deltaX > 30) {
-                    this.lastWheelTime = now;
-                    this.goToPage('landing');
+                if (this.activePage === 'landing') {
+                    // Trackpad swipe right (deltaX < -30): Go to Menu
+                    if (e.deltaX < -30) {
+                        this.lastWheelTime = now;
+                        this.goToPage('menu');
+                    }
+                    // Trackpad swipe left (deltaX > 30): Go to Simulation
+                    else if (e.deltaX > 30) {
+                        this.lastWheelTime = now;
+                        this.goToPage('simulation');
+                    }
+                } else if (this.activePage === 'menu') {
+                    if (e.deltaX > 30) {
+                        this.lastWheelTime = now;
+                        this.goToPage('landing');
+                    }
+                } else if (this.activePage === 'simulation') {
+                    if (e.deltaX < -30) {
+                        this.lastWheelTime = now;
+                        this.goToPage('landing');
+                    }
                 }
             }
         }, { passive: true });
     }
 
     bindButtons() {
-        // Floating pill on the left: "Swipe / Drag → Menu"
-        if (this.swipeHint) {
-            this.swipeHint.addEventListener('click', () => {
+        // Floating pill on the left: "Swipe -> Menu"
+        if (this.swipeHintMenu) {
+            this.swipeHintMenu.addEventListener('click', () => {
                 this.goToPage('menu');
             });
         }
 
+        // Floating pill on the right: "Simulasi Matcha <- Swipe"
+        if (this.swipeHintSim) {
+            this.swipeHintSim.addEventListener('click', () => {
+                this.goToPage('simulation');
+            });
+        }
+
         // Back button on Menu page
-        if (this.backBtn) {
-            this.backBtn.addEventListener('click', () => {
+        if (this.backBtnMenu) {
+            this.backBtnMenu.addEventListener('click', () => {
+                this.goToPage('landing');
+            });
+        }
+
+        // Back button on Simulation page
+        if (this.backBtnSim) {
+            this.backBtnSim.addEventListener('click', () => {
                 this.goToPage('landing');
             });
         }
@@ -223,6 +295,9 @@ export class PageNavigator {
                 if (target === '#menu' || link.textContent.trim().toLowerCase().includes('menu')) {
                     e.preventDefault();
                     this.goToPage('menu');
+                } else if (target === '#simulation' || link.textContent.trim().toLowerCase().includes('simulasi')) {
+                    e.preventDefault();
+                    this.goToPage('simulation');
                 } else if (target === '#home' || link.textContent.trim().toLowerCase().includes('home')) {
                     e.preventDefault();
                     this.goToPage('landing');
@@ -233,11 +308,13 @@ export class PageNavigator {
 
     bindKeyboard() {
         window.addEventListener('keydown', (e) => {
-            // ArrowLeft / ArrowRight navigation
-            if (e.key === 'ArrowRight' && this.activePage === 'landing') {
-                this.goToPage('menu');
-            } else if (e.key === 'ArrowLeft' && this.activePage === 'menu') {
-                this.goToPage('landing');
+            if (this.activePage === 'landing') {
+                if (e.key === 'ArrowLeft') this.goToPage('menu');
+                else if (e.key === 'ArrowRight') this.goToPage('simulation');
+            } else if (this.activePage === 'menu') {
+                if (e.key === 'ArrowRight') this.goToPage('landing');
+            } else if (this.activePage === 'simulation') {
+                if (e.key === 'ArrowLeft') this.goToPage('landing');
             }
         });
     }
@@ -245,14 +322,17 @@ export class PageNavigator {
     updateNavUI() {
         this.navLinks.forEach(link => {
             const isMenuLink = link.dataset.target === '#menu' || link.textContent.trim().toLowerCase().includes('menu');
+            const isSimLink = link.dataset.target === '#simulation' || link.textContent.trim().toLowerCase().includes('simulasi');
             const isHomeLink = link.dataset.target === '#home' || link.textContent.trim().toLowerCase().includes('home');
 
-            if (this.activePage === 'menu') {
-                if (isMenuLink) link.classList.add('active');
-                else link.classList.remove('active');
-            } else {
-                if (isHomeLink) link.classList.add('active');
-                else link.classList.remove('active');
+            link.classList.remove('active');
+
+            if (this.activePage === 'menu' && isMenuLink) {
+                link.classList.add('active');
+            } else if (this.activePage === 'simulation' && isSimLink) {
+                link.classList.add('active');
+            } else if (this.activePage === 'landing' && isHomeLink) {
+                link.classList.add('active');
             }
         });
     }

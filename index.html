@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/hero.css">
     <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/simulation.css">
     <link rel="stylesheet" href="css/animations.css">
 
     <!-- Libraries (CDN) -->
@@ -40,17 +41,25 @@
         <nav class="nav glass">
             <a href="#menu" class="nav-item" data-target="#menu">Menu</a>
             <a href="#home" class="nav-item active" data-target="#home">Home</a>
-            <a href="#" class="nav-item">Simulation</a>
+            <a href="#simulation" class="nav-item" data-target="#simulation">Simulation</a>
         </nav>
         <button class="contact-btn">Reserve Now</button>
     </header>
 
-    <!-- Swipe / Drag Hint Indicator (iPad & Laptop Cursor) -->
+    <!-- Swipe / Drag Hint Indicator (Left: Menu) -->
     <div class="swipe-hint-pill" id="swipe-to-menu-hint" title="Geser / Drag kursor ke kanan untuk melihat menu">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <span>Drag / Swipe → Menu</span>
+    </div>
+
+    <!-- Swipe / Drag Hint Indicator (Right: Simulation) -->
+    <div class="swipe-hint-pill-right" id="swipe-to-sim-hint" title="Geser / Drag kursor ke kiri untuk masuk ke Simulation">
+        <span>Simulation ← Swipe</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
     </div>
 
     <!-- Horizontal Pages Viewport & Slider -->
@@ -297,6 +306,144 @@
                     <div class="hud-slider-group">
                         <span class="hud-label">Explode:</span>
                         <input type="range" id="explode-slider" class="explode-slider" min="0" max="100" value="0">
+                    </div>
+                </div>
+            </section>
+
+            <!-- PAGE 2: MATCHA CRAFTING SIMULATION PAGE (Right Page) -->
+            <section id="simulation-page" class="page">
+                <div class="sim-container">
+                    <button class="back-to-showcase-btn-right" id="back-to-showcase-from-sim">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                            <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Kembali ke Showcase (Swipe →)</span>
+                    </button>
+
+                    <header class="sim-header">
+                        <span class="sim-badge">Matcha Lab • Crafting Sandbox</span>
+                        <h1 class="sim-title">Simulasi Racikan Matcha</h1>
+                        <p class="sim-subtitle">
+                            Eksperimen racikan matcha personal Anda. Sesuaikan konsentrasi bubuk teh Uji, busa susu, serta aksen botani alami, dan pantau profil umami serta antioksidan secara real-time.
+                        </p>
+                    </header>
+
+                    <div class="sim-workbench">
+                        <!-- Customizer Controls Panel -->
+                        <div class="sim-panel">
+                            <!-- 1. Base Tea Selection -->
+                            <div class="sim-group">
+                                <div class="sim-group-label">
+                                    <span>1. Base Teh Matcha</span>
+                                    <span>Pilih Karakter</span>
+                                </div>
+                                <div class="sim-pills">
+                                    <div class="sim-pill active" data-sim-base="uji">Uji Ceremonial</div>
+                                    <div class="sim-pill" data-sim-base="hojicha">Roasted Hojicha</div>
+                                    <div class="sim-pill" data-sim-base="soda">Mineral Soda</div>
+                                </div>
+                            </div>
+
+                            <!-- 2. Matcha Grams & Concentration Slider -->
+                            <div class="sim-group">
+                                <div class="sim-group-label">
+                                    <span>2. Konsentrasi Matcha</span>
+                                    <span id="sim-grams-val">2.5g</span>
+                                </div>
+                                <div class="sim-range-wrap">
+                                    <input type="range" id="sim-grams-slider" class="sim-slider" min="1.0" max="4.5" step="0.1" value="2.5">
+                                    <div class="sim-range-labels">
+                                        <span>Usucha (Halus / 1g)</span>
+                                        <span>Standard (2.5g)</span>
+                                        <span>Koicha (Pekat / 4.5g)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3. Milk & Foam Texture -->
+                            <div class="sim-group">
+                                <div class="sim-group-label">
+                                    <span>3. Susu & Tekstur Foam</span>
+                                    <span>Tipe Busa</span>
+                                </div>
+                                <div class="sim-pills">
+                                    <div class="sim-pill active" data-sim-milk="oat">Oat Milk Cloud</div>
+                                    <div class="sim-pill" data-sim-milk="vanilla">Vanilla Foam</div>
+                                    <div class="sim-pill" data-sim-milk="coconut">Coconut Velvet</div>
+                                    <div class="sim-pill" data-sim-milk="none">Pure Zero Milk</div>
+                                </div>
+                            </div>
+
+                            <!-- 4. Action Brew Button -->
+                            <button id="sim-brew-btn" class="sim-action-btn">
+                                <span>Seduh & Simulasikan Racikan</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                    <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Real-time Sensory Analytics & Cup Preview -->
+                        <div class="sim-analytics">
+                            <div class="sim-cup-preview-wrap">
+                                <div class="sim-cup-glass">
+                                    <div class="cup-layer-foam"></div>
+                                    <div class="cup-layer-liquid"></div>
+                                    <div class="cup-layer-base"></div>
+                                </div>
+                            </div>
+
+                            <div class="sim-meters">
+                                <!-- Umami Meter -->
+                                <div class="sim-meter-item">
+                                    <div class="sim-meter-label-row">
+                                        <span>Umami Richness</span>
+                                        <span>Intense</span>
+                                    </div>
+                                    <div class="sim-meter-track">
+                                        <div id="meter-umami" class="sim-meter-fill" style="width: 75%;"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Sweetness Meter -->
+                                <div class="sim-meter-item">
+                                    <div class="sim-meter-label-row">
+                                        <span>Sweetness Level</span>
+                                        <span>Balanced</span>
+                                    </div>
+                                    <div class="sim-meter-track">
+                                        <div id="meter-sweetness" class="sim-meter-fill" style="width: 48%;"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Antioxidant / EGCG Meter -->
+                                <div class="sim-meter-item">
+                                    <div class="sim-meter-label-row">
+                                        <span>EGCG Antioksidan</span>
+                                        <span>High</span>
+                                    </div>
+                                    <div class="sim-meter-track">
+                                        <div id="meter-antioxidant" class="sim-meter-fill" style="width: 82%;"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Caffeine Estimate -->
+                                <div class="sim-meter-item">
+                                    <div class="sim-meter-label-row">
+                                        <span>Estimasi Kafein</span>
+                                        <span id="val-caffeine" style="color: var(--color-accent); font-weight: 700;">~70 mg</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Summary Description -->
+                            <div class="sim-summary-box">
+                                <span class="sim-summary-title">Profil Sensorik Hasil Racikan</span>
+                                <p id="sim-summary-text" class="sim-summary-text">
+                                    Ceremonial Uji murni (2.5g) dengan umami tebal dan sentuhan oat foam lembut.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
