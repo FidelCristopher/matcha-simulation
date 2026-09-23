@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artisan Sparkling Matcha | Pure Ceremonial Zen</title>
-    <meta name="description" content="Experience the crisp, revitalizing taste of pure ceremonial sparkling matcha. Zero sugar, sustained zen energy.">
+    <title>Artisan Sparkling Matcha | 3-Layer Interactive Simulation</title>
+    <meta name="description" content="Experience the crisp, revitalizing taste of pure ceremonial sparkling matcha. Zero sugar, sustained zen energy. Interactive 3D pinch simulation.">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,7 +67,7 @@
                 <p class="description">
                     Unleash the ceremonial taste of first-harvest Uji matcha.<br>
                     Sustained zen clarity in every crisp bubble —<br>
-                    redefined in one sleek silhouette.
+                    pinch or drag the model to explore its 3 layers.
                 </p>
                 <div class="cta-group">
                     <button class="primary-btn">
@@ -96,21 +96,28 @@
                 <model-viewer class="berry b9" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="45deg 20deg 105%"></model-viewer>
             </div>
 
-            <!-- 3d. Center 3D Matcha Product (Local Matcha 3D Model) -->
+            <!-- 3d. Center 3D Matcha Layer Simulation (Three.js WebGL Stage) -->
             <div class="hero-center">
-                <model-viewer id="product-model"
-                    src="assets/models/matcha.glb"
-                    alt="Artisan 3D Matcha Drink"
-                    camera-controls
-                    disable-zoom
-                    shadow-intensity="0"
-                    environment-image="neutral"
-                    exposure="1.4"
-                    interaction-prompt="none"
-                    camera-orbit="0deg 90deg 280%"
-                    field-of-view="30deg"
-                    class="main-product-3d">
-                </model-viewer>
+                <div id="matcha-canvas-container" class="main-product-3d" title="Cubit (Pinch) atau Drag vertikal untuk memecah layer"></div>
+            </div>
+
+            <!-- Floating 3D Layer Annotations (Active when exploded) -->
+            <div class="layer-annotation annotation-topping">
+                <span class="badge">Layer 1 • Topping</span>
+                <h4>Matcha Foam & Dust</h4>
+                <p>Busa seremonial lembut beraroma umami pekat dengan taburan micro-powder.</p>
+            </div>
+
+            <div class="layer-annotation annotation-isi">
+                <span class="badge">Layer 2 • Isi / Infusion</span>
+                <h4>First-Harvest Uji Extract</h4>
+                <p>Seduhan dingin daun teh Tencha pilihan Kyoto dengan zero sugar.</p>
+            </div>
+
+            <div class="layer-annotation annotation-base">
+                <span class="badge">Layer 3 • Base Foundation</span>
+                <h4>Zen Mineral Soda Base</h4>
+                <p>Air mata air pegunungan dengan gelembung mikro-karbonasi penyegar.</p>
             </div>
 
             <!-- 3e. Foreground Floating Botanicals (Above Can & Text) -->
@@ -155,6 +162,20 @@
 
         </div>
     </main>
+
+    <!-- 4. Interactive Simulation HUD Controls -->
+    <div class="simulation-hud">
+        <button id="explode-toggle-btn" class="explode-btn" aria-label="Pinch / Split Simulation">
+            <span>Pinch / Split Layers</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </button>
+        <div class="hud-slider-group">
+            <span class="hud-label">Explode:</span>
+            <input type="range" id="explode-slider" class="explode-slider" min="0" max="100" value="0">
+        </div>
+    </div>
 
     <!-- Hidden SVG Filter and Asset Preloads -->
     <svg style="position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none;">

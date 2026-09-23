@@ -1,5 +1,5 @@
 /* ==========================================================================
-   UI Components: Header, Navigation, Buttons, Cards, Badges
+   UI Components: Header, Navigation, Buttons, Cards, Badges & Simulation HUD
    ========================================================================== */
 
 /* 1. Header & Glass Nav */
@@ -261,4 +261,176 @@
 .nav-arrow:hover {
     background: rgba(255, 255, 255, 0.15);
     transform: scale(1.08);
+}
+
+/* ==========================================================================
+   5. Matcha Simulation HUD & 3D Layer Annotations
+   ========================================================================== */
+.simulation-hud {
+    position: fixed;
+    bottom: 2.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    background: rgba(4, 20, 11, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    padding: 0.6rem 1.4rem;
+    border-radius: 100px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    z-index: 120;
+    transition: all 0.3s ease;
+}
+
+.simulation-hud:hover {
+    border-color: rgba(251, 207, 232, 0.4);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(34, 197, 94, 0.15);
+}
+
+.explode-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 0.55rem 1.2rem;
+    border-radius: 100px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.explode-btn svg {
+    transition: transform 0.3s ease;
+}
+
+.explode-btn:hover {
+    background: var(--color-accent);
+    color: var(--color-accent-contrast);
+    border-color: var(--color-accent);
+}
+
+.explode-btn.active {
+    background: var(--color-accent);
+    color: var(--color-accent-contrast);
+    border-color: var(--color-accent);
+}
+
+.hud-slider-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.hud-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.explode-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    outline: none;
+    transition: background 0.3s;
+}
+
+.explode-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(251, 207, 232, 0.8);
+    transition: transform 0.2s ease;
+}
+
+.explode-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+}
+
+/* Floating Layer Callout Annotations */
+.layer-annotation {
+    position: absolute;
+    background: rgba(4, 20, 11, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: 3px solid var(--color-accent);
+    padding: 0.7rem 1.1rem;
+    border-radius: 12px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+    z-index: 115;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    max-width: 230px;
+}
+
+.layer-annotation.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.layer-annotation .badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 2px;
+}
+
+.layer-annotation h4 {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 2px;
+}
+
+.layer-annotation p {
+    font-size: 0.72rem;
+    line-height: 1.35;
+    color: var(--text-muted);
+}
+
+/* Callout Coordinates */
+.annotation-topping {
+    top: 22%;
+    left: 54%;
+}
+
+.annotation-isi {
+    top: 48%;
+    right: 54%;
+    text-align: right;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    border-right: 3px solid #76b885;
+}
+
+.annotation-base {
+    top: 72%;
+    left: 54%;
+}
+
+@media (max-width: 900px) {
+    .layer-annotation {
+        display: none; /* Hide dense annotations on small mobile viewports */
+    }
 }

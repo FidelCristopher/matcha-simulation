@@ -1,5 +1,5 @@
 /**
- * Interactive Gestures, Repulsion Physics, Parallax & Flavor Transitions
+ * Interactive Gestures, Repulsion Physics, Parallax, Layer Annotations & Flavor Transitions
  */
 import { APP_CONFIG } from './config.js';
 
@@ -17,6 +17,11 @@ export class InteractionManager {
         this.cards = document.querySelectorAll('.card');
         this.heroCenter = document.querySelector('.hero-center');
 
+        // Simulation HUD Elements
+        this.explodeBtn = document.querySelector('#explode-toggle-btn');
+        this.explodeSlider = document.querySelector('#explode-slider');
+        this.annotations = document.querySelectorAll('.layer-annotation');
+
         // Mouse tracking state
         this.mouse = { x: 0, y: 0, px: 0, py: 0 };
         this.currentMouse = { x: 0, y: 0 };
@@ -27,6 +32,7 @@ export class InteractionManager {
     init() {
         this.setupBerryStates();
         this.setupListeners();
+        this.setupSimulationHUD();
         this.startRenderLoop();
     }
 
@@ -37,6 +43,55 @@ export class InteractionManager {
             berry.dataset.angle = Math.random() * 360;
             berry.dataset.baseX = 0;
             berry.dataset.baseY = 0;
+        });
+    }
+
+    setupSimulationHUD() {
+        // Toggle Button
+        if (this.explodeBtn) {
+            this.explodeBtn.addEventListener('click', () => {
+                this.modelController.toggleExplode();
+            });
+        }
+
+        // Range Slider
+        if (this.explodeSlider) {
+            this.explodeSlider.addEventListener('input', (e) => {
+                const val = parseFloat(e.target.value) / 100;
+                this.modelController.setExplodeProgress(val);
+            });
+        }
+
+        // Listen for explode progress changes from touch/mouse gestures
+        document.addEventListener('matcha:explode-change', (e) => {
+            const progress = e.detail.progress;
+
+            // Sync slider
+            if (this.explodeSlider) {
+                this.explodeSlider.value = Math.round(progress * 100);
+            }
+
+            // Sync toggle button text
+            if (this.explodeBtn) {
+                if (progress > 0.5) {
+                    this.explodeBtn.classList.add('active');
+                    this.explodeBtn.innerHTML = `<span>Assemble</span> <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+                } else {
+                    this.explodeBtn.classList.remove('active');
+                    this.explodeBtn.innerHTML = `<span>Pinch / Split Layers</span> <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+                }
+            }
+
+            // Reveal/Hide Annotations based on progress threshold
+            this.annotations.forEach(ann => {
+                if (progress > 0.25) {
+                    ann.classList.add('visible');
+                    ann.style.opacity = Math.min(1, (progress - 0.25) / 0.5);
+                } else {
+                    ann.classList.remove('visible');
+                    ann.style.opacity = '0';
+                }
+            });
         });
     }
 
@@ -90,6 +145,8 @@ export class InteractionManager {
 
         // 2. 3D Model 720-degree spin + blur transition
         const spinObj = { val: 0, blur: 0 };
+        const canvasDom = this.modelController.renderer.domElement;
+
         gsap.to(spinObj, {
             val: 360,
             blur: 14,
@@ -97,8 +154,8 @@ export class InteractionManager {
             ease: 'power2.in',
             onUpdate: () => {
                 this.modelController.switchSpin = spinObj.val;
-                if (this.modelController.viewer) {
-                    this.modelController.viewer.style.filter = `blur(${spinObj.blur}px)`;
+                if (canvasDom) {
+                    canvasDom.style.filter = `blur(${spinObj.blur}px)`;
                 }
             },
             onComplete: () => {
@@ -119,14 +176,14 @@ export class InteractionManager {
                     ease: 'back.out(0.7)',
                     onUpdate: () => {
                         this.modelController.switchSpin = spinObj.val;
-                        if (this.modelController.viewer) {
-                            this.modelController.viewer.style.filter = `blur(${spinObj.blur}px)`;
+                        if (canvasDom) {
+                            canvasDom.style.filter = `blur(${spinObj.blur}px)`;
                         }
                     },
                     onComplete: () => {
                         this.modelController.switchSpin = 0;
-                        if (this.modelController.viewer) {
-                            this.modelController.viewer.style.filter = 'none';
+                        if (canvasDom) {
+                            canvasDom.style.filter = 'none';
                         }
                     }
                 });
@@ -205,7 +262,7 @@ export class InteractionManager {
             this.currentMouse.x += (this.mouse.x - this.currentMouse.x) * APP_CONFIG.camera.lerpFactor;
             this.currentMouse.y += (this.mouse.y - this.currentMouse.y) * APP_CONFIG.camera.lerpFactor;
 
-            // Update 3D Model tilt
+            // Update 3D Model tilt & render Three.js scene
             this.modelController.updateTilt(this.currentMouse);
 
             // Update Parallax Layers

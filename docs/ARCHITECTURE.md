@@ -55,7 +55,9 @@ Web ini mengandalkan efek visual *depth of field* bertingkat menggunakan Z-Index
 | **Micro-bubbles** | `#bubbles-container` | `0` | Partikel gelembung naik dari dasar layar |
 | **Far BG Leaves** | `.leaves-container` | `-1` | Daun teh 3D melayang halus di latar belakang jauh |
 | **Behind Can Botanicals** | `.berries-container-bg` | `0` | Elemen botanical di belakang kaleng/botol |
-| **Product Model (3D)** | `.hero-center` | `1` | Model 3D matcha utama dengan animasi floating & tilt |
+| **Product Model (3D Three.js)** | `#matcha-canvas-container` | `50` | Simulasi 3 layer (Topping, Isi, Base) dengan kontrol pinch/drag |
+| **Layer Annotations** | `.layer-annotation` | `115` | Label mengambang penjelas komposisi per layer |
+| **Simulation HUD** | `.simulation-hud` | `120` | Tombol toggle split & slider rentang pemisahan |
 | **Hero Content & UI** | `.hero-left`, `.hero-right` | `100` | Headline, tombol CTA, kartu rasa, teks penghargaan |
 | **Foreground Botanicals** | `.berries-container` | `110` | Elemen botanical di depan teks dan model |
 | **Header Navigation** | `.header` | `100` | Glassmorphism bar yang fixed di bagian atas |
