@@ -109,6 +109,28 @@ export class CartManager {
                 }
                 const total = this.calculateTotal().toFixed(2);
                 const successTemplate = window.i18nManager?.t('cart_alert_success') || 'Thank you! Your order of ${total} is now being prepared by our tea masters.';
+
+                // Save confirmed order to Admin Monitor database (localStorage)
+                const newOrder = {
+                    id: 'MTC-' + Math.floor(1000 + Math.random() * 9000),
+                    timestamp: new Date().toISOString(),
+                    timeFormatted: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    dateFormatted: new Date().toLocaleDateString(),
+                    status: 'brewing',
+                    table: 'Kiosk Order',
+                    items: JSON.parse(JSON.stringify(this.items)),
+                    total: parseFloat(total)
+                };
+
+                try {
+                    const existing = JSON.parse(localStorage.getItem('matcha_orders') || '[]');
+                    existing.unshift(newOrder);
+                    localStorage.setItem('matcha_orders', JSON.stringify(existing));
+                    window.dispatchEvent(new Event('storage'));
+                } catch (e) {
+                    console.warn('Failed to record order:', e);
+                }
+
                 alert(successTemplate.replace('${total}', `$${total}`));
                 this.items = [];
                 this.saveCart();
