@@ -1,10 +1,12 @@
 /**
  * Interactive Matcha Crafting Simulation Engine
- * Handles live recipe tweaking, sensory meter updates, and cup preview rendering.
+ * Handles live recipe tweaking, sensory meter updates, cup preview rendering,
+ * Add to Cart integration, and Reset Racikan.
  */
 export class MatchaSimulator {
-    constructor() {
+    constructor(cartManager = null) {
         this.page = document.querySelector('#simulation-page');
+        this.cartManager = cartManager;
         if (!this.page) return;
 
         // Visual Cup Elements
@@ -18,15 +20,18 @@ export class MatchaSimulator {
         this.antioxidantFill = document.querySelector('#meter-antioxidant');
         this.caffeineVal = document.querySelector('#val-caffeine');
         this.summaryText = document.querySelector('#sim-summary-text');
-        this.brewBtn = document.querySelector('#sim-brew-btn');
 
-        // State
-        this.state = {
-            baseTea: 'uji', // 'uji', 'hojicha', 'soda'
+        // Buttons
+        this.addCartBtn = document.querySelector('#sim-add-cart-btn');
+        this.resetBtn = document.querySelector('#sim-reset-btn');
+
+        // State (Default values)
+        this.defaultState = {
+            baseTea: 'uji',
             grams: 2.5,
-            milk: 'oat', // 'oat', 'vanilla', 'coconut', 'none'
-            toppings: ['powder']
+            milk: 'oat'
         };
+        this.state = { ...this.defaultState };
 
         this.init();
     }
@@ -34,7 +39,7 @@ export class MatchaSimulator {
     init() {
         this.bindPills();
         this.bindSlider();
-        this.bindBrewButton();
+        this.bindActionButtons();
         this.updateSimulationUI();
     }
 
@@ -74,30 +79,103 @@ export class MatchaSimulator {
         }
     }
 
-    bindBrewButton() {
-        if (!this.brewBtn) return;
-        this.brewBtn.addEventListener('click', () => {
-            this.brewBtn.innerHTML = `<span>Menyeduh Racikan...</span> ✨`;
-            this.brewBtn.style.transform = 'scale(0.97)';
+    bindActionButtons() {
+        // 1. "Add to Cart" Button
+        if (this.addCartBtn) {
+            this.addCartBtn.addEventListener('click', () => {
+                const baseNames = { uji: 'Uji Ceremonial', hojicha: 'Roasted Hojicha', soda: 'Mineral Soda' };
+                const milkNames = { oat: 'Oat Cloud', vanilla: 'Vanilla Foam', coconut: 'Coconut Velvet', none: 'Zero Milk' };
 
-            const cup = document.querySelector('.sim-cup-glass');
-            if (cup) {
-                cup.style.transform = 'scale(1.08) rotate(3deg)';
-                cup.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
-            }
+                const itemPrice = 4.50 + (this.state.grams > 2.5 ? (this.state.grams - 2.5) * 0.4 : 0);
 
-            setTimeout(() => {
-                this.brewBtn.innerHTML = `<span>Formula Tersimpan!</span> ✔`;
-                if (cup) cup.style.transform = 'scale(1) rotate(0deg)';
+                const customItem = {
+                    name: `Custom ${baseNames[this.state.baseTea]}`,
+                    spec: `${this.state.grams.toFixed(1)}g Matcha • ${milkNames[this.state.milk]}`,
+                    price: parseFloat(itemPrice.toFixed(2)),
+                    qty: 1
+                };
+
+                // Add to Cart
+                if (this.cartManager) {
+                    this.cartManager.addItem(customItem);
+                } else if (window.cartManager) {
+                    window.cartManager.addItem(customItem);
+                }
+
+                // Button visual feedback
+                const originalHTML = this.addCartBtn.innerHTML;
+                this.addCartBtn.innerHTML = `<span>Ditambahkan ke Cart!</span> ✔`;
+                this.addCartBtn.style.background = '#22c55e';
+
+                const cup = document.querySelector('.sim-cup-glass');
+                if (cup) {
+                    cup.style.transform = 'scale(1.08) rotate(3deg)';
+                    cup.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    setTimeout(() => {
+                        cup.style.transform = 'scale(1) rotate(0deg)';
+                    }, 400);
+                }
+
                 setTimeout(() => {
-                    this.brewBtn.innerHTML = `<span>Seduh & Simulasikan Racikan</span> <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
-                }, 1800);
-            }, 700);
+                    this.addCartBtn.innerHTML = originalHTML;
+                    this.addCartBtn.style.background = '';
+                }, 1400);
+            });
+        }
+
+        // 2. "Reset Racikan" Button
+        if (this.resetBtn) {
+            this.resetBtn.addEventListener('click', () => {
+                this.resetSimulation();
+            });
+        }
+    }
+
+    resetSimulation() {
+        this.state = { ...this.defaultState };
+
+        // Reset base tea pills
+        document.querySelectorAll('[data-sim-base]').forEach(pill => {
+            if (pill.dataset.simBase === this.defaultState.baseTea) {
+                pill.classList.add('active');
+            } else {
+                pill.classList.remove('active');
+            }
         });
+
+        // Reset milk pills
+        document.querySelectorAll('[data-sim-milk]').forEach(pill => {
+            if (pill.dataset.simMilk === this.defaultState.milk) {
+                pill.classList.add('active');
+            } else {
+                pill.classList.remove('active');
+            }
+        });
+
+        // Reset slider
+        const slider = document.querySelector('#sim-grams-slider');
+        const label = document.querySelector('#sim-grams-val');
+        if (slider) slider.value = this.defaultState.grams;
+        if (label) label.textContent = `${this.defaultState.grams.toFixed(1)}g`;
+
+        // Update UI & sensory meters
+        this.updateSimulationUI();
+
+        // Brief feedback animation on reset button
+        if (this.resetBtn) {
+            const svg = this.resetBtn.querySelector('svg');
+            if (svg) {
+                svg.style.transform = 'rotate(-360deg)';
+                svg.style.transition = 'transform 0.5s ease';
+                setTimeout(() => {
+                    svg.style.transform = '';
+                    svg.style.transition = '';
+                }, 500);
+            }
+        }
     }
 
     updateSimulationUI() {
-        // Calculate Sensory Values based on state
         let umami = 50 + (this.state.grams * 12);
         let sweetness = 30;
         let antioxidant = 40 + (this.state.grams * 14);
