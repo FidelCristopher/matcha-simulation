@@ -1,6 +1,53 @@
 /* ==========================================================================
-   Shopping Cart Button & Modal Pop-Up (Matcha Aesthetic)
+   Shopping Cart Button, Language Switcher & Modal Pop-Up (Matcha Aesthetic)
    ========================================================================== */
+
+/* Header Action Buttons Group (Language & Cart) */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Language Toggle Button */
+.lang-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: rgba(0, 0, 0, 0.6);
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.75rem 1.15rem;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(12px);
+    user-select: none;
+}
+
+.lang-btn:hover {
+    background: rgba(0, 0, 0, 0.85);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(251, 207, 232, 0.2);
+}
+
+.lang-btn svg {
+    color: var(--color-accent);
+    transition: transform 0.3s ease;
+}
+
+.lang-btn:hover svg {
+    transform: rotate(30deg);
+}
+
+.lang-text {
+    letter-spacing: 0.05em;
+    font-size: 0.8rem;
+}
 
 /* 1. Header Cart Button */
 .cart-btn {

@@ -41,6 +41,11 @@ export class MatchaSimulator {
         this.bindSlider();
         this.bindActionButtons();
         this.updateSimulationUI();
+
+        // Listen for language changes
+        document.addEventListener('matcha:lang-changed', () => {
+            this.updateSimulationUI();
+        });
     }
 
     bindPills() {
@@ -103,8 +108,9 @@ export class MatchaSimulator {
                 }
 
                 // Button visual feedback
+                const addedText = window.i18nManager?.t('sim_btn_added') || 'Added to Cart! ✔';
                 const originalHTML = this.addCartBtn.innerHTML;
-                this.addCartBtn.innerHTML = `<span>Added to Cart!</span> ✔`;
+                this.addCartBtn.innerHTML = `<span>${addedText}</span>`;
                 this.addCartBtn.style.background = '#22c55e';
 
                 const cup = document.querySelector('.sim-cup-glass');
@@ -234,13 +240,24 @@ export class MatchaSimulator {
 
         // Update Dynamic Summary Text
         if (this.summaryText) {
+            const lang = window.i18nManager?.currentLang || 'en';
             let desc = '';
-            if (this.state.baseTea === 'hojicha') {
-                desc = 'Nutty Roasted Hojicha with comforting warm aroma and soothing umami undertones.';
-            } else if (this.state.baseTea === 'soda') {
-                desc = 'Sparkling Zen Refreshment with crisp micro-carbonation and a clean, revitalizing finish.';
+            if (lang === 'id') {
+                if (this.state.baseTea === 'hojicha') {
+                    desc = 'Nutty Roasted Hojicha dengan aroma panggang lembut dan sensasi umami menenangkan.';
+                } else if (this.state.baseTea === 'soda') {
+                    desc = 'Sparkling Zen Refreshment bergelembung mikro dengan rasa bersih dan menyegarkan.';
+                } else {
+                    desc = `Ceremonial Uji murni (${this.state.grams.toFixed(1)}g) dengan umami tebal dan sentuhan ${this.state.milk} foam.`;
+                }
             } else {
-                desc = `Pure Ceremonial Uji (${this.state.grams.toFixed(1)}g) with deep umami and silky ${this.state.milk} foam.`;
+                if (this.state.baseTea === 'hojicha') {
+                    desc = 'Nutty Roasted Hojicha with comforting warm aroma and soothing umami undertones.';
+                } else if (this.state.baseTea === 'soda') {
+                    desc = 'Sparkling Zen Refreshment with crisp micro-carbonation and a clean, revitalizing finish.';
+                } else {
+                    desc = `Pure Ceremonial Uji (${this.state.grams.toFixed(1)}g) with deep umami and silky ${this.state.milk} foam.`;
+                }
             }
             this.summaryText.textContent = desc;
         }

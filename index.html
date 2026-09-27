@@ -40,19 +40,29 @@
             <span>Matcha Tcih</span>
         </div>
         <nav class="nav glass">
-            <a href="#menu" class="nav-item" data-target="#menu">Menu</a>
-            <a href="#home" class="nav-item active" data-target="#home">Home</a>
-            <a href="#simulation" class="nav-item" data-target="#simulation">Simulation</a>
+            <a href="#menu" class="nav-item" data-target="#menu" data-i18n="nav_menu">Menu</a>
+            <a href="#home" class="nav-item active" data-target="#home" data-i18n="nav_home">Home</a>
+            <a href="#simulation" class="nav-item" data-target="#simulation" data-i18n="nav_simulation">Simulation</a>
         </nav>
-        <button class="cart-btn" id="cart-toggle-btn" aria-label="View Cart">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-            </svg>
-            <span>Cart</span>
-            <span class="cart-count-badge" id="cart-count">0</span>
-        </button>
+        <div class="header-actions">
+            <button class="lang-btn" id="lang-toggle-btn" aria-label="Change Language" title="Switch Language (EN / ID)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+                <span class="lang-text" id="lang-text">EN</span>
+            </button>
+            <button class="cart-btn" id="cart-toggle-btn" aria-label="View Cart">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span data-i18n="cart_btn_text">Cart</span>
+                <span class="cart-count-badge" id="cart-count">0</span>
+            </button>
+        </div>
     </header>
 
     <!-- Swipe / Drag Hint Indicator (Left: Menu) -->
@@ -60,12 +70,12 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <span>Drag / Swipe → Menu</span>
+        <span data-i18n="hint_menu">Drag / Swipe → Menu</span>
     </div>
 
     <!-- Swipe / Drag Hint Indicator (Right: Simulation) -->
     <div class="swipe-hint-pill-right" id="swipe-to-sim-hint" title="Swipe or drag left to open Simulation">
-        <span>Simulation ← Swipe</span>
+        <span data-i18n="hint_sim">Simulation ← Swipe</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -79,9 +89,9 @@
             <section id="menu-page" class="page">
                 <div class="menu-container">
                     <header class="menu-header">
-                        <span class="menu-badge">Curated Collection • First-Harvest Uji</span>
+                        <span class="menu-badge" data-i18n="menu_badge">Curated Collection • First-Harvest Uji</span>
                         <h1 class="menu-title">Matcha Tchi's Menu</h1>
-                        <p class="menu-subtitle">
+                        <p class="menu-subtitle" data-i18n="menu_subtitle">
                             Explore authentic ceremonial creations from Uji, Kyoto. 
                             Infused with natural botanicals and crisp micro-carbonation bubbles.
                         </p>
@@ -91,7 +101,7 @@
                         <!-- Card 1 -->
                         <article class="menu-card">
                             <div class="menu-card-header">
-                                <span class="menu-card-tag">Signature Cold</span>
+                                <span class="menu-card-tag" data-i18n="c1_tag">Signature Cold</span>
                                 <span class="menu-card-price">$4.80</span>
                             </div>
                             <div class="menu-card-visual">
@@ -102,7 +112,7 @@
                                 </div>
                             </div>
                             <h3 class="menu-card-title">Ceremonial Cold Foam</h3>
-                            <p class="menu-card-desc">Cold-brewed pure Uji matcha layered with silky vanilla cloud foam and rich ceremonial matcha dust.</p>
+                            <p class="menu-card-desc" data-i18n="c1_desc">Cold-brewed pure Uji matcha layered with silky vanilla cloud foam and rich ceremonial matcha dust.</p>
                             <div class="menu-card-meta">
                                 <span>Zero Sugar</span> • <span>Umami Level 5/5</span>
                             </div>
@@ -111,7 +121,7 @@
                         <!-- Card 2 -->
                         <article class="menu-card">
                             <div class="menu-card-header">
-                                <span class="menu-card-tag">Citrus Botanical</span>
+                                <span class="menu-card-tag" data-i18n="c2_tag">Citrus Botanical</span>
                                 <span class="menu-card-price">$5.20</span>
                             </div>
                             <div class="menu-card-visual">
@@ -123,7 +133,7 @@
                                 </div>
                             </div>
                             <h3 class="menu-card-title">Matcha Yuzu Sparkle</h3>
-                            <p class="menu-card-desc">Crisp Japanese mountain Yuzu citrus combined with micro-carbonation and ceremonial matcha.</p>
+                            <p class="menu-card-desc" data-i18n="c2_desc">Crisp Japanese mountain Yuzu citrus combined with micro-carbonation and ceremonial matcha.</p>
                             <div class="menu-card-meta">
                                 <span>Crisp & Tangy</span> • <span>Vitamin C Rich</span>
                             </div>
@@ -132,7 +142,7 @@
                         <!-- Card 3 -->
                         <article class="menu-card">
                             <div class="menu-card-header">
-                                <span class="menu-card-tag">Floral Fusion</span>
+                                <span class="menu-card-tag" data-i18n="c3_tag">Floral Fusion</span>
                                 <span class="menu-card-price">$5.50</span>
                             </div>
                             <div class="menu-card-visual">
@@ -143,7 +153,7 @@
                                 </div>
                             </div>
                             <h3 class="menu-card-title">Sakura Cloud Latte</h3>
-                            <p class="menu-card-desc">Kyoto Sakura blossom infusion paired with silky oat milk and ceremonial grade matcha.</p>
+                            <p class="menu-card-desc" data-i18n="c3_desc">Kyoto Sakura blossom infusion paired with silky oat milk and ceremonial grade matcha.</p>
                             <div class="menu-card-meta">
                                 <span>Spring Edition</span> • <span>Floral Aroma</span>
                             </div>
@@ -152,7 +162,7 @@
                         <!-- Card 4 -->
                         <article class="menu-card">
                             <div class="menu-card-header">
-                                <span class="menu-card-tag">Roasted Blend</span>
+                                <span class="menu-card-tag" data-i18n="c4_tag">Roasted Blend</span>
                                 <span class="menu-card-price">$4.90</span>
                             </div>
                             <div class="menu-card-visual">
@@ -163,7 +173,7 @@
                                 </div>
                             </div>
                             <h3 class="menu-card-title">Hojicha & Matcha Duo</h3>
-                            <p class="menu-card-desc">Dual-layer nutty roasted Hojicha and deep green ceremonial matcha blended with oat milk.</p>
+                            <p class="menu-card-desc" data-i18n="c4_desc">Dual-layer nutty roasted Hojicha and deep green ceremonial matcha blended with oat milk.</p>
                             <div class="menu-card-meta">
                                 <span>Low Caffeine</span> • <span>Warm Notes</span>
                             </div>
@@ -188,16 +198,16 @@
                         <!-- 3b. Left Column: Branding, Typography & CTA -->
                         <div class="hero-left">
                             <h1 class="main-title">
-                                <span class="outline">Create</span><br>
-                                Your
+                                <span class="outline" data-i18n="hero_title_1">Create</span><br>
+                                <span data-i18n="hero_title_2">Your</span>
                             </h1>
-                            <p class="description">
+                            <p class="description" data-i18n="hero_desc">
                                 Craft your perfect state of calm. <br>
                                 Layer premium first-harvest matcha with your favorite toppings. Rotate and explode each layer to engineer your personal ritual.
                             </p>
                             <div class="cta-group">
                                 <button class="primary-btn">
-                                    Order Ceremonial
+                                    <span data-i18n="hero_cta">Order Ceremonial</span>
                                     <span class="plus-icon">+</span>
                                 </button>
                             </div>
@@ -209,8 +219,8 @@
                                     </svg>
                                 </div>
                                 <div class="award-text">
-                                    <span class="award-title">GLOBAL TEA AWARDS</span>
-                                    <span class="award-subtitle">PREMIUM BOTANICAL SODA 2025</span>
+                                    <span class="award-title" data-i18n="hero_award_title">GLOBAL TEA AWARDS</span>
+                                    <span class="award-subtitle" data-i18n="hero_award_sub">PREMIUM BOTANICAL SODA 2025</span>
                                 </div>
                             </div>
                         </div>
@@ -232,20 +242,20 @@
                         <!-- Floating 3D Layer Annotations (Active when exploded) -->
                         <div class="layer-annotation annotation-topping">
                             <span class="badge">Layer 1 • Topping</span>
-                            <h4>Matcha Foam & Dust</h4>
-                            <p>Silky ceremonial foam rich in umami aroma, dusted with fine matcha micro-powder.</p>
+                            <h4 data-i18n="annotation_topping_title">Matcha Foam & Dust</h4>
+                            <p data-i18n="annotation_topping_desc">Silky ceremonial foam rich in umami aroma, dusted with fine matcha micro-powder.</p>
                         </div>
 
                         <div class="layer-annotation annotation-isi">
                             <span class="badge">Layer 2 • Isi / Infusion</span>
-                            <h4>First-Harvest Uji Extract</h4>
-                            <p>Cold-brewed first-harvest Tencha tea leaves from Kyoto with zero sugar.</p>
+                            <h4 data-i18n="annotation_isi_title">First-Harvest Uji Extract</h4>
+                            <p data-i18n="annotation_isi_desc">Cold-brewed first-harvest Tencha tea leaves from Kyoto with zero sugar.</p>
                         </div>
 
                         <div class="layer-annotation annotation-base">
                             <span class="badge">Layer 3 • Base Foundation</span>
-                            <h4>Zen Mineral Soda Base</h4>
-                            <p>Artisan mountain spring mineral base infused with crisp, revitalizing micro-bubbles.</p>
+                            <h4 data-i18n="annotation_base_title">Zen Mineral Soda Base</h4>
+                            <p data-i18n="annotation_base_desc">Artisan mountain spring mineral base infused with crisp, revitalizing micro-bubbles.</p>
                         </div>
 
                         <!-- 3e. Foreground Floating Botanicals, Chasen & Daun Matcha (Above Can & Text) -->
@@ -288,8 +298,8 @@
                                 </div>
                             </div>
                             <h2 class="side-title">
-                                <span class="outline">Own</span><br>
-                                Matcha
+                                <span class="outline" data-i18n="hero_side_1">Own</span><br>
+                                <span data-i18n="hero_side_2">Matcha</span>
                             </h2>
                         </div>
 
@@ -299,13 +309,13 @@
                 <!-- Interactive Simulation HUD Controls -->
                 <div class="simulation-hud">
                     <button id="explode-toggle-btn" class="explode-btn" aria-label="Pinch / Split Simulation">
-                        <span>Pinch / Split Layers</span>
+                        <span data-i18n="hud_split_btn">Pinch / Split Layers</span>
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                             <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         </svg>
                     </button>
                     <div class="hud-slider-group">
-                        <span class="hud-label">Explode:</span>
+                        <span class="hud-label" data-i18n="hud_explode_label">Explode:</span>
                         <input type="range" id="explode-slider" class="explode-slider" min="0" max="100" value="0">
                     </div>
                 </div>
@@ -315,9 +325,9 @@
             <section id="simulation-page" class="page">
                 <div class="sim-container">
                     <header class="sim-header">
-                        <span class="sim-badge">Matcha Lab • Crafting Sandbox</span>
-                        <h1 class="sim-title">Matcha Simulation</h1>
-                        <p class="sim-subtitle">
+                        <span class="sim-badge" data-i18n="sim_badge">Matcha Lab • Crafting Sandbox</span>
+                        <h1 class="sim-title" data-i18n="sim_title">Matcha Simulation</h1>
+                        <p class="sim-subtitle" data-i18n="sim_subtitle">
                             Engineer your personal matcha ritual. Customize Uji tea concentration, milk foam texture, and botanical notes while tracking umami and antioxidant metrics in real time.
                         </p>
                     </header>
@@ -328,8 +338,8 @@
                             <!-- 1. Base Tea Selection -->
                             <div class="sim-group">
                                 <div class="sim-group-label">
-                                    <span>1. Matcha Tea Base</span>
-                                    <span>Select Profile</span>
+                                    <span data-i18n="sim_step1_label">1. Matcha Tea Base</span>
+                                    <span data-i18n="sim_step1_sub">Select Profile</span>
                                 </div>
                                 <div class="sim-pills">
                                     <div class="sim-pill active" data-sim-base="uji">Uji Ceremonial</div>
@@ -341,15 +351,15 @@
                             <!-- 2. Matcha Grams & Concentration Slider -->
                             <div class="sim-group">
                                 <div class="sim-group-label">
-                                    <span>2. Matcha Concentration</span>
+                                    <span data-i18n="sim_step2_label">2. Matcha Concentration</span>
                                     <span id="sim-grams-val">2.5g</span>
                                 </div>
                                 <div class="sim-range-wrap">
                                     <input type="range" id="sim-grams-slider" class="sim-slider" min="1.0" max="4.5" step="0.1" value="2.5">
                                     <div class="sim-range-labels">
-                                        <span>Usucha (Light / 1g)</span>
-                                        <span>Standard (2.5g)</span>
-                                        <span>Koicha (Intense / 4.5g)</span>
+                                        <span data-i18n="sim_step2_l1">Usucha (Light / 1g)</span>
+                                        <span data-i18n="sim_step2_l2">Standard (2.5g)</span>
+                                        <span data-i18n="sim_step2_l3">Koicha (Intense / 4.5g)</span>
                                     </div>
                                 </div>
                             </div>
@@ -357,8 +367,8 @@
                             <!-- 3. Milk & Foam Texture -->
                             <div class="sim-group">
                                 <div class="sim-group-label">
-                                    <span>3. Milk & Foam Texture</span>
-                                    <span>Foam Style</span>
+                                    <span data-i18n="sim_step3_label">3. Milk & Foam Texture</span>
+                                    <span data-i18n="sim_step3_sub">Foam Style</span>
                                 </div>
                                 <div class="sim-pills">
                                     <div class="sim-pill active" data-sim-milk="oat">Oat Milk Cloud</div>
@@ -376,14 +386,14 @@
                                         <circle cx="20" cy="21" r="1"></circle>
                                         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                                     </svg>
-                                    <span>Add to Cart</span>
+                                    <span data-i18n="sim_btn_add">Add to Cart</span>
                                 </button>
                                 <button id="sim-reset-btn" class="sim-reset-btn" type="button" title="Reset recipe to default formula">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
                                         <path d="M3 3v5h5"></path>
                                     </svg>
-                                    <span>Reset Recipe</span>
+                                    <span data-i18n="sim_btn_reset">Reset Recipe</span>
                                 </button>
                             </div>
                         </div>
@@ -402,7 +412,7 @@
                                 <!-- Umami Meter -->
                                 <div class="sim-meter-item">
                                     <div class="sim-meter-label-row">
-                                        <span>Umami Richness</span>
+                                        <span data-i18n="sim_meter_umami">Umami Richness</span>
                                         <span>Intense</span>
                                     </div>
                                     <div class="sim-meter-track">
@@ -413,7 +423,7 @@
                                 <!-- Sweetness Meter -->
                                 <div class="sim-meter-item">
                                     <div class="sim-meter-label-row">
-                                        <span>Sweetness Level</span>
+                                        <span data-i18n="sim_meter_sweetness">Sweetness Level</span>
                                         <span>Balanced</span>
                                     </div>
                                     <div class="sim-meter-track">
@@ -424,7 +434,7 @@
                                 <!-- Antioxidant / EGCG Meter -->
                                 <div class="sim-meter-item">
                                     <div class="sim-meter-label-row">
-                                        <span>EGCG Antioxidants</span>
+                                        <span data-i18n="sim_meter_antioxidant">EGCG Antioxidants</span>
                                         <span>High</span>
                                     </div>
                                     <div class="sim-meter-track">
@@ -435,7 +445,7 @@
                                 <!-- Caffeine Estimate -->
                                 <div class="sim-meter-item">
                                     <div class="sim-meter-label-row">
-                                        <span>Estimated Caffeine</span>
+                                        <span data-i18n="sim_meter_caffeine">Estimated Caffeine</span>
                                         <span id="val-caffeine" style="color: var(--color-accent); font-weight: 700;">~70 mg</span>
                                     </div>
                                 </div>
@@ -443,7 +453,7 @@
 
                             <!-- Summary Description -->
                             <div class="sim-summary-box">
-                                <span class="sim-summary-title">Sensory Profile & Recipe Summary</span>
+                                <span class="sim-summary-title" data-i18n="sim_summary_title">Sensory Profile & Recipe Summary</span>
                                 <p id="sim-summary-text" class="sim-summary-text">
                                     Pure Ceremonial Uji (2.5g) featuring deep umami and silky oat cloud foam.
                                 </p>
@@ -466,7 +476,7 @@
                         <circle cx="20" cy="21" r="1"></circle>
                         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                     </svg>
-                    <h3>Your Cart</h3>
+                    <h3 data-i18n="cart_title">Your Cart</h3>
                 </div>
                 <button class="cart-modal-close" id="cart-close-btn" aria-label="Close Cart">&times;</button>
             </div>
@@ -474,18 +484,18 @@
             <div class="cart-modal-body" id="cart-items-container">
                 <div class="cart-empty-state">
                     <div class="cart-empty-icon">🍵</div>
-                    <p>Your cart is currently empty.</p>
-                    <span>Craft a blend in the Simulation Lab or explore our Crafted Menu!</span>
+                    <p data-i18n="cart_empty_title">Your cart is currently empty.</p>
+                    <span data-i18n="cart_empty_sub">Craft a blend in the Simulation Lab or explore our Crafted Menu!</span>
                 </div>
             </div>
 
             <div class="cart-modal-footer">
                 <div class="cart-summary-row">
-                    <span>Estimated Total</span>
+                    <span data-i18n="cart_total_label">Estimated Total</span>
                     <span class="cart-total-price" id="cart-total-price">$0.00</span>
                 </div>
                 <button class="cart-checkout-btn" id="cart-checkout-btn">
-                    <span>Proceed to Checkout</span>
+                    <span data-i18n="cart_checkout_btn">Proceed to Checkout</span>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
             </div>

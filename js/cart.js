@@ -21,6 +21,11 @@ export class CartManager {
     init() {
         this.bindEvents();
         this.render();
+
+        // Listen for language switch to re-render empty state and text
+        document.addEventListener('matcha:lang-changed', () => {
+            this.render();
+        });
     }
 
     loadCart() {
@@ -98,11 +103,13 @@ export class CartManager {
         if (this.checkoutBtn) {
             this.checkoutBtn.addEventListener('click', () => {
                 if (!this.items.length) {
-                    alert('Your cart is currently empty. Please add a matcha blend first!');
+                    const emptyMsg = window.i18nManager?.t('cart_alert_empty') || 'Your cart is currently empty. Please add a matcha blend first!';
+                    alert(emptyMsg);
                     return;
                 }
                 const total = this.calculateTotal().toFixed(2);
-                alert(`Thank you! Your order of $${total} is now being prepared by our tea masters.`);
+                const successTemplate = window.i18nManager?.t('cart_alert_success') || 'Thank you! Your order of ${total} is now being prepared by our tea masters.';
+                alert(successTemplate.replace('${total}', `$${total}`));
                 this.items = [];
                 this.saveCart();
                 this.render();
@@ -202,11 +209,13 @@ export class CartManager {
         if (!this.itemsContainer) return;
 
         if (!this.items.length) {
+            const emptyTitle = window.i18nManager?.t('cart_empty_title') || 'Your cart is currently empty.';
+            const emptySub = window.i18nManager?.t('cart_empty_sub') || 'Craft a blend in the Simulation Lab or explore our Crafted Menu!';
             this.itemsContainer.innerHTML = `
                 <div class="cart-empty-state">
                     <div class="cart-empty-icon">🍵</div>
-                    <p>Your cart is currently empty.</p>
-                    <span>Craft a blend in the Simulation Lab or explore our Crafted Menu!</span>
+                    <p>${emptyTitle}</p>
+                    <span>${emptySub}</span>
                 </div>
             `;
             return;
