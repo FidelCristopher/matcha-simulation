@@ -229,6 +229,15 @@ export class AdminOrderMonitor {
         this.render();
     }
 
+    deleteOrder(orderId) {
+        if (!confirm(`Hapus tiket pesanan #${orderId}?`)) return;
+
+        this.orders = this.orders.filter(o => o.id !== orderId);
+        this.saveOrders();
+        this.render();
+        window.dispatchEvent(new Event('storage'));
+    }
+
     updateKPIs() {
         const totalRevenue = this.orders
             .filter(o => o.status !== 'cancelled')
@@ -299,9 +308,17 @@ export class AdminOrderMonitor {
                         <span class="order-id">#${order.id}</span>
                         <span class="order-timestamp">${order.timeFormatted} • ${order.table || 'Kiosk'}</span>
                     </div>
-                    <span class="status-badge ${order.status}">
-                        ${isBrewing ? '⏳ Brewing' : '✔ Completed'}
-                    </span>
+                    <div class="order-header-right">
+                        <span class="status-badge ${order.status}">
+                            ${isBrewing ? '⏳ Brewing' : '✔ Completed'}
+                        </span>
+                        <button class="order-delete-single-btn" data-order-id="${order.id}" title="Hapus pesanan #${order.id}" aria-label="Hapus pesanan">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="order-items-list">
@@ -327,6 +344,15 @@ export class AdminOrderMonitor {
             btn.addEventListener('click', () => {
                 const id = btn.dataset.orderId;
                 this.toggleStatus(id);
+            });
+        });
+
+        // Bind individual order delete buttons
+        this.ordersGrid.querySelectorAll('.order-delete-single-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = btn.dataset.orderId;
+                this.deleteOrder(id);
             });
         });
     }
