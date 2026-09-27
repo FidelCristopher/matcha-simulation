@@ -514,6 +514,101 @@ body {
     margin-bottom: 0.4rem;
 }
 
+/* 6. Export Orders Bar */
+.admin-export-bar {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 22px;
+    padding: 1.5rem 2rem;
+    backdrop-filter: blur(16px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.4rem;
+    margin-top: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.export-info {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+}
+
+.export-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: rgba(34, 197, 94, 0.15);
+    border: 1px solid rgba(34, 197, 94, 0.35);
+    color: #86efac;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.export-text h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.2rem;
+}
+
+.export-text span {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.export-buttons-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.export-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.75rem 1.4rem;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border: 1px solid transparent;
+    user-select: none;
+}
+
+.export-action-btn.excel-btn {
+    background: rgba(34, 197, 94, 0.18);
+    border-color: rgba(34, 197, 94, 0.4);
+    color: #86efac;
+}
+
+.export-action-btn.excel-btn:hover {
+    background: #22c55e;
+    color: #041d0f;
+    border-color: #22c55e;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
+}
+
+.export-action-btn.pdf-btn {
+    background: rgba(251, 207, 232, 0.15);
+    border-color: rgba(251, 207, 232, 0.35);
+    color: var(--color-accent);
+}
+
+.export-action-btn.pdf-btn:hover {
+    background: var(--color-accent);
+    color: var(--color-accent-dark);
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(251, 207, 232, 0.4);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .admin-header {
@@ -521,6 +616,18 @@ body {
     }
     .admin-filter-bar {
         border-radius: 20px;
+    }
+    .admin-export-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.4rem;
+    }
+    .export-buttons-group {
+        width: 100%;
+    }
+    .export-action-btn {
+        width: 100%;
+        justify-content: center;
     }
     .search-box {
         width: 100%;

@@ -20,6 +20,11 @@ export class AdminOrderMonitor {
         this.clearBtn = document.querySelector('#clear-orders-btn');
         this.sampleOrderBtn = document.querySelector('#sample-order-btn');
 
+        // Export elements
+        this.excelBtn = document.querySelector('#export-excel-btn');
+        this.pdfBtn = document.querySelector('#export-pdf-btn');
+        this.exportCountLabel = document.querySelector('#export-orders-count');
+
         // State
         this.currentFilter = 'all'; // 'all' | 'brewing' | 'completed'
         this.searchQuery = '';
@@ -130,6 +135,16 @@ export class AdminOrderMonitor {
                     this.render();
                 }
             });
+        }
+
+        // Export Excel (.xlsx) button
+        if (this.excelBtn) {
+            this.excelBtn.addEventListener('click', () => this.exportToExcel());
+        }
+
+        // Export PDF (.pdf) button
+        if (this.pdfBtn) {
+            this.pdfBtn.addEventListener('click', () => this.exportToPDF());
         }
     }
 
@@ -258,6 +273,15 @@ export class AdminOrderMonitor {
         if (this.statActive) this.statActive.textContent = activeCount;
         if (this.statCompleted) this.statCompleted.textContent = completedCount;
         if (this.statTotal) this.statTotal.textContent = this.orders.length;
+
+        // Update Export bar count description
+        if (this.exportCountLabel) {
+            if (this.orders.length > 0) {
+                this.exportCountLabel.textContent = `${this.orders.length} pesanan (${completedCount} selesai) siap diunduh`;
+            } else {
+                this.exportCountLabel.textContent = 'Belum ada data pesanan untuk diunduh';
+            }
+        }
     }
 
     render() {
@@ -363,6 +387,217 @@ export class AdminOrderMonitor {
                 this.deleteOrder(id);
             });
         });
+    }
+
+    /**
+     * Export all orders to Excel spreadsheet (.xlsx) using SheetJS
+     */
+    exportToExcel() {
+        if (!this.orders.length) {
+            alert('Tidak ada data pesanan untuk diexport!');
+            return;
+        }
+
+        if (typeof XLSX === 'undefined') {
+            alert('Library Excel belum siap dimuat. Silakan refresh halaman.');
+            return;
+        }
+
+        // Sheet 1: Orders Summary
+        const summaryRows = this.orders.map(order => {
+            const itemsSummary = (order.items || []).map(i => `${i.qty}x ${i.name} (${i.spec || ''})`).join('; ');
+            const totalItemsQty = (order.items || []).reduce((sum, i) => sum + (i.qty || 1), 0);
+
+            return {
+                'Order ID': '#' + order.id,
+                'Tanggal': order.dateFormatted || new Date(order.timestamp).toLocaleDateString(),
+                'Waktu': order.timeFormatted || new Date(order.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                'Status': order.status === 'completed' ? 'Selesai (Completed)' : 'Sedang Diseduh (Brewing)',
+                'Sumber / Meja': order.table || 'Kiosk',
+                'Rincian Menu & Racikan': itemsSummary,
+                'Total Qty': totalItemsQty,
+                'Total (USD)': parseFloat(order.total)
+            };
+        });
+
+        // Sheet 2: Itemized Breakdown
+        const itemizedRows = [];
+        this.orders.forEach(order => {
+            (order.items || []).forEach(item => {
+                itemizedRows.push({
+                    'Order ID': '#' + order.id,
+                    'Tanggal': order.dateFormatted || new Date(order.timestamp).toLocaleDateString(),
+                    'Waktu': order.timeFormatted || new Date(order.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    'Status': order.status === 'completed' ? 'Selesai' : 'Sedang Diseduh',
+                    'Nama Menu': item.name,
+                    'Spesifikasi Racikan': item.spec || 'Standard',
+                    'Jumlah (Qty)': item.qty,
+                    'Harga Satuan (USD)': parseFloat(item.price),
+                    'Subtotal (USD)': parseFloat((item.price * item.qty).toFixed(2))
+                });
+            });
+        });
+
+        const wb = XLSX.utils.book_new();
+
+        // Add Sheet 1
+        const wsSummary = XLSX.utils.json_to_sheet(summaryRows);
+        wsSummary['!cols'] = [
+            { wch: 14 }, // Order ID
+            { wch: 14 }, // Tanggal
+            { wch: 10 }, // Waktu
+            { wch: 24 }, // Status
+            { wch: 18 }, // Meja
+            { wch: 48 }, // Rincian
+            { wch: 10 }, // Qty
+            { wch: 14 }  // Total
+        ];
+        XLSX.utils.book_append_sheet(wb, wsSummary, 'Ringkasan Pesanan');
+
+        // Add Sheet 2
+        const wsItems = XLSX.utils.json_to_sheet(itemizedRows);
+        wsItems['!cols'] = [
+            { wch: 14 },
+            { wch: 14 },
+            { wch: 10 },
+            { wch: 16 },
+            { wch: 28 },
+            { wch: 35 },
+            { wch: 14 },
+            { wch: 18 },
+            { wch: 16 }
+        ];
+        XLSX.utils.book_append_sheet(wb, wsItems, 'Detail Item');
+
+        const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+        XLSX.writeFile(wb, `Matcha_Tcih_Orders_${dateStr}.xlsx`);
+    }
+
+    /**
+     * Export all orders to PDF document (.pdf) using jsPDF & autoTable
+     */
+    exportToPDF() {
+        if (!this.orders.length) {
+            alert('Tidak ada data pesanan untuk diexport!');
+            return;
+        }
+
+        if (!window.jspdf || !window.jspdf.jsPDF) {
+            alert('Library PDF belum siap dimuat. Silakan refresh halaman.');
+            return;
+        }
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('p', 'mm', 'a4');
+
+        // Brand Header Banner (Matcha Dark Emerald)
+        doc.setFillColor(6, 32, 16);
+        doc.rect(0, 0, 210, 42, 'F');
+
+        // Title & Logo
+        doc.setTextColor(255, 255, 255);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(20);
+        doc.text('MATCHA TCIH', 14, 18);
+
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(251, 207, 232); // Sakura Pink accent
+        doc.text('KITCHEN DISPLAY SYSTEM — OFFICIAL ORDER REPORT', 14, 26);
+
+        const nowStr = new Date().toLocaleString();
+        doc.setTextColor(200, 200, 200);
+        doc.setFontSize(8.5);
+        doc.text(`Waktu Cetak: ${nowStr}`, 14, 34);
+
+        // Summary Statistics Cards
+        const totalRev = this.orders.reduce((sum, o) => sum + (parseFloat(o.total) || 0), 0);
+        const completedCount = this.orders.filter(o => o.status === 'completed').length;
+        const brewingCount = this.orders.filter(o => o.status === 'brewing').length;
+
+        doc.setTextColor(30, 30, 30);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10.5);
+        doc.text('Ringkasan Kinerja Pesanan:', 14, 52);
+
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.text(`• Total Tiket: ${this.orders.length} Pesanan`, 14, 59);
+        doc.text(`• Sedang Diseduh: ${brewingCount} Tiket`, 65, 59);
+        doc.text(`• Selesai: ${completedCount} Tiket`, 115, 59);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(16, 120, 50);
+        doc.text(`• Total Pendapatan: $${totalRev.toFixed(2)}`, 155, 59);
+
+        // Table Data mapping
+        const tableBody = this.orders.map(order => {
+            const itemsText = (order.items || []).map(i => `${i.qty}x ${i.name}\n(${i.spec || 'Standard'})`).join('\n\n');
+            const statusText = order.status === 'completed' ? 'Selesai' : 'Sedang Diseduh';
+            const dateText = `${order.dateFormatted || ''}\n${order.timeFormatted || ''}`;
+
+            return [
+                '#' + order.id,
+                dateText,
+                order.table || 'Kiosk',
+                statusText,
+                itemsText,
+                `$${parseFloat(order.total).toFixed(2)}`
+            ];
+        });
+
+        // AutoTable
+        doc.autoTable({
+            startY: 65,
+            head: [['Order ID', 'Waktu', 'Lokasi', 'Status', 'Rincian Menu & Racikan', 'Total']],
+            body: tableBody,
+            theme: 'striped',
+            headStyles: {
+                fillColor: [21, 128, 61], // Emerald Matcha
+                textColor: [255, 255, 255],
+                fontStyle: 'bold',
+                fontSize: 9
+            },
+            bodyStyles: {
+                fontSize: 8.5,
+                cellPadding: 4,
+                textColor: [40, 40, 40]
+            },
+            columnStyles: {
+                0: { cellWidth: 22, fontStyle: 'bold' },
+                1: { cellWidth: 25 },
+                2: { cellWidth: 22 },
+                3: { cellWidth: 26 },
+                4: { cellWidth: 'auto' },
+                5: { cellWidth: 22, halign: 'right', fontStyle: 'bold', textColor: [16, 120, 50] }
+            },
+            alternateRowStyles: {
+                fillColor: [245, 250, 246]
+            },
+            foot: [[
+                'TOTAL PENDAPATAN',
+                '',
+                '',
+                '',
+                `${this.orders.length} Tiket Pesanan`,
+                `$${totalRev.toFixed(2)}`
+            ]],
+            footStyles: {
+                fillColor: [6, 32, 16],
+                textColor: [251, 207, 232],
+                fontStyle: 'bold',
+                fontSize: 9.5
+            },
+            didDrawPage: (data) => {
+                const str = 'Halaman ' + doc.internal.getNumberOfPages();
+                doc.setFontSize(8);
+                doc.setTextColor(140);
+                doc.text(str, 196, 290, { align: 'right' });
+                doc.text('Matcha Tcih KDS — Laporan Resmi Penjualan & Dapur', 14, 290);
+            }
+        });
+
+        const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+        doc.save(`Matcha_Tcih_Orders_${dateStr}.pdf`);
     }
 }
 
