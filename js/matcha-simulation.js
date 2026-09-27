@@ -1,7 +1,7 @@
 /**
  * Interactive Matcha Crafting Simulation Engine
  * Handles live recipe tweaking, sensory meter updates, cup preview rendering,
- * Add to Cart integration, and Reset Racikan.
+ * Add to Cart integration, and Recipe Reset.
  */
 export class MatchaSimulator {
     constructor(cartManager = null) {
@@ -104,7 +104,7 @@ export class MatchaSimulator {
 
                 // Button visual feedback
                 const originalHTML = this.addCartBtn.innerHTML;
-                this.addCartBtn.innerHTML = `<span>Ditambahkan ke Cart!</span> ✔`;
+                this.addCartBtn.innerHTML = `<span>Added to Cart!</span> ✔`;
                 this.addCartBtn.style.background = '#22c55e';
 
                 const cup = document.querySelector('.sim-cup-glass');
@@ -123,7 +123,7 @@ export class MatchaSimulator {
             });
         }
 
-        // 2. "Reset Racikan" Button
+        // 2. "Reset Recipe" Button
         if (this.resetBtn) {
             this.resetBtn.addEventListener('click', () => {
                 this.resetSimulation();
@@ -236,11 +236,11 @@ export class MatchaSimulator {
         if (this.summaryText) {
             let desc = '';
             if (this.state.baseTea === 'hojicha') {
-                desc = 'Nutty Roasted Hojicha dengan aroma panggang lembut dan sensasi umami menenangkan.';
+                desc = 'Nutty Roasted Hojicha with comforting warm aroma and soothing umami undertones.';
             } else if (this.state.baseTea === 'soda') {
-                desc = 'Sparkling Zen Refreshment bergelembung mikro dengan rasa bersih dan menyegarkan.';
+                desc = 'Sparkling Zen Refreshment with crisp micro-carbonation and a clean, revitalizing finish.';
             } else {
-                desc = `Ceremonial Uji murni (${this.state.grams.toFixed(1)}g) dengan umami tebal dan sentuhan ${this.state.milk} foam.`;
+                desc = `Pure Ceremonial Uji (${this.state.grams.toFixed(1)}g) with deep umami and silky ${this.state.milk} foam.`;
             }
             this.summaryText.textContent = desc;
         }

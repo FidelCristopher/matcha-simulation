@@ -70,7 +70,7 @@ export class CartManager {
         // Add menu cards to cart on click
         document.querySelectorAll('.menu-card').forEach(card => {
             card.style.cursor = 'pointer';
-            card.setAttribute('title', 'Klik untuk menambahkan ke Keranjang');
+            card.setAttribute('title', 'Click to add to Cart');
             card.addEventListener('click', () => {
                 const title = card.querySelector('.menu-card-title')?.textContent.trim() || 'Matcha Drink';
                 const tag = card.querySelector('.menu-card-tag')?.textContent.trim() || 'Curated';
@@ -98,11 +98,11 @@ export class CartManager {
         if (this.checkoutBtn) {
             this.checkoutBtn.addEventListener('click', () => {
                 if (!this.items.length) {
-                    alert('Keranjang Anda masih kosong. Silakan tambahkan menu racikan terlebih dahulu!');
+                    alert('Your cart is currently empty. Please add a matcha blend first!');
                     return;
                 }
                 const total = this.calculateTotal().toFixed(2);
-                alert(`Terima kasih! Pesanan Anda senilai $${total} sedang disiapkan oleh tea master kami.`);
+                alert(`Thank you! Your order of $${total} is now being prepared by our tea masters.`);
                 this.items = [];
                 this.saveCart();
                 this.render();
@@ -205,8 +205,8 @@ export class CartManager {
             this.itemsContainer.innerHTML = `
                 <div class="cart-empty-state">
                     <div class="cart-empty-icon">🍵</div>
-                    <p>Keranjang masih kosong.</p>
-                    <span>Pilih racikan di Simulation Page atau Menu Racikan!</span>
+                    <p>Your cart is currently empty.</p>
+                    <span>Craft a blend in the Simulation Lab or explore our Crafted Menu!</span>
                 </div>
             `;
             return;
@@ -228,7 +228,7 @@ export class CartManager {
                         <button class="cart-qty-btn btn-plus" data-idx="${idx}">+</button>
                     </div>
                     <span class="cart-item-price">$${(item.price * item.qty).toFixed(2)}</span>
-                    <button class="cart-item-remove" data-idx="${idx}" title="Hapus">✕</button>
+                    <button class="cart-item-remove" data-idx="${idx}" title="Remove">✕</button>
                 </div>
             `;
             this.itemsContainer.appendChild(itemElem);
