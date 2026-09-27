@@ -38,15 +38,21 @@ export class AdminOrderMonitor {
     loadOrders() {
         try {
             const saved = localStorage.getItem('matcha_orders');
-            if (saved) {
+            if (saved !== null) {
                 const parsed = JSON.parse(saved);
-                if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+                if (Array.isArray(parsed)) return parsed;
             }
         } catch (e) {
             console.warn('Failed to parse orders:', e);
         }
 
-        // Default seed orders so the monitor looks rich immediately
+        // Only create seed orders if matcha_orders has never been initialized at all
+        const isInitialized = localStorage.getItem('matcha_orders_init');
+        if (isInitialized) {
+            return [];
+        }
+
+        localStorage.setItem('matcha_orders_init', 'true');
         const seedOrders = [
             {
                 id: 'MTC-7241',
@@ -142,9 +148,12 @@ export class AdminOrderMonitor {
         // Cross-tab storage synchronization
         window.addEventListener('storage', (e) => {
             if (!e.key || e.key === 'matcha_orders') {
+                const prevCount = this.orders.length;
                 this.orders = this.loadOrders();
                 this.render();
-                this.playChime();
+                if (this.orders.length > prevCount) {
+                    this.playChime();
+                }
             }
         });
 
@@ -235,7 +244,6 @@ export class AdminOrderMonitor {
         this.orders = this.orders.filter(o => o.id !== orderId);
         this.saveOrders();
         this.render();
-        window.dispatchEvent(new Event('storage'));
     }
 
     updateKPIs() {
