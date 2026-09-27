@@ -11,6 +11,10 @@ Landing page interaktif berbasis WebGL & 3D real-time untuk minuman seremonial *
   - Swipe Kiri $\rightarrow$ Kanan: Masuk ke **Menu Racikan Matcha** (Page 0).
   - Halaman Tengah: **3D Showcase & Layer Pinch Simulation** (Page 1).
   - Swipe Kanan $\rightarrow$ Kiri: Masuk ke **Simulation Page / Matcha Crafting Lab** (Page 2).
+- **Desain Responsif iPad & Tablet Kiosk**:
+  - Dioptimasi untuk iPad Landscape (1024px – 1366px) dan iPad Portrait (768px – 834px).
+  - Mempertahankan viewport penuh 100vh tanpa scroll vertikal yang merusak gesture swipe horizontal antar halaman.
+  - Komposisi 3D, kartu rasa, dan HUD otomatis berskala proporsional dengan target sentuhan jari yang nyaman ($\ge 44\text{px}$).
 - **Dukungan Multi-Bahasa Instan (Bilingual EN / ID Switcher)**: Tombol pengubah bahasa di header (`EN` $\leftrightarrow$ `ID`) dengan default Bahasa Inggris yang dapat beralih ke Bahasa Indonesia secara instan untuk seluruh halaman, modal keranjang, dan metrik simulasi.
 - **Sistem Keranjang Pesanan (Cart Modal Pop-Up)**: Tombol di header menampilkan indikator jumlah pesanan (*badge count*). Saat diklik, modal *frosted glass* terbuka menampilkan ringkasan racikan, pengaturan kuantitas (+/-), total harga estimasi, dan checkout.
 - **Matcha Crafting Simulation Sandbox**: Workbench interaktif untuk meracik formula matcha (pilih base teh, atur gramatur bubuk teh 1g s/d 4.5g, jenis busa susu, serta metrik rasa umami & antioksidan EGCG real-time). Dilengkapi tombol **Add to Cart** untuk memasukkan formula ke keranjang serta tombol **Reset Racikan** untuk mengembalikan formula ke standar awal.

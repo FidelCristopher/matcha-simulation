@@ -405,15 +405,40 @@ body.simulation-active .swipe-hint-pill {
     transform: translateY(-50%) translateX(20px);
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-    .sim-workbench {
-        grid-template-columns: 1fr;
-    }
+/* Responsive for iPad & Tablet Viewports */
+@media (max-width: 1100px) and (min-width: 851px) {
     #simulation-page {
-        padding-top: 6rem;
+        padding: 6.2rem 4% 4rem;
     }
     .sim-title {
-        font-size: 2.8rem;
+        font-size: clamp(2.8rem, 5vw, 4.2rem);
+    }
+    .sim-workbench {
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 1.6rem;
+    }
+    .sim-panel, .sim-analytics {
+        padding: 1.8rem 1.6rem;
+    }
+}
+
+@media (max-width: 850px) {
+    .sim-workbench {
+        grid-template-columns: 1fr;
+        gap: 1.8rem;
+    }
+    #simulation-page {
+        padding: 6rem 4% 4rem;
+    }
+    .sim-title {
+        font-size: 2.6rem;
+    }
+    .sim-pill {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.85rem;
+    }
+    .sim-slider::-webkit-slider-thumb {
+        width: 22px;
+        height: 22px;
     }
 }

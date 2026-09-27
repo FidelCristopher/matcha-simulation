@@ -277,14 +277,31 @@ body.menu-active .swipe-hint-pill {
     transform: translateY(-50%) translateX(-20px);
 }
 
-/* Responsive adjustments */
-@media (max-width: 900px) {
+/* Responsive adjustments for iPad & Tablets */
+@media (max-width: 1024px) {
     #menu-page {
-        padding-top: 6rem;
+        padding: 6.2rem 5% 4rem;
     }
     .menu-title {
-        font-size: 2.8rem;
+        font-size: clamp(2.6rem, 5vw, 4rem);
     }
+    .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.4rem;
+    }
+    .menu-card {
+        padding: 1.6rem 1.4rem;
+    }
+    .menu-card-visual {
+        height: 130px;
+    }
+    .menu-card-icon-placeholder {
+        width: 75px;
+        height: 75px;
+    }
+}
+
+@media (max-width: 600px) {
     .menu-grid {
         grid-template-columns: 1fr;
     }
