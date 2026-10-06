@@ -1,5 +1,5 @@
 /**
- * Admin & Kitchen Order Monitor Engine (Matcha Tcih KDS)
+ * Admin & Kitchen Order Monitor Engine (MatchaTcih KDS)
  * Handles real-time order tracking, status toggling, and live revenue analytics.
  */
 
@@ -498,7 +498,7 @@ export class AdminOrderMonitor {
         doc.setTextColor(255, 255, 255);
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(20);
-        doc.text('MATCHA TCIH', 14, 18);
+        doc.text('MATCHATCIH', 14, 18);
 
         doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
@@ -592,7 +592,7 @@ export class AdminOrderMonitor {
                 doc.setFontSize(8);
                 doc.setTextColor(140);
                 doc.text(str, 196, 290, { align: 'right' });
-                doc.text('Matcha Tcih KDS — Laporan Resmi Penjualan & Dapur', 14, 290);
+                doc.text('MatchaTcih KDS — Laporan Resmi Penjualan & Dapur', 14, 290);
             }
         });
 

@@ -1,5 +1,5 @@
 /**
- * Internationalization (i18n) Engine for Matcha Tcih
+ * Internationalization (i18n) Engine for MatchaTcih
  * Supports instant bilingual toggling: English (Default) <-> Bahasa Indonesia
  */
 

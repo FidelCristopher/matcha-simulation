@@ -1,8 +1,8 @@
 {
-  "name": "matcha-sparkling-showcase",
+  "name": "matchatcih",
   "version": "1.0.0",
   "type": "module",
-  "description": "Artisan Sparkling Matcha 3D Interactive Landing Page",
+  "description": "MatchaTcih — Artisan Sparkling Matcha 3D Interactive Showcase & Crafting Atelier",
   "main": "index.html",
   "scripts": {
     "dev": "npx --yes live-server --port=3000",

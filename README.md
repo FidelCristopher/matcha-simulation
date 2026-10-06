@@ -1,88 +1,120 @@
-# Artisan Sparkling Matcha — 3D Showcase
+# MatchaTcih — Artisan Sparkling Matcha 3D Showcase & Crafting Atelier
 
-Landing page interaktif berbasis WebGL & 3D real-time untuk minuman seremonial **Artisan Sparkling Matcha**, dibuat dengan arsitektur modular yang rapi, performa tinggi, dan mudah di-update.
-
----
-
-## Fitur Utama
-
-- **Real-time 3D Viewport**: Menggunakan Google `<model-viewer>` dengan kemampuan tilt interaktif mengikuti kursor mouse.
-- **Navigasi 3-Halaman Horizontal (iPad & Laptop Cursor Mode)**:
-  - Swipe Kiri $\rightarrow$ Kanan: Masuk ke **Menu Racikan Matcha** (Page 0).
-  - Halaman Tengah: **3D Showcase & Layer Pinch Simulation** (Page 1).
-  - Swipe Kanan $\rightarrow$ Kiri: Masuk ke **Simulation Page / Matcha Crafting Lab** (Page 2).
-- **Desain Responsif iPad & Tablet Kiosk**:
-  - Dioptimasi untuk iPad Landscape (1024px – 1366px) dan iPad Portrait (768px – 834px).
-  - Mempertahankan viewport penuh 100vh tanpa scroll vertikal yang merusak gesture swipe horizontal antar halaman.
-  - Komposisi 3D, kartu rasa, dan HUD otomatis berskala proporsional dengan target sentuhan jari yang nyaman ($\ge 44\text{px}$).
-- **Dukungan Multi-Bahasa Instan (Bilingual EN / ID Switcher)**: Tombol pengubah bahasa di header (`EN` $\leftrightarrow$ `ID`) dengan default Bahasa Inggris yang dapat beralih ke Bahasa Indonesia secara instan untuk seluruh halaman, modal keranjang, dan metrik simulasi.
-- **Kitchen Display System & Admin Monitor (`admin.html`)**: Halaman khusus barista/dapur untuk memantau pesanan yang masuk secara real-time dari kiosk/cart, mengubah status pesanan (`Brewing` $\leftrightarrow$ `Completed`), menghapus tiket pesanan satu per satu (*individual order delete*), **ekspor seluruh laporan pesanan ke format `.xlsx` (Excel) dan `.pdf` (Dokumen Cetak)**, analitik pendapatan (*revenue*), filter pencarian tiket, serta notifikasi audio saat ada checkout baru.
-- **Sistem Keranjang Pesanan (Cart Modal Pop-Up)**: Tombol di header menampilkan indikator jumlah pesanan (*badge count*). Saat diklik, modal *frosted glass* terbuka menampilkan ringkasan racikan, pengaturan kuantitas (+/-), total harga estimasi, dan checkout.
-- **Matcha Crafting Simulation Sandbox**: Workbench interaktif untuk meracik formula matcha (pilih base teh, atur gramatur bubuk teh 1g s/d 4.5g, jenis busa susu, serta metrik rasa umami & antioksidan EGCG real-time). Dilengkapi tombol **Add to Cart** untuk memasukkan formula ke keranjang serta tombol **Reset Racikan** untuk mengembalikan formula ke standar awal.
-- **Aset 3D Otentik (Matcha, Chasen & Daun Matcha)**: Mengintegrasikan kaleng matcha 3-layer simulation, pengocok bambu *chasen*, dan daun teh matcha asli (*Tencha leaves*) yang melayang dalam orbit melingkar harmonis.
-- **Fisika Tolakan (Force-Field Repulsion)**: Elemen botanical melayang bereaksi menjauh ketika didekati kursor pengguna.
-- **Choreographed Flavor Transition**: Perubahan varian rasa memicu putaran kaleng 720° dengan efek motion blur, perubahan warna background dinamis, dan animasi implosi/eksplosi elemen botanical.
-- **Partikel Mikro-Karbonasi**: Gelembung karbonasi naik perlahan tanpa henti dari bagian bawah layar.
-- **Arsitektur Modular & Offline-Ready**: Seluruh file CSS, JS, dan aset 3D tersimpan secara lokal tanpa dependensi CDN pihak ketiga untuk media.
+Landing page interaktif generasi baru berbasis WebGL & 3D real-time untuk minuman seremonial **MatchaTcih**, mengusung estetika *editorial brutalist* modern (terinspirasi dari Golda Coffee) dengan performa tinggi, visual bebas *AI slop*, dan pengalaman pengguna yang imersif.
 
 ---
 
-## Struktur Proyek
+## ✨ Fitur Utama
+
+- **Estetika Editorial Dark & Non-AI Slop**:
+  - Palet warna mewah **Obsidian Dark Canvas** (`#040604` s/d `#0f1911`) dengan aksen **Electric Ceremonial Matcha Lime** (`#a3e635`) dan **Kyoto Bamboo Whisk Gold** (`#eab308`).
+  - Tipografi editorial kelas atas memadukan **Grotesk Ultra-Bold (`Outfit` 900 tight-tracking)** dan **Editorial Italic Serif (`Newsreader`)** untuk highlight artistik (`Craft` *YOUR RITUAL*, *ritual of stillness*).
+  - Tampilan navigasi capsule glass minimalis dengan wordmark **`MatchaTcih.`**
+
+- **Real-time 3D Layer Simulation Stage**:
+  - Kaleng 3D multi-layer dengan Three.js & Google `<model-viewer>`.
+  - Fitur **Pinch / Split Layer** interaktif dengan slider dan tombol HUD neon lime.
+  - Orbit daun Tencha, pengocok bambu *chasen*, dan elemen botanical yang melayang bebas tanpa menutupi tipografi utama.
+
+- **Bento Grid Showcase ("The Matcha Standard")**:
+  - Layout grid bento modern: ekstraksi dingin *First Flush*, terroir *Single Origin Uji*, cellular flow *L-Theanine 8H Focus*.
+  - **Solid Accent Punch Card (`0g ADDED SUGAR / 100% PURE CEREMONIAL`)** dengan kontras visual tinggi.
+  - Testimonial editorial 5 bintang emas (`★★★★★`), kutipan otentik sommelier teh, baris metrik angka raksasa (*80mg L-Theanine*, *0 Calories*, *0% Jitters*, *100% Satisfaction*), serta watermark tipografi raksasa **`MATCHA`** di latar belakang.
+
+- **Matcha Crafting Atelier / Simulation Sandbox**:
+  - Laboratorium formulasi interaktif: pilih base teh (*Uji Ceremonial*, *Roasted Hojicha*, *Mineral Soda*), sesuaikan konsentrasi bubuk teh (1.0g s/d 4.5g), dan tekstur busa (*Oat Milk Cloud*, *Vanilla Foam*, *Coconut Velvet*, *Pure Zero Milk*).
+  - Visual cup preview dengan layer dinamis realistis dan tekstur busa susu oat krem/ivory alami.
+  - Analitik sensori real-time (Umami, Sweetness, EGCG Antioxidants, dan estimasi Kafein).
+  - Terintegrasi langsung dengan tombol **Add to Cart** dan **Reset Recipe**.
+
+- **Navigasi 3-Halaman Horizontal (Kiosk & Desktop Mode)**:
+  - **Menu Halaman Kiri (Page 0)**: Kurasi racikan signature, bento grid, cerita, dan testimonial.
+  - **Beranda Halaman Tengah (Page 1)**: 3D showcase interaktif, flavor carousel, dan simulation HUD.
+  - **Simulasi Halaman Kanan (Page 2)**: Crafting atelier dan sensory sandbox.
+  - Dapat diakses via klik navigasi atas maupun gesture swipe / drag.
+
+- **Sistem Keranjang & Checkout (Cart Pop-Up Modal)**:
+  - Tombol indikator keranjang di header dengan badge jumlah pesanan dinamis.
+  - Modal pop-up bertema obsidian dark glass untuk menambah/mengurangi porsi, menghitung total pesanan, dan checkout instan.
+
+- **Kitchen Display System & Admin Order Monitor (`admin.html`)**:
+  - Dashboard khusus barista/dapur real-time untuk memantau tiket pesanan kiosk.
+  - Manajemen status pesanan (`Brewing` $\leftrightarrow$ `Completed`), penghapusan tiket individual, filter pencarian, dan analitik omset.
+  - Fitur ekspor laporan dapur ke format dokumen **`.pdf`** dan spreadsheet **`.xlsx` (Excel)**.
+
+- **Dukungan Multi-Bahasa Instan (Bilingual EN / ID)**:
+  - Penggantian bahasa langsung di header (`EN` $\leftrightarrow$ `ID`) mencakup seluruh teks navigasi, hero editorial, menu, kartu bento, anotasi layer 3D, hingga modal keranjang.
+
+---
+
+## 📁 Struktur Proyek
 
 ```text
-matcha-showcase/
+MatchaTcih/
 ├── assets/
-│   ├── models/            # File 3D (matcha.glb, leaves.glb, cherry.glb, blueberry.glb)
-│   ├── textures/          # Tekstur surface produk
-│   └── images/            # Partikel gelembung (bubble.png)
+│   ├── models/            # Model 3D (matcha.glb, leaves.glb, cherry.glb, chasen.glb, daun_matcha.glb)
+│   ├── textures/          # Tekstur surface kaleng & material
+│   └── images/            # Partikel mikro-karbonasi (bubble.png)
 ├── css/
-│   ├── variables.css      # Design tokens (warna, gradient, font, spring)
-│   ├── base.css           # Reset dasar dan body layout
-│   ├── components.css     # Komponen UI (navbar, kartu, badge, tombol)
-│   ├── hero.css           # Layout hero & layering Z-index
-│   └── animations.css     # CSS Keyframe animasi
+│   ├── variables.css      # Design tokens (Obsidian Dark, Electric Lime, Bamboo Gold, tipografi)
+│   ├── base.css           # Reset dasar, background radial editorial, text selection
+│   ├── components.css     # Header MatchaTcih, capsule nav, CTA button, HUD slider, layer badges
+│   ├── hero.css           # Layout 3-tier editorial title, komposisi 3D stage
+│   ├── menu.css           # Bento standard grid, punch card 0g, testimonial, metrics row, watermark
+│   ├── simulation.css     # Workbench atelier, custom range slider, cup preview, sensory meters
+│   ├── cart.css           # Modal pop-up keranjang bertema dark luxury
+│   ├── admin.css          # Styling dashboard Kitchen Display System (KDS)
+│   └── animations.css     # Micro-animations, float keyframe, glow transitions
 ├── js/
-│   ├── config.js          # Konfigurasi terpusat & data rasa
-│   ├── bubbles.js         # Generator partikel gelembung
-│   ├── model-controller.js# Controller 3D model-viewer
-│   ├── interactions.js    # Logika fisika kursor & transisi rasa
-│   └── main.js            # Entry point aplikasi
+│   ├── main.js            # Entry point aplikasi
+│   ├── config.js          # Konfigurasi terpusat & data varian rasa
+│   ├── bubbles.js         # Generator partikel mikro-karbonasi
+│   ├── model-controller.js# Controller 3D Three.js & model-viewer
+│   ├── interactions.js    # Fisika kursor mouse & transisi kaleng
+│   ├── page-navigation.js # Slider navigasi 3-halaman horizontal
+│   ├── matcha-simulation.js # Engine simulasi takaran & formula atelier
+│   ├── cart.js            # Engine manajemen keranjang belanja & modal
+│   ├── admin.js           # Engine KDS barista & ekspor PDF/Excel
+│   └── i18n.js            # Engine translasi instan bilingual (EN / ID)
 ├── docs/
-│   ├── ARCHITECTURE.md    # Penjelasan struktur teknis & layer visual
+│   ├── ARCHITECTURE.md    # Penjelasan arsitektur teknis & layer visual
 │   ├── WORKFLOW.md        # Panduan alur kerja update & penambahan fitur
 │   └── ASSET_GUIDELINES.md# Standar spesifikasi aset 3D
-├── index.html             # Halaman utama aplikasi
-└── package.json           # Skrip development & konfigurasi
+├── index.html             # Halaman utama MatchaTcih Showcase & Atelier
+├── admin.html             # Dashboard Kitchen Display System (KDS)
+└── package.json           # Konfigurasi proyek & dependency scripts
 ```
 
 ---
 
-## Cara Menjalankan
+## 🚀 Cara Menjalankan di Local
 
-Masuk ke folder proyek:
+Pastikan Anda berada di direktori project:
 ```bash
+cd C:\Users\Pongo\matcha-showcase
+# atau di WSL:
 cd /mnt/c/Users/Pongo/matcha-showcase
 ```
 
-Jalankan salah satu perintah server berikut:
+Jalankan perintah berikut:
 
-### Opsi 1 (Python):
-```bash
-python3 -m http.server 3000
-```
-
-### Opsi 2 (Node.js / NPX):
+### Opsi 1 (Rekomendasi - Otomatis Buka Browser & Auto-Reload):
 ```bash
 npm run dev
-# atau
-npx serve .
 ```
 
-Buka peramban di: **`http://localhost:3000`**
+### Opsi 2 (Server Statis):
+```bash
+npm run serve
+```
+
+Buka di browser Anda:
+👉 **`http://localhost:3000`**
+
+Untuk mengakses Kitchen Display System (KDS):
+👉 **`http://localhost:3000/admin.html`**
 
 ---
 
-## Dokumentasi Lengkap
-- [Arsitektur Teknis](docs/ARCHITECTURE.md)
-- [Panduan Update & Tambah Rasa](docs/WORKFLOW.md)
-- [Standar Optimasi Aset 3D](docs/ASSET_GUIDELINES.md)
+## 📜 Lisensi
+MIT License © 2026 MatchaTcih. All rights reserved.
