@@ -1,14 +1,16 @@
 /* ==========================================================================
    Hero Layout, Columns & 3D Layering
+   Inspired by Golda Coffee: High-impact editorial type, balanced negative space
    ========================================================================== */
 .hero {
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 4%;
-    padding-top: 5rem;
+    padding: 0 5%;
+    padding-top: 4.5rem;
     position: relative;
+    overflow: hidden;
 }
 
 .hero-content {
@@ -21,39 +23,76 @@
     position: relative;
 }
 
-/* Typography */
+/* Typography (Golda Brutalist-Editorial Fusion) */
 .main-title,
 .side-title {
     font-family: var(--font-heading);
-    font-size: clamp(5rem, 9.5vw, 11rem);
-    line-height: 0.82;
-    font-weight: 400;
+    font-size: clamp(3.2rem, 5.4vw, 5.4rem);
+    line-height: 0.86;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
     white-space: nowrap;
     color: var(--text-primary);
-    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    text-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
 }
 
-.outline {
-    color: var(--text-primary);
+.main-title .outline,
+.side-title .outline {
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-weight: 400;
+    text-transform: capitalize;
+    letter-spacing: -0.01em;
+    color: var(--color-accent);
+    display: inline-block;
+    padding-right: 0.15em;
+    text-shadow: none;
+    -webkit-text-stroke: 0;
+}
+
+.hero-kicker {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: -1rem;
+}
+
+.hero-kicker::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    box-shadow: 0 0 10px var(--color-accent);
 }
 
 /* Left Column */
 .hero-left {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     height: 100%;
-    padding: 5.5rem 0;
-    gap: 2rem;
-    z-index: 100;
-    max-width: 460px;
+    padding: 4rem 0;
+    gap: 1.8rem;
+    z-index: 50;
+    max-width: 440px;
+    pointer-events: auto;
 }
 
 .description {
     color: var(--text-muted);
-    font-size: 1.1rem;
+    font-size: 0.98rem;
     line-height: 1.65;
     max-width: 380px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    letter-spacing: 0.01em;
 }
 
 /* Right Column */
@@ -64,15 +103,16 @@
     align-items: flex-end;
     text-align: right;
     height: 100%;
-    padding: 5.5rem 0;
-    z-index: 100;
-    width: 450px;
+    padding: 5rem 0 3.5rem;
+    z-index: 50;
+    width: 440px;
     pointer-events: none;
 }
 
 .side-title {
     align-self: flex-end;
     text-align: right;
+    margin-bottom: 2rem;
 }
 
 /* Center 3D Model Stage */
@@ -85,24 +125,23 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 10;
     opacity: 1;
-    animation: float 6s ease-in-out infinite;
     pointer-events: none;
-    background: radial-gradient(circle at center, rgba(34, 197, 94, 0.12) 0%, transparent 70%);
+    background: radial-gradient(circle at center 50%, rgba(163, 230, 53, 0.08) 0%, transparent 65%);
 }
 
 .main-product-3d {
-    width: 75vw;
-    height: 75vh;
+    width: 72vw;
+    height: 78vh;
     outline: none;
-    z-index: 50;
+    z-index: 30;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     pointer-events: auto;
-    filter: drop-shadow(0 25px 45px rgba(0, 0, 0, 0.6));
+    filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.8));
     cursor: grab;
 }
 
@@ -117,7 +156,7 @@
     display: block;
 }
 
-/* Floating 3D Elements Containers */
+/* Floating 3D Elements Containers - Balanced & Non-Obstructing */
 .leaves-container {
     position: absolute;
     top: 0;
@@ -125,7 +164,7 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: -1;
+    z-index: 5;
     transition: transform 0.1s ease-out;
 }
 
@@ -136,7 +175,7 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 0;
+    z-index: 8;
     transition: transform 0.1s ease-out;
 }
 
@@ -147,310 +186,152 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 110;
+    z-index: 40;
     transition: transform 0.1s ease-out;
 }
 
-/* Leaf Coordinates */
+/* Leaf Coordinates - Distributed away from center text */
 .leaf {
     position: absolute;
-    width: 70px;
-    height: 70px;
     pointer-events: none;
-    z-index: -1;
-    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.35));
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.5));
 }
 
-.l1 { top: 12%; left: 14%; width: 75px; height: 75px; }
-.l2 { top: 38%; left: 82%; width: 140px; height: 140px; opacity: 0.45; }
-.l3 { top: 72%; left: 74%; width: 85px; height: 85px; }
-.l4 { top: 84%; left: 22%; width: 125px; height: 125px; opacity: 0.35; }
+.l1 { top: 8%; left: 8%; width: 65px; height: 65px; opacity: 0.6; }
+.l2 { top: 22%; left: 88%; width: 110px; height: 110px; opacity: 0.4; }
+.l3 { top: 78%; left: 78%; width: 80px; height: 80px; opacity: 0.55; }
+.l4 { top: 85%; left: 16%; width: 100px; height: 100px; opacity: 0.35; }
 
-/* Chasen (Bamboo Whisk) 3D Elements */
+/* Chasen (Bamboo Whisk) 3D Elements - Positioned tastefully */
 .chasen {
     position: absolute;
-    width: 170px;
-    height: 170px;
     outline: none;
     --progress-bar-color: transparent;
-    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.45));
+    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.5));
     transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
     pointer-events: none;
-    z-index: 108;
 }
 
 .c1 {
-    top: 18%;
-    left: 68%;
-    width: 185px;
-    height: 185px;
+    top: 15%;
+    left: 64%;
+    width: 150px;
+    height: 150px;
+    opacity: 0.85;
 }
 
 .c2 {
-    top: 68%;
-    left: 22%;
-    width: 165px;
-    height: 165px;
+    top: 72%;
+    left: 28%;
+    width: 140px;
+    height: 140px;
+    opacity: 0.75;
 }
 
 .c-bg {
-    top: 24%;
-    left: 36%;
-    width: 125px;
-    height: 125px;
-    opacity: 0.75;
-    z-index: 0;
+    top: 20%;
+    left: 32%;
+    width: 110px;
+    height: 110px;
+    opacity: 0.45;
 }
 
 /* Authentic 3D Daun Matcha Elements */
 .daun-matcha {
     position: absolute;
-    width: 150px;
-    height: 150px;
     outline: none;
     --progress-bar-color: transparent;
-    filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.4));
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.45));
     transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
     pointer-events: none;
-    z-index: 109;
 }
 
 .dm1 {
-    top: 32%;
-    left: 17%;
-    width: 165px;
-    height: 165px;
+    top: 24%;
+    left: 4%;
+    width: 130px;
+    height: 130px;
+    opacity: 0.6;
 }
 
 .dm2 {
-    top: 75%;
-    left: 70%;
-    width: 150px;
-    height: 150px;
+    top: 80%;
+    left: 66%;
+    width: 140px;
+    height: 140px;
+    opacity: 0.7;
 }
 
 .dm3 {
-    top: 14%;
-    left: 48%;
-    width: 135px;
-    height: 135px;
+    top: 8%;
+    left: 45%;
+    width: 110px;
+    height: 110px;
+    opacity: 0.5;
 }
 
 .dm-bg {
-    top: 60%;
-    left: 38%;
-    width: 120px;
-    height: 120px;
-    opacity: 0.7;
-    z-index: 0;
+    top: 65%;
+    left: 35%;
+    width: 100px;
+    height: 100px;
+    opacity: 0.4;
 }
 
-/* Botanical Items Coordinates */
+/* Berry (Cherry / Botanicals) Positioning */
 .berry {
     position: absolute;
-    width: 120px;
-    height: 120px;
     outline: none;
     --progress-bar-color: transparent;
-    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.4));
+    filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.5));
     transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    pointer-events: none;
 }
 
-.b1 { top: 24%; left: 29%; width: 220px; height: 220px; }
-.b2 { top: 62%; left: 42%; width: 105px; height: 105px; }
-.b3 { top: 28%; left: 63%; width: 250px; height: 250px; }
-.b4 { top: 14%; left: 48%; width: 140px; height: 140px; }
-.b5 { top: 76%; left: 19%; width: 125px; height: 125px; }
-.b6 { top: 44%; left: 76%; width: 180px; height: 180px; }
-.b7 { top: 16%; left: 40%; width: 80px; height: 80px; opacity: 0.75; }
-.b8 { top: 52%; left: 56%; width: 70px; height: 70px; opacity: 0.65; }
-.b9 { top: 82%; left: 34%; width: 75px; height: 75px; opacity: 0.75; }
+.b1 { top: 12%; left: 24%; width: 45px; height: 45px; opacity: 0.75; }
+.b2 { top: 28%; left: 74%; width: 65px; height: 65px; opacity: 0.8; }
+.b3 { top: 68%; left: 14%; width: 75px; height: 75px; opacity: 0.85; }
+.b4 { top: 62%; left: 78%; width: 55px; height: 55px; opacity: 0.75; }
+.b5 { top: 76%; left: 44%; width: 85px; height: 85px; opacity: 0.8; }
+.b6 { top: 82%; left: 52%; width: 60px; height: 60px; opacity: 0.7; }
 
-/* ==========================================================================
-   iPad & Tablet Responsive Optimization
-   ========================================================================== */
+.b7 { top: 18%; left: 36%; width: 50px; height: 50px; opacity: 0.4; }
+.b8 { top: 35%; left: 60%; width: 70px; height: 70px; opacity: 0.45; }
+.b9 { top: 58%; left: 38%; width: 55px; height: 55px; opacity: 0.4; }
 
-/* 1. iPad Landscape / Laptops (901px - 1200px) */
-@media (max-width: 1200px) and (min-width: 901px) {
-    .hero {
-        padding: 0 3%;
-        padding-top: 4.5rem;
+/* Responsive */
+@media (max-width: 1024px) {
+    .main-title, .side-title {
+        font-size: clamp(3.2rem, 7vw, 5.5rem);
     }
-
-    .hero-content {
-        padding-top: 2rem;
-    }
-
-    .main-title,
-    .side-title {
-        font-size: clamp(3.2rem, 5.5vw, 5.5rem);
-        line-height: 0.85;
-    }
-
-    .hero-left {
+    .hero-left, .hero-right {
         width: 320px;
-        max-width: 320px;
-        padding: 4.5rem 0 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 5rem 1.5rem 2rem;
+    }
+    .hero-content {
+        flex-direction: column;
+        justify-content: flex-start;
         gap: 1.5rem;
     }
-
-    .description {
-        font-size: 0.95rem;
-        line-height: 1.5;
-        max-width: 300px;
-    }
-
-    .hero-right {
-        width: 310px;
-        padding: 4.5rem 0 2rem;
-    }
-
-    .main-product-3d {
-        width: 65vw;
-        height: 65vh;
-    }
-
-    .card {
-        width: 118px;
-        padding: 0.8rem;
-        padding-top: 4.2rem;
-        border-radius: 22px;
-        gap: 1rem;
-    }
-
-    .card img {
-        width: 95px;
-        margin-top: -6rem;
-    }
-
-    /* Scaled floating botanicals for iPad */
-    .b1 { width: 160px; height: 160px; }
-    .b3 { width: 180px; height: 180px; }
-    .b6 { width: 140px; height: 140px; }
-    .c1 { width: 140px; height: 140px; }
-    .c2 { width: 130px; height: 130px; }
-    .dm1 { width: 130px; height: 130px; }
-    .dm2 { width: 120px; height: 120px; }
-
-    .simulation-hud {
-        bottom: 1.5rem;
-        padding: 0.5rem 1.2rem;
-    }
-}
-
-/* 2. iPad Portrait & Medium Tablets (600px - 900px) */
-@media (max-width: 900px) {
-    .hero {
-        padding: 0 4%;
-        padding-top: 4.8rem;
-    }
-
-    .hero-content {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: stretch;
-        padding-top: 1rem;
-    }
-
-    .main-title,
-    .side-title {
-        font-size: clamp(2.5rem, 5.5vw, 4rem);
-        line-height: 0.85;
-    }
-
     .hero-left {
-        width: 260px;
-        max-width: 260px;
-        padding: 4.5rem 0 2.5rem;
-        gap: 1.2rem;
+        padding: 1rem 0;
+        max-width: 100%;
+        text-align: center;
+        align-items: center;
     }
-
-    .description {
-        font-size: 0.88rem;
-        line-height: 1.45;
-        max-width: 240px;
-    }
-
-    .primary-btn {
-        padding: 0.35rem 0.35rem 0.35rem 1.2rem;
-        font-size: 0.85rem;
-        gap: 1rem;
-    }
-
-    .plus-icon {
-        width: 32px;
-        height: 32px;
-        font-size: 1.2rem;
-    }
-
-    .award-badge {
-        gap: 0.65rem;
-    }
-
-    .award-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 10px;
-    }
-
-    .award-title {
-        font-size: 0.62rem;
-    }
-
-    .award-subtitle {
-        font-size: 0.75rem;
-    }
-
     .hero-right {
-        width: 240px;
-        padding: 4.5rem 0 2.5rem;
+        display: none;
     }
-
-    .main-product-3d {
-        width: 70vw;
-        height: 60vh;
-        top: 48%;
+    .main-title {
+        font-size: 3.5rem;
+        white-space: normal;
     }
-
-    .card {
-        width: 105px;
-        padding: 0.7rem;
-        padding-top: 3.8rem;
-        border-radius: 20px;
-        gap: 0.8rem;
-    }
-
-    .card img {
-        width: 85px;
-        margin-top: -5.5rem;
-    }
-
-    .card-info {
-        font-size: 0.68rem;
-    }
-
-    /* Scaling floating elements on portrait */
-    .b1 { width: 130px; height: 130px; left: 18%; }
-    .b3 { width: 140px; height: 140px; left: 68%; }
-    .b4 { width: 100px; height: 100px; }
-    .b6 { width: 120px; height: 120px; }
-    .c1 { width: 120px; height: 120px; left: 74%; }
-    .c2 { width: 110px; height: 110px; left: 16%; }
-    .dm1 { width: 110px; height: 110px; left: 14%; }
-    .dm2 { width: 105px; height: 105px; left: 72%; }
-
-    .simulation-hud {
-        bottom: 1.2rem;
-        padding: 0.45rem 1rem;
-        gap: 0.8rem;
-    }
-
-    .explode-btn {
-        padding: 0.45rem 0.95rem;
-        font-size: 0.75rem;
-    }
-
-    .explode-slider {
-        width: 80px;
+    .description {
+        text-align: center;
     }
 }

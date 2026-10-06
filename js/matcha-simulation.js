@@ -188,7 +188,7 @@ export class MatchaSimulator {
         let caffeine = Math.round(this.state.grams * 28);
         let liquidColor = '#15803d';
         let foamHeight = '25%';
-        let foamColor = '#fbcfe8';
+        let foamColor = '#f4f4f5';
 
         // Base adjustments
         if (this.state.baseTea === 'hojicha') {
@@ -207,11 +207,11 @@ export class MatchaSimulator {
         } else if (this.state.milk === 'vanilla') {
             foamHeight = '35%';
             sweetness += 35;
-            foamColor = '#fef08a';
+            foamColor = '#fef3c7';
         } else if (this.state.milk === 'oat') {
             foamHeight = '28%';
             sweetness += 18;
-            foamColor = '#fbcfe8';
+            foamColor = '#f4f4f5';
         } else if (this.state.milk === 'coconut') {
             foamHeight = '22%';
             sweetness += 22;

@@ -1,5 +1,6 @@
 /* ==========================================================================
    UI Components: Header, Navigation, Buttons, Cards, Badges & Simulation HUD
+   Inspired by Golda Coffee: Bold Editorial Dark, Precision Micro-details
    ========================================================================== */
 
 /* 1. Header & Glass Nav */
@@ -7,344 +8,361 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2rem 4%;
+    padding: 1.8rem 4.5%;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 100;
+    pointer-events: none;
+}
+
+.header > * {
+    pointer-events: auto;
 }
 
 .logo {
     display: flex;
     align-items: center;
-    gap: 0.65rem;
-    font-weight: 700;
-    font-size: 1.35rem;
+    gap: 0.6rem;
+    font-weight: 900;
+    font-size: 1.45rem;
     font-family: var(--font-heading);
-    letter-spacing: 0.5px;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: #ffffff;
 }
 
 .logo svg {
     color: var(--color-accent);
 }
 
-.nav {
-    display: flex;
-    gap: 0.5rem;
-    padding: 0.4rem;
-    border-radius: 100px;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
+.logo .dot {
+    color: var(--color-accent);
 }
 
-.nav.glass {
-    position: relative;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+.nav {
+    display: flex;
+    gap: 0.35rem;
+    padding: 0.35rem 0.45rem;
+    border-radius: 9999px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .nav-item {
     font-family: var(--font-ui);
     color: var(--text-muted);
-    font-size: 0.85rem;
-    font-weight: 500;
-    padding: 0.5rem 1.25rem;
-    border-radius: 100px;
-    transition: all 0.3s ease;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.55rem 1.35rem;
+    border-radius: 9999px;
+    transition: all 0.25s var(--ease-standard);
 }
 
-.nav-item:hover,
+.nav-item:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.06);
+}
+
 .nav-item.active {
     background: var(--color-accent);
-    color: var(--color-accent-contrast);
-    font-weight: 600;
+    color: #000000;
+    font-weight: 800;
+    box-shadow: 0 2px 12px rgba(163, 230, 53, 0.3);
 }
 
 /* 2. Action Buttons */
 .contact-btn {
-    background: rgba(0, 0, 0, 0.55);
-    color: var(--text-primary);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 0.85rem 2rem;
-    border-radius: 100px;
-    font-weight: 600;
-    font-size: 0.85rem;
+    background: rgba(14, 18, 14, 0.8);
+    color: #ffffff;
+    border: 1px solid var(--border-subtle);
+    padding: 0.75rem 1.6rem;
+    border-radius: 9999px;
+    font-family: var(--font-ui);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
+    transition: all 0.25s var(--ease-standard);
+    backdrop-filter: blur(12px);
 }
 
 .contact-btn:hover {
-    background: rgba(0, 0, 0, 0.8);
-    border-color: rgba(255, 255, 255, 0.35);
+    background: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
     transform: translateY(-2px);
 }
 
+/* Primary CTA Button (Golda High-Impact Style) */
 .primary-btn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 1.5rem;
-    background: rgba(0, 0, 0, 0.55);
-    color: var(--text-primary);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 0.4rem 0.4rem 0.4rem 1.5rem;
-    border-radius: 100px;
-    font-weight: 700;
+    gap: 1.1rem;
+    background: var(--color-accent);
+    color: #000000;
+    border: none;
+    padding: 0.7rem 0.7rem 0.7rem 1.65rem;
+    border-radius: 9999px;
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: 0.88rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     cursor: pointer;
     width: fit-content;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
+    transition: all 0.25s var(--ease-standard);
+    box-shadow: 0 4px 20px rgba(163, 230, 53, 0.25);
 }
 
 .primary-btn:hover {
-    background: rgba(0, 0, 0, 0.8);
-    border-color: rgba(255, 255, 255, 0.35);
-    transform: translateY(-3px);
+    background: var(--color-accent-hover);
+    transform: scale(1.04);
+    box-shadow: 0 8px 30px rgba(163, 230, 53, 0.4);
+}
+
+.primary-btn:active {
+    transform: scale(0.97);
 }
 
 .plus-icon {
-    background: var(--color-accent);
-    color: var(--color-accent-contrast);
-    width: 38px;
-    height: 38px;
+    background: #000000;
+    color: var(--color-accent);
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     font-weight: 900;
     line-height: 1;
-    padding-bottom: 2px;
+    transition: transform 0.25s ease;
+}
+
+.primary-btn:hover .plus-icon {
+    transform: rotate(90deg);
 }
 
 /* 3. Award Badge */
 .award-badge {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    margin-top: auto;
+    gap: 0.9rem;
+    background: rgba(12, 17, 13, 0.85);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 0.85rem 1.25rem;
+    backdrop-filter: blur(16px);
+    width: fit-content;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
 .award-icon {
-    width: 48px;
-    height: 48px;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 14px;
+    background: var(--color-accent-dim);
+    color: var(--color-accent);
+    border-radius: 10px;
+    padding: 0.45rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(10px);
-    color: var(--color-accent);
 }
 
 .award-text {
     display: flex;
     flex-direction: column;
+    gap: 0.15rem;
 }
 
 .award-title {
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    color: var(--text-muted);
-    font-weight: 600;
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #ffffff;
 }
 
 .award-subtitle {
-    font-size: 0.85rem;
-    font-weight: 600;
+    font-family: var(--font-sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    text-transform: uppercase;
 }
 
-/* 4. Flavor Carousel Cards */
+/* 4. Product Flavor Carousel (Right Column) */
 .product-carousel {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
     align-items: flex-end;
+    gap: 0.85rem;
     pointer-events: auto;
 }
 
 .carousel-cards {
     display: flex;
-    gap: 1rem;
+    gap: 0.85rem;
 }
 
 .card {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    padding: 1rem;
-    padding-top: 5rem;
-    border-radius: 28px;
+    background: rgba(14, 19, 14, 0.85);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    padding: 0.65rem;
+    width: 105px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-standard);
+    backdrop-filter: blur(14px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
-    cursor: pointer;
-    transition: all 0.4s var(--ease-spring);
-    width: 135px;
-    position: relative;
-    backdrop-filter: blur(12px);
-    text-align: center;
+    gap: 0.5rem;
 }
 
 .card:hover {
-    background: var(--glass-bg-hover);
-    border-color: rgba(255, 255, 255, 0.4);
-    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-3px);
 }
 
 .card.active {
     border-color: var(--color-accent);
-    border-width: 1px;
-    background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 0 24px rgba(163, 230, 53, 0.22);
+    background: rgba(18, 25, 18, 0.95);
 }
 
 .card img {
-    width: 120px;
-    height: 140px;
-    object-fit: contain;
-    margin-top: -7.5rem;
-    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.5));
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-    display: block;
-    will-change: transform;
-    pointer-events: none;
-}
-
-.card:hover img {
-    transform: translateY(-25px) rotate(-12deg) scale(1.15) !important;
+    width: 100%;
+    height: 72px;
+    object-fit: cover;
+    border-radius: 14px;
 }
 
 .card-info {
     display: flex;
     flex-direction: column;
-    font-size: 0.75rem;
+    align-items: center;
+    gap: 0.15rem;
     width: 100%;
-    gap: 2px;
 }
 
 .card-info span:first-child {
-    font-weight: 600;
-    letter-spacing: 0.3px;
+    font-family: var(--font-heading);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #ffffff;
 }
 
 .card-info span:last-child {
-    color: var(--text-muted);
-    font-weight: 500;
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    color: var(--color-accent);
+    font-weight: 700;
 }
 
 .carousel-nav {
     display: flex;
-    gap: 0.75rem;
+    gap: 0.4rem;
 }
 
 .nav-arrow {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    color: white;
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    cursor: pointer;
+    background: rgba(14, 19, 14, 0.8);
+    border: 1px solid var(--border-subtle);
+    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s;
-    font-size: 0.9rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
 }
 
 .nav-arrow:hover {
-    background: rgba(255, 255, 255, 0.15);
-    transform: scale(1.08);
+    background: var(--color-accent);
+    color: #000000;
+    border-color: var(--color-accent);
 }
 
-/* ==========================================================================
-   5. Matcha Simulation HUD & 3D Layer Annotations
-   ========================================================================== */
+/* 5. Simulation HUD Controls (Bottom Center) */
 .simulation-hud {
     position: fixed;
-    bottom: 2.2rem;
+    bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     align-items: center;
-    gap: 1.2rem;
-    background: rgba(4, 20, 11, 0.65);
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    padding: 0.6rem 1.4rem;
-    border-radius: 100px;
+    gap: 1.25rem;
+    background: rgba(10, 14, 11, 0.88);
+    border: 1px solid var(--border-subtle);
+    padding: 0.55rem 1.4rem;
+    border-radius: 9999px;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-    z-index: 120;
-    transition: all 0.3s ease;
-}
-
-.simulation-hud:hover {
-    border-color: rgba(251, 207, 232, 0.4);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(34, 197, 94, 0.15);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    z-index: 90;
+    pointer-events: auto;
 }
 
 .explode-btn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
-    background: rgba(255, 255, 255, 0.08);
+    gap: 0.55rem;
+    background: rgba(255, 255, 255, 0.06);
     color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    padding: 0.55rem 1.2rem;
-    border-radius: 100px;
-    font-size: 0.82rem;
-    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0.45rem 1rem;
+    border-radius: 9999px;
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     cursor: pointer;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-}
-
-.explode-btn svg {
-    transition: transform 0.3s ease;
+    transition: all 0.25s ease;
 }
 
 .explode-btn:hover {
     background: var(--color-accent);
-    color: var(--color-accent-contrast);
-    border-color: var(--color-accent);
-}
-
-.explode-btn.active {
-    background: var(--color-accent);
-    color: var(--color-accent-contrast);
+    color: #000000;
     border-color: var(--color-accent);
 }
 
 .hud-slider-group {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.65rem;
 }
 
 .hud-label {
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    letter-spacing: 0.08em;
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
+    color: var(--text-muted);
 }
 
 .explode-slider {
     -webkit-appearance: none;
     appearance: none;
-    width: 100px;
+    width: 90px;
     height: 4px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 9999px;
     outline: none;
-    transition: background 0.3s;
+    cursor: pointer;
 }
 
 .explode-slider::-webkit-slider-thumb {
@@ -355,112 +373,109 @@
     border-radius: 50%;
     background: var(--color-accent);
     cursor: pointer;
-    box-shadow: 0 0 10px rgba(251, 207, 232, 0.8);
-    transition: transform 0.2s ease;
+    box-shadow: 0 0 10px rgba(163, 230, 53, 0.6);
+    transition: transform 0.15s ease;
 }
 
 .explode-slider::-webkit-slider-thumb:hover {
     transform: scale(1.3);
 }
 
-/* Floating Layer Callout Annotations */
+/* 6. Floating 3D Layer Annotations */
 .layer-annotation {
     position: absolute;
-    background: rgba(4, 20, 11, 0.75);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-left: 3px solid var(--color-accent);
-    padding: 0.7rem 1.1rem;
-    border-radius: 12px;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    background: rgba(11, 16, 12, 0.9);
+    border: 1px solid var(--border-accent);
+    border-radius: 18px;
+    padding: 1rem 1.25rem;
+    backdrop-filter: blur(20px);
+    max-width: 260px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
     pointer-events: none;
-    z-index: 115;
     opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-    max-width: 230px;
+    transform: scale(0.92);
+    transition: all 0.4s var(--ease-spring);
+    z-index: 60;
 }
 
-.layer-annotation.visible {
+.layer-annotation.active {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1);
 }
 
 .layer-annotation .badge {
-    font-size: 0.65rem;
-    font-weight: 700;
-    color: var(--color-accent);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
     display: inline-block;
-    margin-bottom: 2px;
+    background: var(--color-accent-dim);
+    color: var(--color-accent);
+    font-family: var(--font-ui);
+    font-size: 0.62rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 9999px;
+    margin-bottom: 0.45rem;
 }
 
 .layer-annotation h4 {
-    font-size: 0.88rem;
-    font-weight: 700;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 800;
     color: #ffffff;
-    margin-bottom: 2px;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
 }
 
 .layer-annotation p {
-    font-size: 0.72rem;
-    line-height: 1.35;
+    font-size: 0.78rem;
     color: var(--text-muted);
+    line-height: 1.45;
 }
 
-/* Callout Coordinates */
-.annotation-topping {
-    top: 22%;
-    left: 54%;
+.annotation-topping { top: 22%; left: 32%; }
+.annotation-isi { top: 48%; right: 30%; }
+.annotation-base { bottom: 25%; left: 33%; }
+
+/* 7. Swipe Hint Pills */
+.swipe-hint-pill,
+.swipe-hint-pill-right {
+    position: fixed;
+    bottom: 2.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(12, 16, 13, 0.75);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    padding: 0.45rem 0.95rem;
+    border-radius: 9999px;
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+    z-index: 80;
+    transition: all 0.25s ease;
+    opacity: 0.5;
 }
 
-.annotation-isi {
-    top: 48%;
-    right: 54%;
-    text-align: right;
-    border-left: 1px solid rgba(255, 255, 255, 0.2);
-    border-right: 3px solid #76b885;
+.swipe-hint-pill:hover,
+.swipe-hint-pill-right:hover {
+    opacity: 1;
+    color: #ffffff;
+    border-color: var(--color-accent);
+    background: rgba(16, 22, 17, 0.9);
 }
 
-.annotation-base {
-    top: 72%;
-    left: 54%;
-}
+.swipe-hint-pill { left: 4%; }
+.swipe-hint-pill-right { right: 4%; }
 
-@media (max-width: 1024px) {
-    .header {
-        padding: 1.2rem 3%;
-    }
-
-    .logo {
-        font-size: 1.15rem;
-    }
-
-    .nav {
-        padding: 0.3rem;
-        gap: 0.3rem;
-    }
-
-    .nav-item {
-        font-size: 0.8rem;
-        padding: 0.45rem 0.95rem;
-    }
-
-    .cart-btn {
-        padding: 0.65rem 1.2rem;
-        font-size: 0.8rem;
-    }
-
-    .lang-btn {
-        padding: 0.65rem 0.95rem;
-        font-size: 0.78rem;
-    }
-}
-
-@media (max-width: 900px) {
-    .layer-annotation {
-        display: none; /* Hide dense annotations on small mobile viewports */
+/* Hide Swipe hints on desktop since header nav is always visible & primary */
+@media (min-width: 1024px) {
+    .swipe-hint-pill,
+    .swipe-hint-pill-right {
+        display: none !important;
     }
 }

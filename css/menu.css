@@ -1,8 +1,9 @@
 /* ==========================================================================
-   Menu Page Styles & Horizontal Page Slider (iPad Kiosk & Responsive)
+   Menu Page Styles & Editorial Bento Showcase
+   Inspired by Golda Coffee: Modern Brutalist Grid, High-Contrast Cards & Quotes
    ========================================================================== */
 
-/* 1. Horizontal App Viewport & Page Slider */
+/* 1. App Viewport & Page Slider */
 #app-viewport {
     width: 100vw;
     height: 100vh;
@@ -19,11 +20,10 @@
     position: absolute;
     top: 0;
     left: 0;
-    transition: transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
     will-change: transform;
 }
 
-/* Page Containers */
 .page {
     width: 100vw;
     height: 100vh;
@@ -36,273 +36,447 @@
 #menu-page {
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 7rem 6% 4rem;
+    padding: 6.5rem 6% 6rem;
     -webkit-overflow-scrolling: touch;
+    background: radial-gradient(circle at 50% 10%, #0c150e 0%, #060906 70%);
 }
 
-/* Custom Scrollbar for Menu Page */
 #menu-page::-webkit-scrollbar {
     width: 6px;
 }
-
 #menu-page::-webkit-scrollbar-track {
     background: transparent;
 }
-
 #menu-page::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 9999px;
+}
+
+.menu-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
 }
 
 /* Menu Header Section */
 .menu-header {
-    max-width: 800px;
-    margin-bottom: 3.5rem;
+    max-width: 860px;
 }
 
 .menu-badge {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(163, 230, 53, 0.1);
+    border: 1px solid rgba(163, 230, 53, 0.25);
     padding: 0.4rem 1.1rem;
-    border-radius: 100px;
+    border-radius: 9999px;
+    font-family: var(--font-heading);
     font-size: 0.72rem;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--color-accent);
-    letter-spacing: 0.12em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    margin-bottom: 1rem;
-    backdrop-filter: blur(10px);
+    margin-bottom: 1.25rem;
 }
 
 .menu-title {
     font-family: var(--font-heading);
-    font-size: clamp(3rem, 6vw, 5.5rem);
-    line-height: 1;
-    font-weight: 400;
+    font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+    line-height: 0.95;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
     color: #ffffff;
-    margin-bottom: 1rem;
-    text-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    margin-bottom: 1.25rem;
 }
 
 .menu-subtitle {
     color: var(--text-muted);
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     line-height: 1.6;
-    max-width: 580px;
+    max-width: 650px;
 }
 
-/* Back Navigation Button */
-.back-to-showcase-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    background: rgba(0, 0, 0, 0.5);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 0.65rem 1.4rem;
-    border-radius: 100px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(12px);
-    margin-bottom: 2.5rem;
+/* Editorial Story Section (Golda Style) */
+.story-section {
+    padding: 3.5rem 0;
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
 }
 
-.back-to-showcase-btn:hover {
-    background: rgba(0, 0, 0, 0.75);
-    border-color: var(--color-accent);
+.story-kicker {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
     color: var(--color-accent);
-    transform: translateX(-4px);
+    margin-bottom: 1.5rem;
 }
 
-/* Menu Grid */
-.menu-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
-    width: 100%;
-    max-width: 1280px;
+.story-headline {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 3.8vw, 3.8rem);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    max-width: 950px;
+    margin-bottom: 1.8rem;
 }
 
-/* Menu Card */
-.menu-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 24px;
-    padding: 2rem 1.8rem;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-    transition: all 0.4s var(--ease-spring);
+.story-headline em {
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-accent);
+}
+
+.story-paragraph {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 820px;
+}
+
+/* Bento Standard Grid (Like Golda's "THE GOLD STANDARD") */
+.bento-section {
     display: flex;
     flex-direction: column;
+    gap: 2rem;
+}
+
+.section-headline {
+    font-family: var(--font-heading);
+    font-size: clamp(2.2rem, 4.5vw, 4rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.section-headline span {
+    color: var(--color-accent);
+}
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+}
+
+.bento-card {
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 28px;
+    padding: 2.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s var(--ease-standard);
+    backdrop-filter: blur(16px);
     position: relative;
     overflow: hidden;
 }
 
+.bento-card:hover {
+    border-color: var(--border-medium);
+    transform: translateY(-3px);
+}
+
+.bento-card-1 {
+    grid-column: span 7;
+    min-height: 260px;
+}
+
+.bento-card-2 {
+    grid-column: span 5;
+    min-height: 260px;
+}
+
+.bento-card-3 {
+    grid-column: span 5;
+    min-height: 260px;
+}
+
+.bento-card-4 {
+    grid-column: span 7;
+    min-height: 260px;
+}
+
+/* The Solid Accent Punch Card (Golda's 0g Added Sugar style) */
+.bento-punch {
+    background: var(--color-accent) !important;
+    color: #000000 !important;
+    border: none !important;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 10px 35px rgba(163, 230, 53, 0.25);
+}
+
+.punch-number {
+    font-family: var(--font-heading);
+    font-size: clamp(4.5rem, 7vw, 6.5rem);
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+    color: #000000;
+    margin-bottom: 0.4rem;
+}
+
+.punch-label {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.85);
+    margin-bottom: 0.4rem;
+}
+
+.punch-sub {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.bento-title {
+    font-family: var(--font-heading);
+    font-size: 1.55rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin-bottom: 0.65rem;
+}
+
+.bento-desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.bento-tag {
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.8rem;
+}
+
+/* 4 Curated Drinks Cards */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+.menu-card {
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 24px;
+    padding: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s var(--ease-standard);
+    backdrop-filter: blur(14px);
+    cursor: pointer;
+}
+
 .menu-card:hover {
-    background: rgba(255, 255, 255, 0.09);
-    border-color: rgba(251, 207, 232, 0.4);
-    transform: translateY(-6px);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(34, 197, 94, 0.12);
+    border-color: var(--color-accent);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(163, 230, 53, 0.15);
 }
 
 .menu-card-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1.4rem;
+    align-items: center;
+    margin-bottom: 1.25rem;
 }
 
 .menu-card-tag {
-    font-size: 0.68rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
     font-weight: 700;
-    color: var(--color-accent);
-    letter-spacing: 0.1em;
     text-transform: uppercase;
-    background: rgba(251, 207, 232, 0.12);
+    letter-spacing: 0.08em;
     padding: 0.3rem 0.75rem;
-    border-radius: 100px;
-    border: 1px solid rgba(251, 207, 232, 0.2);
+    border-radius: 9999px;
 }
 
 .menu-card-price {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: #ffffff;
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: 1.25rem;
+    color: var(--color-accent);
+    letter-spacing: -0.02em;
 }
 
 .menu-card-visual {
-    height: 160px;
+    height: 130px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1.5rem;
-    position: relative;
+    margin-bottom: 1.25rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 18px;
+    border: 1px dashed rgba(255, 255, 255, 0.08);
 }
 
-.menu-card-icon-placeholder {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, rgba(34, 197, 94, 0.25), rgba(4, 20, 11, 0.6));
-    border: 1px dashed rgba(255, 255, 255, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.menu-card-icon-placeholder svg {
     color: var(--color-accent);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-    transition: transform 0.4s ease;
+    transition: transform 0.3s ease;
 }
 
-.menu-card:hover .menu-card-icon-placeholder {
-    transform: scale(1.1) rotate(8deg);
+.menu-card:hover .menu-card-icon-placeholder svg {
+    transform: scale(1.15) rotate(5deg);
 }
 
 .menu-card-title {
+    font-family: var(--font-heading);
     font-size: 1.25rem;
-    font-weight: 700;
+    font-weight: 800;
     color: #ffffff;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
 }
 
 .menu-card-desc {
-    color: var(--text-muted);
     font-size: 0.85rem;
+    color: var(--text-muted);
     line-height: 1.55;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
     flex-grow: 1;
 }
 
 .menu-card-meta {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.5);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding-top: 1rem;
+    color: var(--text-dim);
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 0.85rem;
+    display: flex;
+    justify-content: space-between;
 }
 
-/* 3. iPad Swipe Gesture Hints */
-.swipe-hint-pill {
-    position: fixed;
-    top: 50%;
-    left: 1.2rem;
-    transform: translateY(-50%);
-    background: rgba(4, 20, 11, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    padding: 0.55rem 1rem;
-    border-radius: 100px;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+/* Editorial Testimonial Quote Section */
+.testimonial-section {
+    padding: 4rem 1.5rem;
+    text-align: center;
+    position: relative;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.6rem;
+    gap: 1.5rem;
+    background: radial-gradient(circle at center, rgba(163, 230, 53, 0.04) 0%, transparent 70%);
+}
+
+.testimonial-stars {
+    color: var(--color-gold);
+    font-size: 1.4rem;
+    letter-spacing: 0.4rem;
+}
+
+.testimonial-quote {
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 3.5vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    max-width: 900px;
+}
+
+.testimonial-quote em {
+    font-family: var(--font-editorial);
+    font-style: italic;
     color: var(--color-accent);
-    font-size: 0.75rem;
-    font-weight: 700;
-    cursor: pointer;
-    z-index: 90;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
-    transition: all 0.3s ease;
-    animation: gentlePulse 3s infinite ease-in-out;
 }
 
-.swipe-hint-pill:hover {
-    background: rgba(251, 207, 232, 0.15);
-    border-color: var(--color-accent);
-    transform: translateY(-50%) scale(1.05);
+.testimonial-author {
+    font-family: var(--font-heading);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
 }
 
-@keyframes gentlePulse {
-    0%, 100% {
-        transform: translateY(-50%) translateX(0);
-        opacity: 0.85;
-    }
-    50% {
-        transform: translateY(-50%) translateX(6px);
-        opacity: 1;
-    }
+/* High-Impact Stat Metrics Row (Golda Style) */
+.metrics-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    padding: 3rem 0;
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    text-align: center;
 }
 
-/* Hide swipe pill on Menu Page */
-body.menu-active .swipe-hint-pill {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-50%) translateX(-20px);
+.metric-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
 }
 
-/* Responsive adjustments for iPad & Tablets */
-@media (max-width: 1024px) {
-    #menu-page {
-        padding: 6.2rem 5% 4rem;
+.metric-number {
+    font-family: var(--font-heading);
+    font-size: clamp(2.8rem, 5vw, 4.8rem);
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    color: #ffffff;
+}
+
+.metric-label {
+    font-family: var(--font-heading);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+}
+
+/* Giant Watermark Brand Text */
+.menu-watermark-wrap {
+    overflow: hidden;
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.menu-watermark {
+    font-family: var(--font-heading);
+    font-size: clamp(8rem, 18vw, 16rem);
+    font-weight: 900;
+    letter-spacing: -0.06em;
+    line-height: 0.8;
+    color: rgba(255, 255, 255, 0.03);
+    text-transform: uppercase;
+    user-select: none;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .bento-card-1, .bento-card-2, .bento-card-3, .bento-card-4 {
+        grid-column: span 12;
     }
-    .menu-title {
-        font-size: clamp(2.6rem, 5vw, 4rem);
-    }
-    .menu-grid {
+    .metrics-row {
         grid-template-columns: repeat(2, 1fr);
-        gap: 1.4rem;
-    }
-    .menu-card {
-        padding: 1.6rem 1.4rem;
-    }
-    .menu-card-visual {
-        height: 130px;
-    }
-    .menu-card-icon-placeholder {
-        width: 75px;
-        height: 75px;
-    }
-}
-
-@media (max-width: 600px) {
-    .menu-grid {
-        grid-template-columns: 1fr;
+        gap: 2.5rem;
     }
 }

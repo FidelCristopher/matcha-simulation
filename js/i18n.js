@@ -15,9 +15,9 @@ export const TRANSLATIONS = {
 
         // Menu Page
         menu_back: "Back to 3D Showcase (Swipe ←)",
-        menu_badge: "Curated Collection • First-Harvest Uji",
-        menu_title: "Matcha Tchi's Menu",
-        menu_subtitle: "Discover handcrafted matcha profiles ready to enjoy, or use them as inspiration to simulate and build your own creation.",
+        menu_badge: "Koleksi Kurasi • Panen Pertama Uji",
+        menu_title: "The Matcha Standard.",
+        menu_subtitle: "Handcrafted ceremonial profiles, slow-steeped and micro-carbonated for pure calm and lasting focus.",
         c1_tag: "Signature Cold",
         c1_desc: "Cold-brewed pure Uji matcha layered with silky vanilla cloud foam and rich ceremonial matcha dust.",
         c2_tag: "Citrus Botanical",
@@ -28,10 +28,11 @@ export const TRANSLATIONS = {
         c4_desc: "Dual-layer nutty roasted Hojicha and deep green ceremonial matcha blended with oat milk.",
 
         // Landing Page
-        hero_title_1: "Create",
+        hero_title_1: "Craft",
         hero_title_2: "Your",
-        hero_side_1: "Own",
-        hero_side_2: "Matcha",
+        hero_title_3: "Ritual",
+        hero_side_1: "Pure",
+        hero_side_2: "Zen",
         hero_desc: "Craft your perfect state of calm. <br> Layer premium first-harvest matcha with your favorite toppings. Rotate and explode each layer to engineer your personal ritual.",
         hero_cta: "Order Ceremonial",
         hero_award_title: "GLOBAL TEA AWARDS",
@@ -104,11 +105,12 @@ export const TRANSLATIONS = {
         c4_tag: "Paduan Panggang",
         c4_desc: "Lapisan ganda teh panggang Hojicha beraroma nutty dan matcha hijau pekat dengan susu gandum.",
 
-        // Landing Page
-        hero_title_1: "Kreasikan",
-        hero_title_2: "Sendiri",
-        hero_side_1: "Matcha",
-        hero_side_2: "Impianmu",
+        // Landing Page (ID)
+        hero_title_1: "Racik",
+        hero_title_2: "Seni",
+        hero_title_3: "Ritualmu",
+        hero_side_1: "Murni",
+        hero_side_2: "Zen",
         hero_desc: "Ciptakan momen ketenangan sempurnamu. <br> Susun matcha seremonial pilihan dengan topping favoritmu. Putar dan belah setiap layernya untuk merancang ritual personalmu.",
         hero_cta: "Pesan Seremonial",
         hero_award_title: "PENGHARGAAN TEH GLOBAL",

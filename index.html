@@ -9,7 +9,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;500;600&family=Manrope:wght@400;500;700&family=Galada&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500;1,6..72,600&display=swap" rel="stylesheet">
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/variables.css">
@@ -33,11 +33,11 @@
     <!-- Header & Glass Navigation -->
     <header class="header">
         <div class="logo">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
                 <path d="M12 7V17M7 12C7 9.5 9.5 7 12 7C14.5 7 17 9.5 17 12C17 14.5 14.5 17 12 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
             </svg>
-            <span>Matcha Tcih</span>
+            <span>MATCHA<span class="dot">.</span></span>
         </div>
         <nav class="nav glass">
             <a href="#menu" class="nav-item" data-target="#menu" data-i18n="nav_menu">Menu</a>
@@ -98,93 +98,178 @@
                 <div class="menu-container">
                     <header class="menu-header">
                         <span class="menu-badge" data-i18n="menu_badge">Curated Collection • First-Harvest Uji</span>
-                        <h1 class="menu-title">Matcha Tchi's Menu</h1>
+                        <h1 class="menu-title">The Matcha Standard.</h1>
                         <p class="menu-subtitle" data-i18n="menu_subtitle">
-                            Discover handcrafted matcha profiles ready to enjoy, or use them as inspiration to simulate and build your own creation.
+                            Handcrafted ceremonial profiles, slow-steeped and micro-carbonated for pure calm and lasting focus.
                         </p>
                     </header>
 
-                    <div class="menu-grid">
-                        <!-- Card 1 -->
-                        <article class="menu-card">
-                            <div class="menu-card-header">
-                                <span class="menu-card-tag" data-i18n="c1_tag">Signature Cold</span>
-                                <span class="menu-card-price">$4.80</span>
-                            </div>
-                            <div class="menu-card-visual">
-                                <div class="menu-card-icon-placeholder">
-                                    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/>
-                                    </svg>
-                                </div>
-                            </div>
-                            <h3 class="menu-card-title">Ceremonial Cold Foam</h3>
-                            <p class="menu-card-desc" data-i18n="c1_desc">Cold-brewed pure Uji matcha layered with silky vanilla cloud foam and rich ceremonial matcha dust.</p>
-                            <div class="menu-card-meta">
-                                <span>Zero Sugar</span> • <span>Umami Level 5/5</span>
-                            </div>
-                        </article>
+                    <!-- Editorial Story Section (Golda Style) -->
+                    <div class="story-section">
+                        <p class="story-kicker">OUR RITUAL • UJI, KYOTO</p>
+                        <h3 class="story-headline">We believe matcha is more than fuel. It is a <em>ritual of stillness</em>.</h3>
+                        <p class="story-paragraph">Every single batch is harvested in first-flush spring shade in Uji, Kyoto. Slow stone-ground to 5 microns to preserve rich L-theanine, deep umami, and velvety creaminess without a single grain of added sugar.</p>
+                    </div>
 
-                        <!-- Card 2 -->
-                        <article class="menu-card">
-                            <div class="menu-card-header">
-                                <span class="menu-card-tag" data-i18n="c2_tag">Citrus Botanical</span>
-                                <span class="menu-card-price">$5.20</span>
-                            </div>
-                            <div class="menu-card-visual">
-                                <div class="menu-card-icon-placeholder">
-                                    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <path d="M12 2a14.5 14.5 0 0 0 0 20M2 12h20"/>
-                                    </svg>
+                    <!-- Bento Feature Grid (The Matcha Standard) -->
+                    <div class="bento-section">
+                        <h2 class="section-headline">THE <span>MATCHA</span> STANDARD</h2>
+                        <div class="bento-grid">
+                            <!-- Card 1 -->
+                            <div class="bento-card bento-card-1">
+                                <span class="bento-tag">EXTRACTION METHOD</span>
+                                <div>
+                                    <h3 class="bento-title">Cold-Steeped First Flush</h3>
+                                    <p class="bento-desc">Slow-steeped in mountain spring water to extract deep, sweet chlorophyll notes without any grassy bitterness.</p>
                                 </div>
                             </div>
-                            <h3 class="menu-card-title">Matcha Yuzu Sparkle</h3>
-                            <p class="menu-card-desc" data-i18n="c2_desc">Crisp Japanese mountain Yuzu citrus combined with micro-carbonation and ceremonial matcha.</p>
-                            <div class="menu-card-meta">
-                                <span>Crisp & Tangy</span> • <span>Vitamin C Rich</span>
-                            </div>
-                        </article>
 
-                        <!-- Card 3 -->
-                        <article class="menu-card">
-                            <div class="menu-card-header">
-                                <span class="menu-card-tag" data-i18n="c3_tag">Floral Fusion</span>
-                                <span class="menu-card-price">$5.50</span>
-                            </div>
-                            <div class="menu-card-visual">
-                                <div class="menu-card-icon-placeholder">
-                                    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="M12 2c2 4 6 5 6 9a6 6 0 1 1-12 0c0-4 4-5 6-9z"/>
-                                    </svg>
+                            <!-- Card 2 -->
+                            <div class="bento-card bento-card-2">
+                                <span class="bento-tag">TERROIR</span>
+                                <div>
+                                    <h3 class="bento-title">Single Origin Uji</h3>
+                                    <p class="bento-desc">Shade-grown for 28 days in the mist-veiled valleys of Kyoto, Japan.</p>
                                 </div>
                             </div>
-                            <h3 class="menu-card-title">Sakura Cloud Latte</h3>
-                            <p class="menu-card-desc" data-i18n="c3_desc">Kyoto Sakura blossom infusion paired with silky oat milk and ceremonial grade matcha.</p>
-                            <div class="menu-card-meta">
-                                <span>Spring Edition</span> • <span>Floral Aroma</span>
-                            </div>
-                        </article>
 
-                        <!-- Card 4 -->
-                        <article class="menu-card">
-                            <div class="menu-card-header">
-                                <span class="menu-card-tag" data-i18n="c4_tag">Roasted Blend</span>
-                                <span class="menu-card-price">$4.90</span>
+                            <!-- Card 3: Solid Punch Card (Golda Style) -->
+                            <div class="bento-card bento-card-3 bento-punch">
+                                <h3 class="punch-number">0g</h3>
+                                <p class="punch-label">ADDED SUGAR</p>
+                                <span class="punch-sub">100% PURE CEREMONIAL GRADE</span>
                             </div>
-                            <div class="menu-card-visual">
-                                <div class="menu-card-icon-placeholder">
-                                    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
-                                    </svg>
+
+                            <!-- Card 4 -->
+                            <div class="bento-card bento-card-4">
+                                <span class="bento-tag">CELLULAR FLOW</span>
+                                <div>
+                                    <h3 class="bento-title">8H Sustained Zen Focus</h3>
+                                    <p class="bento-desc">80mg L-Theanine paired with micro-carbonation for calm, jitter-free alpha brainwave focus.</p>
                                 </div>
                             </div>
-                            <h3 class="menu-card-title">Hojicha & Matcha Duo</h3>
-                            <p class="menu-card-desc" data-i18n="c4_desc">Dual-layer nutty roasted Hojicha and deep green ceremonial matcha blended with oat milk.</p>
-                            <div class="menu-card-meta">
-                                <span>Low Caffeine</span> • <span>Warm Notes</span>
-                            </div>
-                        </article>
+                        </div>
+                    </div>
+
+                    <!-- Curated Drink Concoctions -->
+                    <div class="bento-section">
+                        <h2 class="section-headline" style="text-align: left; font-size: 2.2rem; margin-bottom: 0.5rem;">SIGNATURE <span>CONCOCTIONS</span></h2>
+                        <div class="menu-grid">
+                            <!-- Card 1 -->
+                            <article class="menu-card">
+                                <div class="menu-card-header">
+                                    <span class="menu-card-tag" data-i18n="c1_tag">Signature Cold</span>
+                                    <span class="menu-card-price">$4.80</span>
+                                </div>
+                                <div class="menu-card-visual">
+                                    <div class="menu-card-icon-placeholder">
+                                        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                            <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <h3 class="menu-card-title">Ceremonial Cold Foam</h3>
+                                <p class="menu-card-desc" data-i18n="c1_desc">Cold-brewed pure Uji matcha layered with silky vanilla cloud foam and rich ceremonial matcha dust.</p>
+                                <div class="menu-card-meta">
+                                    <span>Zero Sugar</span> • <span>Umami Level 5/5</span>
+                                </div>
+                            </article>
+
+                            <!-- Card 2 -->
+                            <article class="menu-card">
+                                <div class="menu-card-header">
+                                    <span class="menu-card-tag" data-i18n="c2_tag">Citrus Botanical</span>
+                                    <span class="menu-card-price">$5.20</span>
+                                </div>
+                                <div class="menu-card-visual">
+                                    <div class="menu-card-icon-placeholder">
+                                        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                            <circle cx="12" cy="12" r="10"/>
+                                            <path d="M12 2a14.5 14.5 0 0 0 0 20M2 12h20"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <h3 class="menu-card-title">Matcha Yuzu Sparkle</h3>
+                                <p class="menu-card-desc" data-i18n="c2_desc">Crisp Japanese mountain Yuzu citrus combined with micro-carbonation and ceremonial matcha.</p>
+                                <div class="menu-card-meta">
+                                    <span>Crisp & Tangy</span> • <span>Vitamin C Rich</span>
+                                </div>
+                            </article>
+
+                            <!-- Card 3 -->
+                            <article class="menu-card">
+                                <div class="menu-card-header">
+                                    <span class="menu-card-tag" data-i18n="c3_tag">Floral Fusion</span>
+                                    <span class="menu-card-price">$5.50</span>
+                                </div>
+                                <div class="menu-card-visual">
+                                    <div class="menu-card-icon-placeholder">
+                                        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                            <path d="M12 2c2 4 6 5 6 9a6 6 0 1 1-12 0c0-4 4-5 6-9z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <h3 class="menu-card-title">Sakura Cloud Latte</h3>
+                                <p class="menu-card-desc" data-i18n="c3_desc">Kyoto Sakura blossom infusion paired with silky oat milk and ceremonial grade matcha.</p>
+                                <div class="menu-card-meta">
+                                    <span>Spring Edition</span> • <span>Floral Aroma</span>
+                                </div>
+                            </article>
+
+                            <!-- Card 4 -->
+                            <article class="menu-card">
+                                <div class="menu-card-header">
+                                    <span class="menu-card-tag" data-i18n="c4_tag">Roasted Blend</span>
+                                    <span class="menu-card-price">$4.90</span>
+                                </div>
+                                <div class="menu-card-visual">
+                                    <div class="menu-card-icon-placeholder">
+                                        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                            <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <h3 class="menu-card-title">Hojicha & Matcha Duo</h3>
+                                <p class="menu-card-desc" data-i18n="c4_desc">Dual-layer nutty roasted Hojicha and deep green ceremonial matcha blended with oat milk.</p>
+                                <div class="menu-card-meta">
+                                    <span>Low Caffeine</span> • <span>Warm Notes</span>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+
+                    <!-- Editorial Testimonial (Golda Quote Style) -->
+                    <div class="testimonial-section">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <h2 class="testimonial-quote">
+                            “Satu teguk dingin di sore hari, dan rasa lelah seharian langsung sirna. <em>Pure zen focus.</em>”
+                        </h2>
+                        <p class="testimonial-author">— KENJI, TEA MASTER & SOMMELIER</p>
+                    </div>
+
+                    <!-- High-Impact Stat Metrics Row -->
+                    <div class="metrics-row">
+                        <div class="metric-item">
+                            <span class="metric-number">80mg</span>
+                            <span class="metric-label">L-THEANINE</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-number">0</span>
+                            <span class="metric-label">CALORIES</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-number">0%</span>
+                            <span class="metric-label">JITTERS</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-number">100%</span>
+                            <span class="metric-label">SATISFACTION</span>
+                        </div>
+                    </div>
+
+                    <!-- Giant Background Watermark -->
+                    <div class="menu-watermark-wrap">
+                        <div class="menu-watermark">MATCHA</div>
                     </div>
                 </div>
             </section>
@@ -202,25 +287,26 @@
                             <model-viewer class="leaf l4" src="assets/models/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="10deg 45deg 105%"></model-viewer>
                         </div>
 
-                        <!-- 3b. Left Column: Branding, Typography & CTA -->
+                        <!-- 3b. Left Column: Branding, Typography & CTA (Golda Editorial Style) -->
                         <div class="hero-left">
+                            <div class="hero-kicker">FIRST HARVEST UJI • KYOTO</div>
                             <h1 class="main-title">
-                                <span class="outline" data-i18n="hero_title_1">Create</span><br>
-                                <span data-i18n="hero_title_2">Your</span>
+                                <span class="outline" data-i18n="hero_title_1">Craft</span><br>
+                                <span class="title-bold" data-i18n="hero_title_2">Your</span><br>
+                                <span class="title-bold" data-i18n="hero_title_3">Ritual</span>
                             </h1>
                             <p class="description" data-i18n="hero_desc">
-                                Craft your perfect state of calm. <br>
-                                Layer premium first-harvest matcha with your favorite toppings. Rotate and explode each layer to engineer your personal ritual.
+                                Pure ceremonial Tencha from Kyoto, stone-ground to 5 microns. Layer botanical notes, explode the structure, and experience sustained zen focus.
                             </p>
                             <div class="cta-group">
                                 <button class="primary-btn">
                                     <span data-i18n="hero_cta">Order Ceremonial</span>
-                                    <span class="plus-icon">+</span>
+                                    <span class="plus-icon">→</span>
                                 </button>
                             </div>
                             <div class="award-badge">
                                 <div class="award-icon">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M12 15L15 18L19 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                         <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
@@ -305,8 +391,8 @@
                                 </div>
                             </div>
                             <h2 class="side-title">
-                                <span class="outline" data-i18n="hero_side_1">Own</span><br>
-                                <span data-i18n="hero_side_2">Matcha</span>
+                                <span class="outline" data-i18n="hero_side_1">Pure</span><br>
+                                <span data-i18n="hero_side_2">Zen</span>
                             </h2>
                         </div>
 

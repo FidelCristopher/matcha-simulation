@@ -1,45 +1,67 @@
 /* ==========================================================================
-   Design Tokens & CSS Variables
+   Design Tokens & CSS Variables (Golda-Inspired Modern Editorial Dark)
    ========================================================================== */
 :root {
-    /* Brand Colors */
-    --color-primary: #1f4f2c;
-    --color-primary-dark: #102d18;
-    --color-primary-deep: #040e07;
-    --color-accent: #fbcfe8; /* Soft Sakura Pink */
-    --color-accent-contrast: #041d0f;
+    /* Brand Colors - Obsidian Dark + Electric Ceremonial Matcha Lime + Bamboo Gold */
+    --color-primary: #121c14;
+    --color-primary-dark: #0a0f0b;
+    --color-primary-deep: #050705;
+    
+    /* Primary Accent: Electric Ceremonial Matcha Lime (Punchy & Non-Slop) */
+    --color-accent: #a3e635;
+    --color-accent-hover: #bef264;
+    --color-accent-dim: rgba(163, 230, 53, 0.15);
+    --color-accent-contrast: #000000;
+    
+    /* Secondary Accent: Kyoto Bamboo Whisk Gold */
+    --color-gold: #eab308;
+    --color-gold-hover: #facc15;
+    --color-gold-dim: rgba(234, 179, 8, 0.15);
 
-    /* Text & UI Colors */
+    /* Text & UI Colors - High Contrast Editorial */
     --text-primary: #ffffff;
-    --text-muted: rgba(255, 255, 255, 0.75);
-    --text-dim: rgba(255, 255, 255, 0.45);
+    --text-secondary: #e5e5e5;
+    --text-muted: rgba(255, 255, 255, 0.65);
+    --text-dim: rgba(255, 255, 255, 0.4);
 
-    /* Glassmorphism Tokens */
-    --glass-bg: rgba(255, 255, 255, 0.06);
-    --glass-bg-hover: rgba(255, 255, 255, 0.12);
-    --glass-border: rgba(255, 255, 255, 0.12);
-    --glass-border-highlight: rgba(255, 255, 255, 0.25);
-    --glass-blur: 20px;
+    /* Surfaces & Bento Cards */
+    --surface-dark: #070a08;
+    --surface-card: rgba(13, 18, 14, 0.82);
+    --surface-card-hover: rgba(18, 25, 19, 0.95);
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-medium: rgba(255, 255, 255, 0.16);
+    --border-accent: rgba(163, 230, 53, 0.35);
 
-    /* Typography */
-    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-    --font-heading: 'Galada', cursive;
-    --font-ui: 'Manrope', sans-serif;
+    /* Glassmorphism Tokens - Matte Dark Glass */
+    --glass-bg: rgba(10, 14, 11, 0.78);
+    --glass-bg-hover: rgba(18, 24, 19, 0.88);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-border-highlight: rgba(163, 230, 53, 0.3);
+    --glass-blur: 16px;
 
-    /* Dynamic Radial Gradient Tokens (Ceremonial Uji Default) */
-    --bg-inner: #1f4f2c;
-    --bg-mid: #102d18;
-    --bg-outer: #040e07;
+    /* Typography - Grotesk Headings + Editorial Italic Serif + Crisp Sans Body */
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-editorial: 'Newsreader', Georgia, serif;
+    --font-ui: 'Inter', sans-serif;
+
+    /* Dynamic Luxury Dark Radial Gradients */
+    --bg-inner: #0f1911;
+    --bg-mid: #090e0a;
+    --bg-outer: #040604;
 
     /* Motion Defaults */
-    --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    --duration-bg-transition: 1.2s;
+    --duration-bg-transition: 0.8s;
 }
 
 /* Flavor Theme: Matcha Yuzu */
 body.yuzu-theme {
-    --bg-inner: #3a5818;
-    --bg-mid: #22370c;
-    --bg-outer: #091203;
+    --color-accent: #facc15;
+    --color-accent-hover: #fde047;
+    --color-accent-dim: rgba(250, 204, 21, 0.15);
+    --bg-inner: #16180a;
+    --bg-mid: #0d0f06;
+    --bg-outer: #050603;
 }
