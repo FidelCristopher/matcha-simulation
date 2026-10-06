@@ -335,3 +335,34 @@
         text-align: center;
     }
 }
+
+/* Home Page Vertical Scrolling & Editorial Sections (The Matcha Standard & Stories) */
+#landing-page {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100vh;
+    -webkit-overflow-scrolling: touch;
+    background: radial-gradient(circle at 50% 20%, #0d170f 0%, #040604 60%);
+}
+
+#landing-page::-webkit-scrollbar {
+    width: 6px;
+}
+#landing-page::-webkit-scrollbar-track {
+    background: transparent;
+}
+#landing-page::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 9999px;
+}
+
+.home-bottom-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 6% 8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5.5rem;
+    position: relative;
+    z-index: 20;
+}

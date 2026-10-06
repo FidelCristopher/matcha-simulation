@@ -15,9 +15,9 @@ export const TRANSLATIONS = {
 
         // Menu Page
         menu_back: "Back to 3D Showcase (Swipe ←)",
-        menu_badge: "Koleksi Kurasi • Panen Pertama Uji",
-        menu_title: "The Matcha Standard.",
-        menu_subtitle: "Handcrafted ceremonial profiles, slow-steeped and micro-carbonated for pure calm and lasting focus.",
+        menu_badge: "Curated Collection • First-Harvest Uji",
+        menu_title: "Curated Menu.",
+        menu_subtitle: "Discover handcrafted ceremonial matcha profiles ready to enjoy, or use them as inspiration to simulate and build your own creation.",
         c1_tag: "Signature Cold",
         c1_desc: "Cold-brewed pure Uji matcha layered with silky vanilla cloud foam and rich ceremonial matcha dust.",
         c2_tag: "Citrus Botanical",
@@ -94,8 +94,8 @@ export const TRANSLATIONS = {
         // Menu Page
         menu_back: "Kembali ke 3D Showcase (Geser ←)",
         menu_badge: "Koleksi Kurasi • Panen Pertama Uji",
-        menu_title: "Menu Matcha Tchi",
-        menu_subtitle: "Temukan profil racikan matcha otentik yang siap dinikmati, atau jadikan inspirasi untuk mensimulasikan dan meracik kreasimu sendiri.",
+        menu_title: "Menu Pilihan.",
+        menu_subtitle: "Temukan racikan matcha seremonial otentik yang siap dinikmati, atau jadikan inspirasi untuk mensimulasikan dan meracik kreasimu sendiri.",
         c1_tag: "Dingin Khas",
         c1_desc: "Seduhan dingin matcha murni Uji dilapisi busa susu vanila lembut dan taburan bubuk matcha pekat.",
         c2_tag: "Sitrus Botani",

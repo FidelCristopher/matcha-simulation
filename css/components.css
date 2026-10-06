@@ -309,10 +309,10 @@
     border-color: var(--color-accent);
 }
 
-/* 5. Simulation HUD Controls (Bottom Center) */
+/* 5. Simulation HUD Controls (Bottom Center of Hero Stage) */
 .simulation-hud {
-    position: fixed;
-    bottom: 2rem;
+    position: absolute;
+    top: calc(100vh - 4.5rem);
     left: 50%;
     transform: translateX(-50%);
     display: flex;
