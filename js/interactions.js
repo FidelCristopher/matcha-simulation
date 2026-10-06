@@ -91,21 +91,26 @@ export class InteractionManager {
 
             // Sync toggle button text
             if (this.explodeBtn) {
+                const lang = window.i18nManager?.currentLang || 'en';
                 if (progress > 0.5) {
                     this.explodeBtn.classList.add('active');
-                    this.explodeBtn.innerHTML = `<span>Assemble</span> <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+                    const text = lang === 'id' ? 'Satukan' : 'Assemble';
+                    this.explodeBtn.innerHTML = `<span>${text}</span> <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
                 } else {
                     this.explodeBtn.classList.remove('active');
-                    this.explodeBtn.innerHTML = `<span>Pinch / Split Layers</span> <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+                    const text = lang === 'id' ? 'Ketuk / Belah Layer' : 'Tap / Split Layers';
+                    this.explodeBtn.innerHTML = `<span>${text}</span> <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
                 }
             }
 
             // Reveal/Hide Annotations based on progress threshold
             this.annotations.forEach(ann => {
-                if (progress > 0.25) {
+                if (progress > 0.3) {
+                    ann.classList.add('active');
                     ann.classList.add('visible');
-                    ann.style.opacity = Math.min(1, (progress - 0.25) / 0.5);
+                    ann.style.opacity = Math.min(1, (progress - 0.3) / 0.4);
                 } else {
+                    ann.classList.remove('active');
                     ann.classList.remove('visible');
                     ann.style.opacity = '0';
                 }

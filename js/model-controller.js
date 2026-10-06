@@ -32,7 +32,7 @@ export class ModelController {
 
         this.initThree();
         this.loadLayers();
-        this.bindPinchAndDrag();
+        this.bindTapAndInteractions();
     }
 
     initThree() {
@@ -112,67 +112,60 @@ export class ModelController {
         );
     }
 
-    bindPinchAndDrag() {
+    bindTapAndInteractions() {
         const dom = this.renderer.domElement;
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchStartTime = 0;
+        let isPointerDown = false;
+        let pointerStartX = 0;
+        let pointerStartY = 0;
+        let pointerStartTime = 0;
 
-        // Multi-touch gestures (Pinch to Explode on Touchscreen/Mobile)
+        // 1. Mobile & Touchscreen Tap to Explode / Split
         dom.addEventListener('touchstart', (e) => {
-            if (e.touches.length === 2) {
-                // Two-finger pinch start
-                const dx = e.touches[0].clientX - e.touches[1].clientX;
-                const dy = e.touches[0].clientY - e.touches[1].clientY;
-                this.initialPinchDistance = Math.hypot(dx, dy);
-                this.pinchStartExplode = this.explodeProgress;
-            } else if (e.touches.length === 1) {
-                // Single touch vertical drag
-                this.isDragging = true;
-                this.dragStartY = e.touches[0].clientY;
-                this.pinchStartExplode = this.explodeProgress;
+            if (e.touches.length === 1) {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                touchStartTime = Date.now();
             }
         }, { passive: true });
 
-        dom.addEventListener('touchmove', (e) => {
-            if (e.touches.length === 2 && this.initialPinchDistance > 0) {
-                const dx = e.touches[0].clientX - e.touches[1].clientX;
-                const dy = e.touches[0].clientY - e.touches[1].clientY;
-                const currentDist = Math.hypot(dx, dy);
-                const delta = (currentDist - this.initialPinchDistance) / 160;
-                this.setExplodeProgress(Math.max(0, Math.min(1, this.pinchStartExplode + delta)));
-            } else if (e.touches.length === 1 && this.isDragging) {
-                const deltaY = (this.dragStartY - e.touches[0].clientY) / 200;
-                this.setExplodeProgress(Math.max(0, Math.min(1, this.pinchStartExplode + deltaY)));
-            }
-        }, { passive: true });
+        dom.addEventListener('touchend', (e) => {
+            if (e.changedTouches.length === 1) {
+                const deltaX = Math.abs(e.changedTouches[0].clientX - touchStartX);
+                const deltaY = Math.abs(e.changedTouches[0].clientY - touchStartY);
+                const elapsed = Date.now() - touchStartTime;
 
-        dom.addEventListener('touchend', () => {
-            this.isDragging = false;
-            this.initialPinchDistance = 0;
+                // Quick tap without significant swipe/drag
+                if (deltaX < 20 && deltaY < 20 && elapsed < 400) {
+                    this.toggleExplode();
+                }
+            }
         });
 
-        // Desktop Mouse Drag to Explode
+        // 2. Desktop Mouse Click / Tap to Explode / Split
         dom.addEventListener('mousedown', (e) => {
-            this.isDragging = true;
-            this.dragStartY = e.clientY;
-            this.pinchStartExplode = this.explodeProgress;
+            if (e.button !== 0) return; // Left click only
+            isPointerDown = true;
+            pointerStartX = e.clientX;
+            pointerStartY = e.clientY;
+            pointerStartTime = Date.now();
         });
 
-        window.addEventListener('mousemove', (e) => {
-            if (this.isDragging) {
-                const deltaY = (this.dragStartY - e.clientY) / 220;
-                this.setExplodeProgress(Math.max(0, Math.min(1, this.pinchStartExplode + deltaY)));
+        window.addEventListener('mouseup', (e) => {
+            if (isPointerDown) {
+                const deltaX = Math.abs(e.clientX - pointerStartX);
+                const deltaY = Math.abs(e.clientY - pointerStartY);
+                const elapsed = Date.now() - pointerStartTime;
+
+                // Clean click/tap without dragging
+                if (deltaX < 15 && deltaY < 15 && elapsed < 400) {
+                    this.toggleExplode();
+                }
             }
+            isPointerDown = false;
         });
-
-        window.addEventListener('mouseup', () => {
-            this.isDragging = false;
-        });
-
-        // Mouse Wheel over model to explode/collapse
-        dom.addEventListener('wheel', (e) => {
-            e.preventDefault();
-            const step = e.deltaY > 0 ? 0.12 : -0.12;
-            this.setExplodeProgress(Math.max(0, Math.min(1, this.explodeProgress + step)));
-        }, { passive: false });
     }
 
     setExplodeProgress(val, animate = false) {
@@ -180,19 +173,22 @@ export class ModelController {
         if (animate) {
             gsap.to(this, {
                 explodeProgress: val,
-                duration: 0.8,
-                ease: 'power2.out',
-                onUpdate: () => this.updateLayerPositions()
+                duration: 0.75,
+                ease: 'power3.out',
+                onUpdate: () => {
+                    this.updateLayerPositions();
+                    document.dispatchEvent(new CustomEvent('matcha:explode-change', {
+                        detail: { progress: this.explodeProgress }
+                    }));
+                }
             });
         } else {
             this.explodeProgress = val;
             this.updateLayerPositions();
+            document.dispatchEvent(new CustomEvent('matcha:explode-change', {
+                detail: { progress: this.explodeProgress }
+            }));
         }
-
-        // Notify UI to update annotation badges and range slider
-        document.dispatchEvent(new CustomEvent('matcha:explode-change', {
-            detail: { progress: this.explodeProgress }
-        }));
     }
 
     toggleExplode() {

@@ -47,7 +47,7 @@ export const TRANSLATIONS = {
         annotation_base_desc: "Artisan mountain spring mineral base infused with crisp, revitalizing micro-bubbles.",
 
         // Simulation HUD
-        hud_split_btn: "Pinch / Split Layers",
+        hud_split_btn: "Tap / Split Layers",
         hud_assemble_btn: "Assemble",
         hud_explode_label: "Explode:",
 
@@ -125,7 +125,7 @@ export const TRANSLATIONS = {
         annotation_base_desc: "Air mata air pegunungan dengan gelembung mikro-karbonasi penyegar.",
 
         // Simulation HUD
-        hud_split_btn: "Cubit / Pisah Layer",
+        hud_split_btn: "Ketuk / Belah Layer",
         hud_assemble_btn: "Satukan Kembali",
         hud_explode_label: "Pemisahan:",
 

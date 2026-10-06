@@ -446,9 +446,20 @@
     line-height: 1.45;
 }
 
-.annotation-topping { top: 22%; left: 32%; }
-.annotation-isi { top: 48%; right: 30%; }
-.annotation-base { bottom: 25%; left: 33%; }
+.annotation-topping { 
+    top: 18%; 
+    left: 23%; 
+}
+
+.annotation-isi { 
+    top: 40%; 
+    right: 21%; 
+}
+
+.annotation-base { 
+    bottom: 14%; 
+    left: 25%; 
+}
 
 /* 7. Swipe Hint Pills */
 .swipe-hint-pill,
