@@ -2,9 +2,9 @@
  * App Configuration & Flavor Presets
  */
 export const APP_CONFIG = {
-    // 3D Model Path Configuration (Active: matcha_v4.glb, Previous: matcha_layers.glb)
-    modelPath: 'assets/models/matcha_v4.glb',
-    previousModelPath: 'assets/models/matcha_layers.glb',
+    // 3D Model Path Configuration (Active: matcha_layers.glb, Alternative: matcha_v4.glb)
+    modelPath: 'assets/models/matcha_layers.glb',
+    alternativeModelPath: 'assets/models/matcha_v4.glb',
 
     // 3D Camera Configuration
     camera: {

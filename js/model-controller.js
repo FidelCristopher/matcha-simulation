@@ -79,7 +79,7 @@ export class ModelController {
         window.addEventListener('resize', () => this.onWindowResize());
     }
 
-    loadLayers(modelPath = APP_CONFIG.modelPath || 'assets/models/matcha_v4.glb') {
+    loadLayers(modelPath = APP_CONFIG.modelPath || 'assets/models/matcha_layers.glb') {
         const loader = new GLTFLoader();
         loader.load(
             modelPath,
