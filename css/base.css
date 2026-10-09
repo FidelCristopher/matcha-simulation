@@ -15,8 +15,20 @@ html, body {
     background-color: #040604;
 }
 
+/* Micro-carbonation Bubbles Layer */
+#bubbles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
 body {
-    background: radial-gradient(circle at 50% 25%, var(--bg-inner) 0%, var(--bg-mid) 55%, var(--bg-outer) 100%);
+    background: radial-gradient(circle at 50% 30%, var(--bg-inner) 0%, var(--bg-mid) 60%, var(--bg-outer) 100%);
     color: var(--text-primary);
     font-family: var(--font-sans);
     transition: background var(--duration-bg-transition) var(--ease-standard);
