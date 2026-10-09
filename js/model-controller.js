@@ -12,10 +12,12 @@ export class ModelController {
         this.container = document.querySelector(containerSelector);
         if (!this.container) return;
 
-        // Simulation Layers
+        // Simulation Layers & Parts (Supports both matcha_layers & matcha_v4)
         this.toppingMesh = null;
         this.isiMesh = null;
         this.baseMesh = null;
+        this.drinkMesh = null;
+        this.glassMesh = null;
         this.allParts = [];
 
         // State
@@ -77,28 +79,44 @@ export class ModelController {
         window.addEventListener('resize', () => this.onWindowResize());
     }
 
-    loadLayers() {
+    loadLayers(modelPath = APP_CONFIG.modelPath || 'assets/models/matcha_v4.glb') {
         const loader = new GLTFLoader();
         loader.load(
-            'assets/models/matcha_layers.glb',
+            modelPath,
             (gltf) => {
                 const root = gltf.scene;
 
-                // Retrieve the 3 separate layer objects
+                // Retrieve handles for matcha_layers.glb
                 this.toppingMesh = root.getObjectByName('matcha_topping');
                 this.isiMesh = root.getObjectByName('matcha_isi');
                 this.baseMesh = root.getObjectByName('matcha_base');
 
+                // Retrieve handles for matcha_v4.glb
+                this.drinkMesh = root.getObjectByName('Matcha_Drink_Asset');
+                this.glassMesh = root.getObjectByName('Thick_Crystal_Glass_Tumbler');
+
                 root.traverse((child) => {
-                    if (child.isMesh) {
-                        child.material.side = THREE.DoubleSide;
-                        child.material.roughness = 0.35;
-                        child.material.metalness = 0.15;
+                    if (child.isMesh && child.material) {
+                        if (child.material.transmission && child.material.transmission > 0) {
+                            child.material.transparent = true;
+                            child.material.depthWrite = false;
+                            child.material.roughness = Math.max(child.material.roughness || 0.05, 0.05);
+                            child.material.envMapIntensity = 2.0;
+                        } else {
+                            child.material.side = THREE.DoubleSide;
+                        }
                     }
                 });
 
                 this.rootGroup.add(root);
-                this.allParts = [this.toppingMesh, this.isiMesh, this.baseMesh].filter(Boolean);
+                this.allParts = [
+                    this.toppingMesh,
+                    this.isiMesh,
+                    this.baseMesh,
+                    this.drinkMesh,
+                    this.glassMesh
+                ].filter(Boolean);
+
                 this.isReady = true;
 
                 // Initial render frame
@@ -107,7 +125,7 @@ export class ModelController {
             },
             undefined,
             (err) => {
-                console.error('Failed to load matcha_layers.glb:', err);
+                console.error(`Failed to load 3D model (${modelPath}):`, err);
             }
         );
     }
@@ -197,20 +215,27 @@ export class ModelController {
     }
 
     updateLayerPositions() {
-        if (!this.toppingMesh || !this.isiMesh || !this.baseMesh) return;
+        // Mode 1: 3-Layer separated model (matcha_layers.glb)
+        if (this.toppingMesh && this.isiMesh && this.baseMesh) {
+            const maxOffset = 0.55;
+            const currentOffset = this.explodeProgress * maxOffset;
+            this.toppingMesh.position.y = currentOffset;
+            this.isiMesh.position.y = 0;
+            this.baseMesh.position.y = -currentOffset;
+            return;
+        }
 
-        // Separation distances
-        const maxOffset = 0.55; // Units of physical separation
-        const currentOffset = this.explodeProgress * maxOffset;
-
-        // Topping lifts up (+Y)
-        this.toppingMesh.position.y = currentOffset;
-
-        // Isi stays suspended in center (0)
-        this.isiMesh.position.y = 0;
-
-        // Base lowers down (-Y)
-        this.baseMesh.position.y = -currentOffset;
+        // Mode 2: Crystal Glass + Matcha Drink model (matcha_v4.glb)
+        if (this.glassMesh || this.drinkMesh) {
+            const maxOffset = 0.45;
+            const currentOffset = this.explodeProgress * maxOffset;
+            if (this.glassMesh) {
+                this.glassMesh.position.y = currentOffset * 0.7;
+            }
+            if (this.drinkMesh) {
+                this.drinkMesh.position.y = -currentOffset * 0.3;
+            }
+        }
     }
 
     updateTilt(currentMouse) {
