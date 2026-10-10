@@ -108,7 +108,7 @@ export class MatchaSimulator {
                 }
 
                 // Button visual feedback
-                const addedText = window.i18nManager?.t('sim_btn_added') || 'Added to Cart! ✔';
+                const addedText = window.i18nManager?.t('sim_btn_added') || 'Added to Cart!';
                 const originalHTML = this.addCartBtn.innerHTML;
                 this.addCartBtn.innerHTML = `<span>${addedText}</span>`;
                 this.addCartBtn.style.background = '#22c55e';

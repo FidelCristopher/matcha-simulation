@@ -4,7 +4,7 @@ Landing page interaktif generasi baru berbasis WebGL & 3D real-time untuk minuma
 
 ---
 
-## ✨ Fitur Utama
+## Fitur Utama
 
 - **Estetika Editorial Dark & Non-AI Slop**:
   - Palet warna mewah **Obsidian Dark Canvas** (`#040604` s/d `#0f1911`) dengan aksen **Electric Ceremonial Matcha Lime** (`#a3e635`) dan **Kyoto Bamboo Whisk Gold** (`#eab308`).
@@ -19,7 +19,7 @@ Landing page interaktif generasi baru berbasis WebGL & 3D real-time untuk minuma
 - **Bento Grid Showcase ("The Matcha Standard")**:
   - Layout grid bento modern: ekstraksi dingin *First Flush*, terroir *Single Origin Uji*, cellular flow *L-Theanine 8H Focus*.
   - **Solid Accent Punch Card (`0g ADDED SUGAR / 100% PURE CEREMONIAL`)** dengan kontras visual tinggi.
-  - Testimonial editorial 5 bintang emas (`★★★★★`), kutipan otentik sommelier teh, baris metrik angka raksasa (*80mg L-Theanine*, *0 Calories*, *0% Jitters*, *100% Satisfaction*), serta watermark tipografi raksasa **`MATCHA`** di latar belakang.
+  - Testimonial editorial 5 bintang emas, kutipan otentik sommelier teh, baris metrik angka raksasa (*80mg L-Theanine*, *0 Calories*, *0% Jitters*, *100% Satisfaction*), serta watermark tipografi raksasa **`MATCHA`** di latar belakang.
 
 - **Matcha Crafting Atelier / Simulation Sandbox**:
   - Laboratorium formulasi interaktif: pilih base teh (*Uji Ceremonial*, *Roasted Hojicha*, *Mineral Soda*), sesuaikan konsentrasi bubuk teh (1.0g s/d 4.5g), dan tekstur busa (*Oat Milk Cloud*, *Vanilla Foam*, *Coconut Velvet*, *Pure Zero Milk*).
@@ -47,7 +47,7 @@ Landing page interaktif generasi baru berbasis WebGL & 3D real-time untuk minuma
 
 ---
 
-## 📁 Struktur Proyek
+## Struktur Proyek
 
 ```text
 MatchaTcih/
@@ -88,7 +88,7 @@ MatchaTcih/
 
 ---
 
-## 🚀 Cara Menjalankan di Local
+## Cara Menjalankan di Local
 
 Pastikan Anda berada di direktori project:
 ```bash
@@ -110,12 +110,12 @@ npm run serve
 ```
 
 Buka di browser Anda:
-👉 **`http://localhost:3000`**
+**http://localhost:3000**
 
 Untuk mengakses Kitchen Display System (KDS):
-👉 **`http://localhost:3000/admin.html`**
+**http://localhost:3000/admin.html**
 
 ---
 
-## 📜 Lisensi
+## Lisensi
 MIT License © 2026 MatchaTcih. All rights reserved.

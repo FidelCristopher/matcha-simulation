@@ -339,13 +339,18 @@ body {
 }
 
 .order-delete-single-btn {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
+    width: auto;
+    height: auto;
+    padding: 0.28rem 0.65rem;
+    border-radius: 9999px;
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    color: rgba(255, 255, 255, 0.45);
-    display: flex;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;

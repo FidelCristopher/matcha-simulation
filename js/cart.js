@@ -235,7 +235,6 @@ export class CartManager {
             const emptySub = window.i18nManager?.t('cart_empty_sub') || 'Craft a blend in the Simulation Lab or explore our Crafted Menu!';
             this.itemsContainer.innerHTML = `
                 <div class="cart-empty-state">
-                    <div class="cart-empty-icon">🍵</div>
                     <p>${emptyTitle}</p>
                     <span>${emptySub}</span>
                 </div>
@@ -259,7 +258,7 @@ export class CartManager {
                         <button class="cart-qty-btn btn-plus" data-idx="${idx}">+</button>
                     </div>
                     <span class="cart-item-price">$${(item.price * item.qty).toFixed(2)}</span>
-                    <button class="cart-item-remove" data-idx="${idx}" title="Remove">✕</button>
+                    <button class="cart-item-remove" data-idx="${idx}" title="Remove">Remove</button>
                 </div>
             `;
             this.itemsContainer.appendChild(itemElem);

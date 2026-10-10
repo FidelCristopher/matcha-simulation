@@ -50,4 +50,4 @@ Untuk memastikan website tetap berjalan ringan di 60 FPS pada semua perangkat (d
 ## 5. Spesifikasi Aset Interaktif Drag-and-Drop (Chashaku & Bubuk)
 
 Untuk aset interaktif modular seperti sendok bambu (*Bamboo_Chashaku*) dan gundukan bubuk matcha (*Matcha_Scoop_Heap*) yang memerlukan hierarki parent-child dinamis, silakan rujuk dokumen teknis lengkap di:
-- 📖 [DRAG_AND_DROP_SPEC.md](DRAG_AND_DROP_SPEC.md)
+- [DRAG_AND_DROP_SPEC.md](DRAG_AND_DROP_SPEC.md)

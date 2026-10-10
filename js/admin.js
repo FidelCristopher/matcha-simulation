@@ -310,7 +310,6 @@ export class AdminOrderMonitor {
         if (!filtered.length) {
             this.ordersGrid.innerHTML = `
                 <div class="orders-empty-state">
-                    <div class="orders-empty-icon">🍵</div>
                     <h3>Tidak Ada Pesanan</h3>
                     <p>Pesanan baru yang dicheckout dari kiosk akan otomatis muncul di sini.</p>
                 </div>
@@ -342,13 +341,10 @@ export class AdminOrderMonitor {
                     </div>
                     <div class="order-header-right">
                         <span class="status-badge ${order.status}">
-                            ${isBrewing ? '⏳ Brewing' : '✔ Completed'}
+                            ${isBrewing ? 'Brewing' : 'Completed'}
                         </span>
                         <button class="order-delete-single-btn" data-order-id="${order.id}" title="Hapus pesanan #${order.id}" aria-label="Hapus pesanan">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            </svg>
+                            Hapus
                         </button>
                     </div>
                 </div>
@@ -363,7 +359,7 @@ export class AdminOrderMonitor {
                         <span class="order-total-amount">$${parseFloat(order.total).toFixed(2)}</span>
                     </div>
                     <button class="order-action-btn ${isBrewing ? 'finish-btn' : 'reopen-btn'}" data-order-id="${order.id}">
-                        ${isBrewing ? 'Selesai Seduh ✔' : 'Buka Ulang ↺'}
+                        ${isBrewing ? 'Selesai Seduh' : 'Buka Ulang'}
                     </button>
                 </div>
             `;
