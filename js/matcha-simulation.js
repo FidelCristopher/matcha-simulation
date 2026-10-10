@@ -1,18 +1,18 @@
 /**
  * Interactive Matcha Crafting Simulation Engine
- * Handles live recipe tweaking, sensory meter updates, cup preview rendering,
+ * Handles live recipe tweaking, sensory meter updates, 3D Chawan & Chashaku workbench,
  * Add to Cart integration, and Recipe Reset.
  */
+import { Simulation3DWorkbench } from './simulation-3d.js';
+
 export class MatchaSimulator {
     constructor(cartManager = null) {
         this.page = document.querySelector('#simulation-page');
         this.cartManager = cartManager;
         if (!this.page) return;
 
-        // Visual Cup Elements
-        this.foamLayer = document.querySelector('.cup-layer-foam');
-        this.liquidLayer = document.querySelector('.cup-layer-liquid');
-        this.baseLayer = document.querySelector('.cup-layer-base');
+        // Visual 3D Workbench
+        this.workbench3D = new Simulation3DWorkbench('#sim-canvas-container');
 
         // Meter Fill Bars
         this.umamiFill = document.querySelector('#meter-umami');
@@ -40,6 +40,7 @@ export class MatchaSimulator {
         this.bindPills();
         this.bindSlider();
         this.bindActionButtons();
+        this.bind3DEvents();
         this.updateSimulationUI();
 
         // Listen for language changes
@@ -67,6 +68,19 @@ export class MatchaSimulator {
                 this.state.milk = pill.dataset.simMilk;
                 this.updateSimulationUI();
             });
+        });
+    }
+
+    bind3DEvents() {
+        // Listen for 3D Chashaku scoop events
+        document.addEventListener('matcha:scoop-added', (e) => {
+            const { count, grams } = e.detail;
+            this.state.grams = grams;
+            const slider = document.querySelector('#sim-grams-slider');
+            const label = document.querySelector('#sim-grams-val');
+            if (slider) slider.value = grams;
+            if (label) label.textContent = `${grams.toFixed(1)}g`;
+            this.updateSimulationUI();
         });
     }
 
@@ -163,6 +177,11 @@ export class MatchaSimulator {
         const label = document.querySelector('#sim-grams-val');
         if (slider) slider.value = this.defaultState.grams;
         if (label) label.textContent = `${this.defaultState.grams.toFixed(1)}g`;
+
+        // Reset 3D Chawan & Chashaku workbench
+        if (this.workbench3D) {
+            this.workbench3D.reset();
+        }
 
         // Update UI & sensory meters
         this.updateSimulationUI();

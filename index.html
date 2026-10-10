@@ -432,13 +432,13 @@
                             </div>
                         </div>
 
-                        <!-- Real-time Sensory Analytics & Cup Preview -->
+                        <!-- Real-time Sensory Analytics & 3D Interactive Workbench -->
                         <div class="sim-analytics">
-                            <div class="sim-cup-preview-wrap">
-                                <div class="sim-cup-glass">
-                                    <div class="cup-layer-foam"></div>
-                                    <div class="cup-layer-liquid"></div>
-                                    <div class="cup-layer-base"></div>
+                            <div class="sim-cup-preview-wrap" id="sim-canvas-wrap">
+                                <div id="sim-canvas-container" class="sim-3d-stage"></div>
+                                <div class="sim-3d-hud">
+                                    <span class="sim-3d-hint" id="sim-drag-hint">Drag Chashaku ke atas Chawan</span>
+                                    <button type="button" class="sim-3d-quick-btn" id="sim-scoop-action-btn">Sendok Matcha</button>
                                 </div>
                             </div>
 
