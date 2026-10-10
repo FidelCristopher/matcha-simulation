@@ -79,7 +79,8 @@ MatchaTcih/
 ├── docs/
 │   ├── ARCHITECTURE.md    # Penjelasan arsitektur teknis & layer visual
 │   ├── WORKFLOW.md        # Panduan alur kerja update & penambahan fitur
-│   └── ASSET_GUIDELINES.md# Standar spesifikasi aset 3D
+│   ├── ASSET_GUIDELINES.md# Standar spesifikasi aset 3D
+│   └── DRAG_AND_DROP_SPEC.md # Spesifikasi hierarki Chashaku & interaksi Drag-and-Drop
 ├── index.html             # Halaman utama MatchaTcih Showcase & Atelier
 ├── admin.html             # Dashboard Kitchen Display System (KDS)
 └── package.json           # Konfigurasi proyek & dependency scripts

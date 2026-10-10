@@ -44,3 +44,10 @@ Untuk memastikan website tetap berjalan ringan di 60 FPS pada semua perangkat (d
   Wajib berada tepat di **tengah massa (center of geometry)** model 3D, bukan di dasar atau di tepi.
   Jika pivot tidak di tengah, model akan bergoyang tidak seimbang saat animasi putaran 720° berlangsung.
 - **Satuan Skala**: Meter standar WebGL (dimensi bounding box ideal ~1 unit tinggi).
+
+---
+
+## 5. Spesifikasi Aset Interaktif Drag-and-Drop (Chashaku & Bubuk)
+
+Untuk aset interaktif modular seperti sendok bambu (*Bamboo_Chashaku*) dan gundukan bubuk matcha (*Matcha_Scoop_Heap*) yang memerlukan hierarki parent-child dinamis, silakan rujuk dokumen teknis lengkap di:
+- 📖 [DRAG_AND_DROP_SPEC.md](DRAG_AND_DROP_SPEC.md)
