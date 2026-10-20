@@ -28,7 +28,7 @@ html, body {
 }
 
 body {
-    background: radial-gradient(circle at 50% 30%, var(--bg-inner) 0%, var(--bg-mid) 60%, var(--bg-outer) 100%);
+    background: radial-gradient(circle at 50% 38%, var(--bg-inner) 0%, var(--bg-mid) 42%, var(--bg-outer) 80%);
     color: var(--text-primary);
     font-family: var(--font-sans);
     transition: background var(--duration-bg-transition) var(--ease-standard);

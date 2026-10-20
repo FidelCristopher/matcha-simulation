@@ -45,9 +45,9 @@
     --font-editorial: 'Newsreader', Georgia, serif;
     --font-ui: 'Inter', sans-serif;
 
-    /* Dynamic Luxury Dark Radial Gradients */
-    --bg-inner: #0f1911;
-    --bg-mid: #090e0a;
+    /* Dynamic Luxury Dark Radial Gradients - Rich Ceremonial Matcha Ambient Center Glow */
+    --bg-inner: #1b4527;
+    --bg-mid: #0f2416;
     --bg-outer: #040604;
 
     /* Motion Defaults */
@@ -95,7 +95,7 @@ html, body {
 }
 
 body {
-    background: radial-gradient(circle at 50% 30%, var(--bg-inner) 0%, var(--bg-mid) 60%, var(--bg-outer) 100%);
+    background: radial-gradient(circle at 50% 38%, var(--bg-inner) 0%, var(--bg-mid) 42%, var(--bg-outer) 80%);
     color: var(--text-primary);
     font-family: var(--font-sans);
     transition: background var(--duration-bg-transition) var(--ease-standard);
@@ -763,13 +763,13 @@ button {
 .hero-right {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: flex-end;
     text-align: right;
     height: 100%;
     padding: 5rem 0 3.5rem;
     z-index: 50;
-    width: 440px;
+    width: 360px;
     pointer-events: none;
 }
 
@@ -877,8 +877,9 @@ button {
     outline: none;
     --progress-bar-color: transparent;
     filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.5));
-    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
     pointer-events: none;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
 }
 
 .c1 {
@@ -886,7 +887,7 @@ button {
     left: 64%;
     width: 150px;
     height: 150px;
-    opacity: 0.85;
+    opacity: 0.9;
 }
 
 .c2 {
@@ -902,7 +903,7 @@ button {
     left: 32%;
     width: 110px;
     height: 110px;
-    opacity: 0.45;
+    opacity: 0.5;
 }
 
 /* Authentic 3D Daun Matcha Elements */
@@ -911,8 +912,9 @@ button {
     outline: none;
     --progress-bar-color: transparent;
     filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.45));
-    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
     pointer-events: none;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
 }
 
 .dm1 {
@@ -920,7 +922,7 @@ button {
     left: 4%;
     width: 130px;
     height: 130px;
-    opacity: 0.6;
+    opacity: 0.65;
 }
 
 .dm2 {
@@ -944,7 +946,7 @@ button {
     left: 35%;
     width: 100px;
     height: 100px;
-    opacity: 0.4;
+    opacity: 0.45;
 }
 
 /* Berry (Cherry / Botanicals) Positioning */
@@ -953,20 +955,23 @@ button {
     outline: none;
     --progress-bar-color: transparent;
     filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.5));
-    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
     pointer-events: none;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
 }
 
-.b1 { top: 12%; left: 24%; width: 45px; height: 45px; opacity: 0.75; }
-.b2 { top: 28%; left: 74%; width: 65px; height: 65px; opacity: 0.8; }
-.b3 { top: 68%; left: 14%; width: 75px; height: 75px; opacity: 0.85; }
+.b1 { top: 12%; left: 24%; width: 48px; height: 48px; opacity: 0.85; }
+.b2 { top: 28%; left: 74%; width: 68px; height: 68px; opacity: 0.9; }
+.b3 { top: 68%; left: 14%; width: 78px; height: 78px; opacity: 0.85; }
 .b4 { top: 62%; left: 78%; width: 55px; height: 55px; opacity: 0.75; }
 .b5 { top: 76%; left: 44%; width: 85px; height: 85px; opacity: 0.8; }
 .b6 { top: 82%; left: 52%; width: 60px; height: 60px; opacity: 0.7; }
 
-.b7 { top: 18%; left: 36%; width: 50px; height: 50px; opacity: 0.4; }
-.b8 { top: 35%; left: 60%; width: 70px; height: 70px; opacity: 0.45; }
-.b9 { top: 58%; left: 38%; width: 55px; height: 55px; opacity: 0.4; }
+.b7 { top: 18%; left: 36%; width: 52px; height: 52px; opacity: 0.5; }
+.b8 { top: 35%; left: 60%; width: 72px; height: 72px; opacity: 0.5; }
+.b9 { top: 58%; left: 38%; width: 55px; height: 55px; opacity: 0.45; }
+.b-bg1 { top: 18%; left: 36%; width: 52px; height: 52px; opacity: 0.5; }
+.b-bg2 { top: 35%; left: 60%; width: 72px; height: 72px; opacity: 0.5; }
 
 /* Responsive Breakpoints: Tablet (768px - 1024px) & Mobile (<= 767px) */
 @media (min-width: 768px) and (max-width: 1024px) {
