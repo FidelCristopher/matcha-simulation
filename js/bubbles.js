@@ -11,7 +11,7 @@ export function initBubbles(containerSelector = '#bubbles-container') {
 
     function createBubble() {
         const bubble = document.createElement('img');
-        bubble.src = 'assets/images/bubble.png';
+        bubble.src = 'assets/images/bubble.webp';
         bubble.className = 'bubble-img';
 
         const size = Math.round(Math.random() * (maxSize - minSize) + minSize);

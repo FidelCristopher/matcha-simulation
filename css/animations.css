@@ -22,20 +22,26 @@
     }
 }
 
-/* Micro-carbonation Rising Bubble Effect */
+/* Micro-carbonation Rising Bubble Effect (Hardware-Accelerated Compositor) */
+.bubble-img {
+    position: absolute;
+    will-change: transform, opacity;
+    pointer-events: none;
+}
+
 @keyframes floatUpImg {
     0% {
-        transform: translateY(0) translateX(0) rotate(0deg);
+        transform: translate3d(0, 0, 0) rotate(0deg);
         opacity: 0;
     }
     10% {
         opacity: 0.45;
     }
-    90% {
+    85% {
         opacity: 0.45;
     }
     100% {
-        transform: translateY(-110vh) translateX(30px) rotate(360deg);
+        transform: translate3d(25px, -110vh, 0) rotate(360deg);
         opacity: 0;
     }
 }

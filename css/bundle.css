@@ -875,11 +875,12 @@ button {
 .chasen {
     position: absolute;
     outline: none;
-    --progress-bar-color: transparent;
     filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.5));
     pointer-events: none;
     will-change: transform;
     transform: translate3d(0, 0, 0);
+    object-fit: contain;
+    user-select: none;
 }
 
 .c1 {
@@ -910,11 +911,12 @@ button {
 .daun-matcha {
     position: absolute;
     outline: none;
-    --progress-bar-color: transparent;
     filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.45));
     pointer-events: none;
     will-change: transform;
     transform: translate3d(0, 0, 0);
+    object-fit: contain;
+    user-select: none;
 }
 
 .dm1 {
@@ -953,11 +955,12 @@ button {
 .berry {
     position: absolute;
     outline: none;
-    --progress-bar-color: transparent;
     filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.5));
     pointer-events: none;
     will-change: transform;
     transform: translate3d(0, 0, 0);
+    object-fit: contain;
+    user-select: none;
 }
 
 .b1 { top: 12%; left: 24%; width: 48px; height: 48px; opacity: 0.85; }
@@ -1183,6 +1186,7 @@ button {
     position: absolute;
     top: 0;
     left: 0;
+    transform: translateX(-100vw);
     transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
     will-change: transform;
 }
@@ -2494,20 +2498,26 @@ button {
     }
 }
 
-/* Micro-carbonation Rising Bubble Effect */
+/* Micro-carbonation Rising Bubble Effect (Hardware-Accelerated Compositor) */
+.bubble-img {
+    position: absolute;
+    will-change: transform, opacity;
+    pointer-events: none;
+}
+
 @keyframes floatUpImg {
     0% {
-        transform: translateY(0) translateX(0) rotate(0deg);
+        transform: translate3d(0, 0, 0) rotate(0deg);
         opacity: 0;
     }
     10% {
         opacity: 0.45;
     }
-    90% {
+    85% {
         opacity: 0.45;
     }
     100% {
-        transform: translateY(-110vh) translateX(30px) rotate(360deg);
+        transform: translate3d(25px, -110vh, 0) rotate(360deg);
         opacity: 0;
     }
 }
