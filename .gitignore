@@ -13,3 +13,5 @@ Thumbs.db
 # Raw large 3D sources (optional)
 *.blend
 *.blend1
+assets/models/originals/
+

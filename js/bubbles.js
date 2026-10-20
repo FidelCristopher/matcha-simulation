@@ -14,12 +14,16 @@ export function initBubbles(containerSelector = '#bubbles-container') {
         bubble.src = 'assets/images/bubble.png';
         bubble.className = 'bubble-img';
 
-        const size = Math.random() * (maxSize - minSize) + minSize;
+        const size = Math.round(Math.random() * (maxSize - minSize) + minSize);
         const duration = Math.random() * (maxDuration - minDuration) + minDuration;
         const opacity = Math.random() * (maxOpacity - minOpacity) + minOpacity;
 
+        bubble.width = size;
+        bubble.height = size;
+        bubble.alt = '';
+        bubble.setAttribute('aria-hidden', 'true');
         bubble.style.width = `${size}px`;
-        bubble.style.height = 'auto';
+        bubble.style.height = `${size}px`;
         bubble.style.left = `${Math.random() * 100}%`;
         bubble.style.bottom = '-50px';
         bubble.style.opacity = opacity.toFixed(2);

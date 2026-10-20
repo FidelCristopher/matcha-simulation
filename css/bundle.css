@@ -18,11 +18,11 @@
     --color-gold-hover: #facc15;
     --color-gold-dim: rgba(234, 179, 8, 0.15);
 
-    /* Text & UI Colors - High Contrast Editorial */
+    /* Text & UI Colors - High Contrast Editorial for WCAG AA/AAA */
     --text-primary: #ffffff;
-    --text-secondary: #e5e5e5;
-    --text-muted: rgba(255, 255, 255, 0.65);
-    --text-dim: rgba(255, 255, 255, 0.4);
+    --text-secondary: #f3f4f6;
+    --text-muted: rgba(255, 255, 255, 0.82);
+    --text-dim: rgba(255, 255, 255, 0.65);
 
     /* Surfaces & Bento Cards */
     --surface-dark: #070a08;
