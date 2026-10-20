@@ -82,6 +82,7 @@ export class PageNavigator {
             body.classList.remove('menu-active');
             // Page 2 (Right): -200vw
             this.setSliderPosition(-200, animate);
+            document.dispatchEvent(new CustomEvent('matcha:page-simulation'));
         } else {
             this.activePage = 'landing';
             body.classList.remove('menu-active', 'simulation-active');

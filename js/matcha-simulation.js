@@ -11,8 +11,9 @@ export class MatchaSimulator {
         this.cartManager = cartManager;
         if (!this.page) return;
 
-        // Visual 3D Workbench
-        this.workbench3D = new Simulation3DWorkbench('#sim-canvas-container');
+        // Visual 3D Workbench (Lazy Loaded)
+        this.workbench3D = null;
+        this.workbenchLoaded = false;
 
         // Meter Fill Bars
         this.umamiFill = document.querySelector('#meter-umami');
@@ -43,10 +44,30 @@ export class MatchaSimulator {
         this.bind3DEvents();
         this.updateSimulationUI();
 
+        // Lazy load 3D workbench when user visits simulation page or when browser is idle
+        document.addEventListener('matcha:page-simulation', () => {
+            this.initWorkbenchIfNeeded();
+        });
+
+        // Background idle preloader (after initial critical render)
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
+                setTimeout(() => this.initWorkbenchIfNeeded(), 3000);
+            });
+        } else {
+            setTimeout(() => this.initWorkbenchIfNeeded(), 4000);
+        }
+
         // Listen for language changes
         document.addEventListener('matcha:lang-changed', () => {
             this.updateSimulationUI();
         });
+    }
+
+    initWorkbenchIfNeeded() {
+        if (this.workbenchLoaded) return;
+        this.workbenchLoaded = true;
+        this.workbench3D = new Simulation3DWorkbench('#sim-canvas-container');
     }
 
     bindPills() {
