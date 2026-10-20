@@ -18,6 +18,7 @@
 
     <!-- Libraries (Deferred & Optimized) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 </head>
 <body>
 
@@ -175,10 +176,10 @@
 
                         <!-- Background Orbiting Botanicals (Behind Can) -->
                         <div class="berries-container-bg">
-                            <img class="berry b-bg1" src="assets/images/strawberry.png" width="55" height="55" alt="" aria-hidden="true" loading="eager">
-                            <img class="berry b-bg2" src="assets/images/strawberry.png" width="65" height="65" alt="" aria-hidden="true" loading="eager">
-                            <img class="chasen c-bg" src="assets/images/chasen.png" width="110" height="110" alt="" aria-hidden="true" loading="eager">
-                            <img class="daun-matcha dm-bg" src="assets/images/daun_matcha.png" width="100" height="100" alt="" aria-hidden="true" loading="eager">
+                            <model-viewer class="berry b-bg1" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" loading="eager" shadow-intensity="0"></model-viewer>
+                            <model-viewer class="berry b-bg2" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" loading="eager" shadow-intensity="0"></model-viewer>
+                            <model-viewer class="chasen c-bg" src="assets/models/chasen.glb" environment-image="neutral" exposure="1.1" interaction-prompt="none" loading="eager" shadow-intensity="0"></model-viewer>
+                            <model-viewer class="daun-matcha dm-bg" src="assets/models/daun_matcha.glb" environment-image="neutral" exposure="1.1" interaction-prompt="none" loading="eager" shadow-intensity="0"></model-viewer>
                         </div>
 
                         <!-- Center 3D Matcha Showcase (Three.js 360° Drag & Rotate) -->
@@ -188,11 +189,11 @@
 
                         <!-- Foreground Orbiting Botanicals (Above Can & Floating) -->
                         <div class="berries-container">
-                            <img class="berry b1" src="assets/images/strawberry.png" width="60" height="60" alt="" aria-hidden="true" loading="eager">
-                            <img class="berry b2" src="assets/images/strawberry.png" width="75" height="75" alt="" aria-hidden="true" loading="eager">
-                            <img class="berry b3" src="assets/images/strawberry.png" width="70" height="70" alt="" aria-hidden="true" loading="eager">
-                            <img class="chasen c1" src="assets/images/chasen.png" width="145" height="145" alt="" aria-hidden="true" loading="eager">
-                            <img class="daun-matcha dm1" src="assets/images/daun_matcha.png" width="125" height="125" alt="" aria-hidden="true" loading="eager">
+                            <model-viewer class="berry b1" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" loading="eager" shadow-intensity="0"></model-viewer>
+                            <model-viewer class="berry b2" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" loading="eager" shadow-intensity="0"></model-viewer>
+                            <model-viewer class="berry b3" src="assets/models/cherry.glb" environment-image="neutral" exposure="1.2" interaction-prompt="none" loading="eager" shadow-intensity="0"></model-viewer>
+                            <model-viewer class="chasen c1" src="assets/models/chasen.glb" environment-image="neutral" exposure="1.3" interaction-prompt="none" loading="eager" shadow-intensity="0"></model-viewer>
+                            <model-viewer class="daun-matcha dm1" src="assets/models/daun_matcha.glb" environment-image="neutral" exposure="1.3" interaction-prompt="none" loading="eager" shadow-intensity="0"></model-viewer>
                         </div>
 
                         <!-- Right Column: Pure Zen Side Title -->

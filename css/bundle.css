@@ -875,12 +875,13 @@ button {
 .chasen {
     position: absolute;
     outline: none;
+    --progress-bar-color: transparent;
+    --poster-color: transparent;
+    background-color: transparent !important;
     filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.5));
     pointer-events: none;
     will-change: transform;
     transform: translate3d(0, 0, 0);
-    object-fit: contain;
-    user-select: none;
 }
 
 .c1 {
@@ -911,12 +912,13 @@ button {
 .daun-matcha {
     position: absolute;
     outline: none;
+    --progress-bar-color: transparent;
+    --poster-color: transparent;
+    background-color: transparent !important;
     filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.45));
     pointer-events: none;
     will-change: transform;
     transform: translate3d(0, 0, 0);
-    object-fit: contain;
-    user-select: none;
 }
 
 .dm1 {
@@ -955,12 +957,13 @@ button {
 .berry {
     position: absolute;
     outline: none;
+    --progress-bar-color: transparent;
+    --poster-color: transparent;
+    background-color: transparent !important;
     filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.5));
     pointer-events: none;
     will-change: transform;
     transform: translate3d(0, 0, 0);
-    object-fit: contain;
-    user-select: none;
 }
 
 .b1 { top: 12%; left: 24%; width: 48px; height: 48px; opacity: 0.85; }
