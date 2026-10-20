@@ -480,3 +480,32 @@
         gap: 2.5rem;
     }
 }
+
+@media (max-width: 768px) {
+    #menu-page {
+        padding: 5.5rem 5% 4rem;
+    }
+    .menu-header {
+        margin-bottom: 2rem;
+    }
+    .menu-title {
+        font-size: clamp(2.2rem, 7vw, 3.2rem);
+    }
+    .menu-subtitle {
+        font-size: 0.95rem;
+    }
+    .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    #menu-page {
+        padding: 6rem 5% 4rem;
+    }
+    .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}

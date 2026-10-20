@@ -19,11 +19,6 @@ export class InteractionManager {
         this.cards = document.querySelectorAll('.card');
         this.heroCenter = document.querySelector('.hero-center');
 
-        // Simulation HUD Elements
-        this.explodeBtn = document.querySelector('#explode-toggle-btn');
-        this.explodeSlider = document.querySelector('#explode-slider');
-        this.annotations = document.querySelectorAll('.layer-annotation');
-
         // Mouse tracking state
         this.mouse = { x: 0, y: 0, px: 0, py: 0 };
         this.currentMouse = { x: 0, y: 0 };
@@ -34,7 +29,6 @@ export class InteractionManager {
     init() {
         this.setupBerryStates();
         this.setupListeners();
-        this.setupSimulationHUD();
         this.startRenderLoop();
     }
 
@@ -61,60 +55,6 @@ export class InteractionManager {
             leaf.dataset.angle = Math.random() * 360;
             leaf.dataset.baseX = 0;
             leaf.dataset.baseY = 0;
-        });
-    }
-
-    setupSimulationHUD() {
-        // Toggle Button
-        if (this.explodeBtn) {
-            this.explodeBtn.addEventListener('click', () => {
-                this.modelController.toggleExplode();
-            });
-        }
-
-        // Range Slider
-        if (this.explodeSlider) {
-            this.explodeSlider.addEventListener('input', (e) => {
-                const val = parseFloat(e.target.value) / 100;
-                this.modelController.setExplodeProgress(val);
-            });
-        }
-
-        // Listen for explode progress changes from touch/mouse gestures
-        document.addEventListener('matcha:explode-change', (e) => {
-            const progress = e.detail.progress;
-
-            // Sync slider
-            if (this.explodeSlider) {
-                this.explodeSlider.value = Math.round(progress * 100);
-            }
-
-            // Sync toggle button text
-            if (this.explodeBtn) {
-                const lang = window.i18nManager?.currentLang || 'en';
-                if (progress > 0.5) {
-                    this.explodeBtn.classList.add('active');
-                    const text = lang === 'id' ? 'Satukan' : 'Assemble';
-                    this.explodeBtn.innerHTML = `<span>${text}</span> <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
-                } else {
-                    this.explodeBtn.classList.remove('active');
-                    const text = lang === 'id' ? 'Ketuk / Belah Layer' : 'Tap / Split Layers';
-                    this.explodeBtn.innerHTML = `<span>${text}</span> <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
-                }
-            }
-
-            // Reveal/Hide Annotations based on progress threshold
-            this.annotations.forEach(ann => {
-                if (progress > 0.3) {
-                    ann.classList.add('active');
-                    ann.classList.add('visible');
-                    ann.style.opacity = Math.min(1, (progress - 0.3) / 0.4);
-                } else {
-                    ann.classList.remove('active');
-                    ann.classList.remove('visible');
-                    ann.style.opacity = '0';
-                }
-            });
         });
     }
 

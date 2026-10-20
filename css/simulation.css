@@ -430,8 +430,44 @@
 }
 
 /* Responsive */
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
+    #simulation-page {
+        padding: 6rem 5% 5rem;
+    }
+    .sim-header {
+        margin-bottom: 2rem;
+    }
+    .sim-title {
+        font-size: clamp(2.2rem, 6vw, 3.5rem);
+    }
     .sim-workbench {
         grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    .sim-panel {
+        padding: 1.8rem;
+    }
+    .sim-cup-preview-wrap {
+        height: 330px;
+        min-height: 330px;
+    }
+}
+
+@media (max-width: 480px) {
+    #simulation-page {
+        padding: 5.5rem 4% 4rem;
+    }
+    .sim-panel {
+        padding: 1.35rem;
+    }
+    .sim-pills {
+        gap: 0.4rem;
+    }
+    .sim-pill {
+        padding: 0.55rem 0.95rem;
+        font-size: 0.75rem;
+    }
+    .sim-actions-row {
+        flex-direction: column;
     }
 }

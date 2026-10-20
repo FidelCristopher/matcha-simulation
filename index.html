@@ -173,7 +173,7 @@
                                 <span class="title-bold" data-i18n="hero_title_3">Ritual</span>
                             </h1>
                             <p class="description" data-i18n="hero_desc">
-                                Pure ceremonial Tencha from Kyoto, stone-ground to 5 microns. Layer botanical notes, explode the structure, and experience sustained zen focus.
+                                Pure ceremonial Tencha from Kyoto, stone-ground to 5 microns. Rotate and explore every angle in 360° to craft your personal zen ritual.
                             </p>
                             <div class="cta-group">
                                 <button class="primary-btn">
@@ -197,28 +197,9 @@
                             <model-viewer class="daun-matcha dm-bg" src="assets/models/daun_matcha.glb" environment-image="neutral" exposure="1.1" interaction-prompt="none" camera-orbit="45deg 65deg 105%"></model-viewer>
                         </div>
 
-                        <!-- 3d. Center 3D Matcha Layer Simulation (Three.js WebGL Stage) -->
+                        <!-- 3d. Center 3D Matcha Showcase (Three.js 360° Drag & Rotate) -->
                         <div class="hero-center">
-                            <div id="matcha-canvas-container" class="main-product-3d" title="Tap or click to split layers"></div>
-                        </div>
-
-                        <!-- Floating 3D Layer Annotations (Active when exploded) -->
-                        <div class="layer-annotation annotation-topping">
-                            <span class="badge">Layer 1 • Topping</span>
-                            <h4 data-i18n="annotation_topping_title">Matcha Foam & Dust</h4>
-                            <p data-i18n="annotation_topping_desc">Silky ceremonial foam rich in umami aroma, dusted with fine matcha micro-powder.</p>
-                        </div>
-
-                        <div class="layer-annotation annotation-isi">
-                            <span class="badge">Layer 2 • Isi / Infusion</span>
-                            <h4 data-i18n="annotation_isi_title">First-Harvest Uji Extract</h4>
-                            <p data-i18n="annotation_isi_desc">Cold-brewed first-harvest Tencha tea leaves from Kyoto with zero sugar.</p>
-                        </div>
-
-                        <div class="layer-annotation annotation-base">
-                            <span class="badge">Layer 3 • Base Foundation</span>
-                            <h4 data-i18n="annotation_base_title">Zen Mineral Soda Base</h4>
-                            <p data-i18n="annotation_base_desc">Artisan mountain spring mineral base infused with crisp, revitalizing micro-bubbles.</p>
+                            <div id="matcha-canvas-container" class="main-product-3d" title="Drag or swipe to rotate 360°"></div>
                         </div>
 
                         <!-- 3e. Foreground Floating Botanicals, Chasen & Daun Matcha (Above Can & Text) -->
@@ -268,17 +249,6 @@
 
                     </div>
                 </main>
-
-                <!-- Interactive Simulation HUD Controls -->
-                <div class="simulation-hud">
-                    <button id="explode-toggle-btn" class="explode-btn" aria-label="Tap to Split Layers">
-                        <span data-i18n="hud_split_btn">Tap / Split Layers</span>
-                    </button>
-                    <div class="hud-slider-group">
-                        <span class="hud-label" data-i18n="hud_explode_label">Explode:</span>
-                        <input type="range" id="explode-slider" class="explode-slider" min="0" max="100" value="0">
-                    </div>
-                </div>
 
                 <!-- Home Editorial Story & The Matcha Standard (Bento, Quote, Metrics) -->
                 <div class="home-bottom-content">

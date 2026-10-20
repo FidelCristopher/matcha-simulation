@@ -304,40 +304,161 @@
 .b8 { top: 35%; left: 60%; width: 70px; height: 70px; opacity: 0.45; }
 .b9 { top: 58%; left: 38%; width: 55px; height: 55px; opacity: 0.4; }
 
-/* Responsive */
-@media (max-width: 1024px) {
-    .main-title, .side-title {
-        font-size: clamp(3.2rem, 7vw, 5.5rem);
+/* Responsive Breakpoints: Tablet (768px - 1024px) & Mobile (<= 767px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .hero {
+        height: 100vh;
+        padding: 5rem 3% 2rem;
     }
-    .hero-left, .hero-right {
-        width: 320px;
+    .hero-content {
+        align-items: center;
+    }
+    .hero-left {
+        width: 300px;
+        padding: 0;
+        gap: 1.25rem;
+    }
+    .main-title, .side-title {
+        font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+    }
+    .description {
+        font-size: 0.88rem;
+        line-height: 1.5;
+        max-width: 280px;
+    }
+    .award-badge {
+        padding: 0.65rem 1rem;
+    }
+    .main-product-3d {
+        width: 55vw;
+        height: 60vh;
+    }
+    .hero-right {
+        width: 220px;
+        padding: 0;
+        gap: 1.5rem;
+        align-items: flex-end;
+    }
+    .side-title {
+        margin-bottom: 1rem;
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .hero {
-        padding: 5rem 1.5rem 2rem;
+        min-height: 100vh;
+        height: auto;
+        padding: 5.5rem 1.25rem 3.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        overflow: visible;
     }
     .hero-content {
         flex-direction: column;
-        justify-content: flex-start;
-        gap: 1.5rem;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        gap: 1.25rem;
+        position: relative;
     }
     .hero-left {
-        padding: 1rem 0;
+        width: 100%;
         max-width: 100%;
-        text-align: center;
         align-items: center;
+        text-align: center;
+        padding: 0;
+        gap: 1rem;
     }
-    .hero-right {
-        display: none;
+    .hero-kicker {
+        font-size: 0.68rem;
+        margin-bottom: 0;
+        justify-content: center;
     }
     .main-title {
-        font-size: 3.5rem;
+        font-size: clamp(2.5rem, 10vw, 3.6rem);
         white-space: normal;
+        line-height: 0.9;
+        text-align: center;
     }
     .description {
+        font-size: 0.88rem;
+        line-height: 1.55;
+        max-width: 320px;
         text-align: center;
+        margin: 0 auto;
+    }
+    .cta-group {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+    .primary-btn {
+        padding: 0.85rem 2.2rem;
+        font-size: 0.88rem;
+    }
+    .award-badge {
+        margin: 0 auto;
+        padding: 0.55rem 0.95rem;
+        max-width: 290px;
+    }
+    .hero-center {
+        position: relative;
+        width: 100%;
+        height: 42vh;
+        min-height: 300px;
+        max-height: 380px;
+        top: auto;
+        left: auto;
+        transform: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0.5rem 0;
+        pointer-events: auto;
+    }
+    .main-product-3d {
+        width: 90vw;
+        height: 100%;
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        cursor: grab;
+    }
+    .hero-right {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 0;
+        pointer-events: auto;
+        gap: 0.75rem;
+    }
+    .hero-right .side-title {
+        display: none;
+    }
+    .product-carousel {
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+    }
+    .carousel-cards {
+        justify-content: center;
+        gap: 0.75rem;
+    }
+    .card {
+        width: 110px;
+        padding: 0.55rem;
+    }
+
+    /* Clean up excessive floating items on mobile for max 60FPS fluid touch */
+    .leaves-container,
+    .berries-container,
+    .berries-container-bg {
+        display: none !important;
     }
 }
 
