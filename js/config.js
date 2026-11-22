@@ -52,9 +52,9 @@ export const APP_CONFIG = {
             price: '$3.49',
             themeClass: '',
             colors: {
-                inner: '#1f4f2c',
-                mid: '#102d18',
-                outer: '#040e07'
+                inner: '#1c5422',
+                mid: '#103713',
+                outer: '#061608'
             },
             modelBaseColorFactor: [1.0, 1.0, 1.0, 1.0],
             botanicalModel: 'assets/models/cherry.glb'
@@ -65,9 +65,9 @@ export const APP_CONFIG = {
             price: '$3.49',
             themeClass: 'yuzu-theme',
             colors: {
-                inner: '#3a5818',
-                mid: '#22370c',
-                outer: '#091203'
+                inner: '#2d5a1b',
+                mid: '#19380f',
+                outer: '#081705'
             },
             modelBaseColorFactor: [0.95, 1.0, 0.7, 1.0],
             botanicalModel: 'assets/models/blueberry.glb'

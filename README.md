@@ -1,6 +1,6 @@
 # MatchaTcih — Artisan Sparkling Matcha 3D Showcase & Crafting Atelier
 
-Landing page interaktif generasi baru berbasis WebGL & 3D real-time untuk minuman seremonial **MatchaTcih**, mengusung estetika *editorial brutalist* modern (terinspirasi dari Golda Coffee) dengan performa tinggi, visual bebas *AI slop*, dan pengalaman pengguna yang imersif.
+Landing page interaktif generasi baru berbasis WebGL & 3D real-time untuk minuman seremonial **MatchaTcih**, mengusung estetika _editorial brutalist_ modern (terinspirasi dari Golda Coffee) dengan performa tinggi, visual bebas _AI slop_, dan pengalaman pengguna yang imersif.
 
 ---
 
@@ -8,21 +8,21 @@ Landing page interaktif generasi baru berbasis WebGL & 3D real-time untuk minuma
 
 - **Estetika Editorial Dark & Non-AI Slop**:
   - Palet warna mewah **Obsidian Dark Canvas** (`#040604` s/d `#0f1911`) dengan aksen **Electric Ceremonial Matcha Lime** (`#a3e635`) dan **Kyoto Bamboo Whisk Gold** (`#eab308`).
-  - Tipografi editorial kelas atas memadukan **Grotesk Ultra-Bold (`Outfit` 900 tight-tracking)** dan **Editorial Italic Serif (`Newsreader`)** untuk highlight artistik (`Craft` *YOUR RITUAL*, *ritual of stillness*).
+  - Tipografi editorial kelas atas memadukan **Grotesk Ultra-Bold (`Outfit` 900 tight-tracking)** dan **Editorial Italic Serif (`Newsreader`)** untuk highlight artistik (`Craft` _YOUR RITUAL_, _ritual of stillness_).
   - Tampilan navigasi capsule glass minimalis dengan wordmark **`MatchaTcih.`**
 
 - **Real-time 3D Layer Simulation Stage**:
   - Kaleng 3D multi-layer dengan Three.js & Google `<model-viewer>`.
   - Fitur **Pinch / Split Layer** interaktif dengan slider dan tombol HUD neon lime.
-  - Orbit daun Tencha, pengocok bambu *chasen*, dan elemen botanical yang melayang bebas tanpa menutupi tipografi utama.
+  - Orbit daun Tencha, pengocok bambu _chasen_, dan elemen botanical yang melayang bebas tanpa menutupi tipografi utama.
 
 - **Bento Grid Showcase ("The Matcha Standard")**:
-  - Layout grid bento modern: ekstraksi dingin *First Flush*, terroir *Single Origin Uji*, cellular flow *L-Theanine 8H Focus*.
+  - Layout grid bento modern: ekstraksi dingin _First Flush_, terroir _Single Origin Uji_, cellular flow _L-Theanine 8H Focus_.
   - **Solid Accent Punch Card (`0g ADDED SUGAR / 100% PURE CEREMONIAL`)** dengan kontras visual tinggi.
-  - Testimonial editorial 5 bintang emas, kutipan otentik sommelier teh, baris metrik angka raksasa (*80mg L-Theanine*, *0 Calories*, *0% Jitters*, *100% Satisfaction*), serta watermark tipografi raksasa **`MATCHA`** di latar belakang.
+  - Testimonial editorial 5 bintang emas, kutipan otentik sommelier teh, baris metrik angka raksasa (_80mg L-Theanine_, _0 Calories_, _0% Jitters_, _100% Satisfaction_), serta watermark tipografi raksasa **`MATCHA`** di latar belakang.
 
 - **Matcha Crafting Atelier / Simulation Sandbox**:
-  - Laboratorium formulasi interaktif: pilih base teh (*Uji Ceremonial*, *Roasted Hojicha*, *Mineral Soda*), sesuaikan konsentrasi bubuk teh (1.0g s/d 4.5g), dan tekstur busa (*Oat Milk Cloud*, *Vanilla Foam*, *Coconut Velvet*, *Pure Zero Milk*).
+  - Laboratorium formulasi interaktif: pilih base teh (_Uji Ceremonial_, _Roasted Hojicha_, _Mineral Soda_), sesuaikan konsentrasi bubuk teh (1.0g s/d 4.5g), dan tekstur busa (_Oat Milk Cloud_, _Vanilla Foam_, _Coconut Velvet_, _Pure Zero Milk_).
   - Visual cup preview dengan layer dinamis realistis dan tekstur busa susu oat krem/ivory alami.
   - Analitik sensori real-time (Umami, Sweetness, EGCG Antioxidants, dan estimasi Kafein).
   - Terintegrasi langsung dengan tombol **Add to Cart** dan **Reset Recipe**.
@@ -91,6 +91,7 @@ MatchaTcih/
 ## Cara Menjalankan di Local
 
 Pastikan Anda berada di direktori project:
+
 ```bash
 cd C:\Users\Pongo\matcha-showcase
 # atau di WSL:
@@ -100,11 +101,13 @@ cd /mnt/c/Users/Pongo/matcha-showcase
 Jalankan perintah berikut:
 
 ### Opsi 1 (Rekomendasi - Otomatis Buka Browser & Auto-Reload):
+
 ```bash
 npm run dev
 ```
 
 ### Opsi 2 (Server Statis):
+
 ```bash
 npm run serve
 ```
@@ -118,4 +121,5 @@ Untuk mengakses Kitchen Display System (KDS):
 ---
 
 ## Lisensi
+
 MIT License © 2026 MatchaTcih. All rights reserved.

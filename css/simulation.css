@@ -8,7 +8,7 @@
     overflow-x: hidden;
     padding: 6.5rem 6% 6rem;
     -webkit-overflow-scrolling: touch;
-    background: radial-gradient(circle at 50% 15%, #0c150e 0%, #060906 70%);
+    background: radial-gradient(circle at 50% 15%, #FFFFFF 0%, #FFFDF5 50%, #F4EFE6 90%);
 }
 
 #simulation-page::-webkit-scrollbar {
@@ -18,7 +18,7 @@
     background: transparent;
 }
 #simulation-page::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(16, 55, 19, 0.15);
     border-radius: 9999px;
 }
 
@@ -37,14 +37,14 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(163, 230, 53, 0.1);
-    border: 1px solid rgba(163, 230, 53, 0.25);
+    background: rgba(98, 139, 53, 0.12);
+    border: 1px solid rgba(98, 139, 53, 0.4);
     padding: 0.4rem 1.1rem;
     border-radius: 9999px;
     font-family: var(--font-heading);
     font-size: 0.72rem;
     font-weight: 800;
-    color: var(--color-accent);
+    color: var(--color-phthalo, #103713);
     letter-spacing: 0.16em;
     text-transform: uppercase;
     margin-bottom: 1.25rem;
@@ -57,7 +57,7 @@
     font-weight: 900;
     letter-spacing: -0.04em;
     text-transform: uppercase;
-    color: #ffffff;
+    color: var(--text-primary);
     margin-bottom: 1.25rem;
 }
 
@@ -78,7 +78,7 @@
 
 /* Control Panel */
 .sim-panel {
-    background: var(--surface-card);
+    background: #ffffff;
     border: 1px solid var(--border-subtle);
     border-radius: 28px;
     padding: 2.5rem;
@@ -86,7 +86,7 @@
     flex-direction: column;
     gap: 2.2rem;
     backdrop-filter: blur(20px);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 16px 40px rgba(16, 55, 19, 0.08);
 }
 
 .sim-group {
@@ -104,7 +104,7 @@
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #ffffff;
+    color: var(--text-primary);
 }
 
 .sim-group-label span:last-child {
@@ -122,9 +122,9 @@
 }
 
 .sim-pill {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-subtle);
-    color: var(--text-muted);
+    background: var(--color-bone-light, #F6F1E7);
+    border: 1px solid var(--color-bone, #E2DBD0);
+    color: var(--color-phthalo, #103713);
     font-family: var(--font-ui);
     font-size: 0.8rem;
     font-weight: 700;
@@ -137,17 +137,17 @@
 }
 
 .sim-pill:hover {
-    color: #ffffff;
-    border-color: rgba(255, 255, 255, 0.25);
-    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-phthalo, #103713);
+    border-color: var(--color-accent);
+    background: #ffffff;
 }
 
 .sim-pill.active {
     background: var(--color-accent);
-    color: #000000;
+    color: var(--color-milk, #FFFDF5);
     border-color: var(--color-accent);
     font-weight: 800;
-    box-shadow: 0 4px 16px rgba(163, 230, 53, 0.25);
+    box-shadow: 0 4px 16px rgba(98, 139, 53, 0.35);
 }
 
 /* Slider */
@@ -162,7 +162,7 @@
     appearance: none;
     width: 100%;
     height: 6px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(16, 55, 19, 0.12);
     border-radius: 9999px;
     outline: none;
     cursor: pointer;
@@ -175,7 +175,7 @@
     height: 20px;
     border-radius: 50%;
     background: var(--color-accent);
-    box-shadow: 0 0 16px rgba(163, 230, 53, 0.6);
+    box-shadow: 0 0 16px rgba(98, 139, 53, 0.7);
     cursor: pointer;
     transition: transform 0.2s ease;
 }
@@ -208,7 +208,7 @@
     justify-content: center;
     gap: 0.75rem;
     background: var(--color-accent);
-    color: #000000;
+    color: var(--color-milk, #FFFDF5);
     border: none;
     padding: 0.95rem 1.6rem;
     border-radius: 9999px;
@@ -219,13 +219,13 @@
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.25s var(--ease-standard);
-    box-shadow: 0 6px 20px rgba(163, 230, 53, 0.25);
+    box-shadow: 0 6px 20px rgba(98, 139, 53, 0.35);
 }
 
 .sim-action-btn:hover {
     background: var(--color-accent-hover);
     transform: translateY(-2px);
-    box-shadow: 0 10px 28px rgba(163, 230, 53, 0.4);
+    box-shadow: 0 10px 28px rgba(98, 139, 53, 0.55);
 }
 
 .sim-action-btn:active {
@@ -238,9 +238,9 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-subtle);
-    color: var(--text-muted);
+    background: var(--color-bone-light, #F6F1E7);
+    border: 1px solid var(--color-bone, #E2DBD0);
+    color: var(--color-phthalo, #103713);
     padding: 0.95rem 1.25rem;
     border-radius: 9999px;
     font-family: var(--font-ui);
@@ -253,9 +253,9 @@
 }
 
 .sim-reset-btn:hover {
-    color: #ffffff;
-    border-color: rgba(255, 255, 255, 0.25);
-    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-phthalo, #103713);
+    border-color: var(--color-accent);
+    background: #ffffff;
 }
 
 /* Analytics & Preview Column */
@@ -266,7 +266,7 @@
 }
 
 .sim-cup-preview-wrap {
-    background: var(--surface-card);
+    background: #ffffff;
     border: 1px solid var(--border-subtle);
     border-radius: 28px;
     padding: 0;
@@ -279,7 +279,7 @@
     backdrop-filter: blur(20px);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 16px 40px rgba(16, 55, 19, 0.08);
 }
 
 .sim-3d-stage {
@@ -313,21 +313,21 @@
 }
 
 .sim-3d-hint {
-    background: rgba(10, 15, 11, 0.88);
-    border: 1px solid var(--border-subtle);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--border-medium);
     padding: 0.45rem 1rem;
     border-radius: 9999px;
     font-family: var(--font-ui);
     font-size: 0.75rem;
     font-weight: 600;
-    color: var(--text-secondary);
+    color: var(--color-phthalo, #103713);
     backdrop-filter: blur(12px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(16, 55, 19, 0.08);
 }
 
 .sim-3d-quick-btn {
     background: var(--color-accent);
-    color: #000000;
+    color: var(--color-milk, #FFFDF5);
     border: none;
     padding: 0.45rem 1.15rem;
     border-radius: 9999px;
@@ -339,7 +339,7 @@
     cursor: pointer;
     pointer-events: auto;
     transition: transform 0.2s ease, background 0.2s ease;
-    box-shadow: 0 4px 15px rgba(163, 230, 53, 0.3);
+    box-shadow: 0 4px 15px rgba(98, 139, 53, 0.4);
     white-space: nowrap;
 }
 
@@ -354,7 +354,7 @@
 
 /* Meters */
 .sim-meters {
-    background: var(--surface-card);
+    background: #ffffff;
     border: 1px solid var(--border-subtle);
     border-radius: 28px;
     padding: 2rem 2.2rem;
@@ -362,6 +362,7 @@
     flex-direction: column;
     gap: 1.4rem;
     backdrop-filter: blur(20px);
+    box-shadow: 0 16px 40px rgba(16, 55, 19, 0.08);
 }
 
 .sim-meter-item {
@@ -378,7 +379,7 @@
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #ffffff;
+    color: var(--text-primary);
 }
 
 .sim-meter-label-row span:last-child {
@@ -390,26 +391,27 @@
 .sim-meter-track {
     width: 100%;
     height: 6px;
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--color-bone-light, #F6F1E7);
     border-radius: 9999px;
     overflow: hidden;
 }
 
 .sim-meter-fill {
     height: 100%;
-    background: linear-gradient(90deg, #65a30d 0%, var(--color-accent) 100%);
+    background: linear-gradient(90deg, #103713 0%, var(--color-accent) 100%);
     border-radius: 9999px;
     transition: width 0.4s var(--ease-standard);
-    box-shadow: 0 0 10px rgba(163, 230, 53, 0.4);
+    box-shadow: 0 0 10px rgba(98, 139, 53, 0.5);
 }
 
 /* Summary Box */
 .sim-summary-box {
-    background: var(--surface-card);
+    background: #ffffff;
     border: 1px solid var(--border-subtle);
     border-radius: 24px;
     padding: 1.8rem;
     backdrop-filter: blur(20px);
+    box-shadow: 0 12px 30px rgba(16, 55, 19, 0.06);
 }
 
 .sim-summary-title {

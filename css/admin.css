@@ -76,7 +76,7 @@ body {
     width: 32px;
     height: 32px;
     object-fit: contain;
-    filter: drop-shadow(0 0 8px rgba(163, 230, 53, 0.45));
+    filter: drop-shadow(0 0 8px rgba(98, 139, 53, 0.45));
 }
 
 .admin-live-badge {

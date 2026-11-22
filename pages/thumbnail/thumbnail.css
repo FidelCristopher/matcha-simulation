@@ -1,0 +1,1211 @@
+/* ==========================================================================
+   Thumbnail / Welcome Attract Screen (Fun & Mewah - MA-TEA Animation Style)
+   Palette:
+     - Milk          : #FFFDF5 (Base Background & Crisp Pure Milk Tone)
+     - Phthalo Green : #103713 (Deep ceremonial forest green & bold typography)
+     - Maximum Green : #628B35 (Fresh matcha leaf vibrant accent & action CTA)
+     - Bone          : #E2DBD0 (Warm ceramic neutral tone & elegant borders)
+   ========================================================================== */
+
+.thumbnail-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    width: 100dvw;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 9999;
+    background: radial-gradient(circle at 50% 48%, #FFFFFF 0%, #FFFDF5 50%, #F3EDE3 95%);
+    color: var(--color-phthalo, #103713);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: max(1.4rem, env(safe-area-inset-top)) max(1.2rem, env(safe-area-inset-right)) max(1.2rem, env(safe-area-inset-bottom)) max(1.2rem, env(safe-area-inset-left));
+    box-sizing: border-box;
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0.65s;
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: inset 0 0 100px rgba(226, 219, 208, 0.45);
+}
+
+.thumbnail-screen.hidden {
+    opacity: 0;
+    transform: scale(1.06);
+    pointer-events: none;
+    visibility: hidden;
+}
+
+/* 1. Top Header (Prominent Centered Brand Logo) */
+.thumb-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1400px;
+    position: relative;
+    z-index: 30;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-top: clamp(1.4rem, 2.8vh, 2.6rem);
+    margin-bottom: 0.5rem;
+}
+
+.thumbnail-screen.play-anim .thumb-header {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.thumb-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.35rem;
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    font-size: clamp(2.6rem, 4.2vw, 3.8rem);
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    color: var(--color-phthalo, #103713);
+    text-transform: uppercase;
+    text-shadow: 0 4px 18px rgba(16, 55, 19, 0.05);
+    cursor: pointer;
+    user-select: none;
+}
+
+.thumb-logo-badge {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.thumb-logo img {
+    width: 76px;
+    height: 76px;
+    object-fit: contain;
+    background: #ffffff;
+    border-radius: 50%;
+    padding: 8px;
+    box-shadow: 0 8px 28px rgba(16, 55, 19, 0.14), 0 0 0 1px rgba(16, 55, 19, 0.08);
+    border: 3px solid var(--color-bone, #E2DBD0);
+    will-change: transform;
+    transform-origin: 50% 50%;
+    animation: logoBadgeWobble 4.2s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.thumb-logo-text {
+    display: inline-flex;
+    align-items: center;
+    letter-spacing: 0.02em;
+}
+
+.logo-char {
+    display: inline-block;
+    will-change: transform;
+    transform-origin: 50% 85%;
+    animation: logoCharWobble 4.2s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+    animation-delay: calc(var(--i, 0) * 0.045s);
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.logo-char.dot {
+    color: var(--color-maximum, #628B35);
+}
+
+/* Hover Interactive Shake */
+.thumb-logo:hover img {
+    animation: logoBadgeHoverShake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+}
+
+.thumb-logo:hover .logo-char {
+    animation: logoCharHoverShake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+    animation-delay: calc(var(--i, 0) * 0.035s);
+}
+
+/* Periodic Wobble Keyframes (Rest 65% -> Shake/Jiggle 35% - MA-TEA Schütteln Style) */
+@keyframes logoBadgeWobble {
+    0%, 65%, 100% {
+        transform: rotate(0deg) scale(1) translateY(0);
+    }
+    69% {
+        transform: rotate(-12deg) scale(1.08) translateY(-3px);
+    }
+    73% {
+        transform: rotate(11deg) scale(1.10) translateY(1px);
+    }
+    77% {
+        transform: rotate(-8deg) scale(1.06) translateY(-2px);
+    }
+    81% {
+        transform: rotate(6deg) scale(1.04) translateY(1px);
+    }
+    85% {
+        transform: rotate(-3deg) scale(1.02) translateY(-1px);
+    }
+    89% {
+        transform: rotate(2deg) scale(1.01) translateY(0);
+    }
+    93% {
+        transform: rotate(0deg) scale(1) translateY(0);
+    }
+}
+
+@keyframes logoCharWobble {
+    0%, 65%, 100% {
+        transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    }
+    69% {
+        transform: translate3d(0, -6px, 0) rotate(-6.5deg) scale(1.10);
+    }
+    73% {
+        transform: translate3d(0, 3px, 0) rotate(5.5deg) scale(1.06);
+    }
+    77% {
+        transform: translate3d(0, -4px, 0) rotate(-4.5deg) scale(1.03);
+    }
+    81% {
+        transform: translate3d(0, 2px, 0) rotate(3deg) scale(1.01);
+    }
+    85% {
+        transform: translate3d(0, -1px, 0) rotate(-1.5deg);
+    }
+    89% {
+        transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    }
+}
+
+/* Hover Shake Keyframes */
+@keyframes logoBadgeHoverShake {
+    0%, 100% {
+        transform: rotate(0deg) scale(1.12);
+    }
+    20% {
+        transform: rotate(-14deg) scale(1.14);
+    }
+    40% {
+        transform: rotate(13deg) scale(1.15);
+    }
+    60% {
+        transform: rotate(-9deg) scale(1.13);
+    }
+    80% {
+        transform: rotate(7deg) scale(1.12);
+    }
+}
+
+@keyframes logoCharHoverShake {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg) scale(1.08);
+    }
+    25% {
+        transform: translateY(-7px) rotate(-8deg) scale(1.14);
+    }
+    50% {
+        transform: translateY(4px) rotate(7deg) scale(1.08);
+    }
+    75% {
+        transform: translateY(-3px) rotate(-4deg) scale(1.04);
+    }
+}
+
+/* 2. Main Fun Graphic Stage (MA-TEA Inspired Layout - Wide Kiosk Canvas) */
+.thumb-hero-stage {
+    position: relative;
+    width: 100%;
+    max-width: 1720px;
+    height: 74vh;
+    min-height: 560px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    margin: 0 auto;
+}
+
+/* Background Graphic Vector Doodles & Botanical Leaves (Expanded 1700x700 Canvas) */
+.thumb-doodles-svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    width: 100%;
+    max-width: 1720px;
+    height: 100%;
+    max-height: 700px;
+    pointer-events: none;
+    z-index: 1;
+    overflow: visible;
+    opacity: 0.95;
+    will-change: transform, opacity;
+    contain: layout style paint;
+    backface-visibility: hidden;
+}
+
+.thumbnail-screen.play-anim .thumb-doodles-svg {
+    animation: maTeaDoodleBloom 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+}
+
+@keyframes maTeaDoodleBloom {
+    0% {
+        opacity: 0.08;
+        transform: translate3d(-50%, -50%, 0) scale(0.94);
+    }
+    65% {
+        opacity: 0.95;
+        transform: translate3d(-50%, -50%, 0) scale(1.015);
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(-50%, -50%, 0) scale(1);
+    }
+}
+
+/* Center Stage Spotlight (Soft Ambient Halo - Completely Transparent Outer Edge) */
+.thumb-spotlight {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    width: clamp(480px, 44vw, 780px);
+    height: clamp(380px, 50vh, 620px);
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.45) 0%, rgba(255, 253, 245, 0.2) 45%, rgba(255, 253, 245, 0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+    will-change: opacity;
+    backface-visibility: hidden;
+    transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.thumbnail-screen.play-anim .thumb-spotlight {
+    opacity: 1;
+}
+
+/* Big Blurred Green Brand Typography in Background (MA-TEA Style) */
+.thumb-backdrop-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    width: 100%;
+    text-align: center;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.thumbnail-screen.play-anim .thumb-backdrop-title {
+    opacity: 1;
+    animation: backdropTitleEntrance 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+.thumb-backdrop-title span {
+    display: inline-block;
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    font-size: clamp(4.8rem, 16vw, 13.8rem);
+    font-weight: 900;
+    letter-spacing: clamp(0.08em, 2.2vw, 0.22em);
+    text-transform: uppercase;
+    line-height: 0.85;
+    color: rgba(98, 139, 53, 0.13);
+    text-shadow: 0 0 35px rgba(98, 139, 53, 0.18), 0 0 75px rgba(16, 55, 19, 0.10);
+    filter: blur(2.5px);
+    -webkit-filter: blur(2.5px);
+    user-select: none;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+@keyframes backdropTitleEntrance {
+    0% {
+        opacity: 0;
+        transform: translate3d(-50%, -46%, 0) scale(0.92);
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(-50%, -50%, 0) scale(1);
+    }
+}
+
+/* ==========================================================================
+   MA-TEA EXACT CUP DUO ANIMATION:
+   1. Entrance Slide-In from Bottom with Dynamic Angle & Spring Overshoot
+   2. Seamless Transition into Gentle Continuous Idle Floating Bobbing
+   3. 2.5D Multi-Layered Interactive Parallax Response
+   ========================================================================== */
+
+.thumb-cups-stage {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    perspective: 1200px;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.thumb-cup-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+}
+
+.thumb-cup-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+}
+
+.thumb-cup-inner picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Left Cup (Signature Latte with logo):
+   Slides up from bottom-left with tilt, settling into -6deg */
+.thumb-cup-card.cup-left {
+    z-index: 1;
+    transform-origin: 50% 100%;
+    transform: translate3d(0, 0, 0) rotate(-6deg);
+}
+
+.thumbnail-screen.play-anim .thumb-cup-card.cup-left {
+    animation: maTeaCupEntranceLeft 1.25s cubic-bezier(0.16, 1.08, 0.35, 1.18) 0.18s both;
+}
+
+@keyframes maTeaCupEntranceLeft {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 950px, 0) rotate(-22deg) scale(0.85);
+    }
+    60% {
+        opacity: 1;
+        transform: translate3d(0, -22px, 0) rotate(-4deg) scale(1.02);
+    }
+    82% {
+        transform: translate3d(0, 4px, 0) rotate(-6.8deg) scale(0.995);
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) rotate(-6deg) scale(1);
+    }
+}
+
+/* Right Cup (Vanilla Cloud Foam edition):
+   Emerges slightly first from bottom-right, tilted +7deg, overlapping slightly over left cup */
+.thumb-cup-card.cup-right {
+    z-index: 2;
+    margin-left: -3.5rem; /* Dynamic overlap like the MA-TEA bottle pair */
+    transform-origin: 50% 100%;
+    transform: translate3d(0, 12px, 0) rotate(7deg);
+}
+
+.thumbnail-screen.play-anim .thumb-cup-card.cup-right {
+    animation: maTeaCupEntranceRight 1.18s cubic-bezier(0.16, 1.08, 0.35, 1.18) 0.05s both;
+}
+
+@keyframes maTeaCupEntranceRight {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 950px, 0) rotate(22deg) scale(0.85);
+    }
+    60% {
+        opacity: 1;
+        transform: translate3d(0, -26px, 0) rotate(8.8deg) scale(1.02);
+    }
+    82% {
+        transform: translate3d(0, 16px, 0) rotate(6.2deg) scale(0.995);
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 12px, 0) rotate(7deg) scale(1);
+    }
+}
+
+/* Continuous Idle Floating Bobbing (Lively, Noticeable & Dynamic MA-TEA Float) */
+.thumbnail-screen.play-anim .thumb-cup-card.cup-left .thumb-cup-inner {
+    animation: maTeaCupFloatLeft 2.4s ease-in-out 1.45s infinite alternate;
+}
+
+.thumbnail-screen.play-anim .thumb-cup-card.cup-right .thumb-cup-inner {
+    animation: maTeaCupFloatRight 2.7s ease-in-out 1.25s infinite alternate;
+}
+
+@keyframes maTeaCupFloatLeft {
+    0% {
+        transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    }
+    100% {
+        transform: translate3d(0, -28px, 0) rotate(3.6deg) scale(1.025);
+    }
+}
+
+@keyframes maTeaCupFloatRight {
+    0% {
+        transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    }
+    100% {
+        transform: translate3d(0, -30px, 0) rotate(-4.0deg) scale(1.025);
+    }
+}
+
+/* Hover effect on either cup - Smooth GPU Scaling without Keyframe Glitch */
+.thumb-cup-card:hover {
+    z-index: 10 !important;
+}
+
+.thumb-cup-card:hover .thumb-cup-inner {
+    animation-play-state: paused;
+}
+
+.thumb-cup-img {
+    height: clamp(280px, 44vh, 420px);
+    width: auto;
+    object-fit: contain;
+    filter: none;
+    user-select: none;
+    pointer-events: auto;
+    display: block;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-origin: 50% 85%;
+    transform: translate3d(0, 0, 0) scale(1);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+}
+
+.thumb-cup-card:hover .thumb-cup-img {
+    transform: translate3d(0, -12px, 0) scale(1.07);
+}
+
+/* Playful Badge Floating on Cups */
+.thumb-cup-tag {
+    position: absolute;
+    bottom: -15px;
+    background: var(--color-phthalo, #103713);
+    color: var(--color-milk, #FFFDF5);
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.42rem 1.15rem;
+    border-radius: 9999px;
+    box-shadow: 0 8px 24px rgba(16, 55, 19, 0.25), 0 0 16px rgba(98, 139, 53, 0.3);
+    border: 2px solid var(--color-maximum, #628B35);
+    white-space: nowrap;
+    z-index: 15;
+    pointer-events: none;
+    transform: translate3d(0, 0, 0) scale(1);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.thumb-cup-card:hover .thumb-cup-tag {
+    transform: translate3d(0, -6px, 0) scale(1.04);
+    box-shadow: 0 12px 28px rgba(16, 55, 19, 0.32), 0 0 18px rgba(98, 139, 53, 0.4);
+}
+
+/* Floating Fun Sticker Badges (MA-TEA Style with Staggered Pop-In) */
+.thumb-sticker {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.96);
+    border: 2px solid var(--color-maximum, #628B35);
+    color: var(--color-phthalo, #103713);
+    padding: 0.6rem 1.25rem;
+    border-radius: 18px;
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    box-shadow: 0 10px 24px rgba(16, 55, 19, 0.10);
+    z-index: 20;
+    pointer-events: none;
+    opacity: 0;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+}
+.st-1 {
+    top: 15%;
+    left: 12%;
+    transform: translate3d(0, 0, 0) rotate(-10deg);
+}
+
+.st-2 {
+    top: 18%;
+    right: 12%;
+    transform: translate3d(0, 0, 0) rotate(8deg);
+}
+
+.st-3 {
+    bottom: 14%;
+    left: 13%;
+    transform: translate3d(0, 0, 0) rotate(6deg);
+}
+
+.st-4 {
+    bottom: 16%;
+    right: 13%;
+    transform: translate3d(0, 0, 0) rotate(-8deg);
+}
+
+/* Sticker Entrance Pop + Continuous Floating - Kept Permanently Visible! */
+.thumbnail-screen.play-anim .thumb-sticker,
+.thumbnail-screen.idle-active .thumb-sticker {
+    opacity: 1 !important;
+}
+
+.thumbnail-screen.play-anim .st-1 {
+    animation: maTeaStickerPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.55s forwards,
+               stickerFloat1 3.2s ease-in-out 1.35s infinite alternate;
+}
+
+.thumbnail-screen.play-anim .st-2 {
+    animation: maTeaStickerPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.70s forwards,
+               stickerFloat2 3.6s ease-in-out 1.50s infinite alternate;
+}
+
+.thumbnail-screen.play-anim .st-3 {
+    animation: maTeaStickerPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.85s forwards,
+               stickerFloat3 3.0s ease-in-out 1.65s infinite alternate;
+}
+
+.thumbnail-screen.play-anim .st-4 {
+    animation: maTeaStickerPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 1.00s forwards,
+               stickerFloat4 3.4s ease-in-out 1.80s infinite alternate;
+}
+
+@keyframes maTeaStickerPop {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 0, 0) scale(0.25) rotate(var(--rot, 0deg));
+    }
+    65% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1.15) rotate(calc(var(--rot, 0deg) + 3deg));
+    }
+    85% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(0.96) rotate(calc(var(--rot, 0deg) - 1deg));
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1) rotate(var(--rot, 0deg));
+    }
+}
+
+/* Gentle Micro-Floating for Stickers after Entry (Guaranteed Opacity 1 Never Disappearing) */
+@keyframes stickerFloat1 {
+    0% { 
+        opacity: 1 !important;
+        transform: translate3d(0, 0, 0) scale(1) rotate(-10deg); 
+    }
+    100% { 
+        opacity: 1 !important;
+        transform: translate3d(0, -16px, 0) scale(1) rotate(-7deg); 
+    }
+}
+
+@keyframes stickerFloat2 {
+    0% { 
+        opacity: 1 !important;
+        transform: translate3d(0, 0, 0) scale(1) rotate(8deg); 
+    }
+    100% { 
+        opacity: 1 !important;
+        transform: translate3d(0, -18px, 0) scale(1) rotate(11deg); 
+    }
+}
+
+@keyframes stickerFloat3 {
+    0% { 
+        opacity: 1 !important;
+        transform: translate3d(0, 0, 0) scale(1) rotate(6deg); 
+    }
+    100% { 
+        opacity: 1 !important;
+        transform: translate3d(0, -15px, 0) scale(1) rotate(3deg); 
+    }
+}
+
+@keyframes stickerFloat4 {
+    0% { 
+        opacity: 1 !important;
+        transform: translate3d(0, 0, 0) scale(1) rotate(-8deg); 
+    }
+    100% { 
+        opacity: 1 !important;
+        transform: translate3d(0, -17px, 0) scale(1) rotate(-5deg); 
+    }
+}
+
+/* 3. Bottom Call To Action / Minimalist Tap Cue */
+.thumb-footer {
+    position: relative;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.thumbnail-screen.play-anim .thumb-footer {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.thumb-tap-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(16, 55, 19, 0.12);
+    padding: 0.58rem 1.45rem;
+    border-radius: 9999px;
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    color: var(--color-phthalo, #103713);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    text-transform: uppercase;
+    box-shadow: 0 4px 20px rgba(16, 55, 19, 0.06);
+    animation: tapAmbientFloat 3.8s ease-in-out infinite alternate;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.thumb-tap-hint:hover {
+    background: #ffffff;
+    border-color: rgba(98, 139, 53, 0.45);
+    color: var(--color-maximum, #628B35);
+    box-shadow: 0 6px 24px rgba(16, 55, 19, 0.1);
+    transform: translateY(-2px);
+}
+
+.thumb-tap-dot {
+    position: relative;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-maximum, #628B35);
+    flex-shrink: 0;
+}
+
+.thumb-tap-dot::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-maximum, #628B35);
+    opacity: 0.6;
+    animation: tapDotRipple 2.4s infinite ease-out;
+}
+
+@keyframes tapDotRipple {
+    0% {
+        transform: scale(0.6);
+        opacity: 0.85;
+    }
+    100% {
+        transform: scale(2.4);
+        opacity: 0;
+    }
+}
+
+.thumb-tap-text {
+    line-height: 1;
+}
+
+.thumb-tap-arrow {
+    width: 13px;
+    height: 13px;
+    color: var(--color-maximum, #628B35);
+    opacity: 0.75;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+}
+
+.thumb-tap-hint:hover .thumb-tap-arrow {
+    transform: translateX(3px);
+    opacity: 1;
+}
+
+@keyframes tapAmbientFloat {
+    0% {
+        transform: translateY(0);
+        opacity: 0.88;
+    }
+    100% {
+        transform: translateY(-4px);
+        opacity: 1;
+    }
+}
+
+/* Floating Return to Screensaver Button (Inside Main App) */
+.kiosk-screensaver-btn {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    z-index: 900;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #ffffff;
+    border: 1.5px solid var(--color-bone, #E2DBD0);
+    color: var(--color-phthalo, #103713);
+    padding: 0.55rem 1.15rem;
+    border-radius: 9999px;
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    backdrop-filter: blur(14px);
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(16, 55, 19, 0.1);
+    transition: all 0.25s var(--ease-standard, ease);
+    opacity: 0.9;
+}
+
+.kiosk-screensaver-btn:hover {
+    opacity: 1;
+    color: var(--color-milk, #FFFDF5);
+    border-color: var(--color-maximum, #628B35);
+    background: var(--color-phthalo, #103713);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 55, 19, 0.2);
+}
+
+.kiosk-screensaver-btn svg {
+    color: var(--color-maximum, #628B35);
+}
+
+/* ==========================================================================
+   Comprehensive Responsive System (Mobile Phones, Portrait Kiosks & Tablets)
+   Supports:
+     - iPhone 12 / 13 / 14 / 15 / 16 (Standard, Pro, Pro Max, Plus, Mini, SE)
+     - Android Devices (Samsung Galaxy S/A/Z Fold, Google Pixel, Xiaomi, Oppo)
+     - Vertical / Portrait Kiosks (1080x1920, 1440x2560) & iPad Portrait
+     - Landscape Phone Orientations
+   ========================================================================== */
+
+/* 1. Large Vertical / Portrait Kiosks (e.g., 1080x1920 Totems, iPad in Portrait) */
+@media (min-width: 769px) and (orientation: portrait) {
+    .thumb-header {
+        margin-top: clamp(2rem, 3.8vh, 3.2rem);
+    }
+    .thumb-logo {
+        font-size: clamp(3.0rem, 5.2vw, 4.2rem);
+        gap: 1.4rem;
+    }
+    .thumb-logo img {
+        width: 82px;
+        height: 82px;
+    }
+    .thumb-hero-stage {
+        height: 68vh;
+        max-height: 950px;
+    }
+    .thumb-cup-img {
+        height: clamp(340px, 36vh, 480px);
+    }
+    .thumb-cup-card.cup-right {
+        margin-left: -4rem;
+    }
+    .thumb-cup-tag {
+        font-size: 0.85rem;
+        padding: 0.48rem 1.35rem;
+    }
+    .thumb-sticker {
+        font-size: 0.92rem;
+        padding: 0.72rem 1.45rem;
+        border-radius: 20px;
+    }
+    .st-1 { top: 12%; left: 8%; }
+    .st-2 { top: 15%; right: 8%; }
+    .st-3 { bottom: 12%; left: 8%; }
+    .st-4 { bottom: 14%; right: 8%; }
+    .thumb-footer {
+        margin-bottom: 2rem;
+    }
+    .thumb-tap-hint {
+        padding: 0.75rem 2rem;
+        font-size: 0.86rem;
+    }
+}
+
+/* 2. Tablets (iPad / Galaxy Tab in Landscape or Portrait) */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .thumb-header {
+        margin-top: 1.4rem;
+    }
+    .thumb-logo {
+        font-size: 2.6rem;
+        gap: 1.15rem;
+    }
+    .thumb-logo img {
+        width: 66px;
+        height: 66px;
+    }
+    .thumb-hero-stage {
+        height: 68vh;
+    }
+    .thumb-cup-img {
+        height: clamp(260px, 38vh, 340px);
+    }
+    .thumb-cup-card.cup-right {
+        margin-left: -2.8rem;
+    }
+    .st-1 { top: 12%; left: 6%; }
+    .st-2 { top: 15%; right: 6%; }
+    .st-3 { bottom: 10%; left: 7%; }
+    .st-4 { bottom: 12%; right: 7%; }
+}
+
+/* 3. Smartphones (iPhone, Samsung Galaxy, Pixel, etc. - Width <= 768px) */
+@media (max-width: 768px) {
+    .thumbnail-screen {
+        padding: max(1.2rem, env(safe-area-inset-top)) max(0.8rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(0.8rem, env(safe-area-inset-left));
+    }
+
+    /* Header - Lowered down to comfortable upper center */
+    .thumb-header {
+        margin-top: clamp(1.4rem, 3.6vh, 2.5rem);
+        margin-bottom: 0.35rem;
+        flex-shrink: 0;
+    }
+    .thumb-logo {
+        font-size: clamp(1.85rem, 6.8vw, 2.45rem);
+        gap: clamp(0.75rem, 2.5vw, 1.15rem);
+    }
+    .thumb-logo img {
+        width: clamp(48px, 12vw, 60px);
+        height: clamp(48px, 12vw, 60px);
+        padding: 5px;
+        border-width: 2.5px;
+    }
+
+    /* Main Hero Stage - Flexible Vertical Expansion without Overflow */
+    .thumb-hero-stage {
+        flex: 1 1 auto;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        max-height: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    /* Radial Spotlight scaled for Phone Viewport */
+    .thumb-spotlight {
+        width: clamp(280px, 86vw, 420px);
+        height: clamp(280px, 48vh, 420px);
+    }
+
+    /* Blurred Green MATCHA Backdrop Watermark for Mobile */
+    .thumb-backdrop-title span {
+        font-size: clamp(3.0rem, 15vw, 6.0rem);
+        letter-spacing: 0.10em;
+        filter: blur(2px);
+        -webkit-filter: blur(2px);
+    }
+
+    /* Botanical Vector Wings Scaled to Frame the Phone Edges */
+    .thumb-doodles-svg {
+        width: auto;
+        min-width: 860px;
+        max-width: none;
+        height: 100%;
+        max-height: 520px;
+        left: 50%;
+        top: 50%;
+        transform: translate3d(-50%, -50%, 0);
+    }
+
+    /* Dual Matcha Cups Stage */
+    .thumb-cups-stage {
+        gap: 0;
+    }
+    .thumb-cup-card.cup-left {
+        transform: translate3d(0, 0, 0) rotate(-5.5deg);
+    }
+    .thumb-cup-card.cup-right {
+        margin-left: -2.3rem;
+        transform: translate3d(0, 10px, 0) rotate(6.5deg);
+    }
+    .thumb-cup-img {
+        height: clamp(210px, 32vh, 290px);
+    }
+
+    /* Staggered Floating Tags (Guaranteed Zero Text Collisions) */
+    .thumb-cup-tag {
+        font-size: clamp(0.6rem, 2.2vw, 0.70rem);
+        padding: 0.34rem 0.82rem;
+        letter-spacing: 0.05em;
+        border-width: 1.5px;
+    }
+    .thumb-cup-card.cup-left .thumb-cup-tag {
+        bottom: -8px;
+    }
+    .thumb-cup-card.cup-right .thumb-cup-tag {
+        bottom: -14px;
+    }
+
+    /* Floating Stickers - Ergonomically Arranged for Vertical Phone Viewport */
+    .thumb-sticker {
+        padding: 0.36rem 0.72rem;
+        font-size: clamp(0.6rem, 2.1vw, 0.70rem);
+        border-radius: 13px;
+        gap: 0.4rem;
+        white-space: nowrap;
+        border-width: 1.5px;
+        box-shadow: 0 6px 18px rgba(16, 55, 19, 0.09);
+    }
+    .st-1 {
+        top: 4%;
+        left: 3%;
+        transform: translate3d(0, 0, 0) rotate(-6deg);
+    }
+    .st-2 {
+        top: 7%;
+        right: 3%;
+        transform: translate3d(0, 0, 0) rotate(6deg);
+    }
+    .st-3 {
+        bottom: 7%;
+        left: 3%;
+        transform: translate3d(0, 0, 0) rotate(5deg);
+    }
+    .st-4 {
+        bottom: 9%;
+        right: 3%;
+        transform: translate3d(0, 0, 0) rotate(-6deg);
+    }
+
+    /* Return to Screensaver Button inside Kiosk */
+    .kiosk-screensaver-btn {
+        bottom: max(0.9rem, env(safe-area-inset-bottom));
+        left: max(0.9rem, env(safe-area-inset-left));
+        padding: 0.45rem 0.95rem;
+        font-size: 0.65rem;
+    }
+
+    /* Footer & Tap Anywhere Cue */
+    .thumb-footer {
+        margin-bottom: 0.25rem;
+        flex-shrink: 0;
+    }
+    .thumb-tap-hint {
+        padding: 0.52rem 1.35rem;
+        font-size: clamp(0.66rem, 2.5vw, 0.75rem);
+        letter-spacing: 0.12em;
+        gap: 0.55rem;
+    }
+}
+
+/* 4. Compact Smartphones (iPhone Mini, iPhone SE, Galaxy Standard - Width <= 420px) */
+@media (max-width: 420px) {
+    .thumb-header {
+        margin-top: clamp(1.2rem, 3vh, 2rem);
+    }
+    .thumb-logo {
+        font-size: clamp(1.68rem, 6.5vw, 2.05rem);
+        gap: 0.75rem;
+    }
+    .thumb-logo img {
+        width: 48px;
+        height: 48px;
+        padding: 5px;
+    }
+    .thumb-backdrop-title span {
+        font-size: clamp(2.4rem, 14vw, 4.2rem);
+        letter-spacing: 0.08em;
+    }
+    .thumb-cup-img {
+        height: clamp(190px, 30vh, 255px);
+    }
+    .thumb-cup-card.cup-right {
+        margin-left: -1.95rem;
+    }
+    .thumb-cup-tag {
+        font-size: 0.58rem;
+        padding: 0.28rem 0.68rem;
+    }
+    .thumb-sticker {
+        padding: 0.3rem 0.62rem;
+        font-size: 0.58rem;
+        gap: 0.35rem;
+        border-radius: 11px;
+    }
+    .st-1 { top: 3%; left: 2%; }
+    .st-2 { top: 5%; right: 2%; }
+    .st-3 { bottom: 6%; left: 2%; }
+    .st-4 { bottom: 8%; right: 2%; }
+    .thumb-tap-hint {
+        padding: 0.48rem 1.15rem;
+        font-size: 0.68rem;
+    }
+}
+
+/* 5. Ultra-Narrow Devices (Galaxy Z Fold Cover Screen, Small Displays - Width <= 360px) */
+@media (max-width: 360px) {
+    .thumb-header {
+        margin-top: 1.1rem;
+    }
+    .thumb-logo {
+        font-size: 1.5rem;
+        gap: 0.65rem;
+    }
+    .thumb-logo img {
+        width: 42px;
+        height: 42px;
+        padding: 4px;
+    }
+    .thumb-cup-img {
+        height: clamp(170px, 28vh, 225px);
+    }
+    .thumb-cup-card.cup-right {
+        margin-left: -1.65rem;
+    }
+    .thumb-cup-tag {
+        font-size: 0.54rem;
+        padding: 0.25rem 0.58rem;
+    }
+    .thumb-sticker {
+        padding: 0.26rem 0.52rem;
+        font-size: 0.54rem;
+        gap: 0.3rem;
+        border-radius: 9px;
+    }
+    .st-1 { top: 2%; left: 1%; }
+    .st-2 { top: 4%; right: 1%; }
+    .st-3 { bottom: 5%; left: 1%; }
+    .st-4 { bottom: 7%; right: 1%; }
+    .thumb-tap-hint {
+        padding: 0.44rem 1.05rem;
+        font-size: 0.64rem;
+        letter-spacing: 0.1em;
+    }
+}
+
+/* 6. Short Vertical Viewports (iPhone SE 667px, Older Androids - Height <= 680px) */
+@media (max-height: 680px) and (orientation: portrait) {
+    .thumbnail-screen {
+        padding: max(0.75rem, env(safe-area-inset-top)) 0.8rem max(0.6rem, env(safe-area-inset-bottom)) 0.8rem;
+    }
+    .thumb-header {
+        margin-top: clamp(0.75rem, 1.8vh, 1.2rem);
+    }
+    .thumb-logo {
+        font-size: 1.55rem;
+        gap: 0.65rem;
+    }
+    .thumb-logo img {
+        width: 42px;
+        height: 42px;
+    }
+    .thumb-cup-img {
+        height: clamp(165px, 28vh, 215px);
+    }
+    .thumb-spotlight {
+        width: 280px;
+        height: 280px;
+    }
+    .st-1 { top: 2%; }
+    .st-2 { top: 4%; }
+    .st-3 { bottom: 4%; }
+    .st-4 { bottom: 6%; }
+    .thumb-footer {
+        margin-bottom: 0.1rem;
+    }
+}
+
+/* 7. Landscape Phone Orientations (Phones held horizontally - Height <= 520px) */
+@media (max-height: 520px) and (orientation: landscape) {
+    .thumbnail-screen {
+        padding: 0.4rem 3%;
+    }
+    .thumb-header {
+        margin-top: 0.25rem;
+    }
+    .thumb-logo {
+        font-size: 1.45rem;
+        gap: 0.65rem;
+    }
+    .thumb-logo img {
+        width: 36px;
+        height: 36px;
+        padding: 4px;
+    }
+    .thumb-hero-stage {
+        flex: 1 1 auto;
+        height: auto;
+        min-height: 0;
+    }
+    .thumb-cup-img {
+        height: clamp(140px, 48vh, 195px);
+    }
+    .thumb-cup-card.cup-right {
+        margin-left: -1.5rem;
+    }
+    .thumb-cup-tag {
+        font-size: 0.55rem;
+        padding: 0.22rem 0.55rem;
+        bottom: -8px;
+    }
+    .thumb-sticker {
+        font-size: 0.58rem;
+        padding: 0.28rem 0.6rem;
+    }
+    .st-1 { top: 4%; left: 8%; }
+    .st-2 { top: 4%; right: 8%; }
+    .st-3 { bottom: 4%; left: 8%; }
+    .st-4 { bottom: 4%; right: 8%; }
+    .thumb-footer {
+        margin-bottom: 0.15rem;
+    }
+    .thumb-tap-hint {
+        padding: 0.38rem 1.05rem;
+        font-size: 0.64rem;
+    }
+}

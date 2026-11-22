@@ -105,6 +105,13 @@ export class InteractionManager {
 
     startRenderLoop() {
         const tick = () => {
+            // If the welcome / thumbnail screen is currently visible,
+            // yield CPU & GPU resources completely to the kiosk entrance animation!
+            if (window.thumbnailManager && !window.thumbnailManager.isKioskActive) {
+                requestAnimationFrame(tick);
+                return;
+            }
+
             const time = Date.now() * 0.001;
 
             // Interpolate cursor tilt

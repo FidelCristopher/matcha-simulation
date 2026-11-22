@@ -1,54 +1,72 @@
 /* ==========================================================================
-   Design Tokens & CSS Variables (Golda-Inspired Modern Editorial Dark)
+   Design Tokens & CSS Variables (Milk White Base #FFFDF5 Theme)
+   Palette:
+     - Milk          : #FFFDF5 (Base Background & Crisp Bright Elements)
+     - Phthalo Green : #103713 (Deep Contrast Text, Headings & Dark Accents)
+     - Maximum Green : #628B35 (Fresh Matcha Leaf Accent, Buttons & Highlights)
+     - Bone          : #E2DBD0 (Soft Warm Ceramic Neutral Surfaces & Borders)
    ========================================================================== */
 :root {
-    /* Brand Colors - Obsidian Dark + Electric Ceremonial Matcha Lime + Bamboo Gold */
-    --color-primary: #121c14;
-    --color-primary-dark: #0a0f0b;
-    --color-primary-deep: #050705;
+    /* Core User Palette */
+    --color-milk: #FFFDF5;
+    --color-phthalo: #103713;
+    --color-phthalo-dark: #0a240d;
+    --color-phthalo-deep: #051407;
+    --color-maximum: #628B35;
+    --color-maximum-hover: #50742a;
+    --color-maximum-dim: rgba(98, 139, 53, 0.15);
+    --color-bone: #E2DBD0;
+    --color-bone-light: #F6F1E7;
+    --color-bone-dim: rgba(226, 219, 208, 0.4);
+
+    /* Semantic Brand Colors */
+    --color-primary: #103713;
+    --color-primary-dark: #0a240d;
+    --color-primary-deep: #051407;
     
-    /* Primary Accent: Electric Ceremonial Matcha Lime (Punchy & Non-Slop) */
-    --color-accent: #a3e635;
-    --color-accent-hover: #bef264;
-    --color-accent-dim: rgba(163, 230, 53, 0.15);
-    --color-accent-contrast: #000000;
+    /* Primary Accent: Maximum Green */
+    --color-accent: #628B35;
+    --color-accent-hover: #50742a;
+    --color-accent-dim: rgba(98, 139, 53, 0.16);
+    --color-accent-contrast: #FFFDF5;
     
-    /* Secondary Accent: Kyoto Bamboo Whisk Gold */
-    --color-gold: #eab308;
-    --color-gold-hover: #facc15;
-    --color-gold-dim: rgba(234, 179, 8, 0.15);
+    /* Secondary Accent: Warm Bone Gold */
+    --color-gold: #c29d47;
+    --color-gold-hover: #ad8a38;
+    --color-gold-dim: rgba(194, 157, 71, 0.15);
 
-    /* Text & UI Colors - High Contrast Editorial for WCAG AA/AAA */
-    --text-primary: #ffffff;
-    --text-secondary: #f3f4f6;
-    --text-muted: rgba(255, 255, 255, 0.82);
-    --text-dim: rgba(255, 255, 255, 0.65);
+    /* Text & UI Colors - Deep Contrast Phthalo Green */
+    --text-primary: #103713;
+    --text-secondary: #27522d;
+    --text-muted: rgba(16, 55, 19, 0.78);
+    --text-dim: rgba(16, 55, 19, 0.54);
 
-    /* Surfaces & Bento Cards */
-    --surface-dark: #070a08;
-    --surface-card: rgba(13, 18, 14, 0.82);
-    --surface-card-hover: rgba(18, 25, 19, 0.95);
-    --border-subtle: rgba(255, 255, 255, 0.08);
-    --border-medium: rgba(255, 255, 255, 0.16);
-    --border-accent: rgba(163, 230, 53, 0.35);
+    /* Surfaces & Cards - Clean, Bright, Luxurious */
+    --surface-light: #FFFDF5;
+    --surface-dark: #F5EFE4;
+    --surface-card: #FFFFFF;
+    --surface-card-hover: #FCFAF5;
+    --border-subtle: rgba(16, 55, 19, 0.10);
+    --border-medium: rgba(16, 55, 19, 0.18);
+    --border-accent: rgba(98, 139, 53, 0.45);
 
-    /* Glassmorphism Tokens - Matte Dark Glass */
-    --glass-bg: rgba(10, 14, 11, 0.78);
-    --glass-bg-hover: rgba(18, 24, 19, 0.88);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-border-highlight: rgba(163, 230, 53, 0.3);
+    /* Glassmorphism Tokens - Frosted Milk Glass */
+    --glass-bg: rgba(255, 253, 245, 0.88);
+    --glass-bg-hover: rgba(255, 255, 255, 0.96);
+    --glass-border: rgba(16, 55, 19, 0.12);
+    --glass-border-highlight: rgba(98, 139, 53, 0.35);
     --glass-blur: 16px;
 
-    /* Typography - Grotesk Headings + Editorial Italic Serif + Crisp Sans Body */
+    /* Typography */
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-editorial: 'Newsreader', Georgia, serif;
     --font-ui: 'Inter', sans-serif;
 
-    /* Dynamic Luxury Dark Radial Gradients - Rich Ceremonial Matcha Ambient Center Glow */
-    --bg-inner: #1b4527;
-    --bg-mid: #0f2416;
-    --bg-outer: #040604;
+    /* Base Background Gradients (Milk Base #FFFDF5) */
+    --bg-inner: #FFFFFF;
+    --bg-mid: #FFFDF5;
+    --bg-outer: #F4EFE6;
 
     /* Motion Defaults */
     --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
@@ -58,10 +76,10 @@
 
 /* Flavor Theme: Matcha Yuzu */
 body.yuzu-theme {
-    --color-accent: #facc15;
-    --color-accent-hover: #fde047;
-    --color-accent-dim: rgba(250, 204, 21, 0.15);
-    --bg-inner: #16180a;
-    --bg-mid: #0d0f06;
-    --bg-outer: #050603;
+    --color-accent: #7ca132;
+    --color-accent-hover: #678725;
+    --color-accent-dim: rgba(124, 161, 50, 0.18);
+    --bg-inner: #FFFFFF;
+    --bg-mid: #FFFDEE;
+    --bg-outer: #F4EEDC;
 }

@@ -7,9 +7,12 @@ export function initBubbles(containerSelector = '#bubbles-container') {
     const container = document.querySelector(containerSelector);
     if (!container) return;
 
+    let isRunning = false;
+    let timer = null;
     const { minSize, maxSize, minDuration, maxDuration, minOpacity, maxOpacity, spawnIntervalMs } = APP_CONFIG.bubbles;
 
     function createBubble() {
+        if (!isRunning) return;
         const bubble = document.createElement('img');
         bubble.src = 'assets/images/bubble.webp';
         bubble.className = 'bubble-img';
@@ -36,8 +39,37 @@ export function initBubbles(containerSelector = '#bubbles-container') {
         }, duration * 1000);
     }
 
-    // Start interval
-    const timer = setInterval(createBubble, spawnIntervalMs);
+    function start() {
+        if (isRunning) return;
+        isRunning = true;
+        if (!timer) {
+            timer = setInterval(createBubble, spawnIntervalMs);
+        }
+    }
 
-    return () => clearInterval(timer);
+    function stop() {
+        isRunning = false;
+        if (timer) {
+            clearInterval(timer);
+            timer = null;
+        }
+        if (container) {
+            container.innerHTML = '';
+        }
+    }
+
+    // Only run bubbles when entering the ordering application
+    document.addEventListener('matcha:kiosk-start', start);
+    document.addEventListener('matcha:kiosk-reset', stop);
+
+    // If kiosk is already active at launch, start immediately
+    if (window.thumbnailManager && window.thumbnailManager.isKioskActive) {
+        start();
+    }
+
+    return () => {
+        stop();
+        document.removeEventListener('matcha:kiosk-start', start);
+        document.removeEventListener('matcha:kiosk-reset', stop);
+    };
 }

@@ -30,15 +30,19 @@
     font-family: var(--font-heading);
     letter-spacing: -0.04em;
     text-transform: uppercase;
-    color: #ffffff;
+    color: var(--text-primary);
     cursor: pointer;
 }
 
 .logo-mark-img {
-    width: 38px;
-    height: 38px;
+    width: 46px;
+    height: 46px;
     object-fit: contain;
-    filter: drop-shadow(0 0 12px rgba(163, 230, 53, 0.55));
+    background: #ffffff;
+    border-radius: 50%;
+    padding: 6px;
+    box-shadow: 0 4px 14px rgba(16, 55, 19, 0.12);
+    border: 2px solid var(--color-bone);
     transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -64,7 +68,7 @@
     border: 1px solid var(--glass-border);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 24px rgba(16, 55, 19, 0.08);
 }
 
 .nav-item {
@@ -80,22 +84,22 @@
 }
 
 .nav-item:hover {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.06);
+    color: var(--color-phthalo);
+    background: rgba(98, 139, 53, 0.1);
 }
 
 .nav-item.active {
     background: var(--color-accent);
-    color: #000000;
+    color: var(--color-milk, #FFFDF5);
     font-weight: 800;
-    box-shadow: 0 2px 12px rgba(163, 230, 53, 0.3);
+    box-shadow: 0 2px 14px rgba(98, 139, 53, 0.45);
 }
 
 /* 2. Action Buttons */
 .contact-btn {
-    background: rgba(14, 18, 14, 0.8);
-    color: #ffffff;
-    border: 1px solid var(--border-subtle);
+    background: #ffffff;
+    color: var(--text-primary);
+    border: 1.5px solid var(--border-medium);
     padding: 0.75rem 1.6rem;
     border-radius: 9999px;
     font-family: var(--font-ui);
@@ -106,22 +110,23 @@
     cursor: pointer;
     transition: all 0.25s var(--ease-standard);
     backdrop-filter: blur(12px);
+    box-shadow: 0 4px 14px rgba(16, 55, 19, 0.06);
 }
 
 .contact-btn:hover {
-    background: #ffffff;
-    color: #000000;
-    border-color: #ffffff;
+    background: var(--color-phthalo);
+    color: var(--color-milk, #FFFDF5);
+    border-color: var(--color-phthalo);
     transform: translateY(-2px);
 }
 
-/* Primary CTA Button (Golda High-Impact Style) */
+/* Primary CTA Button (High-Impact Luxury Style) */
 .primary-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     background: var(--color-accent);
-    color: #000000;
+    color: var(--color-milk, #FFFDF5);
     border: none;
     padding: 0.85rem 1.85rem;
     border-radius: 9999px;
@@ -133,13 +138,13 @@
     cursor: pointer;
     width: fit-content;
     transition: all 0.25s var(--ease-standard);
-    box-shadow: 0 4px 20px rgba(163, 230, 53, 0.25);
+    box-shadow: 0 4px 20px rgba(98, 139, 53, 0.35);
 }
 
 .primary-btn:hover {
     background: var(--color-accent-hover);
     transform: scale(1.04);
-    box-shadow: 0 8px 30px rgba(163, 230, 53, 0.4);
+    box-shadow: 0 8px 30px rgba(98, 139, 53, 0.55);
 }
 
 .primary-btn:active {
@@ -150,13 +155,13 @@
 .award-badge {
     display: flex;
     align-items: center;
-    background: rgba(12, 17, 13, 0.85);
+    background: #ffffff;
     border: 1px solid var(--border-subtle);
     border-radius: 14px;
     padding: 0.85rem 1.35rem;
     backdrop-filter: blur(16px);
     width: fit-content;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 8px 24px rgba(16, 55, 19, 0.08);
 }
 
 .award-icon {
@@ -181,7 +186,7 @@
     font-size: 0.72rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #ffffff;
+    color: var(--text-primary);
 }
 
 .award-subtitle {
@@ -207,7 +212,7 @@
 }
 
 .card {
-    background: rgba(14, 19, 14, 0.85);
+    background: #ffffff;
     border: 1px solid var(--border-subtle);
     border-radius: 20px;
     padding: 0.65rem;
@@ -219,17 +224,18 @@
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
+    box-shadow: 0 4px 14px rgba(16, 55, 19, 0.06);
 }
 
 .card:hover {
-    border-color: rgba(255, 255, 255, 0.25);
+    border-color: var(--color-accent);
     transform: translateY(-3px);
 }
 
 .card.active {
     border-color: var(--color-accent);
-    box-shadow: 0 0 24px rgba(163, 230, 53, 0.22);
-    background: rgba(18, 25, 18, 0.95);
+    box-shadow: 0 0 20px rgba(98, 139, 53, 0.25);
+    background: #ffffff;
 }
 
 .card img {
@@ -253,7 +259,7 @@
     font-weight: 800;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: #ffffff;
+    color: var(--text-primary);
 }
 
 .card-info span:last-child {
@@ -272,20 +278,21 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: rgba(14, 19, 14, 0.8);
+    background: #ffffff;
     border: 1px solid var(--border-subtle);
-    color: #ffffff;
+    color: var(--text-primary);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     font-size: 0.85rem;
     transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(16, 55, 19, 0.05);
 }
 
 .nav-arrow:hover {
     background: var(--color-accent);
-    color: #000000;
+    color: var(--color-milk, #FFFDF5);
     border-color: var(--color-accent);
 }
 
@@ -298,13 +305,13 @@
     display: flex;
     align-items: center;
     gap: 1.25rem;
-    background: rgba(10, 14, 11, 0.88);
-    border: 1px solid var(--border-subtle);
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid var(--border-medium);
     padding: 0.55rem 1.4rem;
     border-radius: 9999px;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 35px rgba(16, 55, 19, 0.12);
     z-index: 90;
     pointer-events: auto;
 }
@@ -313,9 +320,9 @@
     display: inline-flex;
     align-items: center;
     gap: 0.55rem;
-    background: rgba(255, 255, 255, 0.06);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #ffffff;
+    color: var(--text-primary);
+    border: 1px solid var(--border-medium);
     padding: 0.45rem 1rem;
     border-radius: 9999px;
     font-family: var(--font-ui);
@@ -329,7 +336,7 @@
 
 .explode-btn:hover {
     background: var(--color-accent);
-    color: #000000;
+    color: var(--color-milk, #FFFDF5);
     border-color: var(--color-accent);
 }
 
@@ -353,7 +360,7 @@
     appearance: none;
     width: 90px;
     height: 4px;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(16, 55, 19, 0.15);
     border-radius: 9999px;
     outline: none;
     cursor: pointer;
@@ -367,7 +374,7 @@
     border-radius: 50%;
     background: var(--color-accent);
     cursor: pointer;
-    box-shadow: 0 0 10px rgba(163, 230, 53, 0.6);
+    box-shadow: 0 0 12px rgba(98, 139, 53, 0.5);
     transition: transform 0.15s ease;
 }
 
@@ -378,13 +385,13 @@
 /* 6. Floating 3D Layer Annotations */
 .layer-annotation {
     position: absolute;
-    background: rgba(11, 16, 12, 0.9);
-    border: 1px solid var(--border-accent);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1.5px solid var(--border-accent);
     border-radius: 18px;
     padding: 1rem 1.25rem;
     backdrop-filter: blur(20px);
     max-width: 260px;
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 15px 35px rgba(16, 55, 19, 0.12);
     pointer-events: none;
     opacity: 0;
     transform: scale(0.92);
@@ -415,7 +422,7 @@
     font-family: var(--font-heading);
     font-size: 0.95rem;
     font-weight: 800;
-    color: #ffffff;
+    color: var(--text-primary);
     margin-bottom: 0.25rem;
     letter-spacing: -0.02em;
 }
@@ -449,9 +456,9 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(12, 16, 13, 0.75);
-    border: 1px solid var(--border-subtle);
-    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid var(--border-medium);
+    color: var(--text-secondary);
     padding: 0.45rem 0.95rem;
     border-radius: 9999px;
     font-family: var(--font-ui);
@@ -463,15 +470,16 @@
     cursor: pointer;
     z-index: 80;
     transition: all 0.25s ease;
-    opacity: 0.5;
+    box-shadow: 0 4px 14px rgba(16, 55, 19, 0.08);
+    opacity: 0.85;
 }
 
 .swipe-hint-pill:hover,
 .swipe-hint-pill-right:hover {
     opacity: 1;
-    color: #ffffff;
-    border-color: var(--color-accent);
-    background: rgba(16, 22, 17, 0.9);
+    color: var(--color-milk, #FFFDF5);
+    border-color: var(--color-phthalo);
+    background: var(--color-phthalo);
 }
 
 .swipe-hint-pill { left: 4%; }
@@ -489,10 +497,10 @@
 @media (max-width: 768px) {
     .header {
         padding: 0.85rem 4%;
-        background: rgba(6, 9, 6, 0.88);
+        background: rgba(255, 253, 245, 0.94);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid rgba(16, 55, 19, 0.1);
     }
     .logo {
         font-size: 1.15rem;
