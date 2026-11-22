@@ -48,17 +48,40 @@ export class PageNavigator {
     init() {
         if (!this.slider) return;
 
-        // Default initial position: Landing page is active (center)
-        this.goToPage('landing', false);
+        // Auto-detect page from URL (pathname, hash, or ?page=)
+        const initialPage = this.getPageFromUrl();
+        this.goToPage(initialPage, false, false);
 
         this.bindTouchGestures();
         this.bindMouseGestures();
         this.bindTrackpadGestures();
         this.bindButtons();
         this.bindKeyboard();
+        this.bindUrlChanges();
     }
 
-    goToPage(pageId, animate = true) {
+    getPageFromUrl() {
+        const path = window.location.pathname.replace(/^\/|\/$/g, '').toLowerCase();
+        const hash = window.location.hash.replace('#', '').toLowerCase();
+        const search = new URLSearchParams(window.location.search).get('page')?.toLowerCase();
+
+        if (path === 'menu' || hash === 'menu' || search === 'menu') return 'menu';
+        if (path === 'simulation' || hash === 'simulation' || search === 'simulation') return 'simulation';
+        return 'landing';
+    }
+
+    bindUrlChanges() {
+        window.addEventListener('popstate', () => {
+            const page = this.getPageFromUrl();
+            this.goToPage(page, true, false);
+        });
+        window.addEventListener('hashchange', () => {
+            const page = this.getPageFromUrl();
+            this.goToPage(page, true, false);
+        });
+    }
+
+    goToPage(pageId, animate = true, updateUrl = true) {
         if (this.isTransitioning && animate) return;
 
         if (animate) {
@@ -88,6 +111,12 @@ export class PageNavigator {
             body.classList.remove('menu-active', 'simulation-active');
             // Page 1 (Center): -100vw
             this.setSliderPosition(-100, animate);
+        }
+
+        if (updateUrl && window.history && window.history.replaceState) {
+            const targetHash = pageId === 'landing' ? '' : `#${pageId}`;
+            const cleanPath = window.location.pathname.replace(/\/(menu|simulation)$/, '') || '/';
+            window.history.replaceState(null, '', targetHash ? `${cleanPath}${targetHash}` : cleanPath);
         }
 
         this.updateNavUI();
