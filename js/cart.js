@@ -26,6 +26,22 @@ export class CartManager {
         document.addEventListener('matcha:lang-changed', () => {
             this.render();
         });
+
+        // Listen for storage / cross-page cart changes (e.g. from Customizer page)
+        window.addEventListener('storage', (e) => {
+            if (!e.key || e.key === 'matcha_cart') {
+                this.items = this.loadCart();
+                this.render();
+            }
+        });
+        document.addEventListener('matcha:cart-updated', () => {
+            this.items = this.loadCart();
+            this.render();
+        });
+        document.addEventListener('matcha:kiosk-start', () => {
+            this.items = this.loadCart();
+            this.render();
+        });
     }
 
     loadCart() {
@@ -220,6 +236,9 @@ export class CartManager {
         if (this.countBadge) {
             this.countBadge.textContent = totalCount;
         }
+
+        // Notify other components (e.g. Pantone Specimen Menu)
+        document.dispatchEvent(new CustomEvent('matcha:cart-updated', { detail: { count: totalCount } }));
 
         // 2. Update Total Price
         const totalPrice = this.calculateTotal();

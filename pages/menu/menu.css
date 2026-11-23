@@ -1,0 +1,551 @@
+/**
+ * MatchaTcih • Pantone Specimen Menu Stylesheet
+ * Pages Architecture: pages/menu/menu.css
+ * Exact Pantone Swatch aesthetic inspired by reference (3x3 specimen grid on warm studio neutral)
+ * Color Palette: Phthalo Green (#103713), Maximum Green (#628B35), Bone (#E2DBD0), Milk (#FFFDF5)
+ */
+
+/* ==========================================================================
+   1. Root Page Wrapper & Studio Background
+   ========================================================================== */
+.pantone-menu-standalone {
+  margin: 0;
+  padding: 0;
+  background-color: #E2DBD0;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #103713;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#menu-page {
+  background-color: #E2DBD0 !important;
+  background-image: 
+    radial-gradient(circle at 50% 15%, rgba(255, 253, 245, 0.45) 0%, transparent 70%),
+    linear-gradient(180deg, #E6E1D7 0%, #DCD6CB 100%) !important;
+  padding: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* Hide global app header and swipe hints on menu page to give pure Pantone specimen reference view */
+body.menu-active .header,
+body.menu-active .app-header,
+body.menu-active .nav,
+body.menu-active #swipe-to-menu-hint,
+body.menu-active #swipe-to-sim-hint {
+  display: none !important;
+}
+
+.pantone-menu-wrapper {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #E2DBD0;
+  background-image: 
+    radial-gradient(circle at 50% 15%, rgba(255, 253, 245, 0.45) 0%, transparent 70%),
+    linear-gradient(180deg, #E6E1D7 0%, #DCD6CB 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(2rem, 5vh, 4rem) 1.5rem clamp(5rem, 8vh, 7rem);
+  box-sizing: border-box;
+  overflow-x: hidden;
+  user-select: none;
+}
+
+/* ==========================================================================
+   2. Floating Circular Back Button (Top Left)
+   ========================================================================== */
+.pantone-float-back {
+  position: fixed;
+  top: clamp(1.2rem, 3vh, 2.2rem);
+  left: clamp(1.2rem, 3vw, 2.5rem);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+  color: #103713;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 90;
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), 
+              box-shadow 0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
+              background-color 0.2s ease;
+  outline: none;
+}
+
+.pantone-float-back:hover {
+  transform: scale(1.08) translateX(-3px);
+  background-color: #FFFFFF;
+  box-shadow: 0 12px 30px rgba(16, 55, 19, 0.16), 0 4px 10px rgba(0, 0, 0, 0.06);
+  color: #628B35;
+}
+
+.pantone-float-back:active {
+  transform: scale(0.96) translateX(-1px);
+}
+
+/* ==========================================================================
+   3. Header & Filter Bar
+   ========================================================================== */
+.pantone-menu-header {
+  width: 100%;
+  max-width: 980px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: clamp(1.8rem, 3.8vh, 2.8rem);
+  text-align: center;
+  z-index: 10;
+}
+
+.pantone-brand-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0;
+}
+
+.pantone-brand-label {
+  font-family: 'Syne', sans-serif;
+  font-weight: 900;
+  font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+  letter-spacing: -0.02em;
+  color: #103713;
+}
+
+.pantone-sub-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(0.72rem, 1.1vw, 0.82rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(16, 55, 19, 0.65);
+}
+
+/* Category Filter Pills */
+.pantone-filter-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 0.35rem 0.45rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pantone-filter-btn {
+  background: transparent;
+  border: none;
+  border-radius: 9999px;
+  padding: 0.45rem 1.1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #103713;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.pantone-filter-btn:hover {
+  background: rgba(255, 255, 255, 0.85);
+  color: #628B35;
+}
+
+.pantone-filter-btn.active {
+  background: #103713;
+  color: #FFFDF5;
+  box-shadow: 0 4px 12px rgba(16, 55, 19, 0.25);
+}
+
+/* ==========================================================================
+   4. Specimen Card Grid (Exact 3x3 Layout)
+   ========================================================================== */
+.pantone-grid-stage {
+  width: 100%;
+  max-width: 980px;
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+}
+
+.pantone-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: clamp(1.4rem, 2.8vw, 2.6rem);
+  row-gap: clamp(3.2rem, 6.5vh, 4.8rem);
+  width: 100%;
+  margin-top: clamp(1.2rem, 2.5vh, 2rem);
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Compact / Dense 4-column mode toggled by bottom-right action */
+.pantone-grid.grid-dense {
+  max-width: 1100px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.4rem;
+}
+
+/* ==========================================================================
+   5. Pantone Specimen Card Styling (3D Pop-Out Breakthrough)
+   ========================================================================== */
+.pantone-card {
+  position: relative;
+  background: #FFFFFF;
+  border-radius: 8px;
+  overflow: visible !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 0.25s ease;
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  aspect-ratio: 1 / 1.48;
+  will-change: transform, box-shadow;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.pantone-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 24px 48px rgba(16, 55, 19, 0.16), 0 8px 18px rgba(0, 0, 0, 0.06);
+  border-color: rgba(98, 139, 53, 0.35);
+}
+
+.pantone-card:active {
+  transform: translateY(-2px) scale(0.99);
+}
+
+.pantone-card:focus-visible {
+  box-shadow: 0 0 0 3px #628B35, 0 16px 32px rgba(16, 55, 19, 0.16);
+}
+
+/* Card filtered out state */
+.pantone-card.hidden {
+  display: none !important;
+}
+
+/* Upper Visual Frame (3D Breakthrough Drink Object) */
+.pantone-card-visual {
+  flex: 1 1 68%;
+  background: transparent;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0 0.5rem;
+  overflow: visible !important;
+  position: relative;
+  margin-top: -46px; /* Protrudes 46px above the top card edge */
+  margin-bottom: 0.25rem;
+  z-index: 2;
+}
+
+.pantone-card-visual picture {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: visible !important;
+}
+
+.pantone-card-visual img {
+  width: auto;
+  max-width: 125%; /* Handles / garnishes naturally extend past card sides */
+  height: 235px;
+  max-height: 250px;
+  object-fit: contain;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+              filter 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.14)) drop-shadow(0 4px 8px rgba(16, 55, 19, 0.08));
+  user-select: none;
+  -webkit-user-drag: none;
+  will-change: transform, filter;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  pointer-events: none;
+}
+
+.pantone-card:hover .pantone-card-visual img {
+  transform: translateY(-10px) scale(1.08);
+  filter: drop-shadow(0 24px 32px rgba(16, 55, 19, 0.22)) drop-shadow(0 8px 14px rgba(0, 0, 0, 0.14));
+}
+
+/* Lower Swatch Label Area */
+.pantone-card-info {
+  background: #FFFFFF;
+  padding: 0.65rem 1rem 0.95rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.pantone-card-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(0.78rem, 1.15vw, 0.96rem);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: #103713;
+  text-transform: uppercase;
+  margin: 0 0 0.35rem 0;
+  min-height: 2.3em;
+  display: flex;
+  align-items: flex-start;
+}
+
+.pantone-code-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.pantone-code {
+  font-family: 'DM Sans', monospace, sans-serif;
+  font-weight: 700;
+  font-size: clamp(0.75rem, 0.95vw, 0.84rem);
+  color: #628B35;
+  letter-spacing: 0.03em;
+}
+
+.pantone-price {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 800;
+  font-size: clamp(0.75rem, 0.95vw, 0.84rem);
+  color: #103713;
+  background: rgba(98, 139, 53, 0.1);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+/* Faint Whisk Watermark Stamp in Bottom Right of Card */
+.pantone-card-stamp {
+  position: absolute;
+  right: 0.65rem;
+  bottom: 0.65rem;
+  width: 20px;
+  height: 20px;
+  opacity: 0.22;
+  color: #103713;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.pantone-card:hover .pantone-card-stamp {
+  opacity: 0.45;
+  transform: rotate(15deg);
+  color: #628B35;
+}
+
+/* ==========================================================================
+   6. Floating Action Controls (Bottom Right)
+   ========================================================================== */
+.pantone-float-controls {
+  position: fixed;
+  bottom: clamp(1.2rem, 3vh, 2.2rem);
+  right: clamp(1.2rem, 3vw, 2.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 90;
+}
+
+.pantone-float-btn,
+.pantone-float-action {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+  color: #103713;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+              background-color 0.2s ease;
+  outline: none;
+}
+
+.pantone-float-btn:hover,
+.pantone-float-action:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 28px rgba(16, 55, 19, 0.18), 0 4px 10px rgba(0, 0, 0, 0.06);
+  color: #628B35;
+}
+
+.pantone-float-btn:active,
+.pantone-float-action:active {
+  transform: scale(0.96);
+}
+
+/* Cart Badge */
+.pantone-cart-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #103713;
+  color: #FFFDF5;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.pantone-cart-badge.bump {
+  transform: scale(1.3);
+}
+
+/* ==========================================================================
+   7. Toast Notification Feedback
+   ========================================================================== */
+.pantone-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #103713;
+  color: #FFFDF5;
+  padding: 0.75rem 1.4rem;
+  border-radius: 9999px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 12px 32px rgba(16, 55, 19, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 100;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+              opacity 0.35s ease;
+}
+
+.pantone-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.pantone-toast-icon {
+  background: #628B35;
+  color: #FFFDF5;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+}
+
+/* ==========================================================================
+   8. Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 900px) {
+  .pantone-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+  }
+  .pantone-card {
+    aspect-ratio: 1 / 1.45;
+  }
+}
+
+@media (max-width: 680px) {
+  .pantone-menu-wrapper {
+    padding: 1.5rem 1rem 5.5rem;
+  }
+  .pantone-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .pantone-card-title {
+    font-size: 0.78rem;
+    min-height: 2.8em;
+  }
+  .pantone-card-visual {
+    padding: 0.8rem 0.5rem 0.3rem;
+  }
+  .pantone-float-back {
+    top: 1rem;
+    left: 1rem;
+    width: 44px;
+    height: 44px;
+  }
+  .pantone-float-controls {
+    bottom: 1rem;
+    right: 1rem;
+  }
+  .pantone-float-action {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 380px) {
+  .pantone-grid {
+    grid-template-columns: 1fr;
+    max-width: 280px;
+  }
+}
+
+/* Custom 3D Lab Card Styling */
+.pantone-card.card-custom-craft {
+  border: 1.5px dashed rgba(98, 139, 53, 0.45);
+  background: linear-gradient(180deg, #FFFFFF 0%, #FAFAF7 100%);
+}
+
+.pantone-card.card-custom-craft:hover {
+  border: 1.5px solid #628B35;
+  box-shadow: 0 22px 42px rgba(98, 139, 53, 0.2), 0 0 20px rgba(98, 139, 53, 0.12);
+}
+
+.pantone-custom-badge {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  background: #103713;
+  color: #FFFDF5;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 0.28rem 0.65rem;
+  border-radius: 9999px;
+  box-shadow: 0 4px 12px rgba(16, 55, 19, 0.25);
+  border: 1px solid rgba(255, 253, 245, 0.3);
+  text-transform: uppercase;
+  z-index: 5;
+}
+

@@ -1,0 +1,28 @@
+/* Custom 3D Lab Card Styling */
+.pantone-card.card-custom-craft {
+  border: 1.5px dashed rgba(98, 139, 53, 0.45);
+  background: linear-gradient(180deg, #FFFFFF 0%, #FAFAF7 100%);
+}
+
+.pantone-card.card-custom-craft:hover {
+  border: 1.5px solid #628B35;
+  box-shadow: 0 22px 42px rgba(98, 139, 53, 0.2), 0 0 20px rgba(98, 139, 53, 0.12);
+}
+
+.pantone-custom-badge {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  background: #103713;
+  color: #FFFDF5;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 0.28rem 0.65rem;
+  border-radius: 9999px;
+  box-shadow: 0 4px 12px rgba(16, 55, 19, 0.25);
+  border: 1px solid rgba(255, 253, 245, 0.3);
+  text-transform: uppercase;
+  z-index: 5;
+}

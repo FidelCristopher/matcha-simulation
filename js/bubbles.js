@@ -58,12 +58,24 @@ export function initBubbles(containerSelector = '#bubbles-container') {
         }
     }
 
-    // Only run bubbles when entering the ordering application
-    document.addEventListener('matcha:kiosk-start', start);
+    // Only run bubbles when on the 3D landing showcase
+    document.addEventListener('matcha:page-change', (e) => {
+        if (e.detail && e.detail.page === 'landing') {
+            start();
+        } else {
+            stop();
+        }
+    });
+
+    document.addEventListener('matcha:kiosk-start', () => {
+        if (window.pageNavigator && window.pageNavigator.activePage === 'landing') {
+            start();
+        }
+    });
     document.addEventListener('matcha:kiosk-reset', stop);
 
-    // If kiosk is already active at launch, start immediately
-    if (window.thumbnailManager && window.thumbnailManager.isKioskActive) {
+    // If kiosk is already active at launch and on landing, start immediately
+    if (window.thumbnailManager && window.thumbnailManager.isKioskActive && window.pageNavigator?.activePage === 'landing') {
         start();
     }
 

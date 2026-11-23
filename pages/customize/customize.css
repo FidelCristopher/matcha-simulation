@@ -1,0 +1,1150 @@
+/**
+ * MatchaTcih • Interactive Custom Drink Craft Engine
+ * Pages Architecture: pages/customize/customize.css
+ * Split Poster Style Inspired by Reference:
+ * - Left Panel: Sage/Olive Green (#56782E / #628B35) with Giant Vertical "MATCHA" Typography & Controls
+ * - Right Panel: Warm Bone (#E2DBD0 / #FFFDF5) with Interactive Layered Glass Cup Renderer
+ */
+
+/* ==========================================================================
+   1. Root Page Architecture & Reset
+   ========================================================================== */
+.custom-page-body {
+  margin: 0;
+  padding: 0;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #103713;
+  background-color: #E2DBD0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  user-select: none;
+}
+
+.custom-page-wrapper {
+  display: grid;
+  grid-template-columns: minmax(480px, 1.15fr) 1fr;
+  min-height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   2. Left Panel: Sage/Olive Green Poster Style
+   ========================================================================== */
+.custom-left-panel {
+  position: relative;
+  background-color: #56782E;
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(255, 253, 245, 0.12) 0%, transparent 60%),
+    linear-gradient(165deg, #5D8032 0%, #4D6D29 100%);
+  color: #FFFDF5;
+  padding: clamp(2rem, 4vh, 3.5rem) clamp(1.8rem, 3.5vw, 3.5rem) 3rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 10;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.12);
+}
+
+.custom-left-panel::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-left-panel::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.08);
+}
+.custom-left-panel::-webkit-scrollbar-thumb {
+  background: rgba(255, 253, 245, 0.35);
+  border-radius: 3px;
+}
+
+/* Floating Circular Back Button (Matches Reference Top Left) */
+.custom-back-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.06);
+  color: #103713;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
+              color 0.2s ease;
+  margin-bottom: 2rem;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.custom-back-btn:hover {
+  transform: scale(1.08) translateX(-3px);
+  color: #56782E;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+}
+
+.custom-back-btn:active {
+  transform: scale(0.96) translateX(-1px);
+}
+
+/* Giant Vertical "MATCHA" Typography (Matches Reference) */
+.custom-vertical-bg-title {
+  position: absolute;
+  top: 0;
+  right: -0.15em;
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(5rem, 11vw, 9.5rem);
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: 0.04em;
+  color: rgba(255, 253, 245, 0.88);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  opacity: 0.95;
+  height: 100%;
+}
+
+/* Header & Meta */
+.custom-header {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 1.8rem;
+  max-width: 82%;
+}
+
+.custom-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.4rem;
+}
+
+.kicker-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 253, 245, 0.85);
+}
+
+.kicker-wave {
+  color: rgba(255, 253, 245, 0.7);
+}
+
+.custom-drink-name {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.65rem 0;
+  color: #FFFDF5;
+  text-transform: uppercase;
+}
+
+.custom-template-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.template-badge {
+  background: rgba(255, 253, 245, 0.22);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #FFFDF5;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 253, 245, 0.35);
+}
+
+.pantone-ref-code {
+  font-family: 'DM Sans', monospace, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(255, 253, 245, 0.8);
+  letter-spacing: 0.08em;
+}
+
+/* ==========================================================================
+   3. Customization Fieldsets & Option Pills
+   ========================================================================== */
+.custom-controls-form {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  max-width: 86%;
+}
+
+.custom-section {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.custom-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #FFFDF5;
+  text-transform: uppercase;
+  margin-bottom: 0.65rem;
+}
+
+.section-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.section-num {
+  font-family: 'DM Sans', monospace, sans-serif;
+  font-weight: 800;
+  font-size: 0.75rem;
+  color: #FFFDF5;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+.topping-hint-badge {
+  background: #103713;
+  color: #FFFDF5;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  letter-spacing: 0.04em;
+  border: 1px solid rgba(255, 253, 245, 0.2);
+}
+
+.custom-section-sub {
+  font-size: 0.78rem;
+  color: rgba(255, 253, 245, 0.8);
+  margin: 0 0 0.65rem 0;
+}
+
+/* Pill Groups */
+.custom-pill-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.custom-pill-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+/* Radio & Checkbox Pill Styling */
+.custom-pill {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+.custom-pill input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+
+.pill-box {
+  background: rgba(255, 253, 245, 0.12);
+  border: 1.5px solid rgba(255, 253, 245, 0.28);
+  border-radius: 10px;
+  padding: 0.65rem 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #FFFDF5;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-sizing: border-box;
+}
+
+.pill-name {
+  font-weight: 700;
+}
+
+.pill-price {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: rgba(255, 253, 245, 0.9);
+}
+
+.pill-desc {
+  font-size: 0.72rem;
+  color: rgba(255, 253, 245, 0.75);
+}
+
+.custom-pill:hover .pill-box {
+  background: rgba(255, 253, 245, 0.22);
+  border-color: rgba(255, 253, 245, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Checked State: Cream/White Card with Dark Contrast Text */
+.custom-pill input:checked + .pill-box {
+  background: #FFFDF5;
+  color: #103713;
+  border-color: #FFFDF5;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+  transform: translateY(-2px);
+}
+
+.custom-pill input:checked + .pill-box .pill-price {
+  color: #56782E;
+  font-weight: 900;
+}
+
+.custom-pill input:checked + .pill-box .pill-desc {
+  color: rgba(16, 55, 19, 0.7);
+}
+
+/* 4-grid pill adjustments */
+.custom-pill-grid-4 .pill-box {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0.55rem 0.35rem;
+  gap: 0.15rem;
+}
+
+/* Stackable Checkbox Pill (Toppings) */
+.custom-checkbox-pill .pill-box {
+  padding: 0.75rem 1rem;
+  gap: 0.8rem;
+}
+
+.pill-icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.pill-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+/* Checkbox pill checked highlight */
+.custom-checkbox-pill input:checked + .pill-box {
+  background: #FFFDF5;
+  color: #103713;
+  border-color: #FFFDF5;
+  box-shadow: 0 8px 22px rgba(16, 55, 19, 0.2);
+}
+
+/* ==========================================================================
+   4. Checkout Bar & Dynamic Price Breakdown
+   ========================================================================== */
+.custom-checkout-bar {
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 253, 245, 0.25);
+  border-radius: 16px;
+  padding: 1.25rem 1.4rem;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.custom-price-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.breakdown-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: rgba(255, 253, 245, 0.8);
+  text-transform: uppercase;
+}
+
+.breakdown-amount {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.1rem;
+  font-weight: 900;
+  color: #FFFDF5;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.breakdown-sub {
+  font-size: 0.75rem;
+  color: rgba(255, 253, 245, 0.85);
+}
+
+.custom-buttons-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+/* Reset to Empty Glass Button */
+.btn-clear-custom {
+  background: rgba(255, 253, 245, 0.15);
+  border: 1px solid rgba(255, 253, 245, 0.3);
+  color: #FFFDF5;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.85rem 1.1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  outline: none;
+}
+
+.btn-clear-custom:hover {
+  background: rgba(255, 253, 245, 0.28);
+  border-color: #FFFDF5;
+  transform: translateY(-2px);
+}
+
+.btn-clear-custom:active {
+  transform: scale(0.97);
+}
+
+/* Primary Add to Cart Button */
+.btn-submit-order {
+  flex: 1;
+  min-width: 220px;
+  background: #FFFDF5;
+  border: none;
+  color: #103713;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  padding: 0.95rem 1.4rem;
+  border-radius: 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+  transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+  outline: none;
+}
+
+.btn-submit-order:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.32);
+  background: #FFFFFF;
+  color: #56782E;
+}
+
+.btn-submit-order:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* Footer Info */
+.custom-left-footer {
+  margin-top: 2.5rem;
+  font-size: 0.72rem;
+  color: rgba(255, 253, 245, 0.65);
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
+}
+
+/* ==========================================================================
+   5. Right Panel: Warm Bone Studio (#E2DBD0) with Interactive Glass Cup
+   ========================================================================== */
+.custom-right-panel {
+  position: relative;
+  background-color: #E2DBD0;
+  background-image: 
+    radial-gradient(circle at 50% 25%, rgba(255, 253, 245, 0.65) 0%, transparent 65%),
+    linear-gradient(180deg, #E6E1D7 0%, #DCD6CB 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 2rem;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.custom-preview-tag {
+  position: absolute;
+  top: clamp(1.5rem, 3vh, 2.5rem);
+  right: clamp(1.5rem, 3vw, 2.8rem);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  padding: 0.4rem 0.9rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  z-index: 20;
+}
+
+.live-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #56782E;
+  box-shadow: 0 0 0 0 rgba(86, 120, 46, 0.6);
+  animation: pulse-ring 2s infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(86, 120, 46, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(86, 120, 46, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(86, 120, 46, 0); }
+}
+
+.preview-tag-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #103713;
+}
+
+/* ==========================================================================
+   6. Interactive Layered Glass Cup Renderer
+   ========================================================================== */
+.custom-glass-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 440px;
+  height: 580px;
+}
+
+.cup-glass-wrapper {
+  position: relative;
+  width: 260px;
+  height: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 10;
+}
+
+/* Cast Floor Shadow under Cup */
+.cup-floor-shadow {
+  position: absolute;
+  bottom: -22px;
+  width: 250px;
+  height: 38px;
+  background: radial-gradient(ellipse at 50% 50%, rgba(16, 55, 19, 0.28) 0%, rgba(16, 55, 19, 0.08) 55%, transparent 75%);
+  border-radius: 50%;
+  transform: rotate(-3deg);
+  pointer-events: none;
+  filter: blur(4px);
+  z-index: 2;
+  transition: opacity 0.4s ease;
+}
+
+/* Realistic Clear Glass Silhouette (Tapered Tumbler) */
+.cup-glass-body {
+  position: relative;
+  width: 240px;
+  height: 410px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.18) 50%, rgba(255, 255, 255, 0.35) 100%);
+  border-radius: 12px 12px 32px 32px;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 
+    inset 0 0 18px rgba(255, 255, 255, 0.6),
+    inset 0 -8px 24px rgba(0, 0, 0, 0.06),
+    0 20px 48px rgba(16, 55, 19, 0.12),
+    0 6px 14px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  overflow: hidden;
+  clip-path: polygon(4% 0%, 96% 0%, 88% 100%, 12% 100%);
+  z-index: 5;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Specular Highlights & Solid Base */
+.glass-rim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.95));
+  border-radius: 4px;
+  z-index: 30;
+}
+
+.glass-highlight-edge.left {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  bottom: 12px;
+  width: 14px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.65), transparent);
+  border-radius: 10px;
+  pointer-events: none;
+  z-index: 25;
+}
+
+.glass-highlight-edge.right {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  bottom: 12px;
+  width: 8px;
+  background: linear-gradient(270deg, rgba(255, 255, 255, 0.5), transparent);
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 25;
+}
+
+.glass-base-solid {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 22px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.85));
+  border-top: 1px solid rgba(255, 255, 255, 0.6);
+  z-index: 22;
+}
+
+.glass-glare-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(125deg, rgba(255, 255, 255, 0.35) 0%, transparent 40%, rgba(255, 255, 255, 0.15) 75%, transparent 100%);
+  pointer-events: none;
+  z-index: 28;
+}
+
+/* Internal Liquid Chamber (Liquid layers stack here) */
+.cup-chamber {
+  position: absolute;
+  bottom: 16px;
+  left: 8px;
+  right: 8px;
+  top: 10px;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 4px 4px 20px 20px;
+}
+
+/* Empty State Placeholder (when all layers are 0 / user resets to blank cup) */
+.cup-empty-state {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.8rem;
+  color: rgba(16, 55, 19, 0.45);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 10;
+}
+
+.cup-empty-state.visible {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   7. Liquid Layers (Smooth Pouring & Stacking Animation)
+   ========================================================================== */
+.cup-layer {
+  width: 100%;
+  position: relative;
+  transition: height 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+              opacity 0.4s ease,
+              transform 0.4s ease;
+  flex-shrink: 0;
+}
+
+/* Layer 1: Boba / Matcha Jelly at Bottom */
+.layer-boba {
+  height: 0px;
+  background: linear-gradient(180deg, rgba(30, 48, 16, 0.6), rgba(18, 30, 10, 0.95));
+  opacity: 0;
+  position: relative;
+  z-index: 6;
+}
+
+.layer-boba.active {
+  height: 52px;
+  opacity: 1;
+}
+
+.boba-pearl {
+  position: absolute;
+  left: var(--x);
+  bottom: var(--y);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #3C5A1E 0%, #17260D 70%, #0E1708 100%);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+/* Layer 2: Ceremonial Matcha Base */
+.layer-matcha {
+  height: 140px;
+  background: linear-gradient(180deg, #5D8C33 0%, #446C23 60%, #305018 100%);
+  opacity: 1;
+  z-index: 5;
+  box-shadow: inset 0 -4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.layer-matcha.empty {
+  height: 0px;
+  opacity: 0;
+}
+
+/* Layer 3: Milk Swirl Layer */
+.layer-milk {
+  height: 130px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FDFBF5 45%, #F0EAD8 80%, rgba(93, 140, 51, 0.45) 100%);
+  opacity: 1;
+  position: relative;
+  z-index: 8;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.layer-milk.none {
+  height: 0px;
+  opacity: 0;
+}
+
+.layer-milk.oat {
+  background: linear-gradient(180deg, #FDF9EE 0%, #F5ECCF 50%, #E8DDBB 80%, rgba(93, 140, 51, 0.45) 100%);
+}
+
+.milk-marble-swirl {
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  right: 0;
+  height: 36px;
+  background: radial-gradient(ellipse at 30% 0%, rgba(255, 255, 255, 0.9) 0%, transparent 70%),
+              radial-gradient(ellipse at 75% 10%, rgba(255, 255, 255, 0.8) 0%, transparent 60%);
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+/* Layer 4: Ice Cubes Layer */
+.layer-ice {
+  position: absolute;
+  top: 40px;
+  left: 10px;
+  right: 10px;
+  height: 90px;
+  pointer-events: none;
+  z-index: 12;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.layer-ice.hot {
+  opacity: 0;
+  transform: translateY(-20px) scale(0.8);
+}
+
+.ice-cube {
+  position: absolute;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.65) 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  border-radius: 7px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  transition: all 0.4s ease;
+}
+
+.ice-cube.cube-1 {
+  width: 44px;
+  height: 38px;
+  left: 15px;
+  top: 10px;
+  transform: rotate(-12deg);
+}
+
+.ice-cube.cube-2 {
+  width: 42px;
+  height: 42px;
+  right: 25px;
+  top: 18px;
+  transform: rotate(18deg);
+}
+
+.ice-cube.cube-3 {
+  width: 36px;
+  height: 36px;
+  left: 65px;
+  top: 25px;
+  transform: rotate(6deg);
+}
+
+.ice-cube.cube-4 {
+  width: 38px;
+  height: 32px;
+  right: 60px;
+  top: 45px;
+  transform: rotate(-8deg);
+}
+
+/* Layer 5: Dark Chocolate Swirl / Drizzle */
+.layer-choco-drizzle {
+  position: absolute;
+  top: 25px;
+  left: 0;
+  right: 0;
+  height: 160px;
+  pointer-events: none;
+  z-index: 14;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.layer-choco-drizzle.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.choco-ribbon {
+  position: absolute;
+  background: linear-gradient(180deg, #3A1C0E 0%, #291206 100%);
+  border-radius: 9999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.choco-ribbon.ribbon-1 {
+  width: 14px;
+  height: 90px;
+  left: 30px;
+  top: 15px;
+  transform: rotate(5deg);
+}
+
+.choco-ribbon.ribbon-2 {
+  width: 18px;
+  height: 120px;
+  right: 40px;
+  top: 5px;
+  transform: rotate(-7deg);
+}
+
+.choco-ribbon.ribbon-3 {
+  width: 12px;
+  height: 75px;
+  left: 95px;
+  top: 35px;
+  transform: rotate(2deg);
+}
+
+/* Layer 6: Vanilla Cloud Foam Layer (Top) */
+.layer-vanilla-foam {
+  height: 0px;
+  opacity: 0;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FAF8F2 70%, #F2ECE0 100%);
+  border-radius: 12px 12px 0 0;
+  position: relative;
+  z-index: 16;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.layer-vanilla-foam.active {
+  height: 55px;
+  opacity: 1;
+}
+
+.foam-cloud-head {
+  position: absolute;
+  top: -8px;
+  left: -2px;
+  right: -2px;
+  height: 18px;
+  background: radial-gradient(circle at 25% 50%, #FFFFFF 0%, #FAF8F2 70%),
+              radial-gradient(circle at 55% 40%, #FFFFFF 0%, #FAF8F2 75%),
+              radial-gradient(circle at 80% 50%, #FFFFFF 0%, #FAF8F2 70%);
+  border-radius: 50px 50px 0 0;
+}
+
+/* Layer 7: Coconut Flakes */
+.layer-coconut-flakes {
+  position: absolute;
+  top: 5px;
+  left: 20px;
+  right: 20px;
+  height: 25px;
+  pointer-events: none;
+  z-index: 18;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.layer-coconut-flakes.active {
+  opacity: 1;
+}
+
+.flake {
+  position: absolute;
+  background: #E8D3A8;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+.flake.f1 { width: 14px; height: 5px; left: 20%; top: 6px; transform: rotate(15deg); }
+.flake.f2 { width: 18px; height: 6px; left: 45%; top: 12px; transform: rotate(-25deg); }
+.flake.f3 { width: 12px; height: 5px; left: 65%; top: 4px; transform: rotate(35deg); }
+.flake.f4 { width: 16px; height: 5px; left: 80%; top: 10px; transform: rotate(-10deg); }
+.flake.f5 { width: 10px; height: 4px; left: 35%; top: 15px; transform: rotate(45deg); }
+
+/* Dynamic Floating Recipe Tags */
+.recipe-floating-tags {
+  position: absolute;
+  right: -10px;
+  top: 15%;
+  bottom: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  pointer-events: none;
+  z-index: 25;
+}
+
+.live-tag {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 9999px;
+  padding: 0.35rem 0.8rem;
+  box-shadow: 0 6px 18px rgba(16, 55, 19, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #103713;
+  opacity: 0;
+  transform: translateX(15px);
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.live-tag.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.tag-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #56782E;
+}
+
+/* ==========================================================================
+   8. Bottom Right Floating Actions & Toast
+   ========================================================================== */
+.custom-float-actions {
+  position: fixed;
+  bottom: clamp(1.2rem, 3vh, 2.2rem);
+  right: clamp(1.2rem, 3vw, 2.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 90;
+}
+
+.custom-float-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.04);
+  color: #103713;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  outline: none;
+}
+
+.custom-float-btn:hover {
+  transform: scale(1.08);
+  color: #56782E;
+  box-shadow: 0 12px 28px rgba(16, 55, 19, 0.2);
+}
+
+.custom-cart-count-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #103713;
+  color: #FFFDF5;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Minimalist Feedback Toast */
+.custom-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: #103713;
+  color: #FFFDF5;
+  padding: 0.75rem 1.4rem;
+  border-radius: 9999px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 12px 32px rgba(16, 55, 19, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 100;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.35s ease;
+}
+
+.custom-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.toast-icon {
+  background: #628B35;
+  color: #FFFDF5;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+}
+
+/* ==========================================================================
+   9. Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .custom-page-wrapper {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 100vh;
+  }
+  .custom-left-panel {
+    max-height: none;
+    padding: 2rem 1.5rem 3rem;
+  }
+  .custom-vertical-bg-title {
+    display: none;
+  }
+  .custom-controls-form, .custom-header {
+    max-width: 100%;
+  }
+  .custom-right-panel {
+    min-height: 520px;
+    padding: 3rem 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .custom-pill-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .custom-buttons-row {
+    flex-direction: column;
+  }
+  .btn-submit-order, .btn-clear-custom {
+    width: 100%;
+    justify-content: center;
+  }
+  .custom-glass-stage {
+    height: 480px;
+  }
+  .cup-glass-wrapper {
+    width: 220px;
+    height: 380px;
+  }
+  .cup-glass-body {
+    width: 200px;
+    height: 350px;
+  }
+  .recipe-floating-tags {
+    display: none;
+  }
+}

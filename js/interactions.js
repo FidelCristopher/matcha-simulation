@@ -105,9 +105,14 @@ export class InteractionManager {
 
     startRenderLoop() {
         const tick = () => {
-            // If the welcome / thumbnail screen is currently visible,
-            // yield CPU & GPU resources completely to the kiosk entrance animation!
+            // Yield CPU & GPU resources when kiosk welcome screen is active
             if (window.thumbnailManager && !window.thumbnailManager.isKioskActive) {
+                requestAnimationFrame(tick);
+                return;
+            }
+
+            // Yield CPU & GPU resources when user is not viewing the 3D landing showcase (e.g. on menu or simulation)
+            if (window.pageNavigator && window.pageNavigator.activePage !== 'landing') {
                 requestAnimationFrame(tick);
                 return;
             }

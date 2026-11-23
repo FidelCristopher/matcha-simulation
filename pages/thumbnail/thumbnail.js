@@ -37,6 +37,11 @@ export class ThumbnailManager {
     init() {
         if (!this.screen) return;
 
+        // Ensure thumbnail screen is visible on page load/refresh
+        this.screen.style.display = '';
+        this.screen.classList.remove('hidden');
+        this.isKioskActive = false;
+
         // 1. Trigger Initial MA-TEA Entrance Animation Sequence
         this.playEntranceAnimation();
 
@@ -63,6 +68,12 @@ export class ThumbnailManager {
         if (this.backdropTitle) this.backdropTitle.style.transform = '';
         if (this.cupLeft) this.cupLeft.style.transform = '';
         if (this.cupRight) this.cupRight.style.transform = '';
+        const tagLeft = this.screen.querySelector('.thumb-cup-tag.tag-left');
+        const tagRight = this.screen.querySelector('.thumb-cup-tag.tag-right');
+        if (tagLeft) tagLeft.style.transform = '';
+        if (tagRight) tagRight.style.transform = '';
+        const stickers = this.screen.querySelectorAll('.thumb-sticker');
+        stickers.forEach(s => s.style.transform = '');
 
         this.screen.classList.remove('idle-active');
 
@@ -122,9 +133,14 @@ export class ThumbnailManager {
             this.targetY = 0;
         });
 
-        // 60-120FPS Lerp Animation Loop (Runs ONLY after entrance is complete)
-        const renderLoop = () => {
-            if (!this.isKioskActive && this.cupsStage && this.isEntranceComplete) {
+        // 60-120FPS Lerp Animation Loop (Runs ONLY when Kiosk Welcome Screen is active)
+        this.renderLoop = () => {
+            if (this.isKioskActive) {
+                this.rafId = null;
+                return;
+            }
+
+            if (this.cupsStage && this.isEntranceComplete) {
                 // Smooth damping (lerp factor = 0.08)
                 this.currentX += (this.targetX - this.currentX) * 0.08;
                 this.currentY += (this.targetY - this.currentY) * 0.08;
@@ -141,35 +157,35 @@ export class ThumbnailManager {
                     if (this.cupLeft) {
                         const shiftX = this.currentX * 8;
                         const shiftY = this.currentY * 6;
-                        this.cupLeft.style.transform = `translate3d(${shiftX.toFixed(1)}px, ${shiftY.toFixed(1)}px, 0px) rotate(-6deg)`;
+                        this.cupLeft.style.transform = `translate3d(${shiftX.toFixed(2)}px, ${shiftY.toFixed(2)}px, 0px) rotate(-6deg)`;
                     }
 
                     if (this.cupRight) {
                         const shiftX = this.currentX * 18;
                         const shiftY = this.currentY * 12;
-                        this.cupRight.style.transform = `translate3d(${shiftX.toFixed(1)}px, ${(shiftY + 12).toFixed(1)}px, 20px) rotate(7deg)`;
+                        this.cupRight.style.transform = `translate3d(${shiftX.toFixed(2)}px, ${(shiftY + 12).toFixed(2)}px, 20px) rotate(7deg)`;
                     }
 
                     // Counter-shift background vector doodles
                     if (this.doodles) {
                         const dX = -this.currentX * 24;
                         const dY = -this.currentY * 16;
-                        this.doodles.style.transform = `translate3d(calc(-50% + ${dX.toFixed(1)}px), calc(-50% + ${dY.toFixed(1)}px), 0)`;
+                        this.doodles.style.transform = `translate3d(calc(-50% + ${dX.toFixed(2)}px), calc(-50% + ${dY.toFixed(2)}px), 0)`;
                     }
 
                     // Midground 2.5D parallax shift for blurred "MATCHA" watermark
                     if (this.backdropTitle) {
                         const tX = this.currentX * 14;
                         const tY = this.currentY * 10;
-                        this.backdropTitle.style.transform = `translate3d(calc(-50% + ${tX.toFixed(1)}px), calc(-50% + ${tY.toFixed(1)}px), 0)`;
+                        this.backdropTitle.style.transform = `translate3d(calc(-50% + ${tX.toFixed(2)}px), calc(-50% + ${tY.toFixed(2)}px), 0)`;
                     }
                 }
             }
 
-            this.rafId = requestAnimationFrame(renderLoop);
+            this.rafId = requestAnimationFrame(this.renderLoop);
         };
 
-        this.rafId = requestAnimationFrame(renderLoop);
+        this.rafId = requestAnimationFrame(this.renderLoop);
     }
 
     /**
@@ -198,8 +214,19 @@ export class ThumbnailManager {
         this.screen.classList.add('hidden');
         this.isKioskActive = true;
 
+        // Cancel parallax RAF to free up 100% GPU budget for the app
+        if (this.rafId) {
+            cancelAnimationFrame(this.rafId);
+            this.rafId = null;
+        }
+
         // Reset and activate the inactivity timer
         this.resetIdleTimer();
+
+        // Direct entrance to menu page as requested by user
+        if (window.pageNavigator && typeof window.pageNavigator.goToPage === 'function') {
+            window.pageNavigator.goToPage('menu', false);
+        }
 
         // Dispatch custom event for application components
         document.dispatchEvent(new CustomEvent('matcha:kiosk-start'));
@@ -211,8 +238,14 @@ export class ThumbnailManager {
      */
     showScreensaver() {
         if (!this.screen) return;
+        this.screen.style.display = '';
         this.screen.classList.remove('hidden');
         this.isKioskActive = false;
+
+        // Resume parallax RAF loop if not running
+        if (!this.rafId && this.renderLoop) {
+            this.rafId = requestAnimationFrame(this.renderLoop);
+        }
 
         // Replay full entrance animation
         this.playEntranceAnimation();

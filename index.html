@@ -32,21 +32,28 @@
     <link rel="stylesheet" href="css/animations.css" />
     <!-- Page-Modular Stylesheet: Thumbnail / Welcome Screen -->
     <link rel="stylesheet" href="pages/thumbnail/thumbnail.css" />
+    <!-- Page-Modular Stylesheet: Pantone Specimen Menu -->
+    <link rel="stylesheet" href="pages/menu/menu.css" />
 
     <!-- High-Priority Preload for Welcome Kiosk Cups (Silky 60fps Entrance) -->
     <link
       rel="preload"
       as="image"
-      href="assets/images/matcha_cup_left.webp?v=fulllid"
+      href="assets/images/matcha_cup_left.webp?v=perfectdome"
       type="image/webp"
     />
     <link
       rel="preload"
       as="image"
-      href="assets/images/matcha_cup_right.webp?v=fulllid"
+      href="assets/images/matcha_cup_right.webp?v=perfectdome"
       type="image/webp"
     />
-    <link rel="preload" as="image" href="assets/images/logo.png" />
+    <link
+      rel="preload"
+      as="image"
+      href="assets/images/logo.webp"
+      type="image/webp"
+    />
 
     <!-- Libraries (CDN) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -55,14 +62,27 @@
       src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
     ></script>
   </head>
-  <body>
+  <body class="menu-active">
     <!-- 0. THUMBNAIL / WELCOME ATTRACT SCREEN (Fun MA-TEA Style with MatchaTcih Cups) -->
-    <section id="thumbnail-screen" class="thumbnail-screen">
+    <section
+      id="thumbnail-screen"
+      class="thumbnail-screen"
+    >
       <!-- Top Header (Prominent Centered Brand Logo) -->
       <header class="thumb-header">
         <div class="thumb-logo" id="thumb-logo">
           <div class="thumb-logo-badge">
-            <img src="assets/images/logo.png" alt="MatchaTcih Logo" />
+            <picture>
+              <source srcset="assets/images/logo.webp" type="image/webp" />
+              <img
+                src="assets/images/logo.png"
+                alt="MatchaTcih Logo"
+                width="80"
+                height="80"
+                decoding="async"
+                fetchpriority="high"
+              />
+            </picture>
           </div>
           <span class="thumb-logo-text" aria-label="MatchaTcih.">
             <span class="logo-char" style="--i: 0">M</span>
@@ -83,6 +103,11 @@
       <!-- Center Fun Graphic Stage (MA-TEA Inspired with MatchaTcih Cups) -->
       <div class="thumb-hero-stage">
         <div class="thumb-spotlight"></div>
+
+        <!-- Big Faint Green Brand Typography Watermark in Background (MA-TEA Style) -->
+        <div class="thumb-backdrop-title" aria-hidden="true">
+          <span>MATCHA</span>
+        </div>
 
         <!-- Fun Background Vector Doodles (MA-TEA Graphic Style) -->
         <svg
@@ -161,358 +186,375 @@
             opacity="0.9"
           />
 
-          <!-- 3. Floating Ceremonial Matcha Leaves (Far Left) -->
+          <!-- 3. Floating Ceremonial Matcha Leaves (Far Left) - Lively Wind Rustle -->
           <g transform="translate(140, 110) rotate(-32) scale(1.2)">
-            <path
-              d="M 0 0 C 35 -30, 85 -30, 115 0 C 85 35, 35 35, 0 0 Z"
-              fill="#628B35"
-              opacity="0.95"
-            />
-            <line
-              x1="0"
-              y1="0"
-              x2="115"
-              y2="0"
-              stroke="#103713"
-              stroke-width="2.5"
-            />
-            <line
-              x1="25"
-              y1="0"
-              x2="40"
-              y2="-15"
-              stroke="#103713"
-              stroke-width="1.8"
-            />
-            <line
-              x1="30"
-              y1="0"
-              x2="48"
-              y2="16"
-              stroke="#103713"
-              stroke-width="1.8"
-            />
-            <line
-              x1="55"
-              y1="0"
-              x2="72"
-              y2="-14"
-              stroke="#103713"
-              stroke-width="1.8"
-            />
-            <line
-              x1="62"
-              y1="0"
-              x2="78"
-              y2="15"
-              stroke="#103713"
-              stroke-width="1.8"
-            />
+            <g class="doodle-leaf-anim">
+              <path
+                d="M 0 0 C 35 -30, 85 -30, 115 0 C 85 35, 35 35, 0 0 Z"
+                fill="#628B35"
+                opacity="0.95"
+              />
+              <line
+                x1="0"
+                y1="0"
+                x2="115"
+                y2="0"
+                stroke="#103713"
+                stroke-width="2.5"
+              />
+              <line
+                x1="25"
+                y1="0"
+                x2="40"
+                y2="-15"
+                stroke="#103713"
+                stroke-width="1.8"
+              />
+              <line
+                x1="30"
+                y1="0"
+                x2="48"
+                y2="16"
+                stroke="#103713"
+                stroke-width="1.8"
+              />
+              <line
+                x1="55"
+                y1="0"
+                x2="72"
+                y2="-14"
+                stroke="#103713"
+                stroke-width="1.8"
+              />
+              <line
+                x1="62"
+                y1="0"
+                x2="78"
+                y2="15"
+                stroke="#103713"
+                stroke-width="1.8"
+              />
+            </g>
           </g>
           <g transform="translate(60, 340) rotate(18) scale(1.1)">
-            <path
-              d="M 0 0 C 30 -24, 75 -24, 100 0 C 75 30, 30 30, 0 0 Z"
-              fill="#103713"
-              opacity="0.9"
-            />
-            <line
-              x1="0"
-              y1="0"
-              x2="100"
-              y2="0"
-              stroke="#628B35"
-              stroke-width="2.2"
-            />
-            <line
-              x1="25"
-              y1="0"
-              x2="38"
-              y2="-12"
-              stroke="#628B35"
-              stroke-width="1.5"
-            />
-            <line
-              x1="30"
-              y1="0"
-              x2="44"
-              y2="14"
-              stroke="#628B35"
-              stroke-width="1.5"
-            />
-            <line
-              x1="55"
-              y1="0"
-              x2="70"
-              y2="-11"
-              stroke="#628B35"
-              stroke-width="1.5"
-            />
+            <g class="doodle-leaf-anim-alt">
+              <path
+                d="M 0 0 C 30 -24, 75 -24, 100 0 C 75 30, 30 30, 0 0 Z"
+                fill="#103713"
+                opacity="0.9"
+              />
+              <line
+                x1="0"
+                y1="0"
+                x2="100"
+                y2="0"
+                stroke="#628B35"
+                stroke-width="2.2"
+              />
+              <line
+                x1="25"
+                y1="0"
+                x2="38"
+                y2="-12"
+                stroke="#628B35"
+                stroke-width="1.5"
+              />
+              <line
+                x1="30"
+                y1="0"
+                x2="44"
+                y2="14"
+                stroke="#628B35"
+                stroke-width="1.5"
+              />
+              <line
+                x1="55"
+                y1="0"
+                x2="70"
+                y2="-11"
+                stroke="#628B35"
+                stroke-width="1.5"
+              />
+            </g>
           </g>
           <g transform="translate(220, 520) rotate(35) scale(0.95)">
-            <path
-              d="M 0 0 C 25 -20, 60 -20, 80 0 C 60 25, 25 25, 0 0 Z"
-              fill="#628B35"
-              opacity="0.92"
-            />
-            <line
-              x1="0"
-              y1="0"
-              x2="80"
-              y2="0"
-              stroke="#103713"
-              stroke-width="2"
-            />
+            <g class="doodle-leaf-anim">
+              <path
+                d="M 0 0 C 25 -20, 60 -20, 80 0 C 60 25, 25 25, 0 0 Z"
+                fill="#628B35"
+                opacity="0.92"
+              />
+              <line
+                x1="0"
+                y1="0"
+                x2="80"
+                y2="0"
+                stroke="#103713"
+                stroke-width="2"
+              />
+            </g>
           </g>
 
-          <!-- 4. Japanese Tea Whisk (Chasen) Vector Line Art (Left Wing) -->
+          <!-- 4. Japanese Tea Whisk (Chasen) Vector Line Art - Lively Stirring Sway -->
           <g transform="translate(260, 240) scale(0.95)">
-            <rect
-              x="-10"
-              y="-48"
-              width="20"
-              height="34"
-              rx="4"
-              stroke="#103713"
-              stroke-width="2.5"
-              fill="rgba(226, 219, 208, 0.4)"
-            />
-            <line
-              x1="-10"
-              y1="-24"
-              x2="10"
-              y2="-24"
+            <g class="doodle-chasen-anim">
+              <rect
+                x="-10"
+                y="-48"
+                width="20"
+                height="34"
+                rx="4"
+                stroke="#103713"
+                stroke-width="2.5"
+                fill="rgba(226, 219, 208, 0.4)"
+              />
+              <line
+                x1="-10"
+                y1="-24"
+                x2="10"
+                y2="-24"
+                stroke="#628B35"
+                stroke-width="3"
+              />
+              <circle
+                cx="0"
+                cy="-14"
+                r="11"
+                stroke="#103713"
+                stroke-width="2.5"
+                fill="none"
+              />
+              <path
+                d="M -12 -14 C -24 14, -28 34, -26 48 C -14 50, -4 48, 0 44 C 4 48, 14 50, 26 48 C 28 34, 24 14, 12 -14"
+                stroke="#628B35"
+                stroke-width="2.5"
+                fill="none"
+              />
+              <path
+                d="M -5 -14 C -11 14, -14 34, -11 46"
+                stroke="#628B35"
+                stroke-width="1.8"
+                fill="none"
+              />
+              <path
+                d="M 5 -14 C 11 14, 14 34, 11 46"
+                stroke="#628B35"
+                stroke-width="1.8"
+                fill="none"
+              />
+              <line
+                x1="0"
+                y1="-14"
+                x2="0"
+                y2="44"
+                stroke="#103713"
+                stroke-width="2"
+              />
+            </g>
+          </g>
+
+          <!-- 5. Radiant Citrus Sunburst (Top-Left) - Slow Hypnotic Rotation -->
+          <g transform="translate(180, 130)">
+            <g class="doodle-sunburst-anim">
+              <circle
+                cx="0"
+                cy="0"
+                r="36"
+                stroke="#103713"
+                stroke-width="3"
+                stroke-dasharray="6 4"
+                opacity="0.5"
+              />
+              <circle
+                cx="0"
+                cy="0"
+                r="24"
+                stroke="#628B35"
+                stroke-width="4"
+                opacity="0.9"
+              />
+              <line
+                x1="0"
+                y1="-24"
+                x2="0"
+                y2="24"
+                stroke="#628B35"
+                stroke-width="3"
+              />
+              <line
+                x1="-24"
+                y1="0"
+                x2="24"
+                y2="0"
+                stroke="#628B35"
+                stroke-width="3"
+              />
+              <line
+                x1="-17"
+                y1="-17"
+                x2="17"
+                y2="17"
+                stroke="#628B35"
+                stroke-width="3"
+              />
+              <line
+                x1="-17"
+                y1="17"
+                x2="17"
+                y2="-17"
+                stroke="#628B35"
+                stroke-width="3"
+              />
+              <line
+                x1="0"
+                y1="-42"
+                x2="0"
+                y2="-52"
+                stroke="#628B35"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+              <line
+                x1="30"
+                y1="-30"
+                x2="36"
+                y2="-36"
+                stroke="#103713"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+              <line
+                x1="42"
+                y1="0"
+                x2="52"
+                y2="0"
+                stroke="#628B35"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+              <line
+                x1="30"
+                y1="30"
+                x2="36"
+                y2="36"
+                stroke="#103713"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+              <line
+                x1="0"
+                y1="42"
+                x2="0"
+                y2="52"
+                stroke="#628B35"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+              <line
+                x1="-30"
+                y1="30"
+                x2="-36"
+                y2="36"
+                stroke="#103713"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+              <line
+                x1="-42"
+                y1="0"
+                x2="-52"
+                y2="0"
+                stroke="#628B35"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+              <line
+                x1="-30"
+                y1="-30"
+                x2="-36"
+                y2="-36"
+                stroke="#103713"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+            </g>
+          </g>
+
+          <!-- 6. Zen Wavy Streamers (Left Wing) - Continuous Flowing Currents -->
+          <g class="doodle-waves-anim-left">
+            <path
+              d="M 140 340 Q 170 325 200 340 T 260 340 T 320 340 T 380 340"
               stroke="#628B35"
-              stroke-width="3"
-            />
-            <circle
-              cx="0"
-              cy="-14"
-              r="11"
-              stroke="#103713"
-              stroke-width="2.5"
+              stroke-width="4.5"
+              stroke-linecap="round"
               fill="none"
+              opacity="0.85"
             />
             <path
-              d="M -12 -14 C -24 14, -28 34, -26 48 C -14 50, -4 48, 0 44 C 4 48, 14 50, 26 48 C 28 34, 24 14, 12 -14"
-              stroke="#628B35"
-              stroke-width="2.5"
-              fill="none"
-            />
-            <path
-              d="M -5 -14 C -11 14, -14 34, -11 46"
-              stroke="#628B35"
-              stroke-width="1.8"
-              fill="none"
-            />
-            <path
-              d="M 5 -14 C 11 14, 14 34, 11 46"
-              stroke="#628B35"
-              stroke-width="1.8"
-              fill="none"
-            />
-            <line
-              x1="0"
-              y1="-14"
-              x2="0"
-              y2="44"
+              d="M 140 358 Q 170 343 200 358 T 260 358 T 320 358 T 380 358"
               stroke="#103713"
-              stroke-width="2"
+              stroke-width="4.5"
+              stroke-linecap="round"
+              fill="none"
+              opacity="0.6"
+            />
+            <path
+              d="M 140 376 Q 170 361 200 376 T 260 376 T 320 376 T 380 376"
+              stroke="#628B35"
+              stroke-width="4.5"
+              stroke-linecap="round"
+              fill="none"
+              opacity="0.85"
             />
           </g>
 
-          <!-- 5. Radiant Citrus Sunburst (Top-Left) -->
-          <g transform="translate(180, 130)">
-            <circle
-              cx="0"
-              cy="0"
-              r="36"
-              stroke="#103713"
-              stroke-width="3"
-              stroke-dasharray="6 4"
-              opacity="0.5"
-            />
-            <circle
-              cx="0"
-              cy="0"
-              r="24"
+          <!-- 7. Concentric Rainbow Arches (Bottom Left Wing) - Gentle Aura Ripple -->
+          <g class="doodle-arches-anim">
+            <path
+              d="M 100 620 A 90 90 0 0 1 280 620"
               stroke="#628B35"
-              stroke-width="4"
+              stroke-width="8"
+              stroke-linecap="round"
               opacity="0.9"
             />
-            <line
-              x1="0"
-              y1="-24"
-              x2="0"
-              y2="24"
-              stroke="#628B35"
-              stroke-width="3"
-            />
-            <line
-              x1="-24"
-              y1="0"
-              x2="24"
-              y2="0"
-              stroke="#628B35"
-              stroke-width="3"
-            />
-            <line
-              x1="-17"
-              y1="-17"
-              x2="17"
-              y2="17"
-              stroke="#628B35"
-              stroke-width="3"
-            />
-            <line
-              x1="-17"
-              y1="17"
-              x2="17"
-              y2="-17"
-              stroke="#628B35"
-              stroke-width="3"
-            />
-            <line
-              x1="0"
-              y1="-42"
-              x2="0"
-              y2="-52"
-              stroke="#628B35"
-              stroke-width="3"
-              stroke-linecap="round"
-            />
-            <line
-              x1="30"
-              y1="-30"
-              x2="36"
-              y2="-36"
+            <path
+              d="M 120 620 A 70 70 0 0 1 260 620"
               stroke="#103713"
-              stroke-width="3"
+              stroke-width="6"
               stroke-linecap="round"
+              opacity="0.75"
             />
-            <line
-              x1="42"
-              y1="0"
-              x2="52"
-              y2="0"
+            <path
+              d="M 140 620 A 50 50 0 0 1 240 620"
               stroke="#628B35"
-              stroke-width="3"
+              stroke-width="5"
               stroke-linecap="round"
+              opacity="0.85"
             />
-            <line
-              x1="30"
-              y1="30"
-              x2="36"
-              y2="36"
-              stroke="#103713"
-              stroke-width="3"
+            <path
+              d="M 160 620 A 30 30 0 0 1 220 620"
+              stroke="#E2DBD0"
+              stroke-width="4"
               stroke-linecap="round"
-            />
-            <line
-              x1="0"
-              y1="42"
-              x2="0"
-              y2="52"
-              stroke="#628B35"
-              stroke-width="3"
-              stroke-linecap="round"
-            />
-            <line
-              x1="-30"
-              y1="30"
-              x2="-36"
-              y2="36"
-              stroke="#103713"
-              stroke-width="3"
-              stroke-linecap="round"
-            />
-            <line
-              x1="-42"
-              y1="0"
-              x2="-52"
-              y2="0"
-              stroke="#628B35"
-              stroke-width="3"
-              stroke-linecap="round"
-            />
-            <line
-              x1="-30"
-              y1="-30"
-              x2="-36"
-              y2="-36"
-              stroke="#103713"
-              stroke-width="3"
-              stroke-linecap="round"
+              opacity="0.9"
             />
           </g>
 
-          <!-- 6. Zen Wavy Streamers (Left Wing) -->
+          <!-- Sparkle Stars Left - Twinkling Pulse -->
           <path
-            d="M 140 340 Q 170 325 200 340 T 260 340 T 320 340 T 380 340"
-            stroke="#628B35"
-            stroke-width="4.5"
-            stroke-linecap="round"
-            fill="none"
-            opacity="0.85"
-          />
-          <path
-            d="M 140 358 Q 170 343 200 358 T 260 358 T 320 358 T 380 358"
-            stroke="#103713"
-            stroke-width="4.5"
-            stroke-linecap="round"
-            fill="none"
-            opacity="0.6"
-          />
-          <path
-            d="M 140 376 Q 170 361 200 376 T 260 376 T 320 376 T 380 376"
-            stroke="#628B35"
-            stroke-width="4.5"
-            stroke-linecap="round"
-            fill="none"
-            opacity="0.85"
-          />
-
-          <!-- 7. Concentric Rainbow Arches (Bottom Left Wing) -->
-          <path
-            d="M 100 620 A 90 90 0 0 1 280 620"
-            stroke="#628B35"
-            stroke-width="8"
-            stroke-linecap="round"
-            opacity="0.9"
-          />
-          <path
-            d="M 120 620 A 70 70 0 0 1 260 620"
-            stroke="#103713"
-            stroke-width="6"
-            stroke-linecap="round"
-            opacity="0.75"
-          />
-          <path
-            d="M 140 620 A 50 50 0 0 1 240 620"
-            stroke="#628B35"
-            stroke-width="5"
-            stroke-linecap="round"
-            opacity="0.85"
-          />
-          <path
-            d="M 160 620 A 30 30 0 0 1 220 620"
-            stroke="#E2DBD0"
-            stroke-width="4"
-            stroke-linecap="round"
-            opacity="0.9"
-          />
-
-          <!-- Sparkle Stars Left -->
-          <path
+            class="doodle-star doodle-star-1"
             d="M 380 110 L 385 125 L 400 130 L 385 135 L 380 150 L 375 135 L 360 130 L 375 125 Z"
             fill="#628B35"
             opacity="0.85"
           />
           <path
+            class="doodle-star doodle-star-2"
             d="M 100 230 L 103 239 L 112 242 L 103 245 L 100 254 L 97 245 L 88 242 L 97 239 Z"
             fill="#628B35"
             opacity="0.8"
           />
           <path
+            class="doodle-star doodle-star-3"
             d="M 320 500 L 324 512 L 336 516 L 324 520 L 320 532 L 316 520 L 304 516 L 316 512 Z"
             fill="#103713"
             opacity="0.8"
@@ -586,110 +628,116 @@
             opacity="0.9"
           />
 
-          <!-- 3. Floating Ceremonial Matcha Leaves (Far Right) -->
+          <!-- 3. Floating Ceremonial Matcha Leaves (Far Right) - Lively Wind Rustle -->
           <g transform="translate(1560, 110) rotate(32) scale(1.2)">
-            <path
-              d="M 0 0 C -35 -30, -85 -30, -115 0 C -85 35, -35 35, 0 0 Z"
-              fill="#628B35"
-              opacity="0.95"
-            />
-            <line
-              x1="0"
-              y1="0"
-              x2="-115"
-              y2="0"
-              stroke="#103713"
-              stroke-width="2.5"
-            />
-            <line
-              x1="-25"
-              y1="0"
-              x2="-40"
-              y2="-15"
-              stroke="#103713"
-              stroke-width="1.8"
-            />
-            <line
-              x1="-30"
-              y1="0"
-              x2="-48"
-              y2="16"
-              stroke="#103713"
-              stroke-width="1.8"
-            />
-            <line
-              x1="-55"
-              y1="0"
-              x2="-72"
-              y2="-14"
-              stroke="#103713"
-              stroke-width="1.8"
-            />
-            <line
-              x1="-62"
-              y1="0"
-              x2="-78"
-              y2="15"
-              stroke="#103713"
-              stroke-width="1.8"
-            />
+            <g class="doodle-leaf-anim">
+              <path
+                d="M 0 0 C -35 -30, -85 -30, -115 0 C -85 35, -35 35, 0 0 Z"
+                fill="#628B35"
+                opacity="0.95"
+              />
+              <line
+                x1="0"
+                y1="0"
+                x2="-115"
+                y2="0"
+                stroke="#103713"
+                stroke-width="2.5"
+              />
+              <line
+                x1="-25"
+                y1="0"
+                x2="-40"
+                y2="-15"
+                stroke="#103713"
+                stroke-width="1.8"
+              />
+              <line
+                x1="-30"
+                y1="0"
+                x2="-48"
+                y2="16"
+                stroke="#103713"
+                stroke-width="1.8"
+              />
+              <line
+                x1="-55"
+                y1="0"
+                x2="-72"
+                y2="-14"
+                stroke="#103713"
+                stroke-width="1.8"
+              />
+              <line
+                x1="-62"
+                y1="0"
+                x2="-78"
+                y2="15"
+                stroke="#103713"
+                stroke-width="1.8"
+              />
+            </g>
           </g>
           <g transform="translate(1640, 340) rotate(-18) scale(1.1)">
-            <path
-              d="M 0 0 C -30 -24, -75 -24, -100 0 C -75 30, -30 30, 0 0 Z"
-              fill="#103713"
-              opacity="0.9"
-            />
-            <line
-              x1="0"
-              y1="0"
-              x2="-100"
-              y2="0"
-              stroke="#628B35"
-              stroke-width="2.2"
-            />
-            <line
-              x1="-25"
-              y1="0"
-              x2="-38"
-              y2="-12"
-              stroke="#628B35"
-              stroke-width="1.5"
-            />
-            <line
-              x1="-30"
-              y1="0"
-              x2="-44"
-              y2="14"
-              stroke="#628B35"
-              stroke-width="1.5"
-            />
-            <line
-              x1="-55"
-              y1="0"
-              x2="-70"
-              y2="-11"
-              stroke="#628B35"
-              stroke-width="1.5"
-            />
+            <g class="doodle-leaf-anim-alt">
+              <path
+                d="M 0 0 C -30 -24, -75 -24, -100 0 C -75 30, -30 30, 0 0 Z"
+                fill="#103713"
+                opacity="0.9"
+              />
+              <line
+                x1="0"
+                y1="0"
+                x2="-100"
+                y2="0"
+                stroke="#628B35"
+                stroke-width="2.2"
+              />
+              <line
+                x1="-25"
+                y1="0"
+                x2="-38"
+                y2="-12"
+                stroke="#628B35"
+                stroke-width="1.5"
+              />
+              <line
+                x1="-30"
+                y1="0"
+                x2="-44"
+                y2="14"
+                stroke="#628B35"
+                stroke-width="1.5"
+              />
+              <line
+                x1="-55"
+                y1="0"
+                x2="-70"
+                y2="-11"
+                stroke="#628B35"
+                stroke-width="1.5"
+              />
+            </g>
           </g>
           <g transform="translate(1480, 520) rotate(-35) scale(0.95)">
-            <path
-              d="M 0 0 C -25 -20, -60 -20, -80 0 C -60 25, -25 25, 0 0 Z"
-              fill="#628B35"
-              opacity="0.92"
-            />
-            <line
-              x1="0"
-              y1="0"
-              x2="-80"
-              y2="0"
-              stroke="#103713"
-              stroke-width="2"
-            />
+            <g class="doodle-leaf-anim">
+              <path
+                d="M 0 0 C -25 -20, -60 -20, -80 0 C -60 25, -25 25, 0 0 Z"
+                fill="#628B35"
+                opacity="0.92"
+              />
+              <line
+                x1="0"
+                y1="0"
+                x2="-80"
+                y2="0"
+                stroke="#103713"
+                stroke-width="2"
+              />
+            </g>
           </g>
 
-          <!-- 4. Ceremonial Matcha Bowl (Chawan) with Steam Vapor (Right Wing) -->
+          <!-- 4. Ceremonial Matcha Bowl (Chawan) with Rising Steam Vapor (Right Wing) -->
           <g transform="translate(1440, 240) scale(0.95)">
             <path
               d="M -42 -10 C -42 24, -28 42, 0 42 C 28 42, 42 24, 42 -10 Z"
@@ -715,114 +763,125 @@
               stroke-width="3.5"
               stroke-linecap="round"
             />
-            <path
-              d="M -14 -24 C -18 -36, -9 -45, -15 -56"
-              stroke="#628B35"
-              stroke-width="2.2"
-              stroke-linecap="round"
-              fill="none"
-            />
-            <path
-              d="M 0 -24 C -4 -38, 5 -47, 2 -60"
-              stroke="#103713"
-              stroke-width="2.2"
-              stroke-linecap="round"
-              fill="none"
-            />
-            <path
-              d="M 14 -24 C 9 -36, 18 -45, 15 -56"
-              stroke="#628B35"
-              stroke-width="2.2"
-              stroke-linecap="round"
-              fill="none"
-            />
+            <g class="doodle-steam-anim">
+              <path
+                d="M -14 -24 C -18 -36, -9 -45, -15 -56"
+                stroke="#628B35"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                fill="none"
+              />
+              <path
+                d="M 0 -24 C -4 -38, 5 -47, 2 -60"
+                stroke="#103713"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                fill="none"
+              />
+              <path
+                d="M 14 -24 C 9 -36, 18 -45, 15 -56"
+                stroke="#628B35"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                fill="none"
+              />
+            </g>
           </g>
 
-          <!-- 5. Berry / Tea Blossom Cluster (Top-Right) -->
+          <!-- 5. Berry / Tea Blossom Cluster (Top-Right) - Hanging Bob -->
           <g transform="translate(1520, 130)">
-            <circle cx="0" cy="0" r="14" fill="#628B35" opacity="0.9" />
-            <circle cx="-16" cy="12" r="11" fill="#103713" opacity="0.85" />
-            <circle cx="16" cy="12" r="11" fill="#628B35" opacity="0.85" />
-            <circle cx="-10" cy="28" r="10" fill="#103713" opacity="0.75" />
-            <circle cx="10" cy="28" r="10" fill="#628B35" opacity="0.75" />
-            <circle cx="0" cy="40" r="8" fill="#103713" opacity="0.8" />
+            <g class="doodle-berries-anim">
+              <circle cx="0" cy="0" r="14" fill="#628B35" opacity="0.9" />
+              <circle cx="-16" cy="12" r="11" fill="#103713" opacity="0.85" />
+              <circle cx="16" cy="12" r="11" fill="#628B35" opacity="0.85" />
+              <circle cx="-10" cy="28" r="10" fill="#103713" opacity="0.75" />
+              <circle cx="10" cy="28" r="10" fill="#628B35" opacity="0.75" />
+              <circle cx="0" cy="40" r="8" fill="#103713" opacity="0.8" />
+              <path
+                d="M 0 0 C 0 -25, 20 -40, 45 -48"
+                stroke="#628B35"
+                stroke-width="3"
+                stroke-linecap="round"
+                fill="none"
+              />
+            </g>
+          </g>
+
+          <!-- 6. Zen Wavy Streamers (Right Wing) - Continuous Flowing Currents -->
+          <g class="doodle-waves-anim-right">
             <path
-              d="M 0 0 C 0 -25, 20 -40, 45 -48"
+              d="M 1320 340 Q 1350 325 1380 340 T 1440 340 T 1500 340 T 1560 340"
               stroke="#628B35"
-              stroke-width="3"
+              stroke-width="4.5"
               stroke-linecap="round"
               fill="none"
+              opacity="0.85"
+            />
+            <path
+              d="M 1320 358 Q 1350 343 1380 358 T 1440 358 T 1500 358 T 1560 358"
+              stroke="#103713"
+              stroke-width="4.5"
+              stroke-linecap="round"
+              fill="none"
+              opacity="0.6"
+            />
+            <path
+              d="M 1320 376 Q 1350 361 1380 376 T 1440 376 T 1500 376 T 1560 376"
+              stroke="#628B35"
+              stroke-width="4.5"
+              stroke-linecap="round"
+              fill="none"
+              opacity="0.85"
             />
           </g>
 
-          <!-- 6. Zen Wavy Streamers (Right Wing) -->
-          <path
-            d="M 1320 340 Q 1350 325 1380 340 T 1440 340 T 1500 340 T 1560 340"
-            stroke="#628B35"
-            stroke-width="4.5"
-            stroke-linecap="round"
-            fill="none"
-            opacity="0.85"
-          />
-          <path
-            d="M 1320 358 Q 1350 343 1380 358 T 1440 358 T 1500 358 T 1560 358"
-            stroke="#103713"
-            stroke-width="4.5"
-            stroke-linecap="round"
-            fill="none"
-            opacity="0.6"
-          />
-          <path
-            d="M 1320 376 Q 1350 361 1380 376 T 1440 376 T 1500 376 T 1560 376"
-            stroke="#628B35"
-            stroke-width="4.5"
-            stroke-linecap="round"
-            fill="none"
-            opacity="0.85"
-          />
+          <!-- 7. Concentric Rainbow Arches (Bottom Right Wing) - Gentle Aura Ripple -->
+          <g class="doodle-arches-anim">
+            <path
+              d="M 1420 620 A 90 90 0 0 1 1600 620"
+              stroke="#628B35"
+              stroke-width="8"
+              stroke-linecap="round"
+              opacity="0.9"
+            />
+            <path
+              d="M 1440 620 A 70 70 0 0 1 1580 620"
+              stroke="#103713"
+              stroke-width="6"
+              stroke-linecap="round"
+              opacity="0.75"
+            />
+            <path
+              d="M 1460 620 A 50 50 0 0 1 1560 620"
+              stroke="#628B35"
+              stroke-width="5"
+              stroke-linecap="round"
+              opacity="0.85"
+            />
+            <path
+              d="M 1480 620 A 30 30 0 0 1 1540 620"
+              stroke="#E2DBD0"
+              stroke-width="4"
+              stroke-linecap="round"
+              opacity="0.9"
+            />
+          </g>
 
-          <!-- 7. Concentric Rainbow Arches (Bottom Right Wing) -->
+          <!-- Sparkle Stars Right - Twinkling Pulse -->
           <path
-            d="M 1420 620 A 90 90 0 0 1 1600 620"
-            stroke="#628B35"
-            stroke-width="8"
-            stroke-linecap="round"
-            opacity="0.9"
-          />
-          <path
-            d="M 1440 620 A 70 70 0 0 1 1580 620"
-            stroke="#103713"
-            stroke-width="6"
-            stroke-linecap="round"
-            opacity="0.75"
-          />
-          <path
-            d="M 1460 620 A 50 50 0 0 1 1560 620"
-            stroke="#628B35"
-            stroke-width="5"
-            stroke-linecap="round"
-            opacity="0.85"
-          />
-          <path
-            d="M 1480 620 A 30 30 0 0 1 1540 620"
-            stroke="#E2DBD0"
-            stroke-width="4"
-            stroke-linecap="round"
-            opacity="0.9"
-          />
-
-          <!-- Sparkle Stars Right -->
-          <path
+            class="doodle-star doodle-star-4"
             d="M 1320 110 L 1325 125 L 1340 130 L 1325 135 L 1320 150 L 1315 135 L 1300 130 L 1315 125 Z"
             fill="#103713"
             opacity="0.75"
           />
           <path
+            class="doodle-star doodle-star-5"
             d="M 1600 230 L 1603 239 L 1612 242 L 1603 245 L 1600 254 L 1597 245 L 1588 242 L 1597 239 Z"
             fill="#628B35"
             opacity="0.8"
           />
           <path
+            class="doodle-star doodle-star-6"
             d="M 1380 500 L 1384 512 L 1396 516 L 1384 520 L 1380 532 L 1376 520 L 1364 516 L 1376 512 Z"
             fill="#628B35"
             opacity="0.8"
@@ -832,19 +891,19 @@
         <!-- Floating Fun Stickers (MA-TEA Style) -->
         <div class="thumb-sticker st-1" style="--rot: -10deg; --delay: 0.55s">
           <span>🍃</span>
-          <span>100% Ceremonial Uji</span>
+          <span>Premium Ingredients</span>
         </div>
         <div class="thumb-sticker st-2" style="--rot: 8deg; --delay: 0.7s">
-          <span>🧊</span>
-          <span>Dual-Layer Cold Brew</span>
+          <span>✨</span>
+          <span>Custom Drinks</span>
         </div>
         <div class="thumb-sticker st-3" style="--rot: 6deg; --delay: 0.85s">
-          <span>⚡</span>
-          <span>80mg L-Theanine</span>
+          <span>💚</span>
+          <span>Affordable</span>
         </div>
         <div class="thumb-sticker st-4" style="--rot: -8deg; --delay: 1s">
-          <span>✨</span>
-          <span>0g Added Sugar</span>
+          <span>🍵</span>
+          <span>Freshly Whisked</span>
         </div>
 
         <!-- Dynamic Angled MatchaTcih Cup Duo (Product Real Cutouts - MA-TEA Animation) -->
@@ -854,11 +913,11 @@
             <div class="thumb-cup-inner">
               <picture>
                 <source
-                  srcset="assets/images/matcha_cup_left.webp?v=fulllid"
+                  srcset="assets/images/matcha_cup_left.webp?v=perfectdome"
                   type="image/webp"
                 />
                 <img
-                  src="assets/images/matcha_cup_left.png?v=fulllid"
+                  src="assets/images/matcha_cup_left.png?v=perfectdome"
                   alt="MatchaTcih Signature Cold Cup"
                   class="thumb-cup-img"
                   width="680"
@@ -867,7 +926,7 @@
                   fetchpriority="high"
                 />
               </picture>
-              <span class="thumb-cup-tag">Iced Matcha Latte</span>
+              <span class="thumb-cup-tag tag-left">Iced Matcha Latte</span>
             </div>
           </div>
 
@@ -876,11 +935,11 @@
             <div class="thumb-cup-inner">
               <picture>
                 <source
-                  srcset="assets/images/matcha_cup_right.webp?v=fulllid"
+                  srcset="assets/images/matcha_cup_right.webp?v=perfectdome"
                   type="image/webp"
                 />
                 <img
-                  src="assets/images/matcha_cup_right.png?v=fulllid"
+                  src="assets/images/matcha_cup_right.png?v=perfectdome"
                   alt="MatchaTcih Cloud Foam Cup"
                   class="thumb-cup-img"
                   width="650"
@@ -889,7 +948,7 @@
                   fetchpriority="high"
                 />
               </picture>
-              <span class="thumb-cup-tag">Vanilla Cloud Foam</span>
+              <span class="thumb-cup-tag tag-right">Vanilla Cloud Foam</span>
             </div>
           </div>
         </div>
@@ -941,7 +1000,7 @@
     <!-- Micro-bubbles Container -->
     <div id="bubbles-container"></div>
 
-    <!-- Header & Glass Navigation -->
+    <!-- Header Actions (KDS & Lang & Cart) -->
     <header class="header">
       <div class="logo">
         <img
@@ -951,32 +1010,7 @@
         />
         <span>MatchaTcih<span class="dot">.</span></span>
       </div>
-      <nav class="nav glass">
-        <a
-          href="#menu"
-          class="nav-item"
-          data-target="#menu"
-          data-i18n="nav_menu"
-          >Menu</a
-        >
-        <a
-          href="#home"
-          class="nav-item active"
-          data-target="#home"
-          data-i18n="nav_home"
-          >Home</a
-        >
-        <a
-          href="#simulation"
-          class="nav-item"
-          data-target="#simulation"
-          data-i18n="nav_simulation"
-          >Simulation</a
-        >
-      </nav>
       <div class="header-actions">
-        o
-
         <a
           href="admin.html"
           class="lang-btn"
@@ -1045,668 +1079,296 @@
       </div>
     </header>
 
-    <!-- Swipe / Drag Hint Indicator (Left: Menu) -->
-    <div
-      class="swipe-hint-pill"
-      id="swipe-to-menu-hint"
-      title="Swipe or drag right to open Menu"
-    >
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-        <path
-          d="M5 12h14M12 5l7 7-7 7"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
-      <span data-i18n="hint_menu">Drag / Swipe → Menu</span>
-    </div>
-
-    <!-- Swipe / Drag Hint Indicator (Right: Simulation) -->
-    <div
-      class="swipe-hint-pill-right"
-      id="swipe-to-sim-hint"
-      title="Swipe or drag left to open Simulation"
-    >
-      <span data-i18n="hint_sim">Simulation ← Swipe</span>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-        <path
-          d="M19 12H5M12 19l-7-7 7-7"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
-    </div>
-
     <!-- Horizontal Pages Viewport & Slider -->
     <div id="app-viewport">
       <div id="pages-slider">
-        <!-- PAGE 0: MENU RACIKAN MATCHA (Left Page) -->
+        <!-- PAGE 0: PANTONE SPECIMEN MENU (5 Signature Drinks + 1 Custom 3D Lab) -->
         <section id="menu-page" class="page">
-          <div class="menu-container">
-            <header class="menu-header">
-              <span class="menu-badge" data-i18n="menu_badge"
-                >Curated Collection • First-Harvest Uji</span
+          <div class="pantone-menu-wrapper" id="pantone-menu-root">
+
+    <!-- Header: Brand Typography & Subtitle (Clean & Centered) -->
+    <header class="pantone-menu-header">
+      <div class="pantone-brand-meta">
+        <span class="pantone-brand-label">MATCHA<span style="color:#628B35;">TCIH.</span></span>
+        <span class="pantone-sub-label">CURATED SPECIMEN PALETTE • UJI 2026</span>
+      </div>
+    </header>
+
+    <!-- Main Specimen 6-Card Grid (3 Columns x 2 Rows) -->
+    <main class="pantone-grid-stage">
+      <div class="pantone-grid" id="pantone-cards-grid">
+
+        <!-- CARD 1: Ice Matcha Latte -->
+        <article
+          class="pantone-card"
+          data-id="ice-matcha-latte"
+          data-name="ICE MATCHA LATTE"
+          data-pantone="2270 C"
+          data-price="25000"
+          tabindex="0"
+          role="button"
+          aria-label="ICE MATCHA LATTE, 2270 C, Rp 25.000. Klik untuk kustomisasi"
+        >
+          <div class="pantone-card-visual">
+            <picture>
+              <source srcset="assets/images/menu/ice-matcha-latte.webp" type="image/webp">
+              <img
+                src="assets/images/menu/ice-matcha-latte.png"
+                alt="Ice Matcha Latte"
+                loading="eager"
+                draggable="false"
               >
-              <h1 class="menu-title">The Matcha Standard.</h1>
-              <p class="menu-subtitle" data-i18n="menu_subtitle">
-                Handcrafted ceremonial profiles, slow-steeped and
-                micro-carbonated for pure calm and lasting focus.
-              </p>
-            </header>
-
-            <!-- Editorial Story Section (Golda Style) -->
-            <div class="story-section">
-              <p class="story-kicker">OUR RITUAL • UJI, KYOTO</p>
-              <h3 class="story-headline">
-                We believe matcha is more than fuel. It is a
-                <em>ritual of stillness</em>.
-              </h3>
-              <p class="story-paragraph">
-                Every single batch is harvested in first-flush spring shade in
-                Uji, Kyoto. Slow stone-ground to 5 microns to preserve rich
-                L-theanine, deep umami, and velvety creaminess without a single
-                grain of added sugar.
-              </p>
-            </div>
-
-            <!-- Bento Feature Grid (The Matcha Standard) -->
-            <div class="bento-section">
-              <h2 class="section-headline">THE <span>MATCHA</span> STANDARD</h2>
-              <div class="bento-grid">
-                <!-- Card 1 -->
-                <div class="bento-card bento-card-1">
-                  <span class="bento-tag">EXTRACTION METHOD</span>
-                  <div>
-                    <h3 class="bento-title">Cold-Steeped First Flush</h3>
-                    <p class="bento-desc">
-                      Slow-steeped in mountain spring water to extract deep,
-                      sweet chlorophyll notes without any grassy bitterness.
-                    </p>
-                  </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="bento-card bento-card-2">
-                  <span class="bento-tag">TERROIR</span>
-                  <div>
-                    <h3 class="bento-title">Single Origin Uji</h3>
-                    <p class="bento-desc">
-                      Shade-grown for 28 days in the mist-veiled valleys of
-                      Kyoto, Japan.
-                    </p>
-                  </div>
-                </div>
-
-                <!-- Card 3: Solid Punch Card (Golda Style) -->
-                <div class="bento-card bento-card-3 bento-punch">
-                  <h3 class="punch-number">0g</h3>
-                  <p class="punch-label">ADDED SUGAR</p>
-                  <span class="punch-sub">100% PURE CEREMONIAL GRADE</span>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="bento-card bento-card-4">
-                  <span class="bento-tag">CELLULAR FLOW</span>
-                  <div>
-                    <h3 class="bento-title">8H Sustained Zen Focus</h3>
-                    <p class="bento-desc">
-                      80mg L-Theanine paired with micro-carbonation for calm,
-                      jitter-free alpha brainwave focus.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Curated Drink Concoctions -->
-            <div class="bento-section">
-              <h2
-                class="section-headline"
-                style="
-                  text-align: left;
-                  font-size: 2.2rem;
-                  margin-bottom: 0.5rem;
-                "
-              >
-                SIGNATURE <span>CONCOCTIONS</span>
-              </h2>
-              <div class="menu-grid">
-                <!-- Card 1 -->
-                <article class="menu-card">
-                  <div class="menu-card-header">
-                    <span class="menu-card-tag" data-i18n="c1_tag"
-                      >Signature Cold</span
-                    >
-                    <span class="menu-card-price">$4.80</span>
-                  </div>
-                  <div class="menu-card-visual">
-                    <div class="menu-card-icon-placeholder">
-                      <svg
-                        width="42"
-                        height="42"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                      >
-                        <path
-                          d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                  <h3 class="menu-card-title">Ceremonial Cold Foam</h3>
-                  <p class="menu-card-desc" data-i18n="c1_desc">
-                    Cold-brewed pure Uji matcha layered with silky vanilla cloud
-                    foam and rich ceremonial matcha dust.
-                  </p>
-                  <div class="menu-card-meta">
-                    <span>Zero Sugar</span> • <span>Umami Level 5/5</span>
-                  </div>
-                </article>
-
-                <!-- Card 2 -->
-                <article class="menu-card">
-                  <div class="menu-card-header">
-                    <span class="menu-card-tag" data-i18n="c2_tag"
-                      >Citrus Botanical</span
-                    >
-                    <span class="menu-card-price">$5.20</span>
-                  </div>
-                  <div class="menu-card-visual">
-                    <div class="menu-card-icon-placeholder">
-                      <svg
-                        width="42"
-                        height="42"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                      >
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M12 2a14.5 14.5 0 0 0 0 20M2 12h20" />
-                      </svg>
-                    </div>
-                  </div>
-                  <h3 class="menu-card-title">Matcha Yuzu Sparkle</h3>
-                  <p class="menu-card-desc" data-i18n="c2_desc">
-                    Crisp Japanese mountain Yuzu citrus combined with
-                    micro-carbonation and ceremonial matcha.
-                  </p>
-                  <div class="menu-card-meta">
-                    <span>Crisp & Tangy</span> • <span>Vitamin C Rich</span>
-                  </div>
-                </article>
-
-                <!-- Card 3 -->
-                <article class="menu-card">
-                  <div class="menu-card-header">
-                    <span class="menu-card-tag" data-i18n="c3_tag"
-                      >Floral Fusion</span
-                    >
-                    <span class="menu-card-price">$5.50</span>
-                  </div>
-                  <div class="menu-card-visual">
-                    <div class="menu-card-icon-placeholder">
-                      <svg
-                        width="42"
-                        height="42"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                      >
-                        <path
-                          d="M12 2c2 4 6 5 6 9a6 6 0 1 1-12 0c0-4 4-5 6-9z"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                  <h3 class="menu-card-title">Sakura Cloud Latte</h3>
-                  <p class="menu-card-desc" data-i18n="c3_desc">
-                    Kyoto Sakura blossom infusion paired with silky oat milk and
-                    ceremonial grade matcha.
-                  </p>
-                  <div class="menu-card-meta">
-                    <span>Spring Edition</span> • <span>Floral Aroma</span>
-                  </div>
-                </article>
-
-                <!-- Card 4 -->
-                <article class="menu-card">
-                  <div class="menu-card-header">
-                    <span class="menu-card-tag" data-i18n="c4_tag"
-                      >Roasted Blend</span
-                    >
-                    <span class="menu-card-price">$4.90</span>
-                  </div>
-                  <div class="menu-card-visual">
-                    <div class="menu-card-icon-placeholder">
-                      <svg
-                        width="42"
-                        height="42"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                      >
-                        <path
-                          d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                  <h3 class="menu-card-title">Hojicha & Matcha Duo</h3>
-                  <p class="menu-card-desc" data-i18n="c4_desc">
-                    Dual-layer nutty roasted Hojicha and deep green ceremonial
-                    matcha blended with oat milk.
-                  </p>
-                  <div class="menu-card-meta">
-                    <span>Low Caffeine</span> • <span>Warm Notes</span>
-                  </div>
-                </article>
-              </div>
-            </div>
-
-            <!-- Editorial Testimonial (Golda Quote Style) -->
-            <div class="testimonial-section">
-              <div class="testimonial-stars">★★★★★</div>
-              <h2 class="testimonial-quote">
-                “Satu teguk dingin di sore hari, dan rasa lelah seharian
-                langsung sirna. <em>Pure zen focus.</em>”
-              </h2>
-              <p class="testimonial-author">— KENJI, TEA MASTER & SOMMELIER</p>
-            </div>
-
-            <!-- High-Impact Stat Metrics Row -->
-            <div class="metrics-row">
-              <div class="metric-item">
-                <span class="metric-number">80mg</span>
-                <span class="metric-label">L-THEANINE</span>
-              </div>
-              <div class="metric-item">
-                <span class="metric-number">0</span>
-                <span class="metric-label">CALORIES</span>
-              </div>
-              <div class="metric-item">
-                <span class="metric-number">0%</span>
-                <span class="metric-label">JITTERS</span>
-              </div>
-              <div class="metric-item">
-                <span class="metric-number">100%</span>
-                <span class="metric-label">SATISFACTION</span>
-              </div>
-            </div>
-
-            <!-- Giant Background Watermark -->
-            <div class="menu-watermark-wrap">
-              <div class="menu-watermark">MATCHA</div>
-            </div>
+            </picture>
           </div>
-        </section>
-
-        <!-- PAGE 1: 3D LANDING SHOWCASE (Right Page) -->
-        <section id="landing-page" class="page">
-          <main class="hero">
-            <div class="hero-content">
-              <!-- 3a. Deep Background Floating Tea Leaves -->
-              <div class="leaves-container">
-                <model-viewer
-                  class="leaf l1"
-                  src="assets/models/leaves.glb"
-                  environment-image="neutral"
-                  exposure="1.0"
-                  interaction-prompt="none"
-                  camera-orbit="45deg 75deg 105%"
-                ></model-viewer>
-                <model-viewer
-                  class="leaf l2"
-                  src="assets/models/leaves.glb"
-                  environment-image="neutral"
-                  exposure="1.0"
-                  interaction-prompt="none"
-                  camera-orbit="-30deg 60deg 105%"
-                ></model-viewer>
-                <model-viewer
-                  class="leaf l3"
-                  src="assets/models/leaves.glb"
-                  environment-image="neutral"
-                  exposure="1.0"
-                  interaction-prompt="none"
-                  camera-orbit="120deg 85deg 105%"
-                ></model-viewer>
-                <model-viewer
-                  class="leaf l4"
-                  src="assets/models/leaves.glb"
-                  environment-image="neutral"
-                  exposure="1.0"
-                  interaction-prompt="none"
-                  camera-orbit="10deg 45deg 105%"
-                ></model-viewer>
-              </div>
-
-              <!-- 3b. Left Column: Branding, Typography & CTA (Golda Editorial Style) -->
-              <div class="hero-left">
-                <div class="hero-kicker">FIRST HARVEST UJI • KYOTO</div>
-                <h1 class="main-title">
-                  <span class="outline" data-i18n="hero_title_1">Craft</span
-                  ><br />
-                  <span class="title-bold" data-i18n="hero_title_2">Your</span
-                  ><br />
-                  <span class="title-bold" data-i18n="hero_title_3"
-                    >Ritual</span
-                  >
-                </h1>
-                <p class="description" data-i18n="hero_desc">
-                  Pure ceremonial Tencha from Kyoto, stone-ground to 5 microns.
-                  Layer botanical notes, explode the structure, and experience
-                  sustained zen focus.
-                </p>
-                <div class="cta-group">
-                  <button class="primary-btn">
-                    <span data-i18n="hero_cta">Order Ceremonial</span>
-                    <span class="plus-icon">→</span>
-                  </button>
-                </div>
-                <div class="award-badge">
-                  <div class="award-icon">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 15L15 18L19 14"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M7 10L12 15L17 10"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </div>
-                  <div class="award-text">
-                    <span class="award-title" data-i18n="hero_award_title"
-                      >GLOBAL TEA AWARDS</span
-                    >
-                    <span class="award-subtitle" data-i18n="hero_award_sub"
-                      >PREMIUM BOTANICAL SODA 2025</span
-                    >
-                  </div>
-                </div>
-              </div>
-
-              <!-- 3c. Background Floating Botanicals, Whisk & Matcha Leaves (Behind Can) -->
-              <div class="berries-container-bg">
-                <model-viewer
-                  class="berry b7"
-                  src="assets/models/cherry.glb"
-                  environment-image="neutral"
-                  exposure="1.0"
-                  interaction-prompt="none"
-                  camera-orbit="-20deg 110deg 105%"
-                ></model-viewer>
-                <model-viewer
-                  class="berry b8"
-                  src="assets/models/cherry.glb"
-                  environment-image="neutral"
-                  exposure="1.0"
-                  interaction-prompt="none"
-                  camera-orbit="160deg 45deg 105%"
-                ></model-viewer>
-                <model-viewer
-                  class="berry b9"
-                  src="assets/models/cherry.glb"
-                  environment-image="neutral"
-                  exposure="1.0"
-                  interaction-prompt="none"
-                  camera-orbit="45deg 20deg 105%"
-                ></model-viewer>
-                <model-viewer
-                  class="chasen c-bg"
-                  src="assets/models/chasen.glb"
-                  environment-image="neutral"
-                  exposure="1.1"
-                  interaction-prompt="none"
-                  camera-orbit="40deg 75deg 105%"
-                ></model-viewer>
-                <model-viewer
-                  class="daun-matcha dm-bg"
-                  src="assets/models/daun_matcha.glb"
-                  environment-image="neutral"
-                  exposure="1.1"
-                  interaction-prompt="none"
-                  camera-orbit="45deg 65deg 105%"
-                ></model-viewer>
-              </div>
-
-              <!-- 3d. Center 3D Matcha Layer Simulation (Three.js WebGL Stage) -->
-              <div class="hero-center">
-                <div
-                  id="matcha-canvas-container"
-                  class="main-product-3d"
-                  title="Pinch or drag vertically to explode layers"
-                ></div>
-              </div>
-
-              <!-- Floating 3D Layer Annotations (Active when exploded) -->
-              <div class="layer-annotation annotation-topping">
-                <span class="badge">Layer 1 • Topping</span>
-                <h4 data-i18n="annotation_topping_title">Matcha Foam & Dust</h4>
-                <p data-i18n="annotation_topping_desc">
-                  Silky ceremonial foam rich in umami aroma, dusted with fine
-                  matcha micro-powder.
-                </p>
-              </div>
-
-              <div class="layer-annotation annotation-isi">
-                <span class="badge">Layer 2 • Isi / Infusion</span>
-                <h4 data-i18n="annotation_isi_title">
-                  First-Harvest Uji Extract
-                </h4>
-                <p data-i18n="annotation_isi_desc">
-                  Cold-brewed first-harvest Tencha tea leaves from Kyoto with
-                  zero sugar.
-                </p>
-              </div>
-
-              <div class="layer-annotation annotation-base">
-                <span class="badge">Layer 3 • Base Foundation</span>
-                <h4 data-i18n="annotation_base_title">Zen Mineral Soda Base</h4>
-                <p data-i18n="annotation_base_desc">
-                  Artisan mountain spring mineral base infused with crisp,
-                  revitalizing micro-bubbles.
-                </p>
-              </div>
-
-              <!-- 3e. Foreground Floating Botanicals, Chasen & Daun Matcha (Above Can & Text) -->
-              <div class="berries-container">
-                <model-viewer
-                  class="berry b1"
-                  src="assets/models/cherry.glb"
-                  environment-image="neutral"
-                  exposure="1.2"
-                  interaction-prompt="none"
-                  camera-orbit="45deg 120deg 105%"
-                ></model-viewer>
-                <model-viewer
-                  class="berry b2"
-                  src="assets/models/cherry.glb"
-                  environment-image="neutral"
-                  exposure="1.2"
-                  interaction-prompt="none"
-                  camera-orbit="-120deg 45deg 105%"
-                ></model-viewer>
-                <model-viewer
-                  class="berry b3"
-                  src="assets/models/cherry.glb"
-                  environment-image="neutral"
-                  exposure="1.2"
-                  interaction-prompt="none"
-                  camera-orbit="200deg 90deg 105%"
-                ></model-viewer>
-                <model-viewer
-                  class="berry b4"
-                  src="assets/models/cherry.glb"
-                  environment-image="neutral"
-                  exposure="1.2"
-                  interaction-prompt="none"
-                  camera-orbit="10deg 20deg 105%"
-                ></model-viewer>
-                <model-viewer
-                  class="berry b5"
-                  src="assets/models/cherry.glb"
-                  environment-image="neutral"
-                  exposure="1.2"
-                  interaction-prompt="none"
-                  camera-orbit="-45deg 160deg 105%"
-                ></model-viewer>
-                <model-viewer
-                  class="berry b6"
-                  src="assets/models/cherry.glb"
-                  environment-image="neutral"
-                  exposure="1.2"
-                  interaction-prompt="none"
-                  camera-orbit="80deg 75deg 105%"
-                ></model-viewer>
-                <model-viewer
-                  class="chasen c1"
-                  src="assets/models/chasen.glb"
-                  environment-image="neutral"
-                  exposure="1.3"
-                  interaction-prompt="none"
-                  camera-orbit="30deg 75deg 105%"
-                ></model-viewer>
-                <model-viewer
-                  class="chasen c2"
-                  src="assets/models/chasen.glb"
-                  environment-image="neutral"
-                  exposure="1.3"
-                  interaction-prompt="none"
-                  camera-orbit="-50deg 80deg 105%"
-                ></model-viewer>
-                <model-viewer
-                  class="daun-matcha dm1"
-                  src="assets/models/daun_matcha.glb"
-                  environment-image="neutral"
-                  exposure="1.3"
-                  interaction-prompt="none"
-                  camera-orbit="25deg 70deg 105%"
-                ></model-viewer>
-                <model-viewer
-                  class="daun-matcha dm2"
-                  src="assets/models/daun_matcha.glb"
-                  environment-image="neutral"
-                  exposure="1.3"
-                  interaction-prompt="none"
-                  camera-orbit="-60deg 75deg 105%"
-                ></model-viewer>
-                <model-viewer
-                  class="daun-matcha dm3"
-                  src="assets/models/daun_matcha.glb"
-                  environment-image="neutral"
-                  exposure="1.3"
-                  interaction-prompt="none"
-                  camera-orbit="110deg 80deg 105%"
-                ></model-viewer>
-              </div>
-
-              <!-- 3f. Right Column: Flavor Carousel & Side Title -->
-              <div class="hero-right">
-                <div class="product-carousel">
-                  <div class="carousel-cards">
-                    <div class="card active" data-flavor="classic">
-                      <img
-                        src="assets/textures/texture_20250901.png"
-                        alt="Ceremonial Uji"
-                      />
-                      <div class="card-info">
-                        <span>Ceremonial Uji</span>
-                        <span>$3.49</span>
-                      </div>
-                    </div>
-                    <div class="card" data-flavor="yuzu">
-                      <img
-                        src="assets/textures/texture_20250901.png"
-                        alt="Matcha Yuzu"
-                        style="filter: hue-rotate(45deg) saturate(1.2)"
-                      />
-                      <div class="card-info">
-                        <span>Matcha Yuzu</span>
-                        <span>$3.49</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="carousel-nav">
-                    <button
-                      class="nav-arrow"
-                      id="prev-card"
-                      aria-label="Previous Flavor"
-                    >
-                      ←
-                    </button>
-                    <button
-                      class="nav-arrow"
-                      id="next-card"
-                      aria-label="Next Flavor"
-                    >
-                      →
-                    </button>
-                  </div>
-                </div>
-                <h2 class="side-title">
-                  <span class="outline" data-i18n="hero_side_1">Pure</span
-                  ><br />
-                  <span data-i18n="hero_side_2">Zen</span>
-                </h2>
+          <div class="pantone-card-info">
+            <div class="pantone-card-text">
+              <h3 class="pantone-card-title">ICE MATCHA LATTE</h3>
+              <div class="pantone-code-row">
+                <span class="pantone-code">2270 C</span>
+                <span class="pantone-price">Rp 25.000</span>
               </div>
             </div>
-          </main>
-
-          <!-- Interactive Simulation HUD Controls -->
-          <div class="simulation-hud">
-            <button
-              id="explode-toggle-btn"
-              class="explode-btn"
-              aria-label="Pinch / Split Simulation"
-            >
-              <span data-i18n="hud_split_btn">Pinch / Split Layers</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M6 9l6 6 6-6"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                />
+            <!-- Circular Brand Whisk Watermark Stamp -->
+            <div class="pantone-card-stamp" aria-hidden="true">
+              <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="7">
+                <circle cx="50" cy="50" r="44" stroke-dasharray="3 3"/>
+                <path d="M 50 25 C 42 45 35 60 35 75 C 45 80 55 80 65 75 C 65 60 58 45 50 25 Z"/>
+                <line x1="50" y1="20" x2="50" y2="78"/>
               </svg>
-            </button>
-            <div class="hud-slider-group">
-              <span class="hud-label" data-i18n="hud_explode_label"
-                >Explode:</span
-              >
-              <input
-                type="range"
-                id="explode-slider"
-                class="explode-slider"
-                min="0"
-                max="100"
-                value="0"
-              />
             </div>
           </div>
+        </article>
+
+        <!-- CARD 2: Ice Matcharicano -->
+        <article
+          class="pantone-card"
+          data-id="ice-matcharicano"
+          data-name="ICE MATCHARICANO"
+          data-pantone="0794 C"
+          data-price="22000"
+          tabindex="0"
+          role="button"
+          aria-label="ICE MATCHARICANO, 0794 C, Rp 22.000. Klik untuk kustomisasi"
+        >
+          <div class="pantone-card-visual">
+            <picture>
+              <source srcset="assets/images/menu/ice-matcharicano.webp?v=clean2" type="image/webp">
+              <img
+                src="assets/images/menu/ice-matcharicano.png?v=clean2"
+                alt="Ice Matcharicano"
+                loading="eager"
+                draggable="false"
+              >
+            </picture>
+          </div>
+          <div class="pantone-card-info">
+            <div class="pantone-card-text">
+              <h3 class="pantone-card-title">ICE MATCHARICANO</h3>
+              <div class="pantone-code-row">
+                <span class="pantone-code">0794 C</span>
+                <span class="pantone-price">Rp 22.000</span>
+              </div>
+            </div>
+            <div class="pantone-card-stamp" aria-hidden="true">
+              <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="7">
+                <circle cx="50" cy="50" r="44" stroke-dasharray="3 3"/>
+                <path d="M 50 25 C 42 45 35 60 35 75 C 45 80 55 80 65 75 C 65 60 58 45 50 25 Z"/>
+                <line x1="50" y1="20" x2="50" y2="78"/>
+              </svg>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 3: Ice Matcha Chocolate -->
+        <article
+          class="pantone-card"
+          data-id="ice-matcha-chocolate"
+          data-name="ICE MATCHA CHOCOLATE"
+          data-pantone="4975 C"
+          data-price="28000"
+          tabindex="0"
+          role="button"
+          aria-label="ICE MATCHA CHOCOLATE, 4975 C, Rp 28.000. Klik untuk kustomisasi"
+        >
+          <div class="pantone-card-visual">
+            <picture>
+              <source srcset="assets/images/menu/ice-matcha-chocolate.webp" type="image/webp">
+              <img
+                src="assets/images/menu/ice-matcha-chocolate.png"
+                alt="Ice Matcha Chocolate"
+                loading="eager"
+                draggable="false"
+              >
+            </picture>
+          </div>
+          <div class="pantone-card-info">
+            <div class="pantone-card-text">
+              <h3 class="pantone-card-title">ICE MATCHA<br>CHOCOLATE</h3>
+              <div class="pantone-code-row">
+                <span class="pantone-code">4975 C</span>
+                <span class="pantone-price">Rp 28.000</span>
+              </div>
+            </div>
+            <div class="pantone-card-stamp" aria-hidden="true">
+              <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="7">
+                <circle cx="50" cy="50" r="44" stroke-dasharray="3 3"/>
+                <path d="M 50 25 C 42 45 35 60 35 75 C 45 80 55 80 65 75 C 65 60 58 45 50 25 Z"/>
+                <line x1="50" y1="20" x2="50" y2="78"/>
+              </svg>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 4: Ice Matcha Vanilla Cloud Foam -->
+        <article
+          class="pantone-card"
+          data-id="ice-matcha-vanilla-foam"
+          data-name="ICE MATCHA VANILLA CLOUD FOAM"
+          data-pantone="00997 C"
+          data-price="28000"
+          tabindex="0"
+          role="button"
+          aria-label="ICE MATCHA VANILLA CLOUD FOAM, 00997 C, Rp 28.000. Klik untuk kustomisasi"
+        >
+          <div class="pantone-card-visual">
+            <picture>
+              <source srcset="assets/images/menu/ice-matcha-vanilla-foam.webp" type="image/webp">
+              <img
+                src="assets/images/menu/ice-matcha-vanilla-foam.png"
+                alt="Ice Matcha Vanilla Cloud Foam"
+                loading="lazy"
+                draggable="false"
+              >
+            </picture>
+          </div>
+          <div class="pantone-card-info">
+            <div class="pantone-card-text">
+              <h3 class="pantone-card-title">ICE MATCHA<br>VANILLA CLOUD FOAM</h3>
+              <div class="pantone-code-row">
+                <span class="pantone-code">00997 C</span>
+                <span class="pantone-price">Rp 28.000</span>
+              </div>
+            </div>
+            <div class="pantone-card-stamp" aria-hidden="true">
+              <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="7">
+                <circle cx="50" cy="50" r="44" stroke-dasharray="3 3"/>
+                <path d="M 50 25 C 42 45 35 60 35 75 C 45 80 55 80 65 75 C 65 60 58 45 50 25 Z"/>
+                <line x1="50" y1="20" x2="50" y2="78"/>
+              </svg>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 5: Ice Chocolate -->
+        <article
+          class="pantone-card"
+          data-id="ice-chocolate"
+          data-name="ICE CHOCOLATE"
+          data-pantone="4695 C"
+          data-price="25000"
+          tabindex="0"
+          role="button"
+          aria-label="ICE CHOCOLATE, 4695 C, Rp 25.000. Klik untuk kustomisasi"
+        >
+          <div class="pantone-card-visual">
+            <picture>
+              <source srcset="assets/images/menu/ice-chocolate.webp" type="image/webp">
+              <img
+                src="assets/images/menu/ice-chocolate.png"
+                alt="Ice Chocolate"
+                loading="lazy"
+                draggable="false"
+              >
+            </picture>
+          </div>
+          <div class="pantone-card-info">
+            <div class="pantone-card-text">
+              <h3 class="pantone-card-title">ICE CHOCOLATE</h3>
+              <div class="pantone-code-row">
+                <span class="pantone-code">4695 C</span>
+                <span class="pantone-price">Rp 25.000</span>
+              </div>
+            </div>
+            <div class="pantone-card-stamp" aria-hidden="true">
+              <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="7">
+                <circle cx="50" cy="50" r="44" stroke-dasharray="3 3"/>
+                <path d="M 50 25 C 42 45 35 60 35 75 C 45 80 55 80 65 75 C 65 60 58 45 50 25 Z"/>
+                <line x1="50" y1="20" x2="50" y2="78"/>
+              </svg>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 6: Custom Drink (Craft from Scratch) -->
+        <article
+          class="pantone-card card-custom-craft"
+          data-id="custom-drink"
+          data-name="CUSTOM DRINK"
+          data-pantone="3D LAB"
+          data-price="20000"
+          tabindex="0"
+          role="button"
+          aria-label="CUSTOM DRINK, Interactive Craft Lab, dari Rp 20.000. Klik untuk kustomisasi dari awal"
+        >
+          <div class="pantone-card-visual">
+            <picture>
+              <source srcset="assets/images/menu/custom-drink.webp" type="image/webp">
+              <img
+                src="assets/images/menu/custom-drink.png"
+                alt="Custom Drink Simulation Lab"
+                loading="lazy"
+                draggable="false"
+              >
+            </picture>
+            <div class="pantone-custom-badge">✨ CRAFT LAB</div>
+          </div>
+          <div class="pantone-card-info">
+            <div class="pantone-card-text">
+              <h3 class="pantone-card-title">CUSTOM DRINK</h3>
+              <div class="pantone-code-row">
+                <span class="pantone-code" style="color: #628B35; font-weight: 800;">3D LAB</span>
+                <span class="pantone-price">DARI RP 20K</span>
+              </div>
+            </div>
+            <div class="pantone-card-stamp" aria-hidden="true">
+              <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="7">
+                <circle cx="50" cy="50" r="44" stroke-dasharray="3 3"/>
+                <path d="M 50 25 C 42 45 35 60 35 75 C 45 80 55 80 65 75 C 65 60 58 45 50 25 Z"/>
+                <line x1="50" y1="20" x2="50" y2="78"/>
+              </svg>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </main>
+
+    <!-- Floating Action Controls (Bottom Right - Cart Trigger) -->
+    <div class="pantone-float-controls" aria-label="Quick Actions">
+      <button
+        class="pantone-float-btn pantone-cart-trigger"
+        id="pantone-cart-btn"
+        aria-label="Lihat Keranjang Pesanan"
+        title="Buka Keranjang"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="pantone-cart-badge" id="pantone-cart-badge">0</span>
+      </button>
+    </div>
+
+    <!-- Floating Toast Notification -->
+    <div class="pantone-toast" id="pantone-toast" role="status" aria-live="polite">
+      <span class="pantone-toast-text">Membuka kustomisasi...</span>
+    </div>
+
+  </div>
         </section>
+
+        <!-- [HOME PAGE TEMPORARILY DISABLED AS REQUESTED - Full source backed up in scratch/landing-page-backup.html] -->
 
         <!-- PAGE 2: MATCHA CRAFTING SIMULATION PAGE (Right Page) -->
         <section id="simulation-page" class="page">
@@ -2031,6 +1693,7 @@
         />
       </filter>
     </svg>
+    <!-- 3D Model preloads disabled with Home page
     <div style="display: none">
       <model-viewer src="assets/models/blueberry.glb"></model-viewer>
       <model-viewer src="assets/models/cherry.glb"></model-viewer>
@@ -2038,6 +1701,7 @@
       <model-viewer src="assets/models/chasen.glb"></model-viewer>
       <model-viewer src="assets/models/daun_matcha.glb"></model-viewer>
     </div>
+    -->
 
     <!-- Modular Application Script -->
     <script type="module" src="js/main.js"></script>

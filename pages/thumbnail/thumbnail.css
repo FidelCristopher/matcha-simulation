@@ -271,6 +271,196 @@
     }
 }
 
+/* ==========================================================================
+   MA-TEA LIVELY BACKGROUND DOODLE ANIMATIONS
+   1. Zen Wavy Streamers: continuous flowing tea currents
+   2. Japanese Chasen (whisk): gentle whimsical stirring sway
+   3. Ceremonial Chawan: softly rising steam vapor
+   4. Radiant Citrus Sunburst: continuous slow rotation
+   5. Floating Ceremonial Leaves: gentle wind rustle and sway
+   6. Sparkle Stars: staggered twinkling pulse
+   7. Concentric Rainbow Arches: gentle breathing aura ripple
+   8. Berry Blossom Cluster: subtle hanging bob
+   ========================================================================== */
+
+/* 1. Zen Wavy Streamers (Flowing Tea Currents) */
+.doodle-waves-anim-left {
+    animation: doodleWaveLeft 4.6s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+@keyframes doodleWaveLeft {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(18px, -5px, 0);
+    }
+}
+
+.doodle-waves-anim-right {
+    animation: doodleWaveRight 4.9s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+@keyframes doodleWaveRight {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-18px, -5px, 0);
+    }
+}
+
+/* 2. Japanese Chasen Whisk (Whimsical Stirring Sway) */
+.doodle-chasen-anim {
+    transform-origin: 0 -48px;
+    animation: doodleWhiskSway 3.2s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+@keyframes doodleWhiskSway {
+    0% {
+        transform: rotate(-7deg);
+    }
+    50% {
+        transform: rotate(1deg) scale(1.02);
+    }
+    100% {
+        transform: rotate(8deg);
+    }
+}
+
+/* 3. Ceremonial Chawan Rising Steam Vapor */
+.doodle-steam-anim {
+    animation: doodleSteamRise 3.0s ease-in-out infinite alternate;
+    will-change: transform, opacity;
+}
+
+@keyframes doodleSteamRise {
+    0% {
+        transform: translate3d(0, 0, 0) scaleY(0.92);
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 0.95;
+    }
+    100% {
+        transform: translate3d(0, -12px, 0) scaleY(1.15);
+        opacity: 0.35;
+    }
+}
+
+/* 4. Radiant Citrus Sunburst (Slow Hypnotic Rotation) */
+.doodle-sunburst-anim {
+    transform-origin: 0 0;
+    animation: doodleSunRotate 24s linear infinite;
+    will-change: transform;
+}
+
+@keyframes doodleSunRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* 5. Floating Ceremonial Leaves (Gentle Wind Rustle & Sway) */
+.doodle-leaf-anim {
+    transform-origin: 0 0;
+    animation: doodleLeafWiggle 3.6s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+.doodle-leaf-anim-alt {
+    transform-origin: 0 0;
+    animation: doodleLeafWiggleAlt 4.2s ease-in-out 0.5s infinite alternate;
+    will-change: transform;
+}
+
+@keyframes doodleLeafWiggle {
+    0% {
+        transform: rotate(-5deg) scale(0.98);
+    }
+    100% {
+        transform: rotate(5deg) scale(1.02);
+    }
+}
+
+@keyframes doodleLeafWiggleAlt {
+    0% {
+        transform: rotate(4deg) scale(1.02);
+    }
+    100% {
+        transform: rotate(-6deg) scale(0.97);
+    }
+}
+
+/* 6. Sparkle Stars (Staggered Twinkling Pulse) */
+.doodle-star {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: doodleStarTwinkle 2.5s ease-in-out infinite alternate;
+    will-change: transform, opacity;
+}
+
+.doodle-star-1 { animation-delay: 0.1s; }
+.doodle-star-2 { animation-delay: 0.7s; }
+.doodle-star-3 { animation-delay: 1.3s; }
+.doodle-star-4 { animation-delay: 0.4s; }
+.doodle-star-5 { animation-delay: 1.0s; }
+.doodle-star-6 { animation-delay: 1.6s; }
+
+@keyframes doodleStarTwinkle {
+    0% {
+        transform: scale(0.82) rotate(-8deg);
+        opacity: 0.4;
+    }
+    50% {
+        transform: scale(1.22) rotate(14deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.92) rotate(0deg);
+        opacity: 0.55;
+    }
+}
+
+/* 7. Concentric Rainbow Arches (Gentle Aura Ripple) */
+.doodle-arches-anim {
+    transform-box: fill-box;
+    transform-origin: center bottom;
+    animation: doodleArchRipple 4.5s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+@keyframes doodleArchRipple {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.035);
+    }
+}
+
+/* 8. Berry / Tea Blossom Cluster (Hanging Bob) */
+.doodle-berries-anim {
+    transform-origin: 45px -48px;
+    animation: doodleBerryBob 3.8s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+@keyframes doodleBerryBob {
+    0% {
+        transform: rotate(-4.5deg);
+    }
+    100% {
+        transform: rotate(4.5deg);
+    }
+}
+
 /* Center Stage Spotlight (Soft Ambient Halo - Completely Transparent Outer Edge) */
 .thumb-spotlight {
     position: absolute;
@@ -293,7 +483,7 @@
     opacity: 1;
 }
 
-/* Big Blurred Green Brand Typography in Background (MA-TEA Style) */
+/* Big Faint Green Brand Typography Watermark in Background (MA-TEA Style) */
 .thumb-backdrop-title {
     position: absolute;
     top: 50%;
@@ -309,23 +499,24 @@
     transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.thumbnail-screen.play-anim .thumb-backdrop-title {
+.thumbnail-screen.play-anim .thumb-backdrop-title,
+.thumbnail-screen.idle-active .thumb-backdrop-title {
     opacity: 1;
     animation: backdropTitleEntrance 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
 }
 
 .thumb-backdrop-title span {
     display: inline-block;
-    font-family: var(--font-heading, 'Outfit', sans-serif);
-    font-size: clamp(4.8rem, 16vw, 13.8rem);
+    font-family: 'Syne', var(--font-heading, 'Outfit', sans-serif);
+    font-size: clamp(5.5rem, 18vw, 15rem);
     font-weight: 900;
-    letter-spacing: clamp(0.08em, 2.2vw, 0.22em);
+    letter-spacing: clamp(0.08em, 2vw, 0.20em);
     text-transform: uppercase;
     line-height: 0.85;
-    color: rgba(98, 139, 53, 0.13);
-    text-shadow: 0 0 35px rgba(98, 139, 53, 0.18), 0 0 75px rgba(16, 55, 19, 0.10);
-    filter: blur(2.5px);
-    -webkit-filter: blur(2.5px);
+    color: rgba(98, 139, 53, 0.20);
+    text-shadow: 0 0 45px rgba(98, 139, 53, 0.22), 0 0 90px rgba(16, 55, 19, 0.10);
+    filter: blur(1.5px);
+    -webkit-filter: blur(1.5px);
     user-select: none;
     pointer-events: none;
     white-space: nowrap;
@@ -369,7 +560,9 @@
     cursor: pointer;
     will-change: transform, opacity;
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
     transform: translateZ(0);
+    isolation: isolate;
 }
 
 .thumb-cup-inner {
@@ -379,19 +572,22 @@
     align-items: center;
     will-change: transform;
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
     transform: translateZ(0);
+    pointer-events: none; /* Children don't fire competing hit-tests */
 }
 
 .thumb-cup-inner picture {
     display: block;
     width: 100%;
     height: 100%;
+    pointer-events: none;
 }
 
 /* Left Cup (Signature Latte with logo):
    Slides up from bottom-left with tilt, settling into -6deg */
 .thumb-cup-card.cup-left {
-    z-index: 1;
+    z-index: 2;
     transform-origin: 50% 100%;
     transform: translate3d(0, 0, 0) rotate(-6deg);
 }
@@ -421,7 +617,7 @@
 /* Right Cup (Vanilla Cloud Foam edition):
    Emerges slightly first from bottom-right, tilted +7deg, overlapping slightly over left cup */
 .thumb-cup-card.cup-right {
-    z-index: 2;
+    z-index: 1;
     margin-left: -3.5rem; /* Dynamic overlap like the MA-TEA bottle pair */
     transform-origin: 50% 100%;
     transform: translate3d(0, 12px, 0) rotate(7deg);
@@ -476,60 +672,151 @@
     }
 }
 
-/* Hover effect on either cup - Smooth GPU Scaling without Keyframe Glitch */
-.thumb-cup-card:hover {
-    z-index: 10 !important;
-}
-
-.thumb-cup-card:hover .thumb-cup-inner {
-    animation-play-state: paused;
-}
-
+/* Hover effect on either cup - Silky Smooth GPU Scaling (Zero Glitch / Zero Jitter) */
 .thumb-cup-img {
     height: clamp(280px, 44vh, 420px);
     width: auto;
     object-fit: contain;
-    filter: none;
+    filter: drop-shadow(0 8px 16px rgba(16, 55, 19, 0.08));
     user-select: none;
-    pointer-events: auto;
+    -webkit-user-drag: none;
+    pointer-events: none; /* Pointer-transparent: eliminates hover oscillation completely */
     display: block;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    transform-origin: 50% 85%;
+    transform-origin: 50% 50%; /* Symmetrical expansion avoids 37px lid displacement oscillation */
     transform: translate3d(0, 0, 0) scale(1);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: transform;
+    transition: transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1),
+                filter 0.42s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: transform, filter;
+    outline: 1px solid transparent; /* Locks bilinear anti-aliasing on GPU scale */
 }
 
 .thumb-cup-card:hover .thumb-cup-img {
-    transform: translate3d(0, -12px, 0) scale(1.07);
+    transform: translate3d(0, -8px, 0) scale(1.05);
+    filter: drop-shadow(0 22px 34px rgba(16, 55, 19, 0.22));
 }
 
-/* Playful Badge Floating on Cups */
+/* Playful Badge Floating on Cups (Pop Entrance + Floating Sticker Physics) */
 .thumb-cup-tag {
     position: absolute;
-    bottom: -15px;
+    bottom: -16px;
     background: var(--color-phthalo, #103713);
     color: var(--color-milk, #FFFDF5);
     font-family: var(--font-heading, 'Outfit', sans-serif);
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     font-weight: 900;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    padding: 0.42rem 1.15rem;
+    padding: 0.46rem 1.25rem;
     border-radius: 9999px;
-    box-shadow: 0 8px 24px rgba(16, 55, 19, 0.25), 0 0 16px rgba(98, 139, 53, 0.3);
+    box-shadow: 0 10px 26px rgba(16, 55, 19, 0.32), 0 0 16px rgba(98, 139, 53, 0.35);
     border: 2px solid var(--color-maximum, #628B35);
     white-space: nowrap;
-    z-index: 15;
-    pointer-events: none;
-    transform: translate3d(0, 0, 0) scale(1);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    z-index: 25;
+    pointer-events: none; /* Pointer-transparent: card manages hover cleanly */
+    cursor: pointer;
+    opacity: 0;
+    transform-origin: 50% 50%;
+    transform: translate3d(0, 20px, 0) scale(0);
+    will-change: transform, opacity, box-shadow;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: transform 0.38s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                box-shadow 0.38s ease, 
+                border-color 0.38s ease, 
+                background-color 0.25s ease;
 }
 
+/* Staggered Spring Pop-In for Left Tag */
+.thumbnail-screen.play-anim .thumb-cup-card.cup-left .thumb-cup-tag,
+.thumbnail-screen.play-anim .thumb-cup-tag.tag-left {
+    animation: cupTagPopLeft 0.78s cubic-bezier(0.34, 1.56, 0.64, 1) 0.68s forwards,
+               cupTagFloatLeft 2.5s ease-in-out 1.46s infinite alternate;
+}
+
+/* Staggered Spring Pop-In for Right Tag */
+.thumbnail-screen.play-anim .thumb-cup-card.cup-right .thumb-cup-tag,
+.thumbnail-screen.play-anim .thumb-cup-tag.tag-right {
+    animation: cupTagPopRight 0.78s cubic-bezier(0.34, 1.56, 0.64, 1) 0.82s forwards,
+               cupTagFloatRight 2.8s ease-in-out 1.60s infinite alternate;
+}
+
+/* Keep permanently visible when idle */
+.thumbnail-screen.idle-active .thumb-cup-tag {
+    opacity: 1 !important;
+}
+
+/* Hover effect on Cup Card -> Smooth Tag Spring Lift */
 .thumb-cup-card:hover .thumb-cup-tag {
-    transform: translate3d(0, -6px, 0) scale(1.04);
-    box-shadow: 0 12px 28px rgba(16, 55, 19, 0.32), 0 0 18px rgba(98, 139, 53, 0.4);
+    transform: translate3d(0, -6px, 0) scale(1.08);
+    box-shadow: 0 16px 36px rgba(16, 55, 19, 0.42), 0 0 20px rgba(98, 139, 53, 0.55);
+    border-color: #8CE036;
+    background-color: #0c2b0f;
+}
+
+.thumb-cup-card:active .thumb-cup-tag {
+    transform: translate3d(0, -2px, 0) scale(1.02);
+}
+
+@keyframes cupTagPopLeft {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 26px, 0) scale(0) rotate(-6deg);
+    }
+    55% {
+        opacity: 1;
+        transform: translate3d(0, -10px, 0) scale(1.24) rotate(1.5deg);
+    }
+    75% {
+        transform: translate3d(0, 2px, 0) scale(0.94) rotate(-1deg);
+    }
+    90% {
+        transform: translate3d(0, -2px, 0) scale(1.05) rotate(0.5deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    }
+}
+
+@keyframes cupTagPopRight {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 26px, 0) scale(0) rotate(6deg);
+    }
+    55% {
+        opacity: 1;
+        transform: translate3d(0, -10px, 0) scale(1.24) rotate(-1.5deg);
+    }
+    75% {
+        transform: translate3d(0, 2px, 0) scale(0.94) rotate(1deg);
+    }
+    90% {
+        transform: translate3d(0, -2px, 0) scale(1.05) rotate(-0.5deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    }
+}
+
+@keyframes cupTagFloatLeft {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    }
+    100% {
+        transform: translate3d(0, -6px, 0) scale(1.03) rotate(-1deg);
+    }
+}
+
+@keyframes cupTagFloatRight {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    }
+    100% {
+        transform: translate3d(0, -7px, 0) scale(1.03) rotate(1deg);
+    }
 }
 
 /* Floating Fun Sticker Badges (MA-TEA Style with Staggered Pop-In) */
@@ -550,123 +837,187 @@
     gap: 0.55rem;
     box-shadow: 0 10px 24px rgba(16, 55, 19, 0.10);
     z-index: 20;
-    pointer-events: none;
+    pointer-events: auto;
+    cursor: default;
     opacity: 0;
+    transform: scale(0);
     will-change: transform, opacity;
     backface-visibility: hidden;
-    transform: translateZ(0);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease;
 }
+
 .st-1 {
     top: 15%;
     left: 12%;
-    transform: translate3d(0, 0, 0) rotate(-10deg);
+    --rot: -10deg;
 }
 
 .st-2 {
     top: 18%;
     right: 12%;
-    transform: translate3d(0, 0, 0) rotate(8deg);
+    --rot: 8deg;
 }
 
 .st-3 {
     bottom: 14%;
     left: 13%;
-    transform: translate3d(0, 0, 0) rotate(6deg);
+    --rot: 6deg;
 }
 
 .st-4 {
     bottom: 16%;
     right: 13%;
-    transform: translate3d(0, 0, 0) rotate(-8deg);
+    --rot: -8deg;
 }
 
-/* Sticker Entrance Pop + Continuous Floating - Kept Permanently Visible! */
-.thumbnail-screen.play-anim .thumb-sticker,
+/* Staggered Pop-In with fill-mode 'both' (100% invisible until exact pop moment, then stays permanently visible) */
+.thumbnail-screen.play-anim .st-1 {
+    animation: maTeaStickerPop1 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) 0.55s both,
+               stickerFloat1 3.2s ease-in-out 1.30s infinite alternate;
+}
+
+.thumbnail-screen.play-anim .st-2 {
+    animation: maTeaStickerPop2 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) 0.70s both,
+               stickerFloat2 3.6s ease-in-out 1.45s infinite alternate;
+}
+
+.thumbnail-screen.play-anim .st-3 {
+    animation: maTeaStickerPop3 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) 0.85s both,
+               stickerFloat3 3.0s ease-in-out 1.60s infinite alternate;
+}
+
+.thumbnail-screen.play-anim .st-4 {
+    animation: maTeaStickerPop4 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) 1.00s both,
+               stickerFloat4 3.4s ease-in-out 1.75s infinite alternate;
+}
+
+/* Keep permanently visible once entrance sequence completes */
 .thumbnail-screen.idle-active .thumb-sticker {
     opacity: 1 !important;
 }
 
-.thumbnail-screen.play-anim .st-1 {
-    animation: maTeaStickerPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.55s forwards,
-               stickerFloat1 3.2s ease-in-out 1.35s infinite alternate;
+/* Tactile Hover Pop Response */
+.thumb-sticker:hover {
+    transform: scale(1.10) rotate(calc(var(--rot, 0deg) + 2deg)) !important;
+    box-shadow: 0 16px 36px rgba(16, 55, 19, 0.22), 0 0 18px rgba(98, 139, 53, 0.35) !important;
+    border-color: #8CE036 !important;
 }
 
-.thumbnail-screen.play-anim .st-2 {
-    animation: maTeaStickerPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.70s forwards,
-               stickerFloat2 3.6s ease-in-out 1.50s infinite alternate;
-}
-
-.thumbnail-screen.play-anim .st-3 {
-    animation: maTeaStickerPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.85s forwards,
-               stickerFloat3 3.0s ease-in-out 1.65s infinite alternate;
-}
-
-.thumbnail-screen.play-anim .st-4 {
-    animation: maTeaStickerPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 1.00s forwards,
-               stickerFloat4 3.4s ease-in-out 1.80s infinite alternate;
-}
-
-@keyframes maTeaStickerPop {
+/* Staggered Pop-In Keyframes: Starts 100% invisible (opacity 0, scale 0) until delay finishes */
+@keyframes maTeaStickerPop1 {
     0% {
         opacity: 0;
-        transform: translate3d(0, 0, 0) scale(0.25) rotate(var(--rot, 0deg));
+        transform: translate3d(0, 18px, 0) scale(0) rotate(-16deg);
     }
-    65% {
+    60% {
         opacity: 1;
-        transform: translate3d(0, 0, 0) scale(1.15) rotate(calc(var(--rot, 0deg) + 3deg));
+        transform: translate3d(0, -6px, 0) scale(1.18) rotate(-7deg);
     }
-    85% {
-        opacity: 1;
-        transform: translate3d(0, 0, 0) scale(0.96) rotate(calc(var(--rot, 0deg) - 1deg));
+    80% {
+        transform: translate3d(0, 2px, 0) scale(0.95) rotate(-11deg);
     }
     100% {
         opacity: 1;
-        transform: translate3d(0, 0, 0) scale(1) rotate(var(--rot, 0deg));
+        transform: translate3d(0, 0, 0) scale(1) rotate(-10deg);
     }
 }
 
-/* Gentle Micro-Floating for Stickers after Entry (Guaranteed Opacity 1 Never Disappearing) */
+@keyframes maTeaStickerPop2 {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 18px, 0) scale(0) rotate(16deg);
+    }
+    60% {
+        opacity: 1;
+        transform: translate3d(0, -6px, 0) scale(1.18) rotate(11deg);
+    }
+    80% {
+        transform: translate3d(0, 2px, 0) scale(0.95) rotate(7deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1) rotate(8deg);
+    }
+}
+
+@keyframes maTeaStickerPop3 {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 18px, 0) scale(0) rotate(12deg);
+    }
+    60% {
+        opacity: 1;
+        transform: translate3d(0, -6px, 0) scale(1.18) rotate(9deg);
+    }
+    80% {
+        transform: translate3d(0, 2px, 0) scale(0.95) rotate(5deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1) rotate(6deg);
+    }
+}
+
+@keyframes maTeaStickerPop4 {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 18px, 0) scale(0) rotate(-14deg);
+    }
+    60% {
+        opacity: 1;
+        transform: translate3d(0, -6px, 0) scale(1.18) rotate(-5deg);
+    }
+    80% {
+        transform: translate3d(0, 2px, 0) scale(0.95) rotate(-9deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1) rotate(-8deg);
+    }
+}
+
+/* Gentle Micro-Floating for Stickers after Entry (Smooth & Continuous at Opacity 1) */
 @keyframes stickerFloat1 {
     0% { 
-        opacity: 1 !important;
+        opacity: 1;
         transform: translate3d(0, 0, 0) scale(1) rotate(-10deg); 
     }
     100% { 
-        opacity: 1 !important;
-        transform: translate3d(0, -16px, 0) scale(1) rotate(-7deg); 
+        opacity: 1;
+        transform: translate3d(0, -14px, 0) scale(1.02) rotate(-7deg); 
     }
 }
 
 @keyframes stickerFloat2 {
     0% { 
-        opacity: 1 !important;
+        opacity: 1;
         transform: translate3d(0, 0, 0) scale(1) rotate(8deg); 
     }
     100% { 
-        opacity: 1 !important;
-        transform: translate3d(0, -18px, 0) scale(1) rotate(11deg); 
+        opacity: 1;
+        transform: translate3d(0, -16px, 0) scale(1.02) rotate(11deg); 
     }
 }
 
 @keyframes stickerFloat3 {
     0% { 
-        opacity: 1 !important;
+        opacity: 1;
         transform: translate3d(0, 0, 0) scale(1) rotate(6deg); 
     }
     100% { 
-        opacity: 1 !important;
-        transform: translate3d(0, -15px, 0) scale(1) rotate(3deg); 
+        opacity: 1;
+        transform: translate3d(0, -14px, 0) scale(1.02) rotate(3deg); 
     }
 }
 
 @keyframes stickerFloat4 {
     0% { 
-        opacity: 1 !important;
+        opacity: 1;
         transform: translate3d(0, 0, 0) scale(1) rotate(-8deg); 
     }
     100% { 
-        opacity: 1 !important;
-        transform: translate3d(0, -17px, 0) scale(1) rotate(-5deg); 
+        opacity: 1;
+        transform: translate3d(0, -15px, 0) scale(1.02) rotate(-5deg); 
     }
 }
 
@@ -942,12 +1293,12 @@
         height: clamp(280px, 48vh, 420px);
     }
 
-    /* Blurred Green MATCHA Backdrop Watermark for Mobile */
+    /* Faint Green MATCHA Backdrop Watermark for Mobile */
     .thumb-backdrop-title span {
-        font-size: clamp(3.0rem, 15vw, 6.0rem);
+        font-size: clamp(3.2rem, 16vw, 6.5rem);
         letter-spacing: 0.10em;
-        filter: blur(2px);
-        -webkit-filter: blur(2px);
+        filter: blur(1.2px);
+        -webkit-filter: blur(1.2px);
     }
 
     /* Botanical Vector Wings Scaled to Frame the Phone Edges */
@@ -1004,22 +1355,22 @@
     .st-1 {
         top: 4%;
         left: 3%;
-        transform: translate3d(0, 0, 0) rotate(-6deg);
+        --rot: -6deg;
     }
     .st-2 {
         top: 7%;
         right: 3%;
-        transform: translate3d(0, 0, 0) rotate(6deg);
+        --rot: 6deg;
     }
     .st-3 {
         bottom: 7%;
         left: 3%;
-        transform: translate3d(0, 0, 0) rotate(5deg);
+        --rot: 5deg;
     }
     .st-4 {
         bottom: 9%;
         right: 3%;
-        transform: translate3d(0, 0, 0) rotate(-6deg);
+        --rot: -6deg;
     }
 
     /* Return to Screensaver Button inside Kiosk */
@@ -1058,7 +1409,7 @@
         padding: 5px;
     }
     .thumb-backdrop-title span {
-        font-size: clamp(2.4rem, 14vw, 4.2rem);
+        font-size: clamp(2.5rem, 15vw, 4.5rem);
         letter-spacing: 0.08em;
     }
     .thumb-cup-img {

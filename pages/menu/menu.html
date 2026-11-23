@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MatchaTcih • Pantone Specimen Menu</title>
+    <link rel="icon" type="image/png" href="../../assets/images/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..900;1,9..40,400..900&family=Syne:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="stylesheet" href="../../css/variables.css" />
+    <link rel="stylesheet" href="menu.css" />
+  </head>
+  <body class="pantone-menu-standalone">
+    <!-- =====================================================================
+       MATCHATCIH PANTONE SPECIMEN MENU COMPONENT
+       6 Signature Drinks Grid (3 Columns x 2 Rows)
+       Clean Header: No filter bar & No back button (Auto screensaver on idle)
+       ===================================================================== -->
+    <div class="pantone-menu-wrapper" id="pantone-menu-root">
+      <!-- Header: Brand Typography & Subtitle (Clean & Centered) -->
+      <header class="pantone-menu-header">
+        <div class="pantone-brand-meta">
+          <span class="pantone-brand-label"
+            >MATCHA<span style="color: #628b35">TCIH.</span></span
+          >
+          <span class="pantone-sub-label"
+            >CURATED SPECIMEN PALETTE • UJI 2026</span
+          >
+        </div>
+      </header>
+
+      <!-- Main Specimen 6-Card Grid (3 Columns x 2 Rows) -->
+      <main class="pantone-grid-stage">
+        <div class="pantone-grid" id="pantone-cards-grid">
+          <!-- CARD 1: Ice Matcha Latte -->
+          <article
+            class="pantone-card"
+            data-id="ice-matcha-latte"
+            data-name="ICE MATCHA LATTE"
+            data-pantone="2270 C"
+            data-price="25000"
+            tabindex="0"
+            role="button"
+            aria-label="ICE MATCHA LATTE, 2270 C, Rp 25.000. Klik untuk kustomisasi"
+          >
+            <div class="pantone-card-visual">
+              <picture>
+                <source
+                  srcset="../../assets/images/menu/ice-matcha-latte.webp"
+                  type="image/webp"
+                />
+                <img
+                  src="../../assets/images/menu/ice-matcha-latte.png"
+                  alt="Ice Matcha Latte"
+                  loading="eager"
+                  draggable="false"
+                />
+              </picture>
+            </div>
+            <div class="pantone-card-info">
+              <div class="pantone-card-text">
+                <h3 class="pantone-card-title">ICE MATCHA LATTE</h3>
+                <div class="pantone-code-row">
+                  <span class="pantone-code">2270 C</span>
+                  <span class="pantone-price">Rp 25.000</span>
+                </div>
+              </div>
+              <!-- Circular Brand Whisk Watermark Stamp -->
+              <div class="pantone-card-stamp" aria-hidden="true">
+                <svg
+                  viewBox="0 0 100 100"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="7"
+                >
+                  <circle cx="50" cy="50" r="44" stroke-dasharray="3 3" />
+                  <path
+                    d="M 50 25 C 42 45 35 60 35 75 C 45 80 55 80 65 75 C 65 60 58 45 50 25 Z"
+                  />
+                  <line x1="50" y1="20" x2="50" y2="78" />
+                </svg>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 2: Ice Matcharicano -->
+          <article
+            class="pantone-card"
+            data-id="ice-matcharicano"
+            data-name="ICE MATCHARICANO"
+            data-pantone="0794 C"
+            data-price="22000"
+            tabindex="0"
+            role="button"
+            aria-label="ICE MATCHARICANO, 0794 C, Rp 22.000. Klik untuk kustomisasi"
+          >
+            <div class="pantone-card-visual">
+              <picture>
+                <source
+                  srcset="../../assets/images/menu/ice-matcharicano.webp?v=clean2"
+                  type="image/webp"
+                />
+                <img
+                  src="../../assets/images/menu/ice-matcharicano.png?v=clean2"
+                  alt="Ice Matcharicano"
+                  loading="eager"
+                  draggable="false"
+                />
+              </picture>
+            </div>
+            <div class="pantone-card-info">
+              <div class="pantone-card-text">
+                <h3 class="pantone-card-title">ICE MATCHARICANO</h3>
+                <div class="pantone-code-row">
+                  <span class="pantone-code">0794 C</span>
+                  <span class="pantone-price">Rp 22.000</span>
+                </div>
+              </div>
+              <div class="pantone-card-stamp" aria-hidden="true">
+                <svg
+                  viewBox="0 0 100 100"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="7"
+                >
+                  <circle cx="50" cy="50" r="44" stroke-dasharray="3 3" />
+                  <path
+                    d="M 50 25 C 42 45 35 60 35 75 C 45 80 55 80 65 75 C 65 60 58 45 50 25 Z"
+                  />
+                  <line x1="50" y1="20" x2="50" y2="78" />
+                </svg>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 3: Ice Matcha Chocolate -->
+          <article
+            class="pantone-card"
+            data-id="ice-matcha-chocolate"
+            data-name="ICE MATCHA CHOCOLATE"
+            data-pantone="4975 C"
+            data-price="28000"
+            tabindex="0"
+            role="button"
+            aria-label="ICE MATCHA CHOCOLATE, 4975 C, Rp 28.000. Klik untuk kustomisasi"
+          >
+            <div class="pantone-card-visual">
+              <picture>
+                <source
+                  srcset="../../assets/images/menu/ice-matcha-chocolate.webp"
+                  type="image/webp"
+                />
+                <img
+                  src="../../assets/images/menu/ice-matcha-chocolate.png"
+                  alt="Ice Matcha Chocolate"
+                  loading="eager"
+                  draggable="false"
+                />
+              </picture>
+            </div>
+            <div class="pantone-card-info">
+              <div class="pantone-card-text">
+                <h3 class="pantone-card-title">ICE MATCHA<br />CHOCOLATE</h3>
+                <div class="pantone-code-row">
+                  <span class="pantone-code">4975 C</span>
+                  <span class="pantone-price">Rp 28.000</span>
+                </div>
+              </div>
+              <div class="pantone-card-stamp" aria-hidden="true">
+                <svg
+                  viewBox="0 0 100 100"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="7"
+                >
+                  <circle cx="50" cy="50" r="44" stroke-dasharray="3 3" />
+                  <path
+                    d="M 50 25 C 42 45 35 60 35 75 C 45 80 55 80 65 75 C 65 60 58 45 50 25 Z"
+                  />
+                  <line x1="50" y1="20" x2="50" y2="78" />
+                </svg>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 4: Ice Matcha Vanilla Cloud Foam -->
+          <article
+            class="pantone-card"
+            data-id="ice-matcha-vanilla-foam"
+            data-name="ICE MATCHA VANILLA CLOUD FOAM"
+            data-pantone="00997 C"
+            data-price="28000"
+            tabindex="0"
+            role="button"
+            aria-label="ICE MATCHA VANILLA CLOUD FOAM, 00997 C, Rp 28.000. Klik untuk kustomisasi"
+          >
+            <div class="pantone-card-visual">
+              <picture>
+                <source
+                  srcset="../../assets/images/menu/ice-matcha-vanilla-foam.webp"
+                  type="image/webp"
+                />
+                <img
+                  src="../../assets/images/menu/ice-matcha-vanilla-foam.png"
+                  alt="Ice Matcha Vanilla Cloud Foam"
+                  loading="lazy"
+                  draggable="false"
+                />
+              </picture>
+            </div>
+            <div class="pantone-card-info">
+              <div class="pantone-card-text">
+                <h3 class="pantone-card-title">ICE MATCHA<br />VANILLA CLOUD FOAM</h3>
+                <div class="pantone-code-row">
+                  <span class="pantone-code">00997 C</span>
+                  <span class="pantone-price">Rp 28.000</span>
+                </div>
+              </div>
+              <div class="pantone-card-stamp" aria-hidden="true">
+                <svg
+                  viewBox="0 0 100 100"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="7"
+                >
+                  <circle cx="50" cy="50" r="44" stroke-dasharray="3 3" />
+                  <path
+                    d="M 50 25 C 42 45 35 60 35 75 C 45 80 55 80 65 75 C 65 60 58 45 50 25 Z"
+                  />
+                  <line x1="50" y1="20" x2="50" y2="78" />
+                </svg>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 5: Ice Chocolate -->
+          <article
+            class="pantone-card"
+            data-id="ice-chocolate"
+            data-name="ICE CHOCOLATE"
+            data-pantone="4695 C"
+            data-price="25000"
+            tabindex="0"
+            role="button"
+            aria-label="ICE CHOCOLATE, 4695 C, Rp 25.000. Klik untuk kustomisasi"
+          >
+            <div class="pantone-card-visual">
+              <picture>
+                <source
+                  srcset="../../assets/images/menu/ice-chocolate.webp"
+                  type="image/webp"
+                />
+                <img
+                  src="../../assets/images/menu/ice-chocolate.png"
+                  alt="Ice Chocolate"
+                  loading="lazy"
+                  draggable="false"
+                />
+              </picture>
+            </div>
+            <div class="pantone-card-info">
+              <div class="pantone-card-text">
+                <h3 class="pantone-card-title">ICE CHOCOLATE</h3>
+                <div class="pantone-code-row">
+                  <span class="pantone-code">4695 C</span>
+                  <span class="pantone-price">Rp 25.000</span>
+                </div>
+              </div>
+              <div class="pantone-card-stamp" aria-hidden="true">
+                <svg
+                  viewBox="0 0 100 100"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="7"
+                >
+                  <circle cx="50" cy="50" r="44" stroke-dasharray="3 3" />
+                  <path
+                    d="M 50 25 C 42 45 35 60 35 75 C 45 80 55 80 65 75 C 65 60 58 45 50 25 Z"
+                  />
+                  <line x1="50" y1="20" x2="50" y2="78" />
+                </svg>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 6: Custom Drink (Craft from Scratch) -->
+          <article
+            class="pantone-card card-custom-craft"
+            data-id="custom-drink"
+            data-name="CUSTOM DRINK"
+            data-pantone="3D LAB"
+            data-price="20000"
+            tabindex="0"
+            role="button"
+            aria-label="CUSTOM DRINK, Interactive Craft Lab, dari Rp 20.000. Klik untuk kustomisasi dari awal"
+          >
+            <div class="pantone-card-visual">
+              <picture>
+                <source
+                  srcset="../../assets/images/menu/custom-drink.webp"
+                  type="image/webp"
+                />
+                <img
+                  src="../../assets/images/menu/custom-drink.png"
+                  alt="Custom Drink Simulation Lab"
+                  loading="lazy"
+                  draggable="false"
+                />
+              </picture>
+              <div class="pantone-custom-badge">✨ CRAFT LAB</div>
+            </div>
+            <div class="pantone-card-info">
+              <div class="pantone-card-text">
+                <h3 class="pantone-card-title">CUSTOM DRINK</h3>
+                <div class="pantone-code-row">
+                  <span
+                    class="pantone-code"
+                    style="color: #628b35; font-weight: 800"
+                    >3D LAB</span
+                  >
+                  <span class="pantone-price">DARI RP 20K</span>
+                </div>
+              </div>
+              <div class="pantone-card-stamp" aria-hidden="true">
+                <svg
+                  viewBox="0 0 100 100"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="7"
+                >
+                  <circle cx="50" cy="50" r="44" stroke-dasharray="3 3" />
+                  <path
+                    d="M 50 25 C 42 45 35 60 35 75 C 45 80 55 80 65 75 C 65 60 58 45 50 25 Z"
+                  />
+                  <line x1="50" y1="20" x2="50" y2="78" />
+                </svg>
+              </div>
+            </div>
+          </article>
+        </div>
+      </main>
+
+      <!-- Floating Action Controls (Bottom Right - Cart Trigger) -->
+      <div class="pantone-float-controls" aria-label="Quick Actions">
+        <button
+          class="pantone-float-btn pantone-cart-trigger"
+          id="pantone-cart-btn"
+          aria-label="Lihat Keranjang Pesanan"
+          title="Buka Keranjang"
+        >
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path
+              d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+            ></path>
+          </svg>
+          <span class="pantone-cart-badge" id="pantone-cart-badge">0</span>
+        </button>
+      </div>
+
+      <!-- Floating Toast Notification -->
+      <div
+        class="pantone-toast"
+        id="pantone-toast"
+        role="status"
+        aria-live="polite"
+      >
+        <span class="pantone-toast-text">Membuka kustomisasi...</span>
+      </div>
+    </div>
+
+    <!-- Modular Scripts -->
+    <script type="module" src="menu.js"></script>
+  </body>
+</html>

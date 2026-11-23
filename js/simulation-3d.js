@@ -97,9 +97,38 @@ export class Simulation3DWorkbench {
         // Resize Listener
         window.addEventListener('resize', () => this.onResize());
 
-        // Render Loop
+        // Lifecycle & Performance-Aware Render Loop
+        this.isPageActive = false;
+        this.rafId = null;
         this.render = this.render.bind(this);
-        requestAnimationFrame(this.render);
+
+        document.addEventListener('matcha:page-change', (e) => {
+            if (e.detail && e.detail.page === 'simulation') {
+                this.resumeRender();
+            } else {
+                this.pauseRender();
+            }
+        });
+        document.addEventListener('matcha:page-simulation', () => {
+            this.resumeRender();
+        });
+    }
+
+    resumeRender() {
+        if (this.isPageActive) return;
+        this.isPageActive = true;
+        this.onResize();
+        if (!this.rafId) {
+            this.rafId = requestAnimationFrame(this.render);
+        }
+    }
+
+    pauseRender() {
+        this.isPageActive = false;
+        if (this.rafId) {
+            cancelAnimationFrame(this.rafId);
+            this.rafId = null;
+        }
     }
 
     onResize() {
@@ -479,6 +508,11 @@ export class Simulation3DWorkbench {
     }
 
     render() {
+        if (!this.isPageActive) {
+            this.rafId = null;
+            return;
+        }
+
         if (this.renderer && this.scene && this.camera) {
             // Subtle breathing motion on Chawan when idle
             if (this.chawanScene && !this.isDragging) {
@@ -487,6 +521,6 @@ export class Simulation3DWorkbench {
             }
             this.renderer.render(this.scene, this.camera);
         }
-        requestAnimationFrame(this.render);
+        this.rafId = requestAnimationFrame(this.render);
     }
 }

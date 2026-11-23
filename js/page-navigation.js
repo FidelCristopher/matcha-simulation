@@ -1,30 +1,24 @@
 /**
- * Horizontal 3-Page Navigation (Menu <-> Landing <-> Simulation)
- * Handles iPad Touch Swipe & Laptop Mouse/Trackpad Gestures.
+ * Page Navigation Controller (Pantone Specimen Menu & Simulation)
+ * Note: Home / Landing Showcase has been disabled per user request.
  *
- * Page 0: #menu-page (x: 0)
- * Page 1: #landing-page (x: -100vw) [Default]
- * Page 2: #simulation-page (x: -200vw)
+ * Page 0: #menu-page (x: 0vw) [Default & Primary Screen]
+ * Page 1: #simulation-page (x: -100vw)
  */
 export class PageNavigator {
     constructor() {
         this.slider = document.querySelector('#pages-slider');
         this.viewport = document.querySelector('#app-viewport');
         this.menuPage = document.querySelector('#menu-page');
-        this.landingPage = document.querySelector('#landing-page');
         this.simulationPage = document.querySelector('#simulation-page');
         this.navLinks = document.querySelectorAll('.nav-item');
-
-        // Floating Swipe Pills
-        this.swipeHintMenu = document.querySelector('#swipe-to-menu-hint');
-        this.swipeHintSim = document.querySelector('#swipe-to-sim-hint');
 
         // Back Buttons
         this.backBtnMenu = document.querySelector('#back-to-showcase');
         this.backBtnSim = document.querySelector('#back-to-showcase-from-sim');
 
-        // State: 'menu' | 'landing' | 'simulation'
-        this.activePage = 'landing';
+        // State: 'menu' | 'simulation' (Default: 'menu')
+        this.activePage = 'menu';
         this.isTransitioning = false;
 
         // Touch Tracking for iPad & Mobile
@@ -65,9 +59,8 @@ export class PageNavigator {
         const hash = window.location.hash.replace('#', '').toLowerCase();
         const search = new URLSearchParams(window.location.search).get('page')?.toLowerCase();
 
-        if (path === 'menu' || hash === 'menu' || search === 'menu') return 'menu';
         if (path === 'simulation' || hash === 'simulation' || search === 'simulation') return 'simulation';
-        return 'landing';
+        return 'menu';
     }
 
     bindUrlChanges() {
@@ -84,6 +77,11 @@ export class PageNavigator {
     goToPage(pageId, animate = true, updateUrl = true) {
         if (this.isTransitioning && animate) return;
 
+        // Home/landing is disabled: redirect to menu
+        if (pageId === 'landing' || !pageId) {
+            pageId = 'menu';
+        }
+
         if (animate) {
             this.isTransitioning = true;
             setTimeout(() => {
@@ -93,33 +91,32 @@ export class PageNavigator {
 
         const body = document.body;
 
-        if (pageId === 'menu') {
+        if (pageId === 'simulation') {
+            this.activePage = 'simulation';
+            body.classList.add('simulation-active');
+            body.classList.remove('menu-active');
+            // Simulation: -100vw next to Menu
+            this.setSliderPosition(-100, animate);
+            document.dispatchEvent(new CustomEvent('matcha:page-simulation'));
+        } else {
+            // Default: Menu Page
             this.activePage = 'menu';
             body.classList.add('menu-active');
             body.classList.remove('simulation-active');
             // Page 0 (Left): 0vw
             this.setSliderPosition(0, animate);
-        } else if (pageId === 'simulation') {
-            this.activePage = 'simulation';
-            body.classList.add('simulation-active');
-            body.classList.remove('menu-active');
-            // Page 2 (Right): -200vw
-            this.setSliderPosition(-200, animate);
-            document.dispatchEvent(new CustomEvent('matcha:page-simulation'));
-        } else {
-            this.activePage = 'landing';
-            body.classList.remove('menu-active', 'simulation-active');
-            // Page 1 (Center): -100vw
-            this.setSliderPosition(-100, animate);
         }
 
         if (updateUrl && window.history && window.history.replaceState) {
-            const targetHash = pageId === 'landing' ? '' : `#${pageId}`;
-            const cleanPath = window.location.pathname.replace(/\/(menu|simulation)$/, '') || '/';
+            const targetHash = pageId === 'menu' ? '' : `#${pageId}`;
+            const cleanPath = window.location.pathname.replace(/\/(menu|simulation|landing)$/, '') || '/';
             window.history.replaceState(null, '', targetHash ? `${cleanPath}${targetHash}` : cleanPath);
         }
 
         this.updateNavUI();
+
+        // Dispatch page lifecycle event for performance-aware rendering
+        document.dispatchEvent(new CustomEvent('matcha:page-change', { detail: { page: this.activePage } }));
     }
 
     setSliderPosition(percentX, animate = true) {
@@ -156,30 +153,14 @@ export class PageNavigator {
 
             // Ensure clear horizontal intent
             if (Math.abs(deltaX) > Math.abs(deltaY) * 1.3 && Math.abs(deltaX) > this.dragThreshold) {
-                if (this.activePage === 'landing') {
-                    // Swipe Left-to-Right (deltaX > 0): Open Menu
+                if (this.activePage === 'simulation') {
+                    // Swipe Left-to-Right: Back to Menu
                     if (deltaX > this.dragThreshold) {
                         this.goToPage('menu');
                         this.isTouchSwiping = false;
                     }
-                    // Swipe Right-to-Left (deltaX < 0): Open Simulation
-                    else if (deltaX < -this.dragThreshold) {
-                        this.goToPage('simulation');
-                        this.isTouchSwiping = false;
-                    }
-                } else if (this.activePage === 'menu') {
-                    // Swipe Right-to-Left: Back to Landing
-                    if (deltaX < -this.dragThreshold) {
-                        this.goToPage('landing');
-                        this.isTouchSwiping = false;
-                    }
-                } else if (this.activePage === 'simulation') {
-                    // Swipe Left-to-Right: Back to Landing
-                    if (deltaX > this.dragThreshold) {
-                        this.goToPage('landing');
-                        this.isTouchSwiping = false;
-                    }
                 }
+                // On menu page: horizontal gestures locked (Pantone grid is primary)
             }
         }, { passive: true });
 
@@ -193,8 +174,8 @@ export class PageNavigator {
      */
     bindMouseGestures() {
         window.addEventListener('mousedown', (e) => {
-            // Ignore clicks on form inputs, buttons, sliders, links
-            if (e.target.closest('button, input, a, .card, .sim-pill, .explode-slider, .sim-slider')) {
+            // Ignore clicks on form inputs, buttons, sliders, links, cards
+            if (e.target.closest('button, input, a, .pantone-card, .card, .sim-pill, .explode-slider, .sim-slider')) {
                 return;
             }
 
@@ -216,27 +197,10 @@ export class PageNavigator {
             }
 
             if (this.isMouseDragging && Math.abs(deltaX) > this.dragThreshold) {
-                if (this.activePage === 'landing') {
-                    // Dragged Left to Right: Go to Menu
+                if (this.activePage === 'simulation') {
+                    // Dragged Left to Right: Back to Menu
                     if (deltaX > this.dragThreshold) {
                         this.goToPage('menu');
-                        this.resetMouse();
-                    }
-                    // Dragged Right to Left: Go to Simulation
-                    else if (deltaX < -this.dragThreshold) {
-                        this.goToPage('simulation');
-                        this.resetMouse();
-                    }
-                } else if (this.activePage === 'menu') {
-                    // Dragged Right to Left: Back to Landing
-                    if (deltaX < -this.dragThreshold) {
-                        this.goToPage('landing');
-                        this.resetMouse();
-                    }
-                } else if (this.activePage === 'simulation') {
-                    // Dragged Left to Right: Back to Landing
-                    if (deltaX > this.dragThreshold) {
-                        this.goToPage('landing');
                         this.resetMouse();
                     }
                 }
@@ -263,26 +227,10 @@ export class PageNavigator {
             if (now - this.lastWheelTime < 700 || this.isTransitioning) return;
 
             if (Math.abs(e.deltaX) > Math.abs(e.deltaY) * 1.4 && Math.abs(e.deltaX) > 30) {
-                if (this.activePage === 'landing') {
-                    // Trackpad swipe right (deltaX < -30): Go to Menu
+                if (this.activePage === 'simulation') {
                     if (e.deltaX < -30) {
                         this.lastWheelTime = now;
                         this.goToPage('menu');
-                    }
-                    // Trackpad swipe left (deltaX > 30): Go to Simulation
-                    else if (e.deltaX > 30) {
-                        this.lastWheelTime = now;
-                        this.goToPage('simulation');
-                    }
-                } else if (this.activePage === 'menu') {
-                    if (e.deltaX > 30) {
-                        this.lastWheelTime = now;
-                        this.goToPage('landing');
-                    }
-                } else if (this.activePage === 'simulation') {
-                    if (e.deltaX < -30) {
-                        this.lastWheelTime = now;
-                        this.goToPage('landing');
                     }
                 }
             }
@@ -290,31 +238,17 @@ export class PageNavigator {
     }
 
     bindButtons() {
-        // Floating pill on the left: "Swipe -> Menu"
-        if (this.swipeHintMenu) {
-            this.swipeHintMenu.addEventListener('click', () => {
-                this.goToPage('menu');
-            });
-        }
-
-        // Floating pill on the right: "Simulasi Matcha <- Swipe"
-        if (this.swipeHintSim) {
-            this.swipeHintSim.addEventListener('click', () => {
-                this.goToPage('simulation');
-            });
-        }
-
-        // Back button on Menu page
+        // Back button on Menu page (if any)
         if (this.backBtnMenu) {
             this.backBtnMenu.addEventListener('click', () => {
-                this.goToPage('landing');
+                this.goToPage('menu');
             });
         }
 
         // Back button on Simulation page
         if (this.backBtnSim) {
             this.backBtnSim.addEventListener('click', () => {
-                this.goToPage('landing');
+                this.goToPage('menu');
             });
         }
 
@@ -330,7 +264,7 @@ export class PageNavigator {
                     this.goToPage('simulation');
                 } else if (target === '#home' || link.textContent.trim().toLowerCase().includes('home')) {
                     e.preventDefault();
-                    this.goToPage('landing');
+                    this.goToPage('menu');
                 }
             });
         });
@@ -338,13 +272,8 @@ export class PageNavigator {
 
     bindKeyboard() {
         window.addEventListener('keydown', (e) => {
-            if (this.activePage === 'landing') {
+            if (this.activePage === 'simulation') {
                 if (e.key === 'ArrowLeft') this.goToPage('menu');
-                else if (e.key === 'ArrowRight') this.goToPage('simulation');
-            } else if (this.activePage === 'menu') {
-                if (e.key === 'ArrowRight') this.goToPage('landing');
-            } else if (this.activePage === 'simulation') {
-                if (e.key === 'ArrowLeft') this.goToPage('landing');
             }
         });
     }
@@ -353,15 +282,12 @@ export class PageNavigator {
         this.navLinks.forEach(link => {
             const isMenuLink = link.dataset.target === '#menu' || link.textContent.trim().toLowerCase().includes('menu');
             const isSimLink = link.dataset.target === '#simulation' || link.textContent.trim().toLowerCase().includes('simulasi');
-            const isHomeLink = link.dataset.target === '#home' || link.textContent.trim().toLowerCase().includes('home');
 
             link.classList.remove('active');
 
             if (this.activePage === 'menu' && isMenuLink) {
                 link.classList.add('active');
             } else if (this.activePage === 'simulation' && isSimLink) {
-                link.classList.add('active');
-            } else if (this.activePage === 'landing' && isHomeLink) {
                 link.classList.add('active');
             }
         });
