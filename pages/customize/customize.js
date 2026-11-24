@@ -450,7 +450,7 @@ export class CustomizeManager {
       }
 
       if (selectedToppings.length > 0) {
-        breakdownText += ` + ${selectedToppings.length} Topping Tambahan (${this.formatIDR(pricing.extraToppings)})`;
+        breakdownText += ` + ${selectedToppings.length} Topping`;
       }
     }
     if (this.breakdownSubEl) this.breakdownSubEl.textContent = breakdownText;
@@ -617,11 +617,7 @@ export class CustomizeManager {
       this.tagFoam.classList.toggle('visible', hasFoam);
       const tagText = this.tagFoam.querySelector('.tag-text');
       if (tagText) {
-        if (selectedToppings.includes('vanilla_foam')) {
-          tagText.textContent = isVanillaPreset ? '☁️ Extra Vanilla Cloud Foam (+Rp 3.000)' : '☁️ Vanilla Cloud Foam (+Rp 3.000)';
-        } else {
-          tagText.textContent = '☁️ Vanilla Cloud Foam (Sudah Termasuk)';
-        }
+        tagText.textContent = '☁️ Vanilla Cloud Foam';
       }
     }
 
@@ -633,11 +629,7 @@ export class CustomizeManager {
       this.tagChoco.classList.toggle('visible', hasChoco);
       const tagText = this.tagChoco.querySelector('.tag-text');
       if (tagText) {
-        if (selectedToppings.includes('chocolate')) {
-          tagText.textContent = isChocoPreset ? '🍫 Extra Cokelat Bawah (+Rp 3.000)' : '🍫 Lapisan Cokelat Bawah (+Rp 3.000)';
-        } else {
-          tagText.textContent = '🍫 Lapisan Cokelat Bawah (Sudah Termasuk)';
-        }
+        tagText.textContent = '🍫 Lapisan Cokelat Bawah';
       }
     }
 
@@ -656,11 +648,7 @@ export class CustomizeManager {
       this.tagBrownSugar.classList.toggle('visible', hasBrownSugar);
       const tagText = this.tagBrownSugar.querySelector('.tag-text');
       if (tagText) {
-        if (selectedToppings.includes('brown_sugar')) {
-          tagText.textContent = isBrownSugarPreset ? '🍯 Extra Brown Sugar (+Rp 3.000)' : '🍯 Brown Sugar Syrup (+Rp 3.000)';
-        } else {
-          tagText.textContent = '🍯 Brown Sugar Syrup (Sudah Termasuk)';
-        }
+        tagText.textContent = '🍯 Brown Sugar Syrup';
       }
     }
   }
@@ -679,7 +667,7 @@ export class CustomizeManager {
       this.currentDrinkId === 'ice-matcha-vanilla-foam'
     );
     const signatureExtra = (baseVal && isSignatureWithLayer) ? 3000 : 0;
-    const extraToppings = (selectedToppings ? selectedToppings.length : 0) * 3000;
+    const extraToppings = 0; // Topping gratis / tanpa biaya tambahan
     const total = baseCost + milkCost + signatureExtra + extraToppings;
 
     return { baseCost, milkCost, signatureExtra, extraToppings, total };
@@ -932,9 +920,9 @@ export class CustomizeManager {
     };
     const iceNames = { hot: 'Hot (No Ice)', less: 'Less Ice', normal: 'Normal Ice', extra: 'Extra Ice' };
     const toppingNames = {
-      vanilla_foam: 'Vanilla Cloud Foam (+3k)',
-      chocolate: 'Lapisan Cokelat Bawah (+3k)',
-      brown_sugar: 'Brown Sugar Syrup (+3k)'
+      vanilla_foam: 'Vanilla Cloud Foam',
+      chocolate: 'Lapisan Cokelat Bawah',
+      brown_sugar: 'Brown Sugar Syrup'
     };
 
     const toppingsSummary = selectedToppings.map(t => toppingNames[t] || t).join(', ');
