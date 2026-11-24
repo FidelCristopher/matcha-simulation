@@ -5,6 +5,7 @@
  */
 
 import { CartManager } from '../../js/cart.js';
+import { ThumbnailManager } from '../thumbnail/thumbnail.js';
 
 export class MenuManager {
   constructor(options = {}) {
@@ -30,6 +31,11 @@ export class MenuManager {
     // Ensure CartManager is active for standalone or embedded pages
     if (!window.cartManager) {
       window.cartManager = new CartManager();
+    }
+
+    // Initialize Page-Modular Thumbnail / Attract Screensaver if present
+    if (document.querySelector('#thumbnail-screen') && !window.thumbnailManager) {
+      window.thumbnailManager = new ThumbnailManager({ idleTimeoutMs: 60000 });
     }
 
     this.bindBackNavigation();
@@ -62,13 +68,15 @@ export class MenuManager {
       }
       // Return to Kiosk Thumbnail Attract Screensaver
       const thumbScreen = document.querySelector('#thumbnail-screen');
-      if (thumbScreen && !thumbScreen.classList.contains('hidden')) {
+      if (thumbScreen) {
         if (window.thumbnailManager && typeof window.thumbnailManager.showScreensaver === 'function') {
-          thumbScreen.style.display = '';
-          thumbScreen.classList.remove('hidden');
           window.thumbnailManager.showScreensaver();
           return;
         }
+        thumbScreen.style.display = '';
+        thumbScreen.classList.remove('hidden');
+        document.body.classList.add('thumbnail-active');
+        return;
       }
       // Navigate to standalone thumbnail or previous page
       if (document.referrer && (document.referrer.includes('thumbnail') || document.referrer.includes('index.html'))) {

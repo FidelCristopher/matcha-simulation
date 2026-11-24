@@ -208,7 +208,7 @@ export class CustomizeManager {
       'custom-drink': {
         name: 'CUSTOM DRINK CRAFT',
         pantone: 'CRAFT LAB • DARI AWAL',
-        basePrice: 22000,
+        basePrice: 0,
         base: null,
         milk: null,
         sugar: null,
@@ -218,9 +218,9 @@ export class CustomizeManager {
       }
     };
 
-    this.currentDrinkId = 'ice-matcha-latte';
-    this.currentBasePrice = 25000;
-    this.isScratch = false;
+    this.currentDrinkId = 'custom-drink';
+    this.currentBasePrice = 0;
+    this.isScratch = true;
 
     this.init();
   }
@@ -270,8 +270,8 @@ export class CustomizeManager {
     if (drinkKey && this.templates[drinkKey]) {
       this.loadTemplate(drinkKey);
     } else {
-      // Default fallback template: Ice Matcha Latte
-      this.loadTemplate('ice-matcha-latte');
+      // Default fallback template: custom-drink (Craft from Scratch, Rp 0)
+      this.loadTemplate('custom-drink');
     }
   }
 
@@ -281,8 +281,8 @@ export class CustomizeManager {
   loadTemplate(drinkKey) {
     const tpl = this.templates[drinkKey] || this.templates['custom-drink'];
     this.currentDrinkId = drinkKey;
-    this.currentBasePrice = tpl.basePrice || 22000;
     this.isScratch = !!tpl.isScratch;
+    this.currentBasePrice = this.isScratch ? 0 : (tpl.basePrice || 22000);
 
     // Update Headings & Meta
     if (this.titleEl) this.titleEl.textContent = tpl.name;
@@ -376,18 +376,32 @@ export class CustomizeManager {
 
     // Calculate Price:
     // Base is pegged to lowest menu item: Matcharicano (Rp 22.000)
-    let finalTotal = 22000;
     const toppingCostPerItem = 3000; // Fixed +Rp 3.000 per topping
     const extraToppings = selectedToppings.length * toppingCostPerItem;
 
     const isCustomOrScratch = (this.currentDrinkId === 'custom-drink' || this.isScratch);
 
-    if (isCustomOrScratch || this.currentDrinkId === 'ice-matcharicano') {
+    let finalTotal = 0;
+
+    if (isCustomOrScratch) {
+      if (!baseVal && !milkVal && selectedToppings.length === 0) {
+        this.currentBasePrice = 0;
+        finalTotal = 0;
+      } else {
+        let baseCost = baseVal ? 22000 : 0;
+        this.currentBasePrice = baseCost;
+        let milkCost = 0;
+        if (milkVal === 'fresh') milkCost = 3000;
+        else if (milkVal === 'oat' || milkVal === 'almond') milkCost = 5000; // Fresh Milk (3k) + Oatmilk (+2k) = 5k
+        else milkCost = 0; // none or null
+        finalTotal = baseCost + milkCost + extraToppings;
+      }
+    } else if (this.currentDrinkId === 'ice-matcharicano') {
       this.currentBasePrice = 22000;
       let milkCost = 0;
       if (milkVal === 'fresh') milkCost = 3000;
-      else if (milkVal === 'oat' || milkVal === 'almond') milkCost = 5000; // Fresh Milk (3k) + Oatmilk (+2k) = 5k
-      else milkCost = 0; // none or null
+      else if (milkVal === 'oat' || milkVal === 'almond') milkCost = 5000;
+      else milkCost = 0;
       finalTotal = this.currentBasePrice + milkCost + extraToppings;
     } else if (this.currentDrinkId === 'ice-matcha-latte' || this.currentDrinkId === 'hot-traditional' || this.currentDrinkId === 'ice-chocolate') {
       this.currentBasePrice = 25000;
@@ -403,7 +417,7 @@ export class CustomizeManager {
       finalTotal = this.currentBasePrice + milkCost + extraToppings;
     } else {
       let milkCost = (milkVal === 'oat' || milkVal === 'almond') ? 2000 : 0;
-      finalTotal = this.currentBasePrice + milkCost + extraToppings;
+      finalTotal = (this.currentBasePrice || 22000) + milkCost + extraToppings;
     }
 
     // Update UI Price Displays
@@ -412,8 +426,10 @@ export class CustomizeManager {
 
     // Breakdown Text
     let breakdownText = '';
-    if (this.isScratch || !baseVal) {
-      breakdownText = `Craft Lab • Mulai Rp 22.000 (Pilih Base & Susu di Kiri)`;
+    if (finalTotal === 0 || (!baseVal && !milkVal && selectedToppings.length === 0)) {
+      breakdownText = `Craft Lab • Belum ada pilihan (Rp 0)`;
+    } else if (!baseVal) {
+      breakdownText = `Bahan Tambahan: ${this.formatIDR(finalTotal)} (Pilih Base untuk melengkapi)`;
     } else {
       let baseLabel = baseVal === 'chocolate' ? 'Base Cokelat' : 'Base Matcha';
       if (this.currentDrinkId === 'ice-matcha-vanilla-foam') {
@@ -422,7 +438,8 @@ export class CustomizeManager {
         baseLabel = 'Ice Matcha Chocolate (Termasuk Cokelat)';
       }
       breakdownText = `${baseLabel} ${this.formatIDR(this.currentBasePrice)}`;
-      if (milkVal === 'oat') breakdownText += ` + Susu Oat (+Rp 2.000)`;
+      if (milkVal === 'fresh') breakdownText += ` + Fresh Milk (+Rp 3.000)`;
+      else if (milkVal === 'oat') breakdownText += ` + Susu Oat (+Rp 5.000)`;
       if (selectedToppings.length > 0) {
         breakdownText += ` + ${selectedToppings.length} Topping Tambahan (${this.formatIDR(extraToppings)})`;
       } else {
@@ -442,6 +459,8 @@ export class CustomizeManager {
 
     if (isCupCompletelyBlank) {
       // Cup is completely blank / empty glass sketch
+      if (this.sketchMilkLayer) this.sketchMilkLayer.style.display = 'none';
+      if (this.sketchBaseLayer) this.sketchBaseLayer.style.display = 'none';
       if (this.sketchMilkRect) {
         this.sketchMilkRect.setAttribute('height', '0');
         this.sketchMilkRect.style.opacity = '0';
@@ -467,6 +486,9 @@ export class CustomizeManager {
       if (this.tagChoco) this.tagChoco.classList.remove('visible');
       return;
     }
+
+    if (this.sketchMilkLayer) this.sketchMilkLayer.style.display = '';
+    if (this.sketchBaseLayer) this.sketchBaseLayer.style.display = '';
 
     // --- 1. BASE FLAVOR (Matcha vs Belgian Chocolate) ---
     const isChocolate = (baseVal === 'chocolate');
@@ -643,7 +665,7 @@ export class CustomizeManager {
       this.resetBtn.addEventListener('click', () => {
         this.isScratch = true;
         this.currentDrinkId = 'custom-drink';
-        this.currentBasePrice = 22000;
+        this.currentBasePrice = 0;
 
         if (this.titleEl) this.titleEl.textContent = 'CUSTOM MATCHA CRAFT';
         if (this.pantoneCodeEl) this.pantoneCodeEl.textContent = 'CRAFT LAB • DARI AWAL';
@@ -714,7 +736,7 @@ export class CustomizeManager {
 
     const toppingsSummary = selectedToppings.map(t => toppingNames[t] || t).join(', ');
 
-    let finalPriceIDR = 22000;
+    let finalPriceIDR = 0;
     const toppingCostPerItem = 3000;
     const extraToppings = selectedToppings.length * toppingCostPerItem;
 
@@ -722,7 +744,7 @@ export class CustomizeManager {
       let milkCost = 0;
       if (milkVal === 'fresh') milkCost = 3000;
       else if (milkVal === 'oat' || milkVal === 'almond') milkCost = 5000;
-      finalPriceIDR = 22000 + milkCost + extraToppings;
+      finalPriceIDR = (baseVal ? 22000 : 0) + milkCost + extraToppings;
     } else if (this.currentDrinkId === 'ice-matcha-latte' || this.currentDrinkId === 'hot-traditional' || this.currentDrinkId === 'ice-chocolate') {
       let milkCost = 0;
       if (milkVal === 'none') milkCost = -3000;
@@ -735,7 +757,12 @@ export class CustomizeManager {
       finalPriceIDR = 28000 + milkCost + extraToppings;
     } else {
       let milkCost = (milkVal === 'oat' || milkVal === 'almond') ? 2000 : 0;
-      finalPriceIDR = this.currentBasePrice + milkCost + extraToppings;
+      finalPriceIDR = (this.currentBasePrice || 22000) + milkCost + extraToppings;
+    }
+
+    if (finalPriceIDR <= 0) {
+      this.showToast('Silakan pilih bahan minuman terlebih dahulu!');
+      return;
     }
     const finalPriceUSD = parseFloat((finalPriceIDR / 5300).toFixed(2));
 

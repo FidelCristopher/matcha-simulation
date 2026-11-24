@@ -310,7 +310,14 @@ const server = http.createServer((req, res) => {
   }
 
   // STATIC ASSET SERVING
-  let relativePath = pathname === '/' ? 'index.html' : pathname.replace(/^\//, '');
+  // If customer visits root '/', direct to Kiosk (with full Thumbnail Attract Screensaver)
+  if (pathname === '/') {
+    res.writeHead(302, { 'Location': '/pages/menu/menu.html' });
+    res.end();
+    return;
+  }
+
+  let relativePath = pathname.replace(/^\//, '');
   let filePath = path.join(__dirname, relativePath);
 
   // Security check: prevent directory traversal
@@ -356,8 +363,8 @@ function serveFile(file, res) {
 function startServer(portToUse) {
   server.listen(portToUse, () => {
     console.log(`🍵 MatchaTcih Server & Database running on http://localhost:${portToUse}`);
-    console.log(`📊 Admin Portal: http://localhost:${portToUse}/admin.html`);
-    console.log(`📋 Menu Kiosk: http://localhost:${portToUse}/pages/menu/menu.html`);
+    console.log(`📋 Kiosk Pemesanan (Pelanggan - Menampilkan Thumbnail Terlebih Dahulu): http://localhost:${portToUse}/`);
+    console.log(`📊 Admin Portal (Pemilik Bisnis - Langsung Tanpa Thumbnail): http://localhost:${portToUse}/admin.html`);
     console.log(`💾 Database: ${useJsonFallback ? BACKUP_JSON_FILE : DB_FILE}`);
   });
 }

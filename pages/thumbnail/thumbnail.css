@@ -44,6 +44,10 @@
     visibility: hidden;
 }
 
+body.thumbnail-active {
+    overflow: hidden !important;
+}
+
 /* 1. Top Header (Prominent Centered Brand Logo) */
 .thumb-header {
     display: flex;

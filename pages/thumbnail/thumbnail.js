@@ -40,6 +40,7 @@ export class ThumbnailManager {
         // Ensure thumbnail screen is visible on page load/refresh
         this.screen.style.display = '';
         this.screen.classList.remove('hidden');
+        document.body.classList.add('thumbnail-active');
         this.isKioskActive = false;
 
         // 1. Trigger Initial MA-TEA Entrance Animation Sequence
@@ -212,6 +213,7 @@ export class ThumbnailManager {
     enterApp() {
         if (!this.screen) return;
         this.screen.classList.add('hidden');
+        document.body.classList.remove('thumbnail-active');
         this.isKioskActive = true;
 
         // Cancel parallax RAF to free up 100% GPU budget for the app
@@ -223,10 +225,13 @@ export class ThumbnailManager {
         // Reset and activate the inactivity timer
         this.resetIdleTimer();
 
-        // Direct entrance / page navigation to menu page
-        const isPages = window.location.pathname.includes('/pages/');
-        const targetMenuUrl = isPages ? '../menu/menu.html' : 'pages/menu/menu.html';
-        window.location.href = targetMenuUrl;
+        // If menu is on the same page, simply reveal it; otherwise navigate
+        const hasMenuOnPage = !!document.querySelector('#pantone-menu-root') || !!document.querySelector('#pantone-cards-grid');
+        if (!hasMenuOnPage) {
+            const isPages = window.location.pathname.includes('/pages/');
+            const targetMenuUrl = isPages ? '../menu/menu.html' : 'pages/menu/menu.html';
+            window.location.href = targetMenuUrl;
+        }
 
         // Dispatch custom event for application components
         document.dispatchEvent(new CustomEvent('matcha:kiosk-start'));
@@ -240,6 +245,7 @@ export class ThumbnailManager {
         if (!this.screen) return;
         this.screen.style.display = '';
         this.screen.classList.remove('hidden');
+        document.body.classList.add('thumbnail-active');
         this.isKioskActive = false;
 
         // Resume parallax RAF loop if not running
