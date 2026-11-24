@@ -34,7 +34,8 @@ html {
   display: grid;
   grid-template-columns: minmax(460px, 1.08fr) 1fr;
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
+  max-width: 100vw;
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
@@ -1313,6 +1314,9 @@ html {
     overflow-y: auto !important;
     height: auto !important;
     min-height: 100% !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
   }
 
   .custom-page-wrapper {
@@ -1320,8 +1324,11 @@ html {
     flex-direction: column-reverse !important;
     min-height: 100vh !important;
     height: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
     overflow: visible !important;
     overflow-x: hidden !important;
+    box-sizing: border-box !important;
   }
   .custom-split-poster-brand {
     display: none;
@@ -1505,6 +1512,41 @@ html {
     min-width: 0 !important;
     box-sizing: border-box !important;
   }
+  /* Base Options (Matcha & Cokelat) Mobile Sizing - Fits Inside Button Perfectly */
+  #base-options .pill-box {
+    padding: 0.5rem 0.55rem !important;
+    min-height: 48px !important;
+    gap: 0.35rem !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+  #base-options .pill-icon {
+    font-size: 1.25rem !important;
+    flex-shrink: 0 !important;
+  }
+  #base-options .pill-name {
+    font-size: 0.88rem !important;
+    font-weight: 800 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  #base-options .base-check-badge {
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
+    box-sizing: border-box !important;
+  }
+  #base-options .base-check-badge svg {
+    width: 11px !important;
+    height: 11px !important;
+  }
+  #base-options .custom-pill input:checked + .pill-box {
+    transform: none !important;
+  }
+  
   .pill-box {
     min-width: 0 !important;
     box-sizing: border-box !important;
@@ -1524,9 +1566,9 @@ html {
     font-size: 0.66rem;
   }
   
-  /* Checkout Bar on Mobile - Sleek, Compact & Properly Padded */
+  /* Checkout Bar on Mobile - Sleek, Compact & Fully Responsive */
   .custom-left-panel {
-    padding-bottom: calc(72px + env(safe-area-inset-bottom)) !important;
+    padding-bottom: calc(68px + env(safe-area-inset-bottom)) !important;
   }
   .custom-checkout-bar {
     position: fixed !important;
@@ -1541,31 +1583,32 @@ html {
     -webkit-backdrop-filter: blur(20px);
     border-top: 1px solid rgba(244, 237, 229, 0.2);
     box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.5);
-    padding: 0.6rem 16px max(0.75rem, env(safe-area-inset-bottom)) 16px !important;
+    padding: 0.5rem 12px max(0.6rem, env(safe-area-inset-bottom)) 12px !important;
     margin-top: 0;
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
     justify-content: space-between !important;
-    gap: 0.75rem;
+    gap: 0.5rem !important;
     box-sizing: border-box !important;
     height: auto;
-    min-height: 58px;
+    min-height: 54px;
+    overflow: hidden !important;
   }
   .custom-price-breakdown {
-    min-width: 80px;
+    min-width: 78px;
     flex-shrink: 0;
     gap: 0;
   }
   .breakdown-label {
-    font-size: 0.58rem;
-    letter-spacing: 0.05em;
+    font-size: 0.56rem;
+    letter-spacing: 0.04em;
     color: rgba(244, 237, 229, 0.6);
     line-height: 1;
     margin-bottom: 2px;
   }
   .breakdown-amount {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 900;
     color: #F4EDE5;
     line-height: 1.1;
@@ -1577,25 +1620,55 @@ html {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    gap: 8px !important;
-    flex-shrink: 0 !important;
+    gap: 6px !important;
+    flex-shrink: 1 !important;
     margin-left: auto !important;
+    min-width: 0 !important;
   }
   .btn-submit-order {
-    flex-shrink: 0 !important;
+    flex-shrink: 1 !important;
     width: auto !important;
-    height: 42px !important;
-    padding: 0 14px !important;
-    font-size: 0.8rem !important;
+    height: 38px !important;
+    padding: 0 10px !important;
+    font-size: 0.78rem !important;
     font-weight: 800;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 0.4rem !important;
+    gap: 0.35rem !important;
     box-sizing: border-box !important;
     border-radius: 8px !important;
     white-space: nowrap !important;
     transition: background-color 0.25s ease, color 0.25s ease;
+  }
+  .btn-submit-order svg {
+    width: 15px !important;
+    height: 15px !important;
+    flex-shrink: 0 !important;
+  }
+  .btn-text-mobile {
+    white-space: nowrap !important;
+    display: inline-block !important;
+    font-size: 0.78rem !important;
+  }
+  .btn-clear-custom {
+    width: auto !important;
+    height: 38px !important;
+    padding: 0 8px !important;
+    font-size: 0.74rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.3rem !important;
+    box-sizing: border-box !important;
+    border-radius: 8px !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+  }
+  .btn-clear-custom svg {
+    width: 14px !important;
+    height: 14px !important;
+    flex-shrink: 0 !important;
   }
   .btn-text-mobile {
     white-space: nowrap !important;
