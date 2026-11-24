@@ -537,17 +537,40 @@ export class AdminOrderMonitor {
         });
     }
 
+    showAdminToast(message, type = 'warning') {
+        let toast = document.querySelector('#admin-web-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'admin-web-toast';
+            toast.style.cssText = 'position:fixed;top:1.25rem;left:50%;transform:translateX(-50%) translateY(-140%);z-index:999999;padding:0.85rem 1.35rem;border-radius:12px;font-family:Inter,sans-serif;font-size:0.86rem;font-weight:600;box-shadow:0 12px 32px rgba(0,0,0,0.45);transition:transform 0.3s ease,opacity 0.25s ease;opacity:0;max-width:90vw;text-align:center;';
+            document.body.appendChild(toast);
+        }
+        toast.style.background = type === 'error' ? '#7f1d1d' : '#0b140b';
+        toast.style.color = type === 'error' ? '#fecaca' : '#a3e635';
+        toast.style.border = type === 'error' ? '1px solid rgba(252,165,165,0.4)' : '1px solid rgba(163,230,53,0.4)';
+        toast.textContent = message;
+        clearTimeout(this._toastTimer);
+        requestAnimationFrame(() => {
+            toast.style.transform = 'translateX(-50%) translateY(0)';
+            toast.style.opacity = '1';
+        });
+        this._toastTimer = setTimeout(() => {
+            toast.style.transform = 'translateX(-50%) translateY(-140%)';
+            toast.style.opacity = '0';
+        }, 3200);
+    }
+
     /**
      * Export all orders to Excel spreadsheet (.xlsx) using SheetJS
      */
     exportToExcel() {
         if (!this.orders.length) {
-            alert('Tidak ada data pesanan untuk diexport!');
+            this.showAdminToast('Tidak ada data pesanan untuk diexport!', 'warning');
             return;
         }
 
         if (typeof XLSX === 'undefined') {
-            alert('Library Excel belum siap dimuat. Silakan refresh halaman.');
+            this.showAdminToast('Library Excel belum siap dimuat. Silakan refresh halaman.', 'error');
             return;
         }
 
@@ -632,12 +655,12 @@ export class AdminOrderMonitor {
      */
     exportToPDF() {
         if (!this.orders.length) {
-            alert('Tidak ada data pesanan untuk diexport!');
+            this.showAdminToast('Tidak ada data pesanan untuk diexport!', 'warning');
             return;
         }
 
         if (!window.jspdf || !window.jspdf.jsPDF) {
-            alert('Library PDF belum siap dimuat. Silakan refresh halaman.');
+            this.showAdminToast('Library PDF belum siap dimuat. Silakan refresh halaman.', 'error');
             return;
         }
 

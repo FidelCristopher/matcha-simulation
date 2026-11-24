@@ -783,3 +783,66 @@
         padding-right: 1.15rem;
     }
 }
+
+/* ==========================================================================
+   In-Web Notification Toast (Replaces ugly browser alert() dialogs)
+   ========================================================================== */
+.matcha-web-toast {
+    position: fixed;
+    top: max(1.25rem, env(safe-area-inset-top));
+    left: 50%;
+    transform: translateX(-50%) translateY(-140%);
+    z-index: 999999;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    max-width: min(92vw, 440px);
+    padding: 0.85rem 1.25rem;
+    border-radius: 14px;
+    background: #103713;
+    color: #FFFDF5;
+    border: 1px solid rgba(163, 230, 53, 0.35);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.32);
+    font-family: 'DM Sans', 'Inter', -apple-system, sans-serif;
+    font-size: 0.86rem;
+    font-weight: 600;
+    line-height: 1.35;
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.28s ease;
+}
+
+.matcha-web-toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.matcha-web-toast.toast-error {
+    background: #7f1d1d;
+    border-color: rgba(252, 165, 165, 0.45);
+    color: #fef2f2;
+}
+
+.matcha-web-toast.toast-warning {
+    background: #1c2e14;
+    border-color: rgba(234, 179, 8, 0.55);
+    color: #fef9c3;
+}
+
+.matcha-web-toast-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #a3e635;
+    flex-shrink: 0;
+}
+
+.matcha-web-toast.toast-error .matcha-web-toast-dot {
+    background: #fca5a5;
+}
+
+.matcha-web-toast.toast-warning .matcha-web-toast-dot {
+    background: #eab308;
+}
+

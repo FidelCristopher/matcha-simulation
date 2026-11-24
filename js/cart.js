@@ -129,7 +129,7 @@ export class CartManager {
             this.checkoutBtn.addEventListener('click', async () => {
                 if (!this.items.length) {
                     const emptyMsg = window.i18nManager?.t('cart_alert_empty') || 'Keranjang pesanan masih kosong. Silakan pilih menu matcha terlebih dahulu!';
-                    alert(emptyMsg);
+                    this.showNotice(emptyMsg, 'warning');
                     return;
                 }
 
@@ -146,7 +146,7 @@ export class CartManager {
                     if (nameInput) {
                         nameInput.focus();
                     }
-                    alert('Silakan masukkan Nama Pemesan terlebih dahulu untuk pencatatan di database!');
+                    this.showNotice('Silakan masukkan Nama Pemesan terlebih dahulu sebelum melanjutkan!', 'warning');
                     return;
                 }
 
@@ -187,6 +187,29 @@ export class CartManager {
                 this.showPaymentModal(newOrder);
             });
         }
+    }
+
+    showNotice(message, type = 'info') {
+        let toast = document.querySelector('#matcha-web-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'matcha-web-toast';
+            toast.className = 'matcha-web-toast';
+            toast.setAttribute('role', 'status');
+            toast.setAttribute('aria-live', 'polite');
+            toast.innerHTML = '<span class="matcha-web-toast-dot"></span><span class="matcha-web-toast-text"></span>';
+            document.body.appendChild(toast);
+        }
+
+        toast.className = 'matcha-web-toast' + (type === 'error' ? ' toast-error' : type === 'warning' ? ' toast-warning' : '');
+        const textEl = toast.querySelector('.matcha-web-toast-text');
+        if (textEl) textEl.textContent = message;
+
+        clearTimeout(this._noticeTimer);
+        requestAnimationFrame(() => toast.classList.add('show'));
+        this._noticeTimer = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3200);
     }
 
     escapeHtml(str) {
