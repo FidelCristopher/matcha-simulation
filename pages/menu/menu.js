@@ -102,7 +102,7 @@ export class MenuManager {
       }
     });
 
-    // Or 5 quick clicks on the subtitle "CURATED SPECIMEN PALETTE • UJI 2026"
+    // Or 5 quick clicks on the subtitle "AVAILABLE MENU"
     const subLabel = this.root.querySelector('.pantone-sub-label');
     if (subLabel) {
       let clicks = 0;
