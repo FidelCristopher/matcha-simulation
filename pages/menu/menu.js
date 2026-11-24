@@ -4,6 +4,8 @@
  * Manages specimen cards, category filtering, cart additions, view modes, and navigation.
  */
 
+import { CartManager } from '../../js/cart.js';
+
 export class MenuManager {
   constructor(options = {}) {
     this.root = document.querySelector('#pantone-menu-root') || document;
@@ -13,9 +15,10 @@ export class MenuManager {
     this.cardsGrid = this.root.querySelector('#pantone-cards-grid');
     this.toggleGridBtn = this.root.querySelector('#pantone-toggle-grid-btn');
     this.resetFilterBtn = this.root.querySelector('#pantone-reset-filter-btn');
-    this.cartBtn = this.root.querySelector('#pantone-cart-btn');
-    this.cartBadge = this.root.querySelector('#pantone-cart-badge');
+    this.cartBtn = this.root.querySelector('#pantone-cart-btn') || document.querySelector('#cart-floating-btn');
+    this.cartBadge = this.root.querySelector('#pantone-cart-badge') || document.querySelector('#cart-floating-count');
     this.toast = this.root.querySelector('#pantone-toast');
+    this.menuLogo = this.root.querySelector('#pantone-menu-logo');
 
     this.toastTimeout = null;
     this.activeCategory = 'all';
@@ -24,6 +27,11 @@ export class MenuManager {
   }
 
   init() {
+    // Ensure CartManager is active for standalone or embedded pages
+    if (!window.cartManager) {
+      window.cartManager = new CartManager();
+    }
+
     this.bindBackNavigation();
     this.bindCategoryFilters();
     this.bindCardInteractions();
@@ -47,27 +55,59 @@ export class MenuManager {
    * 1. Top Left Floating Back Button -> Returns to Welcome Thumbnail Screen
    */
   bindBackNavigation() {
-    if (!this.backBtn) return;
-
-    this.backBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-
+    const returnToThumbnail = (e) => {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
       // Return to Kiosk Thumbnail Attract Screensaver
-      if (window.thumbnailManager && typeof window.thumbnailManager.showScreensaver === 'function') {
-        const thumbScreen = document.querySelector('#thumbnail-screen');
-        if (thumbScreen) {
+      const thumbScreen = document.querySelector('#thumbnail-screen');
+      if (thumbScreen && !thumbScreen.classList.contains('hidden')) {
+        if (window.thumbnailManager && typeof window.thumbnailManager.showScreensaver === 'function') {
           thumbScreen.style.display = '';
           thumbScreen.classList.remove('hidden');
-        }
-        window.thumbnailManager.showScreensaver();
-      } else {
-        // Fallback: If pageNavigator is active, slide to landing
-        if (window.pageNavigator && typeof window.pageNavigator.goToPage === 'function') {
-          window.pageNavigator.goToPage('landing', true);
+          window.thumbnailManager.showScreensaver();
+          return;
         }
       }
+      // Navigate to standalone thumbnail or previous page
+      if (document.referrer && (document.referrer.includes('thumbnail') || document.referrer.includes('index.html'))) {
+        window.history.back();
+      } else {
+        const isPages = window.location.pathname.includes('/pages/');
+        window.location.href = isPages ? '../thumbnail/thumbnail.html' : 'pages/thumbnail/thumbnail.html';
+      }
+    };
+
+    if (this.backBtn) {
+      this.backBtn.addEventListener('click', returnToThumbnail);
+    }
+
+    if (this.menuLogo) {
+      this.menuLogo.addEventListener('click', returnToThumbnail);
+    }
+
+    // Secret Owner Shortcut: Press Ctrl + Alt + A to open Admin Dashboard
+    window.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.altKey && (e.key === 'a' || e.key === 'A')) {
+        window.location.href = '../../admin.html';
+      }
     });
+
+    // Or 5 quick clicks on the subtitle "CURATED SPECIMEN PALETTE • UJI 2026"
+    const subLabel = this.root.querySelector('.pantone-sub-label');
+    if (subLabel) {
+      let clicks = 0;
+      let clickTimer = null;
+      subLabel.addEventListener('click', () => {
+        clicks++;
+        clearTimeout(clickTimer);
+        clickTimer = setTimeout(() => { clicks = 0; }, 2000);
+        if (clicks >= 5) {
+          window.location.href = '../../admin.html';
+        }
+      });
+    }
   }
 
   /**

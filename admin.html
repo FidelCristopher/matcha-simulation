@@ -3,113 +3,379 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MatchaTcih | Kitchen Display System & Order Monitor</title>
-    <meta name="description" content="Real-time order monitoring dashboard for MatchaTcih kitchen, barista, and staff.">
+    <title>MatchaTcih | Panel Pemilik Bisnis & Rekapan Penjualan</title>
+    <meta name="description" content="Portal dashboard privat pemilik bisnis MatchaTcih: monitor pesanan masuk secara real-time dan analisis rekapan penjualan.">
     <link rel="icon" type="image/png" href="assets/images/logo.png">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800;900&family=Inter:wght@400;500;600;700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800;900&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
 
     <!-- Admin Stylesheet -->
     <link rel="stylesheet" href="css/admin.css">
 </head>
-<body>
+<body class="admin-body">
 
-    <!-- Admin Header -->
+    <!-- =====================================================================
+         0. SECURITY PIN ACCESS GATE (KHUSUS PEMILIK BISNIS)
+         Terpisah & tidak dapat diakses pembeli umum tanpa PIN
+         ===================================================================== -->
+    <div id="admin-pin-modal" class="admin-pin-modal">
+        <div class="pin-card-box">
+            <div class="pin-header-icon">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+            </div>
+            <h2 class="pin-title">Portal Pemilik Bisnis</h2>
+            <p class="pin-sub">Halaman ini bersifat privat untuk pemilik bisnis. Masukkan PIN keamanan untuk melihat pesanan & rekapan.</p>
+            
+            <div class="pin-dots-container" id="pin-dots">
+                <span class="pin-dot"></span>
+                <span class="pin-dot"></span>
+                <span class="pin-dot"></span>
+                <span class="pin-dot"></span>
+            </div>
+            
+            <div class="pin-keypad">
+                <button type="button" class="keypad-btn" data-key="1">1</button>
+                <button type="button" class="keypad-btn" data-key="2">2</button>
+                <button type="button" class="keypad-btn" data-key="3">3</button>
+                <button type="button" class="keypad-btn" data-key="4">4</button>
+                <button type="button" class="keypad-btn" data-key="5">5</button>
+                <button type="button" class="keypad-btn" data-key="6">6</button>
+                <button type="button" class="keypad-btn" data-key="7">7</button>
+                <button type="button" class="keypad-btn" data-key="8">8</button>
+                <button type="button" class="keypad-btn" data-key="9">9</button>
+                <button type="button" class="keypad-btn keypad-clear" data-key="clear" title="Hapus">C</button>
+                <button type="button" class="keypad-btn" data-key="0">0</button>
+                <button type="button" class="keypad-btn keypad-enter" data-key="enter" title="Masuk">OK</button>
+            </div>
+
+            <div class="pin-feedback-msg" id="pin-feedback"></div>
+            <div class="pin-footer-hint">PIN Default: <strong>8888</strong> (atau 1234)</div>
+            <a href="pages/menu/menu.html" class="pin-back-link">&larr; Kembali ke Kiosk Menu</a>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         1. ADMIN HEADER BAR
+         ===================================================================== -->
     <header class="admin-header">
-        <div class="admin-brand">
-            <div class="admin-logo">
-                <img src="assets/images/logo.webp" alt="MatchaTcih Logo" class="logo-mark-img" width="32" height="32">
-                <span>MatchaTcih<span class="dot">.</span></span>
+        <div class="admin-brand-group">
+            <div class="admin-brand">
+                <div class="admin-logo">
+                    <img src="assets/images/logo.webp" alt="MatchaTcih Logo" class="logo-mark-img" width="32" height="32">
+                    <span>MatchaTcih<span class="dot">.</span></span>
+                </div>
+                <div class="admin-live-badge">
+                    <span class="pulse-dot"></span>
+                    <span>Admin Hub</span>
+                </div>
             </div>
-            <div class="admin-live-badge">
-                <span class="pulse-dot"></span>
-                <span>Live Kitchen Monitor</span>
-            </div>
+
+            <!-- View Switcher Tabs: Order Monitor vs Rekapan Bisnis -->
+            <nav class="admin-view-nav" aria-label="Navigasi Panel Admin">
+                <button class="view-nav-btn active" id="tab-btn-orders" data-view="orders">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <span>Daftar Pesanan</span>
+                </button>
+                <button class="view-nav-btn" id="tab-btn-recap" data-view="recap">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                    <span>Rekapan Penjualan</span>
+                </button>
+                <button class="view-nav-btn" id="tab-btn-database" data-view="database">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                    </svg>
+                    <span>Database Pesanan</span>
+                </button>
+            </nav>
         </div>
 
         <div class="admin-actions">
             <div class="admin-clock" id="admin-clock">00:00:00</div>
             <button class="admin-btn" id="sample-order-btn" title="Simulasikan pesanan masuk baru">+ Test Order</button>
-            <button class="admin-btn" id="clear-orders-btn" title="Hapus riwayat pesanan">Clear</button>
-            <a href="index.html" class="admin-btn admin-btn-primary" title="Buka Halaman Customer Kiosk">
-                <span>Open Kiosk</span>
+            <button class="admin-btn" id="clear-orders-btn" title="Hapus seluruh riwayat pesanan">Reset</button>
+            <button class="admin-btn admin-btn-lock" id="admin-logout-btn" title="Kunci panel & keluar sesi">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <span>Kunci</span>
+            </button>
+            <a href="pages/menu/menu.html" class="admin-btn admin-btn-primary" title="Buka Halaman Customer Kiosk">
+                <span>Buka Menu</span>
             </a>
         </div>
     </header>
 
-    <!-- Main Dashboard Container -->
+    <!-- =====================================================================
+         2. MAIN DASHBOARD CONTENT
+         ===================================================================== -->
     <main class="admin-main">
 
-        <!-- KPI Statistic Analytics -->
-        <section class="admin-stats-grid">
-            <div class="stat-card">
-                <span class="stat-label">Total Revenue</span>
-                <span class="stat-value revenue" id="stat-revenue">$0.00</span>
-                <span class="stat-subtext">Dari pesanan yang berhasil dicheckout</span>
-            </div>
+        <!-- =================================================================
+             VIEW 1: LIVE ORDERS MONITOR (DAFTAR PESANAN)
+             ================================================================= -->
+        <div id="view-orders-section" class="admin-view-panel active">
+            <!-- KPI Statistic Analytics Bar (Rupiah) -->
+            <section class="admin-stats-grid">
+                <div class="stat-card">
+                    <span class="stat-label">Total Omset Pesanan</span>
+                    <span class="stat-value revenue" id="stat-revenue">Rp 0</span>
+                    <span class="stat-subtext">Akumulasi seluruh pesanan masuk</span>
+                </div>
 
-            <div class="stat-card">
-                <span class="stat-label">Sedang Diseduh (Active)</span>
-                <span class="stat-value active" id="stat-active">0</span>
-                <span class="stat-subtext">Menunggu proses barista</span>
-            </div>
+                <div class="stat-card">
+                    <span class="stat-label">Sedang Diseduh (Active)</span>
+                    <span class="stat-value active" id="stat-active">0</span>
+                    <span class="stat-subtext">Menunggu proses barista</span>
+                </div>
 
-            <div class="stat-card">
-                <span class="stat-label">Pesanan Selesai</span>
-                <span class="stat-value" id="stat-completed">0</span>
-                <span class="stat-subtext">Sudah disajikan ke pelanggan</span>
-            </div>
+                <div class="stat-card">
+                    <span class="stat-label">Pesanan Selesai</span>
+                    <span class="stat-value" id="stat-completed">0</span>
+                    <span class="stat-subtext">Sudah disajikan ke pelanggan</span>
+                </div>
 
-            <div class="stat-card">
-                <span class="stat-label">Total Tiket Masuk</span>
-                <span class="stat-value" id="stat-total">0</span>
-                <span class="stat-subtext">Akumulasi sesi hari ini</span>
-            </div>
-        </section>
+                <div class="stat-card">
+                    <span class="stat-label">Total Tiket Masuk</span>
+                    <span class="stat-value" id="stat-total">0</span>
+                    <span class="stat-subtext">Total transaksi tercatat</span>
+                </div>
+            </section>
 
-        <!-- Controls, Filter Tabs & Search -->
-        <section class="admin-filter-bar">
-            <div class="filter-tabs">
-                <button class="filter-tab active" data-filter="all">Semua Pesanan</button>
-                <button class="filter-tab" data-filter="brewing">Sedang Diseduh</button>
-                <button class="filter-tab" data-filter="completed">Selesai</button>
-            </div>
+            <!-- Controls, Filter Tabs & Search -->
+            <section class="admin-filter-bar">
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">Semua Pesanan</button>
+                    <button class="filter-tab" data-filter="brewing">Sedang Diseduh</button>
+                    <button class="filter-tab" data-filter="completed">Selesai</button>
+                </div>
 
-            <div class="search-box">
-                <input type="text" id="search-orders" placeholder="Cari ID atau nama menu..." aria-label="Cari pesanan berdasarkan ID atau nama menu">
-            </div>
-        </section>
+                <div class="search-box">
+                    <input type="text" id="search-orders" placeholder="Cari ID tiket atau nama minuman..." aria-label="Cari pesanan berdasarkan ID atau nama menu">
+                </div>
+            </section>
 
-        <!-- Orders Kitchen Display Cards Grid -->
-        <section class="orders-grid" id="orders-grid">
-            <!-- Dynamic order cards generated by js/admin.js -->
-        </section>
+            <!-- Orders Kitchen Display Cards Grid -->
+            <section class="orders-grid" id="orders-grid">
+                <!-- Dynamic order cards generated by js/admin.js -->
+            </section>
+        </div>
 
-        <!-- Export Orders Report Section -->
-        <section class="admin-export-bar">
-            <div class="export-info">
-                <div class="export-text">
-                    <h4>Export Laporan Rekap Pesanan</h4>
-                    <span id="export-orders-count">Siap mengunduh seluruh data pesanan</span>
+        <!-- =================================================================
+             VIEW 2: REKAPAN PENJUALAN & BISNIS (SALES ANALYTICS)
+             ================================================================= -->
+        <div id="view-recap-section" class="admin-view-panel">
+            <!-- Recap Date Range Bar -->
+            <section class="recap-header-bar">
+                <div class="recap-title-block">
+                    <h2>Laporan Rekapan Penjualan Bisnis</h2>
+                    <p>Ringkasan performa finansial, volume penjualan, dan preferensi kustomisasi pelanggan.</p>
+                </div>
+
+                <div class="recap-range-tabs">
+                    <button class="range-tab active" data-range="today">Hari Ini</button>
+                    <button class="range-tab" data-range="week">7 Hari Terakhir</button>
+                    <button class="range-tab" data-range="all">Semua Waktu</button>
+                </div>
+            </section>
+
+            <!-- Key Financial Recap Grid -->
+            <section class="admin-stats-grid recap-stats-grid">
+                <div class="stat-card">
+                    <span class="stat-label">Total Pendapatan (Omset)</span>
+                    <span class="stat-value revenue" id="recap-total-revenue">Rp 0</span>
+                    <span class="stat-subtext" id="recap-period-label">Berdasarkan data tersaring</span>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-label">Total Minuman Terjual</span>
+                    <span class="stat-value" id="recap-total-drinks">0 Gelas</span>
+                    <span class="stat-subtext">Akumulasi kuantitas cup</span>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-label">Rata-rata Nilai Pesanan (AOV)</span>
+                    <span class="stat-value" id="recap-aov">Rp 0</span>
+                    <span class="stat-subtext">Rata-rata per tiket transaksi</span>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-label">Tingkat Penyelesaian</span>
+                    <span class="stat-value active" id="recap-completion-rate">0%</span>
+                    <span class="stat-subtext" id="recap-completion-sub">0 pesanan selesai</span>
+                </div>
+            </section>
+
+            <!-- Two-Column Analytics: Best Seller Menu & Customization Breakdown -->
+            <div class="recap-details-grid">
+                <!-- Left: Best Seller Menu Ranking -->
+                <div class="recap-card">
+                    <div class="recap-card-header">
+                        <div class="recap-card-title-group">
+                            <span class="card-icon">🍵</span>
+                            <h3>Ranking Menu Terlaris</h3>
+                        </div>
+                        <span class="recap-card-sub" id="recap-menu-count">0 Menu Terjual</span>
+                    </div>
+                    <div class="recap-card-body" id="recap-bestseller-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Right: Customization Preferences (Milk & Toppings) -->
+                <div class="recap-card">
+                    <div class="recap-card-header">
+                        <div class="recap-card-title-group">
+                            <span class="card-icon">⚡</span>
+                            <h3>Analisis Kustomisasi & Topping</h3>
+                        </div>
+                        <span class="recap-card-sub">Preferensi Racikan</span>
+                    </div>
+                    <div class="recap-card-body">
+                        <!-- Milk Breakdown -->
+                        <div class="custom-analytic-block">
+                            <h4 class="analytic-subhead">Pilihan Susu (Milk Base)</h4>
+                            <div class="analytic-bars" id="recap-milk-breakdown">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Toppings Breakdown -->
+                        <div class="custom-analytic-block" style="margin-top: 1.5rem;">
+                            <h4 class="analytic-subhead">Add-on Topping Populer</h4>
+                            <div class="analytic-bars" id="recap-toppings-breakdown">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="export-buttons-group">
-                <button id="export-excel-btn" class="export-action-btn excel-btn" title="Unduh data dalam format Spreadsheet Excel (.xlsx)">
-                    <span>Export Excel (.xlsx)</span>
-                </button>
+            <!-- Print POS Summary & Export Report Section -->
+            <section class="admin-export-bar" style="margin-top: 1.5rem;">
+                <div class="export-info">
+                    <div class="export-text">
+                        <h4>Export & Cetak Laporan Rekapan</h4>
+                        <span id="export-orders-count">Siap mengunduh seluruh data pesanan</span>
+                    </div>
+                </div>
 
-                <button id="export-pdf-btn" class="export-action-btn pdf-btn" title="Unduh dokumen laporan dalam format PDF (.pdf)">
-                    <span>Export PDF (.pdf)</span>
-                </button>
+                <div class="export-buttons-group">
+                    <button id="print-daily-summary-btn" class="export-action-btn print-btn" title="Cetak Ringkasan Struk Rekapan Kasir">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                        <span>Cetak Struk Rekapan</span>
+                    </button>
+
+                    <button id="export-excel-btn" class="export-action-btn excel-btn" title="Unduh data dalam format Spreadsheet Excel (.xlsx)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line></svg>
+                        <span>Export Excel (.xlsx)</span>
+                    </button>
+
+                    <button id="export-pdf-btn" class="export-action-btn pdf-btn" title="Unduh dokumen laporan resmi dalam format PDF (.pdf)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M10 12h4"></path><path d="M10 16h4"></path></svg>
+                        <span>Export PDF (.pdf)</span>
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <!-- =================================================================
+             VIEW 3: DATABASE EXPLORER & MANAGEMENT (DATABASE PESANAN)
+             ================================================================= -->
+        <div id="view-database-section" class="admin-view-panel">
+            <div class="database-header-card">
+                <div class="db-status-info">
+                    <div class="db-badge">
+                        <span class="db-pulse-dot"></span>
+                        <span id="db-connection-status">Database Terhubung</span>
+                    </div>
+                    <h3 id="db-driver-title">SQLite 3 & IndexedDB Multi-Layer Database</h3>
+                    <p id="db-sub-info">Semua transaksi pesanan tercatat otomatis dengan nama pemesan, ID, menu racikan, jumlah, dan total harga.</p>
+                </div>
+                <div class="db-actions-group">
+                    <button id="db-refresh-btn" class="db-action-btn" title="Refresh & Sinkronkan Data">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                        <span>Sinkronkan DB</span>
+                    </button>
+                    <button id="db-export-sql-btn" class="db-action-btn primary" title="Unduh File Dump SQL Database">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        <span>Export SQL Dump</span>
+                    </button>
+                    <button id="db-export-json-btn" class="db-action-btn" title="Unduh Salinan JSON Database">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                        <span>Export JSON</span>
+                    </button>
+                </div>
             </div>
-        </section>
+
+            <!-- Database Search & Record Count -->
+            <div class="db-table-controls">
+                <div class="db-search-wrap">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="db-search-input" placeholder="Cari nama pemesan, ID pemesanan, atau menu..." />
+                </div>
+                <div class="db-stats-badge" id="db-record-count">Memuat catatan database...</div>
+            </div>
+
+            <!-- Database Data Table -->
+            <div class="db-table-container">
+                <table class="db-data-table">
+                    <thead>
+                        <tr>
+                            <th>ID Pemesanan</th>
+                            <th>Nama Pemesan</th>
+                            <th>Nama Menu Yang Dipesan</th>
+                            <th style="text-align: center;">Jumlah (Qty)</th>
+                            <th style="text-align: right;">Total Harga</th>
+                            <th>Waktu Transaksi</th>
+                            <th style="text-align: center;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="db-table-body">
+                        <!-- Populated dynamically by js/admin.js -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
     </main>
+
+    <!-- =====================================================================
+         3. THERMAL RECEIPT PRINT MODAL (STRUK KASIR)
+         ===================================================================== -->
+    <div id="receipt-modal" class="receipt-modal">
+        <div class="receipt-dialog">
+            <div class="receipt-paper" id="receipt-paper">
+                <!-- Struk Content rendered dynamically by js/admin.js -->
+            </div>
+            <div class="receipt-actions-row">
+                <button type="button" class="receipt-btn receipt-print-btn" id="receipt-do-print">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                    <span>Cetak Sekarang</span>
+                </button>
+                <button type="button" class="receipt-btn receipt-close-btn" id="receipt-close-btn">Tutup</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Libraries for Export (Excel & PDF) -->
     <script src="js/vendor/xlsx.full.min.js"></script>

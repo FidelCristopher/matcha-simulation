@@ -1,9 +1,11 @@
 /**
  * MatchaTcih • Interactive Custom Drink Controller
  * Pages Architecture: pages/customize/customize.js
- * Manages preset templates, dynamic options, live cup layer pouring/stacking,
- * +Rp 3.000 / topping pricing math, and cart synchronization.
+ * Manages preset templates, dynamic options, live tumbler photo switching,
+ * realistic topping overlays, +Rp 3.000 / topping pricing math, and cart synchronization.
  */
+
+import { CartManager } from '../../js/cart.js';
 
 export class CustomizeManager {
   constructor(options = {}) {
@@ -23,19 +25,27 @@ export class CustomizeManager {
     this.toast = this.root.querySelector('#custom-toast');
     this.toastMsg = this.root.querySelector('#custom-toast-msg');
 
-    // Visual Cup Elements
-    this.cupChamber = this.root.querySelector('#cup-chamber');
+    // Hand-Drawn Sketch Craft Tumbler Elements
+    this.sketchSvg = this.root.querySelector('#sketch-tumbler-svg');
     this.emptyState = this.root.querySelector('#cup-empty-indicator');
-    this.layerBoba = this.root.querySelector('#visual-layer-boba');
-    this.layerMatcha = this.root.querySelector('#visual-layer-matcha');
-    this.layerMilk = this.root.querySelector('#visual-layer-milk');
-    this.layerIce = this.root.querySelector('#visual-layer-ice');
-    this.layerChoco = this.root.querySelector('#visual-layer-choco');
-    this.layerFoam = this.root.querySelector('#visual-layer-foam');
-    this.layerCoconut = this.root.querySelector('#visual-layer-coconut');
+    this.sketchMilkLayer = this.root.querySelector('#sketch-layer-milk');
+    this.sketchMilkRect = this.root.querySelector('#sketch-milk-rect');
+    this.sketchBaseLayer = this.root.querySelector('#sketch-layer-base');
+    this.sketchBaseRect = this.root.querySelector('#sketch-base-rect');
+    this.sketchBaseMeniscus = this.root.querySelector('#sketch-base-meniscus');
+    this.sketchSwirlWave = this.root.querySelector('#sketch-swirl-wave');
+    this.sketchOatDoodles = this.root.querySelector('#sketch-oat-doodles');
+    this.sketchWaterRipples = this.root.querySelector('#sketch-water-ripples');
+    this.sketchFoam = this.root.querySelector('#sketch-topping-foam');
+    this.sketchChoco = this.root.querySelector('#sketch-topping-choco');
+    this.sketchIceLayer = this.root.querySelector('#sketch-ice-layer');
+    this.sketchSteam = this.root.querySelector('#sketch-hot-steam');
+    this.sketchIceCubes = this.root.querySelectorAll('.sketch-ice-cube');
+    this.extraIceCube = this.root.querySelector('#ice-cube-5');
 
-    // Live Tag Callouts
+    // Live Dynamic Tag Callouts
     this.tagFoam = this.root.querySelector('#tag-foam-label');
+    this.tagChoco = this.root.querySelector('#tag-choco-label');
     this.tagMilk = this.root.querySelector('#tag-milk-label');
     this.tagMilkText = this.root.querySelector('#tag-milk-text');
     this.tagMatcha = this.root.querySelector('#tag-matcha-label');
@@ -67,7 +77,7 @@ export class CustomizeManager {
         milk: 'oat',
         sugar: '70',
         ice: 'normal',
-        toppings: ['coconut']
+        toppings: []
       },
       'strawberry-matcha': {
         name: 'STRAWBERRY MATCHA',
@@ -103,7 +113,7 @@ export class CustomizeManager {
         milk: 'fresh',
         sugar: '70',
         ice: 'normal',
-        toppings: ['chocolate']
+        toppings: []
       },
       'sparkling-matcha-ginger': {
         name: 'SPARKLING MATCHA GINGER',
@@ -128,6 +138,7 @@ export class CustomizeManager {
         name: 'ICE MATCHA LATTE',
         pantone: 'SPECIMEN 2270 C',
         basePrice: 25000,
+        base: 'matcha',
         milk: 'fresh',
         sugar: '70',
         ice: 'normal',
@@ -137,6 +148,7 @@ export class CustomizeManager {
         name: 'ICE MATCHARICANO',
         pantone: 'SPECIMEN 0794 C',
         basePrice: 22000,
+        base: 'matcha',
         milk: 'none',
         sugar: '70',
         ice: 'normal',
@@ -146,36 +158,61 @@ export class CustomizeManager {
         name: 'ICE MATCHA CHOCOLATE',
         pantone: 'SPECIMEN 4975 C',
         basePrice: 28000,
-        milk: 'fresh',
-        sugar: '70',
-        ice: 'normal',
-        toppings: ['chocolate']
-      },
-      'ice-matcha-vanilla-foam': {
-        name: 'ICE MATCHA VANILLA CLOUD FOAM',
-        pantone: 'SPECIMEN 00997 C',
-        basePrice: 28000,
-        milk: 'fresh',
-        sugar: '70',
-        ice: 'normal',
-        toppings: ['vanilla_foam']
-      },
-      'ice-chocolate': {
-        name: 'ICE CHOCOLATE',
-        pantone: 'SPECIMEN 4695 C',
-        basePrice: 25000,
+        base: 'matcha',
         milk: 'fresh',
         sugar: '70',
         ice: 'normal',
         toppings: []
       },
-      'custom-drink': {
-        name: 'CUSTOM MATCHA CRAFT',
-        pantone: 'CRAFT LAB • DARI AWAL',
-        basePrice: 20000,
-        milk: 'none',
+      'ice-matcha-vanilla-foam': {
+        name: 'ICE MATCHA VANILLA CLOUD FOAM',
+        pantone: 'SPECIMEN 00997 C',
+        basePrice: 28000,
+        base: 'matcha',
+        milk: 'fresh',
         sugar: '70',
         ice: 'normal',
+        toppings: []
+      },
+      'ice-chocolate': {
+        name: 'ICE CHOCOLATE',
+        pantone: 'SPECIMEN 4695 C',
+        basePrice: 25000,
+        base: 'chocolate',
+        milk: 'fresh',
+        sugar: '70',
+        ice: 'normal',
+        toppings: []
+      },
+      'ice-matcha-strawberry': {
+        name: 'ICE MATCHA STRAWBERRY',
+        pantone: 'SPECIMEN 187 C',
+        basePrice: 29000,
+        base: 'matcha',
+        milk: 'fresh',
+        sugar: '70',
+        ice: 'normal',
+        toppings: []
+      },
+      'ice-matcha-coconut': {
+        name: 'ICE MATCHA COCONUT',
+        pantone: 'SPECIMEN 00997 C',
+        basePrice: 27000,
+        base: 'matcha',
+        milk: 'oat',
+        sugar: '70',
+        ice: 'normal',
+        toppings: []
+      },
+      // Blank Canvas Custom (All options start unselected)
+      'custom-drink': {
+        name: 'CUSTOM DRINK CRAFT',
+        pantone: 'CRAFT LAB • DARI AWAL',
+        basePrice: 22000,
+        base: null,
+        milk: null,
+        sugar: null,
+        ice: null,
         toppings: [],
         isScratch: true
       }
@@ -189,6 +226,21 @@ export class CustomizeManager {
   }
 
   init() {
+    // Ensure CartManager instance is initialized for standalone or embedded pages
+    if (!window.cartManager) {
+      window.cartManager = new CartManager();
+    }
+
+    // Listen for cart changes across the application
+    document.addEventListener('matcha:cart-updated', () => {
+      this.syncCartBadge();
+    });
+    window.addEventListener('storage', (e) => {
+      if (!e.key || e.key === 'matcha_cart') {
+        this.syncCartBadge();
+      }
+    });
+
     this.detectInitialPreset();
     this.bindFormChangeListeners();
     this.bindActions();
@@ -218,8 +270,8 @@ export class CustomizeManager {
     if (drinkKey && this.templates[drinkKey]) {
       this.loadTemplate(drinkKey);
     } else {
-      // Default fallback template: Matcha Latte
-      this.loadTemplate('matcha-latte');
+      // Default fallback template: Ice Matcha Latte
+      this.loadTemplate('ice-matcha-latte');
     }
   }
 
@@ -227,9 +279,9 @@ export class CustomizeManager {
    * 2. Populate form fields from template preset
    */
   loadTemplate(drinkKey) {
-    const tpl = this.templates[drinkKey] || this.templates['matcha-latte'];
+    const tpl = this.templates[drinkKey] || this.templates['custom-drink'];
     this.currentDrinkId = drinkKey;
-    this.currentBasePrice = tpl.basePrice;
+    this.currentBasePrice = tpl.basePrice || 22000;
     this.isScratch = !!tpl.isScratch;
 
     // Update Headings & Meta
@@ -239,23 +291,44 @@ export class CustomizeManager {
       this.badgeEl.textContent = this.isScratch ? 'Custom Craft • Dari Gelas Kosong' : 'Template Menu • Bisa Diedit';
     }
 
-    // Set Milk Radio
-    const milkRadio = this.form.querySelector(`input[name="custom_milk"][value="${tpl.milk}"]`);
-    if (milkRadio) milkRadio.checked = true;
+    // Uncheck ALL radios and checkboxes first
+    this.form.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+    this.form.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
 
-    // Set Sugar Radio
-    const sugarRadio = this.form.querySelector(`input[name="custom_sugar"][value="${tpl.sugar}"]`);
-    if (sugarRadio) sugarRadio.checked = true;
+    // Keep clean milk pill descriptions
+    const descFresh = this.form.querySelector('#desc-milk-fresh');
+    const descOat = this.form.querySelector('#desc-milk-oat');
+    const descNone = this.form.querySelector('#desc-milk-none');
 
-    // Set Ice Radio
-    const iceRadio = this.form.querySelector(`input[name="custom_ice"][value="${tpl.ice}"]`);
-    if (iceRadio) iceRadio.checked = true;
+    if (descFresh) descFresh.textContent = 'Termasuk';
+    if (descOat) descOat.textContent = '+Rp 2.000';
+    if (descNone) descNone.textContent = 'Rp 0';
 
-    // Set Topping Checkboxes
-    const toppingBoxes = this.form.querySelectorAll('input[name="custom_toppings"]');
-    toppingBoxes.forEach((chk) => {
-      chk.checked = tpl.toppings && tpl.toppings.includes(chk.value);
-    });
+    // If template has specific presets (e.g. Ice Matcha Latte), set them; if scratch, leave all empty!
+    if (!this.isScratch) {
+      if (tpl.base) {
+        const baseRadio = this.form.querySelector(`input[name="custom_base"][value="${tpl.base}"]`);
+        if (baseRadio) baseRadio.checked = true;
+      }
+      if (tpl.milk) {
+        const milkRadio = this.form.querySelector(`input[name="custom_milk"][value="${tpl.milk}"]`);
+        if (milkRadio) milkRadio.checked = true;
+      }
+      if (tpl.sugar) {
+        const sugarRadio = this.form.querySelector(`input[name="custom_sugar"][value="${tpl.sugar}"]`);
+        if (sugarRadio) sugarRadio.checked = true;
+      }
+      if (tpl.ice) {
+        const iceRadio = this.form.querySelector(`input[name="custom_ice"][value="${tpl.ice}"]`);
+        if (iceRadio) iceRadio.checked = true;
+      }
+      if (Array.isArray(tpl.toppings)) {
+        tpl.toppings.forEach(val => {
+          const chk = this.form.querySelector(`input[name="custom_toppings"][value="${val}"]`);
+          if (chk) chk.checked = true;
+        });
+      }
+    }
 
     this.updateRecipeAndVisuals();
   }
@@ -266,130 +339,273 @@ export class CustomizeManager {
   bindFormChangeListeners() {
     if (!this.form) return;
 
-    this.form.addEventListener('change', () => {
-      this.isScratch = false;
+    this.form.addEventListener('change', (e) => {
+      const hasBase = !!this.form.querySelector('input[name="custom_base"]:checked');
+      if (hasBase) {
+        this.isScratch = false;
+      }
+
+      // If user is in custom drink, and chooses chocolate (either base or topping),
+      // auto-pair with Fresh Milk if milk is not yet selected ("untuk yang chocolate itu pakai freshmilk")
+      const target = e.target;
+      if (this.currentDrinkId === 'custom-drink' || this.isScratch) {
+        if ((target.name === 'custom_base' && target.value === 'chocolate') ||
+            (target.name === 'custom_toppings' && target.value === 'chocolate' && target.checked)) {
+          const milkChecked = this.form.querySelector('input[name="custom_milk"]:checked');
+          if (!milkChecked) {
+            const freshRadio = this.form.querySelector('input[name="custom_milk"][value="fresh"]');
+            if (freshRadio) freshRadio.checked = true;
+          }
+        }
+      }
+
       this.updateRecipeAndVisuals();
     });
   }
 
   /**
-   * 4. Dynamic Math & Live Layer Stacking Visuals
+   * 4. Dynamic Math & Live Visuals
    */
   updateRecipeAndVisuals() {
     // Read Current Selections
-    const milkVal = this.form.querySelector('input[name="custom_milk"]:checked')?.value || 'fresh';
-    const sugarVal = this.form.querySelector('input[name="custom_sugar"]:checked')?.value || '70';
-    const iceVal = this.form.querySelector('input[name="custom_ice"]:checked')?.value || 'normal';
+    const baseVal = this.form.querySelector('input[name="custom_base"]:checked')?.value || null;
+    const milkVal = this.form.querySelector('input[name="custom_milk"]:checked')?.value || null;
+    const sugarVal = this.form.querySelector('input[name="custom_sugar"]:checked')?.value || null;
+    const iceVal = this.form.querySelector('input[name="custom_ice"]:checked')?.value || null;
     const selectedToppings = Array.from(this.form.querySelectorAll('input[name="custom_toppings"]:checked')).map(c => c.value);
 
     // Calculate Price:
-    // Base Price + Extra Milk (Oat: +4k) + Toppings count * 3.000 (3 rebu)
-    let extraMilk = 0;
-    if (milkVal === 'oat' || milkVal === 'almond') extraMilk = 4000;
-
-    const toppingCostPerItem = 3000; // 3 rebu per user requirement
+    // Base is pegged to lowest menu item: Matcharicano (Rp 22.000)
+    let finalTotal = 22000;
+    const toppingCostPerItem = 3000; // Fixed +Rp 3.000 per topping
     const extraToppings = selectedToppings.length * toppingCostPerItem;
 
-    const totalPrice = this.currentBasePrice + extraMilk + extraToppings;
+    const isCustomOrScratch = (this.currentDrinkId === 'custom-drink' || this.isScratch);
 
-    // Format IDR Currency
-    const formattedPrice = `Rp ${totalPrice.toLocaleString('id-ID')}`;
-    if (this.totalPriceEl) this.totalPriceEl.textContent = formattedPrice;
-    if (this.btnPriceDisplay) this.btnPriceDisplay.textContent = formattedPrice;
+    if (isCustomOrScratch || this.currentDrinkId === 'ice-matcharicano') {
+      this.currentBasePrice = 22000;
+      let milkCost = 0;
+      if (milkVal === 'fresh') milkCost = 3000;
+      else if (milkVal === 'oat' || milkVal === 'almond') milkCost = 5000; // Fresh Milk (3k) + Oatmilk (+2k) = 5k
+      else milkCost = 0; // none or null
+      finalTotal = this.currentBasePrice + milkCost + extraToppings;
+    } else if (this.currentDrinkId === 'ice-matcha-latte' || this.currentDrinkId === 'hot-traditional' || this.currentDrinkId === 'ice-chocolate') {
+      this.currentBasePrice = 25000;
+      let milkCost = 0;
+      if (milkVal === 'none') milkCost = -3000;
+      else if (milkVal === 'oat' || milkVal === 'almond') milkCost = 2000;
+      finalTotal = this.currentBasePrice + milkCost + extraToppings;
+    } else if (this.currentDrinkId === 'ice-matcha-chocolate' || this.currentDrinkId === 'ice-matcha-vanilla-foam') {
+      this.currentBasePrice = 28000;
+      let milkCost = 0;
+      if (milkVal === 'none') milkCost = -3000;
+      else if (milkVal === 'oat' || milkVal === 'almond') milkCost = 2000;
+      finalTotal = this.currentBasePrice + milkCost + extraToppings;
+    } else {
+      let milkCost = (milkVal === 'oat' || milkVal === 'almond') ? 2000 : 0;
+      finalTotal = this.currentBasePrice + milkCost + extraToppings;
+    }
+
+    // Update UI Price Displays
+    if (this.totalPriceEl) this.totalPriceEl.textContent = this.formatIDR(finalTotal);
+    if (this.btnPriceDisplay) this.btnPriceDisplay.textContent = this.formatIDR(finalTotal);
 
     // Breakdown Text
-    let breakdownText = `Base ${this.formatIDR(this.currentBasePrice)}`;
-    if (extraMilk > 0) breakdownText += ` + Susu Oat (${this.formatIDR(extraMilk)})`;
-    if (selectedToppings.length > 0) {
-      breakdownText += ` + ${selectedToppings.length} Topping (${this.formatIDR(extraToppings)})`;
+    let breakdownText = '';
+    if (this.isScratch || !baseVal) {
+      breakdownText = `Craft Lab • Mulai Rp 22.000 (Pilih Base & Susu di Kiri)`;
     } else {
-      breakdownText += ` (Tanpa Topping Tambahan)`;
+      let baseLabel = baseVal === 'chocolate' ? 'Base Cokelat' : 'Base Matcha';
+      if (this.currentDrinkId === 'ice-matcha-vanilla-foam') {
+        baseLabel = 'Ice Matcha Vanilla Cloud Foam (Termasuk Foam)';
+      } else if (this.currentDrinkId === 'ice-matcha-chocolate') {
+        baseLabel = 'Ice Matcha Chocolate (Termasuk Cokelat)';
+      }
+      breakdownText = `${baseLabel} ${this.formatIDR(this.currentBasePrice)}`;
+      if (milkVal === 'oat') breakdownText += ` + Susu Oat (+Rp 2.000)`;
+      if (selectedToppings.length > 0) {
+        breakdownText += ` + ${selectedToppings.length} Topping Tambahan (${this.formatIDR(extraToppings)})`;
+      } else {
+        breakdownText += ` (Tanpa Topping Tambahan)`;
+      }
     }
     if (this.breakdownSubEl) this.breakdownSubEl.textContent = breakdownText;
 
     // =========================================================================
-    // UPDATE VISUAL CUP IN REAL-TIME
+    // UPDATE INTERACTIVE HAND-DRAWN SKETCH CRAFT TUMBLER IN REAL-TIME
     // =========================================================================
+    const isCupCompletelyBlank = this.isScratch || !baseVal;
 
-    // If starting completely blank with no milk and no matcha
-    const isCupCompletelyBlank = (milkVal === 'none' && selectedToppings.length === 0 && this.isScratch);
     if (this.emptyState) {
-      if (isCupCompletelyBlank) {
-        this.emptyState.classList.add('visible');
-      } else {
-        this.emptyState.classList.remove('visible');
-      }
+      this.emptyState.classList.toggle('visible', isCupCompletelyBlank);
     }
 
-    // A. Matcha Layer
-    if (this.layerMatcha) {
-      if (isCupCompletelyBlank) {
-        this.layerMatcha.classList.add('empty');
-      } else {
-        this.layerMatcha.classList.remove('empty');
+    if (isCupCompletelyBlank) {
+      // Cup is completely blank / empty glass sketch
+      if (this.sketchMilkRect) {
+        this.sketchMilkRect.setAttribute('height', '0');
+        this.sketchMilkRect.style.opacity = '0';
       }
+      if (this.sketchBaseRect) {
+        this.sketchBaseRect.setAttribute('height', '0');
+        this.sketchBaseRect.style.opacity = '0';
+      }
+      if (this.sketchBaseMeniscus) this.sketchBaseMeniscus.style.opacity = '0';
+      if (this.sketchSwirlWave) this.sketchSwirlWave.style.opacity = '0';
+      if (this.sketchOatDoodles) this.sketchOatDoodles.style.opacity = '0';
+      if (this.sketchWaterRipples) this.sketchWaterRipples.style.opacity = '0';
+      if (this.sketchSteam) this.sketchSteam.style.opacity = '0';
+      if (this.sketchIceCubes) {
+        this.sketchIceCubes.forEach(c => c.style.opacity = '0');
+      }
+      if (this.sketchFoam) this.sketchFoam.style.opacity = '0';
+      if (this.sketchChoco) this.sketchChoco.style.opacity = '0';
+
+      if (this.tagMilk) this.tagMilk.classList.remove('visible');
+      if (this.tagMatcha) this.tagMatcha.classList.remove('visible');
+      if (this.tagFoam) this.tagFoam.classList.remove('visible');
+      if (this.tagChoco) this.tagChoco.classList.remove('visible');
+      return;
     }
+
+    // --- 1. BASE FLAVOR (Matcha vs Belgian Chocolate) ---
+    const isChocolate = (baseVal === 'chocolate');
+    if (this.sketchBaseRect) {
+      this.sketchBaseRect.style.opacity = '1';
+      this.sketchBaseRect.setAttribute('fill', isChocolate ? 'url(#sketchChocGrad)' : 'url(#sketchMatchaGrad)');
+    }
+    if (this.sketchBaseMeniscus) {
+      this.sketchBaseMeniscus.style.opacity = '1';
+      this.sketchBaseMeniscus.setAttribute('fill', isChocolate ? '#703C1C' : '#7DB045');
+    }
+    if (this.sketchSwirlWave) {
+      this.sketchSwirlWave.setAttribute('fill', isChocolate ? '#341808' : '#486D24');
+    }
+
+    // Base Tag Callout
     if (this.tagMatcha) {
-      this.tagMatcha.classList.toggle('visible', !isCupCompletelyBlank);
+      this.tagMatcha.classList.add('visible');
+      const tagText = this.tagMatcha.querySelector('.tag-text');
+      if (tagText) {
+        tagText.textContent = isChocolate ? '🍫 Base Cokelat' : '🍵 Base Matcha';
+      }
     }
 
-    // B. Milk Layer & Swirl
-    if (this.layerMilk) {
-      if (milkVal === 'none' || isCupCompletelyBlank) {
-        this.layerMilk.classList.add('none');
-        this.layerMilk.classList.remove('oat');
-        if (this.tagMilk) this.tagMilk.classList.remove('visible');
-      } else if (milkVal === 'oat') {
-        this.layerMilk.classList.remove('none');
-        this.layerMilk.classList.add('oat');
-        if (this.tagMilk) {
-          this.tagMilk.classList.add('visible');
-          if (this.tagMilkText) this.tagMilkText.textContent = '🌾 Oatly Oat Milk Layer';
-        }
-      } else {
-        this.layerMilk.classList.remove('none', 'oat');
-        if (this.tagMilk) {
-          this.tagMilk.classList.add('visible');
-          if (this.tagMilkText) this.tagMilkText.textContent = '🥛 Fresh Milk Layer';
+    // --- 2. MILK & LIQUID PROPORTIONS ---
+    if (!milkVal || milkVal === 'none') {
+      // Pure Base (Matcha Water or Pure Chocolate), full cup height
+      if (this.sketchBaseRect) {
+        this.sketchBaseRect.setAttribute('y', '65');
+        this.sketchBaseRect.setAttribute('height', '330');
+      }
+      if (this.sketchMilkRect) {
+        this.sketchMilkRect.setAttribute('height', '0');
+        this.sketchMilkRect.style.opacity = '0';
+      }
+      if (this.sketchSwirlWave) this.sketchSwirlWave.style.opacity = '0';
+      if (this.sketchOatDoodles) this.sketchOatDoodles.style.opacity = '0';
+      if (this.sketchWaterRipples) this.sketchWaterRipples.style.opacity = '0';
+
+      if (this.tagMilk) this.tagMilk.classList.remove('visible');
+    } else {
+      // Layered: Base on top, Milk at bottom
+      if (this.sketchBaseRect) {
+        this.sketchBaseRect.setAttribute('y', '65');
+        this.sketchBaseRect.setAttribute('height', '155');
+      }
+      if (this.sketchMilkRect) {
+        this.sketchMilkRect.setAttribute('y', '210');
+        this.sketchMilkRect.setAttribute('height', '190');
+        this.sketchMilkRect.style.opacity = '1';
+        this.sketchMilkRect.setAttribute('fill', milkVal === 'oat' ? 'url(#sketchOatMilkGrad)' : 'url(#sketchFreshMilkGrad)');
+      }
+      if (this.sketchSwirlWave) this.sketchSwirlWave.style.opacity = '0.65';
+      if (this.sketchOatDoodles) this.sketchOatDoodles.style.opacity = (milkVal === 'oat') ? '1' : '0';
+      if (this.sketchWaterRipples) this.sketchWaterRipples.style.opacity = '0';
+
+      if (this.tagMilk) {
+        this.tagMilk.classList.add('visible');
+        if (this.tagMilkText) {
+          this.tagMilkText.textContent = milkVal === 'oat' ? '🌾 Oatly Oat Milk Layer (+Rp 2.000)' : '🥛 Fresh Milk Layer';
         }
       }
     }
 
-    // C. Ice Cubes Layer
-    if (this.layerIce) {
-      if (iceVal === 'hot' || isCupCompletelyBlank) {
-        this.layerIce.classList.add('hot');
+    // --- 3. ICE & TEMPERATURE LEVEL ---
+    if (!iceVal) {
+      if (this.sketchSteam) this.sketchSteam.style.opacity = '0';
+      if (this.sketchIceCubes) {
+        this.sketchIceCubes.forEach(cube => cube.style.opacity = '0');
+      }
+    } else if (iceVal === 'hot') {
+      if (this.sketchSteam) this.sketchSteam.style.opacity = '1';
+      if (this.sketchIceCubes) {
+        this.sketchIceCubes.forEach(cube => cube.style.opacity = '0');
+      }
+    } else {
+      if (this.sketchSteam) this.sketchSteam.style.opacity = '0';
+      const cube1 = this.root.querySelector('#ice-cube-1');
+      const cube2 = this.root.querySelector('#ice-cube-2');
+      const cube3 = this.root.querySelector('#ice-cube-3');
+      const cube4 = this.root.querySelector('#ice-cube-4');
+      const cube5 = this.root.querySelector('#ice-cube-5');
+
+      if (iceVal === 'less') {
+        if (cube1) cube1.style.opacity = '1';
+        if (cube2) cube2.style.opacity = '1';
+        if (cube3) cube3.style.opacity = '0';
+        if (cube4) cube4.style.opacity = '0';
+        if (cube5) cube5.style.opacity = '0';
+      } else if (iceVal === 'extra') {
+        if (cube1) cube1.style.opacity = '1';
+        if (cube2) cube2.style.opacity = '1';
+        if (cube3) cube3.style.opacity = '1';
+        if (cube4) cube4.style.opacity = '1';
+        if (cube5) cube5.style.opacity = '1';
       } else {
-        this.layerIce.classList.remove('hot');
+        // Normal ice (default: 4 cubes)
+        if (cube1) cube1.style.opacity = '1';
+        if (cube2) cube2.style.opacity = '1';
+        if (cube3) cube3.style.opacity = '1';
+        if (cube4) cube4.style.opacity = '1';
+        if (cube5) cube5.style.opacity = '0';
       }
     }
 
-    // D. Stackable Toppings in the Cup:
-    // 1. Vanilla Cloud Foam
-    const hasFoam = selectedToppings.includes('vanilla_foam');
-    if (this.layerFoam) {
-      this.layerFoam.classList.toggle('active', hasFoam);
+    // --- 4. TOPPINGS (Vanilla Cloud Foam & Chocolate Bottom Layer) ---
+    const isVanillaPreset = (this.currentDrinkId === 'ice-matcha-vanilla-foam' && !isCupCompletelyBlank);
+    const isChocoPreset = (this.currentDrinkId === 'ice-matcha-chocolate' && !isCupCompletelyBlank);
+
+    const hasFoam = selectedToppings.includes('vanilla_foam') || isVanillaPreset;
+    if (this.sketchFoam) {
+      this.sketchFoam.style.opacity = hasFoam ? '1' : '0';
     }
     if (this.tagFoam) {
       this.tagFoam.classList.toggle('visible', hasFoam);
+      const tagText = this.tagFoam.querySelector('.tag-text');
+      if (tagText) {
+        if (selectedToppings.includes('vanilla_foam')) {
+          tagText.textContent = isVanillaPreset ? '☁️ Extra Vanilla Cloud Foam (+Rp 3.000)' : '☁️ Vanilla Cloud Foam (+Rp 3.000)';
+        } else {
+          tagText.textContent = '☁️ Vanilla Cloud Foam (Sudah Termasuk)';
+        }
+      }
     }
 
-    // 2. Dark Chocolate Drizzle
-    const hasChoco = selectedToppings.includes('chocolate');
-    if (this.layerChoco) {
-      this.layerChoco.classList.toggle('active', hasChoco);
+    const hasChoco = selectedToppings.includes('chocolate') || isChocoPreset;
+    if (this.sketchChoco) {
+      this.sketchChoco.style.opacity = hasChoco ? '1' : '0';
     }
-
-    // 3. Boba / Matcha Jelly
-    const hasBoba = selectedToppings.includes('boba');
-    if (this.layerBoba) {
-      this.layerBoba.classList.toggle('active', hasBoba);
-    }
-
-    // 4. Toasted Coconut Flakes
-    const hasCoconut = selectedToppings.includes('coconut');
-    if (this.layerCoconut) {
-      this.layerCoconut.classList.toggle('active', hasCoconut);
+    if (this.tagChoco) {
+      this.tagChoco.classList.toggle('visible', hasChoco);
+      const tagText = this.tagChoco.querySelector('.tag-text');
+      if (tagText) {
+        if (selectedToppings.includes('chocolate')) {
+          tagText.textContent = isChocoPreset ? '🍫 Extra Cokelat Bawah (+Rp 3.000)' : '🍫 Lapisan Cokelat Bawah (+Rp 3.000)';
+        } else {
+          tagText.textContent = '🍫 Lapisan Cokelat Bawah (Sudah Termasuk)';
+        }
+      }
     }
   }
 
@@ -422,23 +638,20 @@ export class CustomizeManager {
       });
     }
 
-    // Reset to Empty Cup ("Mulai dari Gelas Kosong")
+    // Reset to Empty Tumbler ("Mulai dari Gelas Kosong")
     if (this.resetBtn) {
       this.resetBtn.addEventListener('click', () => {
         this.isScratch = true;
         this.currentDrinkId = 'custom-drink';
-        this.currentBasePrice = 20000;
+        this.currentBasePrice = 22000;
 
         if (this.titleEl) this.titleEl.textContent = 'CUSTOM MATCHA CRAFT';
         if (this.pantoneCodeEl) this.pantoneCodeEl.textContent = 'CRAFT LAB • DARI AWAL';
         if (this.badgeEl) this.badgeEl.textContent = 'Custom Craft • Dari Gelas Kosong';
 
-        // Set Milk to none
-        const noneMilk = this.form.querySelector('input[name="custom_milk"][value="none"]');
-        if (noneMilk) noneMilk.checked = true;
-
-        // Uncheck all toppings
-        this.form.querySelectorAll('input[name="custom_toppings"]').forEach(c => c.checked = false);
+        // Uncheck all options so user starts fresh from scratch
+        this.form.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+        this.form.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
 
         this.updateRecipeAndVisuals();
         this.showToast('Gelas dikosongkan. Silakan racik dari awal!');
@@ -452,14 +665,19 @@ export class CustomizeManager {
       });
     }
 
-    // Floating Cart Button Trigger
+    // Floating Cart Button Trigger (Opens Cart Modal matching Menu Page)
     if (this.cartBtn) {
-      this.cartBtn.addEventListener('click', () => {
+      this.cartBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         if (window.cartManager && typeof window.cartManager.open === 'function') {
           window.cartManager.open();
         } else {
           const cartModal = document.querySelector('#cart-modal-backdrop');
-          if (cartModal) cartModal.classList.add('active');
+          if (cartModal) {
+            cartModal.classList.add('open');
+            cartModal.classList.add('active');
+          }
         }
       });
     }
@@ -469,30 +687,60 @@ export class CustomizeManager {
    * 6. Add Custom Recipe to Cart
    */
   handleAddToCart() {
-    const milkVal = this.form.querySelector('input[name="custom_milk"]:checked')?.value || 'fresh';
+    const baseVal = this.form.querySelector('input[name="custom_base"]:checked')?.value;
+    if (!baseVal) {
+      this.showToast('Silakan pilih Base (Matcha atau Cokelat) terlebih dahulu!');
+      return;
+    }
+    const milkVal = this.form.querySelector('input[name="custom_milk"]:checked')?.value || 'none';
     const sugarVal = this.form.querySelector('input[name="custom_sugar"]:checked')?.value || '70';
     const iceVal = this.form.querySelector('input[name="custom_ice"]:checked')?.value || 'normal';
     const selectedToppings = Array.from(this.form.querySelectorAll('input[name="custom_toppings"]:checked')).map(c => c.value);
 
+    const isCustomOrScratch = (this.currentDrinkId === 'custom-drink' || this.isScratch);
+
     // Readable Names
-    const milkNames = { fresh: 'Fresh Milk', oat: 'Oat Milk (+4k)', none: 'Tanpa Susu' };
+    const baseNames = { matcha: 'Base Matcha', chocolate: 'Base Cokelat' };
+    const milkNames = {
+      fresh: 'Fresh Milk',
+      oat: 'Oat Milk (+2k)',
+      none: 'Tanpa Susu'
+    };
     const iceNames = { hot: 'Hot (No Ice)', less: 'Less Ice', normal: 'Normal Ice', extra: 'Extra Ice' };
     const toppingNames = {
-      vanilla_foam: 'Vanilla Foam (+3k)',
-      chocolate: 'Choco Swirl (+3k)',
-      boba: 'Matcha Boba (+3k)',
-      coconut: 'Coconut Flakes (+3k)'
+      vanilla_foam: 'Vanilla Cloud Foam (+3k)',
+      chocolate: 'Lapisan Cokelat Bawah (+3k)'
     };
 
     const toppingsSummary = selectedToppings.map(t => toppingNames[t] || t).join(', ');
 
-    let extraMilk = (milkVal === 'oat' || milkVal === 'almond') ? 4000 : 0;
-    const extraToppings = selectedToppings.length * 3000;
-    const finalPriceIDR = this.currentBasePrice + extraMilk + extraToppings;
+    let finalPriceIDR = 22000;
+    const toppingCostPerItem = 3000;
+    const extraToppings = selectedToppings.length * toppingCostPerItem;
+
+    if (isCustomOrScratch || this.currentDrinkId === 'ice-matcharicano') {
+      let milkCost = 0;
+      if (milkVal === 'fresh') milkCost = 3000;
+      else if (milkVal === 'oat' || milkVal === 'almond') milkCost = 5000;
+      finalPriceIDR = 22000 + milkCost + extraToppings;
+    } else if (this.currentDrinkId === 'ice-matcha-latte' || this.currentDrinkId === 'hot-traditional' || this.currentDrinkId === 'ice-chocolate') {
+      let milkCost = 0;
+      if (milkVal === 'none') milkCost = -3000;
+      else if (milkVal === 'oat' || milkVal === 'almond') milkCost = 2000;
+      finalPriceIDR = 25000 + milkCost + extraToppings;
+    } else if (this.currentDrinkId === 'ice-matcha-chocolate' || this.currentDrinkId === 'ice-matcha-vanilla-foam') {
+      let milkCost = 0;
+      if (milkVal === 'none') milkCost = -3000;
+      else if (milkVal === 'oat' || milkVal === 'almond') milkCost = 2000;
+      finalPriceIDR = 28000 + milkCost + extraToppings;
+    } else {
+      let milkCost = (milkVal === 'oat' || milkVal === 'almond') ? 2000 : 0;
+      finalPriceIDR = this.currentBasePrice + milkCost + extraToppings;
+    }
     const finalPriceUSD = parseFloat((finalPriceIDR / 5300).toFixed(2));
 
-    const itemTitle = this.titleEl?.textContent || 'Custom Matcha';
-    const specDetails = `${milkNames[milkVal] || milkVal}, ${sugarVal}% Gula, ${iceNames[iceVal] || iceVal}${toppingsSummary ? ' • ' + toppingsSummary : ''}`;
+    const itemTitle = this.titleEl?.textContent || 'Custom Drink';
+    const specDetails = `${baseNames[baseVal] || baseVal}, ${milkNames[milkVal] || milkVal}, ${sugarVal}% Gula, ${iceNames[iceVal] || iceVal}${toppingsSummary ? ' • ' + toppingsSummary : ''}`;
 
     const orderItem = {
       name: itemTitle,
@@ -520,8 +768,8 @@ export class CustomizeManager {
     this.syncCartBadge();
     this.showToast(`Berhasil menambahkan ${itemTitle} ke pesanan!`);
 
-    // Optional subtle button pulse feedback
-    this.submitBtn.style.transform = 'scale(1.05)';
+    // Button pulse feedback
+    this.submitBtn.style.transform = 'scale(1.04)';
     setTimeout(() => {
       this.submitBtn.style.transform = '';
     }, 280);
@@ -531,7 +779,6 @@ export class CustomizeManager {
    * 7. Sync Cart Count
    */
   syncCartBadge() {
-    if (!this.cartBadge) return;
     let count = 0;
     if (window.cartManager && Array.isArray(window.cartManager.items)) {
       count = window.cartManager.items.reduce((sum, item) => sum + (item.qty || 1), 0);
@@ -543,8 +790,11 @@ export class CustomizeManager {
         count = 0;
       }
     }
-    this.cartBadge.textContent = count;
-    this.cartBadge.style.display = count > 0 ? 'flex' : 'none';
+    const badges = document.querySelectorAll('#custom-cart-badge, .custom-cart-count-badge, .pantone-cart-badge, .cart-fab-badge');
+    badges.forEach(badge => {
+      badge.textContent = count;
+      badge.style.display = count > 0 ? 'flex' : 'none';
+    });
   }
 
   /**
@@ -563,9 +813,15 @@ export class CustomizeManager {
 
 // Auto-initialize when loaded
 if (typeof window !== 'undefined') {
-  document.addEventListener('DOMContentLoaded', () => {
+  const initCustomize = () => {
     if (!window.customizeManager && document.querySelector('#customize-root')) {
       window.customizeManager = new CustomizeManager();
     }
-  });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCustomize);
+  } else {
+    initCustomize();
+  }
 }

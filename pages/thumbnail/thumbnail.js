@@ -223,10 +223,10 @@ export class ThumbnailManager {
         // Reset and activate the inactivity timer
         this.resetIdleTimer();
 
-        // Direct entrance to menu page as requested by user
-        if (window.pageNavigator && typeof window.pageNavigator.goToPage === 'function') {
-            window.pageNavigator.goToPage('menu', false);
-        }
+        // Direct entrance / page navigation to menu page
+        const isPages = window.location.pathname.includes('/pages/');
+        const targetMenuUrl = isPages ? '../menu/menu.html' : 'pages/menu/menu.html';
+        window.location.href = targetMenuUrl;
 
         // Dispatch custom event for application components
         document.dispatchEvent(new CustomEvent('matcha:kiosk-start'));

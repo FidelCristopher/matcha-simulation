@@ -5,7 +5,10 @@
   "description": "MatchaTcih — Artisan Sparkling Matcha 3D Interactive Showcase & Crafting Atelier",
   "main": "index.html",
   "scripts": {
-    "dev": "npx --yes live-server --port=3000",
+    "start": "node server.js",
+    "server": "node server.js",
+    "dev": "node server.js",
+    "live-dev": "npx --yes live-server --port=3000",
     "serve": "npx --yes serve -l 3000 .",
     "convert-obj": "npx obj2gltf -i assets/models/raw.obj -o assets/models/matcha.glb -b"
   },

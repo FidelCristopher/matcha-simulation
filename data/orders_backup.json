@@ -1,0 +1,28 @@
+[
+  {
+    "id": "ORD-2026-001",
+    "customerName": "Budi Santoso",
+    "items": [
+      {
+        "name": "ICE MATCHA LATTE",
+        "spec": "Fresh Milk, 70% Gula",
+        "qty": 2,
+        "price": 25000
+      },
+      {
+        "name": "ICE MATCHA CHOCOLATE",
+        "spec": "Fresh Milk, Lapisan Cokelat",
+        "qty": 1,
+        "price": 28000
+      }
+    ],
+    "totalQty": 3,
+    "totalIDR": 78000,
+    "totalFormattedIDR": "Rp 78,000",
+    "status": "brewing",
+    "table": "Kiosk Meja 2",
+    "timestamp": "2026-11-24T13:00:00Z",
+    "dateFormatted": "24/11/2026",
+    "timeFormatted": "13:00"
+  }
+]

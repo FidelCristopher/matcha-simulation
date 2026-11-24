@@ -1,20 +1,21 @@
 /**
  * MatchaTcih • Interactive Custom Drink Craft Engine
  * Pages Architecture: pages/customize/customize.css
- * Split Poster Style Inspired by Reference:
- * - Left Panel: Sage/Olive Green (#56782E / #628B35) with Giant Vertical "MATCHA" Typography & Controls
- * - Right Panel: Warm Bone (#E2DBD0 / #FFFDF5) with Interactive Layered Glass Cup Renderer
+ * Matches Reference Poster (Photo 2):
+ * - Left Panel: Sage Olive Green (#849159) with Editorial "Today's Special Menu" & Controls
+ * - Right Panel: Warm Eggshell Cream (#F4EDE5) with Faceted Glass Tumbler & Cast Shadow
+ * - Center Split: Giant Upright Stacked Two-Tone "MATCHA" Typography (Cream on Green / Green on Cream)
  */
 
 /* ==========================================================================
-   1. Root Page Architecture & Reset
+   1. Global Architecture & Reset
    ========================================================================== */
 .custom-page-body {
   margin: 0;
   padding: 0;
   font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   color: #103713;
-  background-color: #E2DBD0;
+  background-color: #F4EDE5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -23,7 +24,7 @@
 
 .custom-page-wrapper {
   display: grid;
-  grid-template-columns: minmax(480px, 1.15fr) 1fr;
+  grid-template-columns: minmax(460px, 1.08fr) 1fr;
   min-height: 100vh;
   width: 100vw;
   box-sizing: border-box;
@@ -32,24 +33,64 @@
 }
 
 /* ==========================================================================
-   2. Left Panel: Sage/Olive Green Poster Style
+   2. Central Split Two-Tone Vertical "MATCHA" Poster Typography
+   Exact Reference Match: Upright Stacked Letters down the Center Dividing Split
+   Left half is Cream (#F4EDE5), Right half is Sage Green (#849159)
+   ========================================================================== */
+.custom-split-poster-brand {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 51.92%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  padding: 1.5vh 0;
+  box-sizing: border-box;
+  pointer-events: none;
+  user-select: none;
+  z-index: 3;
+}
+
+.brand-letter {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 900;
+  font-size: clamp(4.6rem, 10vh, 8.4rem);
+  line-height: 0.94;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  background: linear-gradient(to right, #F4EDE5 0%, #F4EDE5 50%, #849159 50%, #849159 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  transition: transform 0.4s ease;
+}
+
+/* ==========================================================================
+   3. Left Panel: Sage Olive Green (#849159) Poster Design & Options
    ========================================================================== */
 .custom-left-panel {
   position: relative;
-  background-color: #56782E;
+  background-color: #849159;
   background-image: 
-    radial-gradient(circle at 15% 15%, rgba(255, 253, 245, 0.12) 0%, transparent 60%),
-    linear-gradient(165deg, #5D8032 0%, #4D6D29 100%);
-  color: #FFFDF5;
-  padding: clamp(2rem, 4vh, 3.5rem) clamp(1.8rem, 3.5vw, 3.5rem) 3rem;
+    radial-gradient(circle at 10% 15%, rgba(244, 237, 229, 0.12) 0%, transparent 60%),
+    linear-gradient(165deg, #8E9C61 0%, #849159 55%, #75834D 100%);
+  color: #F4EDE5;
+  padding: clamp(1rem, 2.2vh, 1.8rem) clamp(1.2rem, 2.4vw, 2.2rem) clamp(1rem, 2.2vh, 1.5rem);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  height: 100vh;
+  max-height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
   z-index: 10;
-  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 6px 0 28px rgba(0, 0, 0, 0.14);
 }
 
 .custom-left-panel::-webkit-scrollbar {
@@ -59,19 +100,30 @@
   background: rgba(0, 0, 0, 0.08);
 }
 .custom-left-panel::-webkit-scrollbar-thumb {
-  background: rgba(255, 253, 245, 0.35);
+  background: rgba(244, 237, 229, 0.35);
   border-radius: 3px;
 }
 
-/* Floating Circular Back Button (Matches Reference Top Left) */
+/* Top Navigation Bar: Back Button & Specimen Meta Badges */
+.custom-top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-bottom: clamp(0.4rem, 1vh, 0.75rem);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
 .custom-back-btn {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: #FFFFFF;
   border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.06);
-  color: #103713;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 2px 5px rgba(0, 0, 0, 0.08);
+  color: #2D3A18;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,120 +131,80 @@
   transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
               box-shadow 0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
               color 0.2s ease;
-  margin-bottom: 2rem;
+  margin: 0;
   outline: none;
   flex-shrink: 0;
 }
 
 .custom-back-btn:hover {
-  transform: scale(1.08) translateX(-3px);
-  color: #56782E;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+  transform: scale(1.08) translateX(-2px);
+  color: #849159;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
 }
 
 .custom-back-btn:active {
-  transform: scale(0.96) translateX(-1px);
+  transform: scale(0.96);
 }
 
-/* Giant Vertical "MATCHA" Typography (Matches Reference) */
-.custom-vertical-bg-title {
-  position: absolute;
-  top: 0;
-  right: -0.15em;
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(5rem, 11vw, 9.5rem);
-  font-weight: 900;
-  line-height: 0.85;
-  letter-spacing: 0.04em;
-  color: rgba(255, 253, 245, 0.88);
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  transform: rotate(180deg);
-  pointer-events: none;
-  user-select: none;
-  z-index: 1;
-  opacity: 0.95;
-  height: 100%;
-}
-
-/* Header & Meta */
+/* Header: Drink Title as the Top Header */
 .custom-header {
   position: relative;
   z-index: 2;
-  margin-bottom: 1.8rem;
-  max-width: 82%;
-}
-
-.custom-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 0.4rem;
-}
-
-.kicker-text {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255, 253, 245, 0.85);
-}
-
-.kicker-wave {
-  color: rgba(255, 253, 245, 0.7);
+  margin-bottom: clamp(0.5rem, 1.2vh, 0.85rem);
+  flex-shrink: 0;
 }
 
 .custom-drink-name {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.5rem, 2.2vw, 2.2rem);
   font-weight: 900;
-  line-height: 1.1;
+  line-height: 1.08;
   letter-spacing: -0.02em;
-  margin: 0 0 0.65rem 0;
-  color: #FFFDF5;
+  margin: 0;
+  color: #F4EDE5;
   text-transform: uppercase;
 }
 
 .custom-template-meta {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.5rem;
   flex-wrap: wrap;
 }
 
 .template-badge {
-  background: rgba(255, 253, 245, 0.22);
+  background: rgba(244, 237, 229, 0.2);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  color: #FFFDF5;
-  padding: 0.25rem 0.75rem;
+  color: #F4EDE5;
+  padding: 0.24rem 0.7rem;
   border-radius: 9999px;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  border: 1px solid rgba(255, 253, 245, 0.35);
+  border: 1px solid rgba(244, 237, 229, 0.35);
 }
 
 .pantone-ref-code {
   font-family: 'DM Sans', monospace, sans-serif;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  color: rgba(255, 253, 245, 0.8);
+  color: rgba(244, 237, 229, 0.85);
   letter-spacing: 0.08em;
 }
 
 /* ==========================================================================
-   3. Customization Fieldsets & Option Pills
+   4. Customization Form & Options Styling
    ========================================================================== */
 .custom-controls-form {
   position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 1.6rem;
-  max-width: 86%;
+  gap: clamp(0.35rem, 0.8vh, 0.6rem);
+  max-width: 100%;
+  flex: 1;
 }
 
 .custom-section {
@@ -204,14 +216,14 @@
 .custom-section-title {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-family: 'Syne', sans-serif;
-  font-size: 0.88rem;
+  gap: 0.45rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.72rem, 1vh, 0.8rem);
   font-weight: 800;
-  letter-spacing: 0.06em;
-  color: #FFFDF5;
+  letter-spacing: 0.05em;
+  color: #F4EDE5;
   text-transform: uppercase;
-  margin-bottom: 0.65rem;
+  margin-bottom: clamp(0.2rem, 0.45vh, 0.32rem);
 }
 
 .section-title-row {
@@ -219,47 +231,59 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  margin-bottom: 0.25rem;
+  margin-bottom: clamp(0.2rem, 0.45vh, 0.32rem);
 }
 
 .section-num {
   font-family: 'DM Sans', monospace, sans-serif;
   font-weight: 800;
-  font-size: 0.75rem;
-  color: #FFFDF5;
-  background: rgba(0, 0, 0, 0.2);
-  padding: 0.15rem 0.45rem;
+  font-size: 0.7rem;
+  color: #F4EDE5;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 0.12rem 0.38rem;
   border-radius: 4px;
 }
 
 .topping-hint-badge {
-  background: #103713;
-  color: #FFFDF5;
-  font-size: 0.72rem;
+  background: #233314;
+  color: #F4EDE5;
+  font-size: 0.68rem;
   font-weight: 800;
-  padding: 0.2rem 0.6rem;
+  padding: 0.18rem 0.55rem;
   border-radius: 9999px;
   letter-spacing: 0.04em;
-  border: 1px solid rgba(255, 253, 245, 0.2);
+  border: 1px solid rgba(244, 237, 229, 0.25);
 }
 
 .custom-section-sub {
-  font-size: 0.78rem;
-  color: rgba(255, 253, 245, 0.8);
-  margin: 0 0 0.65rem 0;
+  font-size: 0.75rem;
+  color: rgba(244, 237, 229, 0.85);
+  margin: 0 0 0.45rem 0;
 }
 
-/* Pill Groups */
+/* Option Pill Groups & Grids */
 .custom-pill-group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .custom-pill-grid-4 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 0.5rem;
+  gap: 0.4rem;
+}
+
+.custom-pill-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.45rem;
+}
+
+.custom-pill-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.45rem;
 }
 
 /* Radio & Checkbox Pill Styling */
@@ -278,228 +302,312 @@
 }
 
 .pill-box {
-  background: rgba(255, 253, 245, 0.12);
-  border: 1.5px solid rgba(255, 253, 245, 0.28);
-  border-radius: 10px;
-  padding: 0.65rem 0.95rem;
+  background: rgba(244, 237, 229, 0.14);
+  border: 1.5px solid rgba(244, 237, 229, 0.3);
+  border-radius: 9px;
+  padding: clamp(0.28rem, 0.65vh, 0.44rem) 0.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #FFFDF5;
-  font-size: 0.85rem;
+  color: #F4EDE5;
+  font-size: 0.82rem;
   font-weight: 600;
-  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: all 0.24s cubic-bezier(0.2, 0.8, 0.2, 1);
   box-sizing: border-box;
 }
 
 .pill-name {
   font-weight: 700;
+  font-size: 0.82rem;
 }
 
+.pill-desc,
 .pill-price {
-  font-size: 0.78rem;
-  font-weight: 800;
-  color: rgba(255, 253, 245, 0.9);
+  font-size: 0.7rem;
+  opacity: 0.88;
 }
 
-.pill-desc {
-  font-size: 0.72rem;
-  color: rgba(255, 253, 245, 0.75);
-}
-
-.custom-pill:hover .pill-box {
-  background: rgba(255, 253, 245, 0.22);
-  border-color: rgba(255, 253, 245, 0.6);
-  transform: translateY(-2px);
-}
-
-/* Checked State: Cream/White Card with Dark Contrast Text */
-.custom-pill input:checked + .pill-box {
-  background: #FFFDF5;
-  color: #103713;
-  border-color: #FFFDF5;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
-  transform: translateY(-2px);
-}
-
-.custom-pill input:checked + .pill-box .pill-price {
-  color: #56782E;
-  font-weight: 900;
-}
-
-.custom-pill input:checked + .pill-box .pill-desc {
-  color: rgba(16, 55, 19, 0.7);
-}
-
-/* 4-grid pill adjustments */
+.custom-pill-grid-3 .pill-box,
 .custom-pill-grid-4 .pill-box {
   flex-direction: column;
-  align-items: center;
   text-align: center;
-  padding: 0.55rem 0.35rem;
-  gap: 0.15rem;
+  padding: clamp(0.38rem, 0.8vh, 0.54rem) 0.35rem;
+  gap: 0.1rem;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Stackable Checkbox Pill (Toppings) */
+.custom-pill-grid-3 .pill-desc,
+.custom-pill-grid-4 .pill-desc {
+  font-size: 0.66rem;
+  opacity: 0.82;
+  font-weight: 500;
+}
+
+/* Checkbox Pills with Icons (Topping Grid) */
 .custom-checkbox-pill .pill-box {
-  padding: 0.75rem 1rem;
-  gap: 0.8rem;
+  justify-content: flex-start;
+  gap: 0.55rem;
+  padding: clamp(0.4rem, 0.85vh, 0.56rem) 0.65rem;
 }
 
 .pill-icon {
-  font-size: 1.3rem;
-  flex-shrink: 0;
+  font-size: 1.15rem;
+  line-height: 1;
 }
 
 .pill-content {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: 0.05rem;
+  flex: 1;
 }
 
-/* Checkbox pill checked highlight */
-.custom-checkbox-pill input:checked + .pill-box {
-  background: #FFFDF5;
-  color: #103713;
-  border-color: #FFFDF5;
-  box-shadow: 0 8px 22px rgba(16, 55, 19, 0.2);
+.pill-content .pill-name {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.pill-content .pill-desc {
+  font-size: 0.68rem;
+  opacity: 0.85;
+  font-weight: 600;
+}
+
+/* Hover State */
+.custom-pill:hover .pill-box {
+  background: rgba(244, 237, 229, 0.22);
+  border-color: rgba(244, 237, 229, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Checked / Selected State (Crisp Contrast Ivory on Olive) */
+.custom-pill input:checked + .pill-box {
+  background: #F4EDE5;
+  border-color: #F4EDE5;
+  color: #35461C;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
+  transform: translateY(-1.5px);
+}
+
+.custom-pill input:checked + .pill-box .pill-desc,
+.custom-pill input:checked + .pill-box .pill-price {
+  color: #495C27;
+  opacity: 1;
+  font-weight: 700;
+}
+
+/* Section 01: Base Flavor Selection (Large, Prominent, Clear Touch Targets) */
+#base-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+#base-options .base-pill {
+  width: 100%;
+}
+
+#base-options .pill-box {
+  padding: clamp(0.7rem, 1.4vh, 0.95rem) 1rem;
+  min-height: 54px;
+  border-radius: 12px;
+  border: 2px solid rgba(244, 237, 229, 0.35);
+  background: rgba(244, 237, 229, 0.14);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+#base-options .pill-icon {
+  font-size: 1.55rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.18));
+  transition: transform 0.25s ease;
+}
+
+#base-options .pill-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.05rem;
+  flex: 1;
+}
+
+#base-options .pill-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #F4EDE5;
+}
+
+.base-check-badge {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.8px solid rgba(244, 237, 229, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  color: transparent;
+  transition: all 0.22s ease;
+  flex-shrink: 0;
+}
+
+#base-options .custom-pill:hover .pill-box {
+  background: rgba(244, 237, 229, 0.24);
+  border-color: rgba(244, 237, 229, 0.65);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+}
+
+#base-options .custom-pill:hover .pill-icon {
+  transform: scale(1.14);
+}
+
+/* Checked / Selected State for Base Flavor */
+#base-options .custom-pill input:checked + .pill-box {
+  background: #F4EDE5;
+  border-color: #F4EDE5;
+  color: #233314;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22), 0 0 0 2px rgba(244, 237, 229, 0.45);
+  transform: translateY(-2px) scale(1.02);
+}
+
+#base-options .custom-pill input:checked + .pill-box .pill-name {
+  color: #233314;
+  font-weight: 800;
+}
+
+#base-options .custom-pill input:checked + .pill-box .base-check-badge {
+  background: #233314;
+  border-color: #233314;
+  color: #F4EDE5;
 }
 
 /* ==========================================================================
-   4. Checkout Bar & Dynamic Price Breakdown
+   5. Price Breakdown & Checkout Actions
    ========================================================================== */
 .custom-checkout-bar {
-  background: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 253, 245, 0.25);
-  border-radius: 16px;
-  padding: 1.25rem 1.4rem;
-  margin-top: 1rem;
+  margin-top: clamp(0.35rem, 0.8vh, 0.6rem);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: clamp(0.45rem, 1vh, 0.7rem);
+  padding-top: clamp(0.45rem, 1vh, 0.7rem);
+  border-top: 1px solid rgba(244, 237, 229, 0.22);
 }
 
 .custom-price-breakdown {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.15rem;
+}
+
+.custom-price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
 }
 
 .breakdown-label {
-  font-size: 0.72rem;
+  font-family: 'DM Sans', monospace, sans-serif;
+  font-size: 0.7rem;
   font-weight: 800;
-  letter-spacing: 0.1em;
-  color: rgba(255, 253, 245, 0.8);
-  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(244, 237, 229, 0.82);
 }
 
 .breakdown-amount {
-  font-family: 'Syne', sans-serif;
-  font-size: 2.1rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
   font-weight: 900;
-  color: #FFFDF5;
+  color: #F4EDE5;
   line-height: 1;
-  letter-spacing: -0.02em;
 }
 
 .breakdown-sub {
-  font-size: 0.75rem;
-  color: rgba(255, 253, 245, 0.85);
+  font-size: 0.72rem;
+  color: rgba(244, 237, 229, 0.82);
 }
 
 .custom-buttons-row {
   display: flex;
+  gap: 0.6rem;
   align-items: center;
-  gap: 0.8rem;
-  flex-wrap: wrap;
 }
 
-/* Reset to Empty Glass Button */
 .btn-clear-custom {
-  background: rgba(255, 253, 245, 0.15);
-  border: 1px solid rgba(255, 253, 245, 0.3);
-  color: #FFFDF5;
+  background: rgba(244, 237, 229, 0.12);
+  border: 1.5px solid rgba(244, 237, 229, 0.35);
+  color: #F4EDE5;
+  border-radius: 10px;
+  padding: clamp(0.55rem, 1.1vh, 0.72rem) 0.9rem;
   font-family: 'DM Sans', sans-serif;
   font-size: 0.82rem;
   font-weight: 700;
-  padding: 0.85rem 1.1rem;
-  border-radius: 12px;
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
-  outline: none;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
 }
 
 .btn-clear-custom:hover {
-  background: rgba(255, 253, 245, 0.28);
-  border-color: #FFFDF5;
-  transform: translateY(-2px);
+  background: rgba(244, 237, 229, 0.22);
+  border-color: #F4EDE5;
+  transform: translateY(-1.5px);
 }
 
-.btn-clear-custom:active {
-  transform: scale(0.97);
-}
-
-/* Primary Add to Cart Button */
 .btn-submit-order {
   flex: 1;
-  min-width: 220px;
-  background: #FFFDF5;
-  border: none;
-  color: #103713;
-  font-family: 'Syne', sans-serif;
-  font-size: 0.95rem;
+  background: #233314;
+  color: #F4EDE5;
+  border: 1.5px solid rgba(244, 237, 229, 0.3);
+  border-radius: 10px;
+  padding: clamp(0.6rem, 1.2vh, 0.8rem) 1.1rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
   font-weight: 800;
   letter-spacing: 0.02em;
-  padding: 0.95rem 1.4rem;
-  border-radius: 12px;
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.65rem;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+  gap: 0.55rem;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
-  outline: none;
 }
 
 .btn-submit-order:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.32);
-  background: #FFFFFF;
-  color: #56782E;
+  background: #17240C;
+  transform: translateY(-1.5px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
 }
 
 .btn-submit-order:active {
-  transform: translateY(-1px) scale(0.98);
+  transform: translateY(0);
 }
 
-/* Footer Info */
+/* Editorial Footer (Deprecate or Hide) */
 .custom-left-footer {
-  margin-top: 2.5rem;
-  font-size: 0.72rem;
-  color: rgba(255, 253, 245, 0.65);
-  display: flex;
-  gap: 1.2rem;
-  flex-wrap: wrap;
-  position: relative;
-  z-index: 2;
+  display: none;
 }
 
 /* ==========================================================================
-   5. Right Panel: Warm Bone Studio (#E2DBD0) with Interactive Glass Cup
+   6. Right Panel: Warm Eggshell Cream (#F4EDE5) Faceted Tumbler Stage
    ========================================================================== */
 .custom-right-panel {
   position: relative;
-  background-color: #E2DBD0;
-  background-image: 
-    radial-gradient(circle at 50% 25%, rgba(255, 253, 245, 0.65) 0%, transparent 65%),
-    linear-gradient(180deg, #E6E1D7 0%, #DCD6CB 100%);
+  background-color: #F4EDE5;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -507,22 +615,22 @@
   padding: 2.5rem 2rem;
   box-sizing: border-box;
   overflow: hidden;
+  z-index: 5;
 }
 
+/* Live Craft Preview Badge */
 .custom-preview-tag {
   position: absolute;
-  top: clamp(1.5rem, 3vh, 2.5rem);
-  right: clamp(1.5rem, 3vw, 2.8rem);
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  padding: 0.4rem 0.9rem;
-  border-radius: 9999px;
-  display: flex;
+  top: 2rem;
+  right: 2.2rem;
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  background: rgba(132, 145, 89, 0.15);
+  border: 1px solid rgba(132, 145, 89, 0.3);
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  backdrop-filter: blur(8px);
   z-index: 20;
 }
 
@@ -530,159 +638,161 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #56782E;
-  box-shadow: 0 0 0 0 rgba(86, 120, 46, 0.6);
+  background: #60792D;
+  box-shadow: 0 0 0 rgba(96, 121, 45, 0.4);
   animation: pulse-ring 2s infinite;
 }
 
 @keyframes pulse-ring {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(86, 120, 46, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(86, 120, 46, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(86, 120, 46, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(96, 121, 45, 0.6); }
+  70% { box-shadow: 0 0 0 8px rgba(96, 121, 45, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(96, 121, 45, 0); }
 }
 
 .preview-tag-text {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'DM Sans', monospace, sans-serif;
   font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 0.1em;
-  color: #103713;
+  letter-spacing: 0.08em;
+  color: #35461C;
 }
 
-/* ==========================================================================
-   6. Interactive Layered Glass Cup Renderer
-   ========================================================================== */
+/* Tumbler Stage Area */
 .custom-glass-stage {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  height: 100%;
+  min-height: 540px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tumbler Stage Wrapper with Cast Shadow */
+.tumbler-stage-wrapper {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  max-width: 440px;
-  height: 580px;
-}
-
-.cup-glass-wrapper {
-  position: relative;
-  width: 260px;
-  height: 440px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
   z-index: 10;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* Cast Floor Shadow under Cup */
-.cup-floor-shadow {
+.tumbler-stage-wrapper:hover {
+  transform: translateY(-4px);
+}
+
+/* Realistic Diagonal Cast Shadow to Right (Matches Reference Poster) */
+.ref-tumbler-shadow {
   position: absolute;
-  bottom: -22px;
-  width: 250px;
-  height: 38px;
-  background: radial-gradient(ellipse at 50% 50%, rgba(16, 55, 19, 0.28) 0%, rgba(16, 55, 19, 0.08) 55%, transparent 75%);
-  border-radius: 50%;
-  transform: rotate(-3deg);
+  right: -32px;
+  bottom: 6px;
+  width: 180px;
+  height: 210px;
+  background: radial-gradient(ellipse at 40% 50%, rgba(55, 66, 36, 0.38) 0%, rgba(55, 66, 36, 0.22) 50%, transparent 75%);
+  filter: blur(15px);
+  transform: rotate(34deg) skewX(24deg);
+  border-radius: 35% 65% 65% 35% / 45% 45% 55% 55%;
   pointer-events: none;
-  filter: blur(4px);
   z-index: 2;
   transition: opacity 0.4s ease;
 }
 
-/* Realistic Clear Glass Silhouette (Tapered Tumbler) */
-.cup-glass-body {
+/* ==========================================================================
+   Interactive Hand-Drawn Sketch Craft Tumbler Stage
+   ========================================================================== */
+.sketch-craft-wrapper {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
-  width: 240px;
-  height: 410px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.18) 50%, rgba(255, 255, 255, 0.35) 100%);
-  border-radius: 12px 12px 32px 32px;
-  border: 2px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 
-    inset 0 0 18px rgba(255, 255, 255, 0.6),
-    inset 0 -8px 24px rgba(0, 0, 0, 0.06),
-    0 20px 48px rgba(16, 55, 19, 0.12),
-    0 6px 14px rgba(0, 0, 0, 0.04);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  overflow: hidden;
-  clip-path: polygon(4% 0%, 96% 0%, 88% 100%, 12% 100%);
-  z-index: 5;
+  filter: drop-shadow(0 14px 28px rgba(35, 55, 25, 0.12));
+}
+
+.sketch-tumbler-hero {
+  width: 100%;
+  height: auto;
+  max-height: clamp(340px, 54vh, 480px);
+  overflow: visible;
+  user-select: none;
+  pointer-events: none;
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* Specular Highlights & Solid Base */
-.glass-rim {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 8px;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.95));
-  border-radius: 4px;
-  z-index: 30;
+.sketch-craft-wrapper:hover .sketch-tumbler-hero {
+  transform: translateY(-4px) scale(1.02);
 }
 
-.glass-highlight-edge.left {
-  position: absolute;
-  top: 6px;
-  left: 6px;
-  bottom: 12px;
-  width: 14px;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.65), transparent);
-  border-radius: 10px;
-  pointer-events: none;
-  z-index: 25;
+.sketch-line {
+  fill: none;
+  stroke: #22381E;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-.glass-highlight-edge.right {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  bottom: 12px;
-  width: 8px;
-  background: linear-gradient(270deg, rgba(255, 255, 255, 0.5), transparent);
-  border-radius: 8px;
-  pointer-events: none;
-  z-index: 25;
+.sketch-thin {
+  fill: none;
+  stroke: #22381E;
+  stroke-width: 1.6;
+  stroke-linecap: round;
 }
 
-.glass-base-solid {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 22px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.85));
-  border-top: 1px solid rgba(255, 255, 255, 0.6);
-  z-index: 22;
+.measurement-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  fill: #3D5936;
+  letter-spacing: 0.5px;
 }
 
-.glass-glare-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(125deg, rgba(255, 255, 255, 0.35) 0%, transparent 40%, rgba(255, 255, 255, 0.15) 75%, transparent 100%);
-  pointer-events: none;
-  z-index: 28;
+.sketch-liquid-group rect {
+  transition: y 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+              height 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+              fill 0.4s ease;
 }
 
-/* Internal Liquid Chamber (Liquid layers stack here) */
-.cup-chamber {
-  position: absolute;
-  bottom: 16px;
-  left: 8px;
-  right: 8px;
-  top: 10px;
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: flex-start;
-  align-items: center;
-  overflow: hidden;
-  border-radius: 4px 4px 20px 20px;
+.sketch-liquid-group ellipse,
+.sketch-liquid-group path {
+  transition: all 0.4s ease;
 }
 
-/* Empty State Placeholder (when all layers are 0 / user resets to blank cup) */
+.sketch-oat-icons,
+.sketch-water-waves,
+.sketch-steam-group,
+.sketch-topping-element {
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.sketch-ice-cube {
+  transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: center center;
+}
+
+.sketch-whisk {
+  animation: floatWhisk 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes floatWhisk {
+  0% { transform: translate(160px, 22px) rotate(-1deg); }
+  100% { transform: translate(160px, 16px) rotate(2deg); }
+}
+
+@keyframes steamFloat {
+  0% { stroke-dashoffset: 0; transform: translateY(0); opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { stroke-dashoffset: 40; transform: translateY(-8px); opacity: 0.4; }
+}
+
+.steam-curl {
+  animation: steamFloat 2.6s linear infinite;
+  stroke-dasharray: 6 3;
+}
+
+/* Empty State Placeholder (when user clicks 'Reset Gelas Kosong') */
 .cup-empty-state {
   position: absolute;
   top: 50%;
@@ -692,302 +802,115 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 0.8rem;
-  color: rgba(16, 55, 19, 0.45);
+  gap: 0.6rem;
+  color: #35461C;
   font-family: 'DM Sans', sans-serif;
   font-weight: 700;
   font-size: 0.88rem;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s ease;
-  z-index: 10;
+  transition: opacity 0.35s ease;
+  z-index: 12;
+  background: rgba(244, 237, 229, 0.88);
+  padding: 1rem 1.4rem;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(132, 145, 89, 0.3);
 }
 
 .cup-empty-state.visible {
   opacity: 1;
 }
 
+.empty-icon-circle {
+  font-size: 1.8rem;
+}
+
 /* ==========================================================================
-   7. Liquid Layers (Smooth Pouring & Stacking Animation)
+   7. Dynamic Interactive Topping Overlays
    ========================================================================== */
 .cup-layer {
-  width: 100%;
-  position: relative;
-  transition: height 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
-              opacity 0.4s ease,
-              transform 0.4s ease;
-  flex-shrink: 0;
-}
-
-/* Layer 1: Boba / Matcha Jelly at Bottom */
-.layer-boba {
-  height: 0px;
-  background: linear-gradient(180deg, rgba(30, 48, 16, 0.6), rgba(18, 30, 10, 0.95));
-  opacity: 0;
-  position: relative;
-  z-index: 6;
-}
-
-.layer-boba.active {
-  height: 52px;
-  opacity: 1;
-}
-
-.boba-pearl {
   position: absolute;
-  left: var(--x);
-  bottom: var(--y);
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #3C5A1E 0%, #17260D 70%, #0E1708 100%);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
-}
-
-/* Layer 2: Ceremonial Matcha Base */
-.layer-matcha {
-  height: 140px;
-  background: linear-gradient(180deg, #5D8C33 0%, #446C23 60%, #305018 100%);
-  opacity: 1;
-  z-index: 5;
-  box-shadow: inset 0 -4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.layer-matcha.empty {
-  height: 0px;
+  pointer-events: none;
   opacity: 0;
-}
-
-/* Layer 3: Milk Swirl Layer */
-.layer-milk {
-  height: 130px;
-  background: linear-gradient(180deg, #FFFFFF 0%, #FDFBF5 45%, #F0EAD8 80%, rgba(93, 140, 51, 0.45) 100%);
-  opacity: 1;
-  position: relative;
+  transition: opacity 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+              transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
   z-index: 8;
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.layer-milk.none {
-  height: 0px;
-  opacity: 0;
-}
-
-.layer-milk.oat {
-  background: linear-gradient(180deg, #FDF9EE 0%, #F5ECCF 50%, #E8DDBB 80%, rgba(93, 140, 51, 0.45) 100%);
-}
-
-.milk-marble-swirl {
-  position: absolute;
-  bottom: -15px;
-  left: 0;
-  right: 0;
-  height: 36px;
-  background: radial-gradient(ellipse at 30% 0%, rgba(255, 255, 255, 0.9) 0%, transparent 70%),
-              radial-gradient(ellipse at 75% 10%, rgba(255, 255, 255, 0.8) 0%, transparent 60%);
-  filter: blur(2px);
-  pointer-events: none;
-}
-
-/* Layer 4: Ice Cubes Layer */
-.layer-ice {
-  position: absolute;
-  top: 40px;
-  left: 10px;
-  right: 10px;
-  height: 90px;
-  pointer-events: none;
-  z-index: 12;
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.layer-ice.hot {
-  opacity: 0;
-  transform: translateY(-20px) scale(0.8);
-}
-
-.ice-cube {
-  position: absolute;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.65) 100%);
-  border: 1.5px solid rgba(255, 255, 255, 0.9);
-  border-radius: 7px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-  transition: all 0.4s ease;
-}
-
-.ice-cube.cube-1 {
-  width: 44px;
-  height: 38px;
-  left: 15px;
-  top: 10px;
-  transform: rotate(-12deg);
-}
-
-.ice-cube.cube-2 {
-  width: 42px;
-  height: 42px;
-  right: 25px;
-  top: 18px;
-  transform: rotate(18deg);
-}
-
-.ice-cube.cube-3 {
-  width: 36px;
-  height: 36px;
-  left: 65px;
-  top: 25px;
-  transform: rotate(6deg);
-}
-
-.ice-cube.cube-4 {
-  width: 38px;
-  height: 32px;
-  right: 60px;
-  top: 45px;
-  transform: rotate(-8deg);
-}
-
-/* Layer 5: Dark Chocolate Swirl / Drizzle */
-.layer-choco-drizzle {
-  position: absolute;
-  top: 25px;
-  left: 0;
-  right: 0;
-  height: 160px;
-  pointer-events: none;
-  z-index: 14;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.layer-choco-drizzle.active {
+.cup-layer.active {
   opacity: 1;
-  transform: translateY(0);
 }
 
-.choco-ribbon {
-  position: absolute;
-  background: linear-gradient(180deg, #3A1C0E 0%, #291206 100%);
-  border-radius: 9999px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-}
-
-.choco-ribbon.ribbon-1 {
-  width: 14px;
-  height: 90px;
-  left: 30px;
-  top: 15px;
-  transform: rotate(5deg);
-}
-
-.choco-ribbon.ribbon-2 {
-  width: 18px;
-  height: 120px;
-  right: 40px;
-  top: 5px;
-  transform: rotate(-7deg);
-}
-
-.choco-ribbon.ribbon-3 {
-  width: 12px;
-  height: 75px;
-  left: 95px;
-  top: 35px;
-  transform: rotate(2deg);
-}
-
-/* Layer 6: Vanilla Cloud Foam Layer (Top) */
+/* Layer 1: Vanilla Cloud Foam Head */
 .layer-vanilla-foam {
-  height: 0px;
-  opacity: 0;
-  background: linear-gradient(180deg, #FFFFFF 0%, #FAF8F2 70%, #F2ECE0 100%);
-  border-radius: 12px 12px 0 0;
-  position: relative;
-  z-index: 16;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
-  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  top: 10%;
+  left: 21%;
+  width: 58%;
+  height: 18%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-8px);
 }
 
 .layer-vanilla-foam.active {
-  height: 55px;
-  opacity: 1;
+  transform: translateY(0);
 }
 
 .foam-cloud-head {
-  position: absolute;
-  top: -8px;
-  left: -2px;
-  right: -2px;
-  height: 18px;
-  background: radial-gradient(circle at 25% 50%, #FFFFFF 0%, #FAF8F2 70%),
-              radial-gradient(circle at 55% 40%, #FFFFFF 0%, #FAF8F2 75%),
-              radial-gradient(circle at 80% 50%, #FFFFFF 0%, #FAF8F2 70%);
-  border-radius: 50px 50px 0 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at 50% 30%, rgba(255, 255, 255, 0.96) 0%, rgba(248, 245, 236, 0.92) 65%, rgba(230, 225, 210, 0.7) 100%);
+  border-radius: 50% 50% 40% 40% / 60% 60% 30% 30%;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.12));
+  box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.8);
 }
 
-/* Layer 7: Coconut Flakes */
-.layer-coconut-flakes {
+/* Layer 2: Chocolate Bottom Layer Overlay */
+.layer-choco-bottom {
   position: absolute;
-  top: 5px;
-  left: 20px;
-  right: 20px;
-  height: 25px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   pointer-events: none;
-  z-index: 18;
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
-.layer-coconut-flakes.active {
+.layer-choco-bottom.active {
   opacity: 1;
 }
 
-.flake {
-  position: absolute;
-  background: #E8D3A8;
-  border-radius: 2px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-.flake.f1 { width: 14px; height: 5px; left: 20%; top: 6px; transform: rotate(15deg); }
-.flake.f2 { width: 18px; height: 6px; left: 45%; top: 12px; transform: rotate(-25deg); }
-.flake.f3 { width: 12px; height: 5px; left: 65%; top: 4px; transform: rotate(35deg); }
-.flake.f4 { width: 16px; height: 5px; left: 80%; top: 10px; transform: rotate(-10deg); }
-.flake.f5 { width: 10px; height: 4px; left: 35%; top: 15px; transform: rotate(45deg); }
-
-/* Dynamic Floating Recipe Tags */
+/* Floating Dynamic Recipe Dimension Callouts */
 .recipe-floating-tags {
   position: absolute;
-  right: -10px;
-  top: 15%;
-  bottom: 20%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   pointer-events: none;
-  z-index: 25;
+  z-index: 15;
 }
 
 .live-tag {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.95);
-  border-radius: 9999px;
-  padding: 0.35rem 0.8rem;
-  box-shadow: 0 6px 18px rgba(16, 55, 19, 0.08);
-  display: flex;
+  position: absolute;
+  display: inline-flex;
   align-items: center;
   gap: 0.45rem;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(132, 145, 89, 0.3);
+  padding: 0.35rem 0.8rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.75rem;
+  font-size: 0.76rem;
   font-weight: 700;
-  color: #103713;
+  color: #2D3A18;
   opacity: 0;
-  transform: translateX(15px);
+  transform: translateX(12px);
   transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  white-space: nowrap;
 }
 
 .live-tag.visible {
@@ -999,152 +922,474 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #56782E;
+  background: #849159;
+}
+
+.tag-foam {
+  top: 20%;
+  right: 8%;
+}
+
+.tag-matcha {
+  top: 36%;
+  right: 8%;
+}
+
+.tag-milk {
+  top: 54%;
+  right: 8%;
+}
+
+.tag-choco {
+  top: 72%;
+  right: 6%;
+}
+
+.tag-choco .tag-dot {
+  background: #3A1A0B;
 }
 
 /* ==========================================================================
-   8. Bottom Right Floating Actions & Toast
+   8. Bottom Right Floating Cart Trigger (Matching Menu Page)
    ========================================================================== */
-.custom-float-actions {
+.custom-float-controls {
   position: fixed;
-  bottom: clamp(1.2rem, 3vh, 2.2rem);
-  right: clamp(1.2rem, 3vw, 2.5rem);
+  bottom: clamp(1.2rem, 3.5vw, 2.5rem);
+  right: clamp(1.2rem, 3.5vw, 2.5rem);
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  z-index: 90;
+  z-index: 1050;
 }
 
+.custom-cart-fab,
 .custom-float-btn {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.04);
-  color: #103713;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  position: relative;
-  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
-  outline: none;
-}
-
-.custom-float-btn:hover {
-  transform: scale(1.08);
-  color: #56782E;
-  box-shadow: 0 12px 28px rgba(16, 55, 19, 0.2);
-}
-
-.custom-cart-count-badge {
-  position: absolute;
-  top: -4px;
-  right: -4px;
+  gap: 0.75rem;
   background: #103713;
   color: #FFFDF5;
+  border: 1.5px solid rgba(255, 253, 245, 0.25);
+  padding: 0.85rem 1.45rem;
+  border-radius: 9999px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.72rem;
   font-weight: 800;
-  min-width: 20px;
-  height: 20px;
-  border-radius: 10px;
+  font-size: 0.88rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(16, 55, 19, 0.38), 0 2px 8px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+              background-color 0.2s ease;
+  user-select: none;
+  outline: none;
+  width: auto;
+  height: auto;
+}
+
+.custom-cart-fab:hover,
+.custom-float-btn:hover {
+  background: #174d1c;
+  border-color: rgba(98, 139, 53, 0.6);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 14px 38px rgba(16, 55, 19, 0.48), 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.custom-cart-fab:active,
+.custom-float-btn:active {
+  transform: translateY(0) scale(0.96);
+  box-shadow: 0 6px 18px rgba(16, 55, 19, 0.3);
+}
+
+.custom-cart-fab .cart-fab-icon-wrap,
+.custom-float-btn .cart-fab-icon-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 4px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  color: #628B35;
+  transition: transform 0.25s ease;
 }
 
-/* Minimalist Feedback Toast */
+.custom-cart-fab:hover .cart-fab-icon-wrap,
+.custom-float-btn:hover .cart-fab-icon-wrap {
+  color: #FFFDF5;
+  transform: scale(1.1);
+}
+
+.custom-cart-fab .cart-fab-label,
+.custom-float-btn .cart-fab-label {
+  display: inline-block;
+  color: #FFFDF5;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.custom-cart-count-badge,
+.cart-fab-badge {
+  background: #628B35;
+  color: #FFFDF5;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 900;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: static;
+  border: none;
+}
+
+.custom-cart-count-badge.bump,
+.cart-fab-badge.bump {
+  transform: scale(1.35);
+}
+
+/* ==========================================================================
+   9. Feedback Toast Pop-Up
+   ========================================================================== */
 .custom-toast {
   position: fixed;
   bottom: 2rem;
   left: 50%;
-  transform: translateX(-50%) translateY(80px);
-  background: #103713;
-  color: #FFFDF5;
-  padding: 0.75rem 1.4rem;
+  transform: translateX(-50%) translateY(100px);
+  background: #233314;
+  color: #F4EDE5;
+  border: 1px solid rgba(244, 237, 229, 0.3);
+  padding: 0.8rem 1.6rem;
   border-radius: 9999px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.88rem;
-  font-weight: 700;
-  display: flex;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+  display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  box-shadow: 0 12px 32px rgba(16, 55, 19, 0.35);
+  gap: 0.65rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  z-index: 1000;
   opacity: 0;
   pointer-events: none;
-  z-index: 100;
-  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.35s ease;
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .custom-toast.show {
   transform: translateX(-50%) translateY(0);
   opacity: 1;
+  pointer-events: auto;
 }
 
 .toast-icon {
-  background: #628B35;
-  color: #FFFDF5;
-  width: 20px;
-  height: 20px;
+  background: #849159;
+  color: #FFFFFF;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 900;
 }
 
 /* ==========================================================================
-   9. Responsive Breakpoints
+   10. Professional Responsive Architecture (Tablets Landscape/Portrait & Mobile)
    ========================================================================== */
-@media (max-width: 1024px) {
+
+/* Tablets Landscape & Small Laptops (861px - 1080px) */
+@media (max-width: 1080px) {
   .custom-page-wrapper {
-    grid-template-columns: 1fr;
-    height: auto;
-    min-height: 100vh;
+    grid-template-columns: minmax(420px, 1.05fr) 1fr;
   }
   .custom-left-panel {
-    max-height: none;
-    padding: 2rem 1.5rem 3rem;
+    padding: 2.2rem 2rem 2.8rem;
   }
-  .custom-vertical-bg-title {
-    display: none;
-  }
-  .custom-controls-form, .custom-header {
-    max-width: 100%;
-  }
-  .custom-right-panel {
-    min-height: 520px;
-    padding: 3rem 1.5rem;
+  .brand-letter {
+    font-size: clamp(3.6rem, 7.8vh, 5.8rem);
   }
 }
 
-@media (max-width: 600px) {
+/* Tablets Portrait & Large Foldables (681px - 860px) */
+@media (max-width: 860px) {
+  .custom-page-wrapper {
+    display: flex;
+    flex-direction: column-reverse;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+  .custom-split-poster-brand {
+    display: none;
+  }
+  
+  /* Top Tumbler Preview Stage on Tablets */
+  .custom-right-panel {
+    min-height: 340px;
+    height: 380px;
+    padding: 2rem 1.5rem 1.2rem;
+    flex-shrink: 0;
+  }
+  .custom-glass-stage {
+    min-height: auto;
+    height: 100%;
+  }
+  .tumbler-hero-img {
+    max-height: 290px;
+  }
+  .ref-tumbler-shadow {
+    width: 140px;
+    height: 160px;
+    right: -20px;
+    bottom: 4px;
+  }
+  
+  /* Bottom Customization Controls on Tablets */
+  .custom-left-panel {
+    min-height: auto;
+    overflow-y: visible;
+    padding: 2.5rem 2.2rem 4rem;
+  }
+  .custom-controls-form {
+    max-width: 100%;
+  }
+  .custom-float-controls,
+  .custom-float-actions {
+    bottom: 1.8rem;
+    right: 1.8rem;
+  }
+}
+
+/* Standard Smartphones (361px - 680px) */
+@media (max-width: 680px) {
+  .custom-page-wrapper {
+    display: flex;
+    flex-direction: column-reverse;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+  .custom-split-poster-brand {
+    display: none;
+  }
+  
+  /* Top Tumbler Stage on Mobile */
+  .custom-right-panel {
+    min-height: 250px;
+    max-height: 310px;
+    height: 34vh;
+    padding: 1.2rem 1rem 0.8rem;
+    flex-shrink: 0;
+  }
+  .custom-preview-tag {
+    top: 0.85rem;
+    right: 0.85rem;
+    padding: 0.22rem 0.65rem;
+  }
+  .preview-tag-text {
+    font-size: 0.64rem;
+  }
+  .custom-glass-stage {
+    min-height: auto;
+    height: 100%;
+    max-width: 320px;
+  }
+  .tumbler-hero-img {
+    max-height: clamp(190px, 28vh, 240px);
+  }
+  .ref-tumbler-shadow {
+    width: 110px;
+    height: 130px;
+    right: -10px;
+    bottom: 2px;
+    filter: blur(12px);
+  }
+  
+  /* Compact Floating Ingredient Tags on Mobile */
+  .live-tag {
+    font-size: 0.66rem;
+    padding: 0.22rem 0.55rem;
+    border-radius: 14px;
+    gap: 0.35rem;
+  }
+  .tag-dot {
+    width: 5px;
+    height: 5px;
+  }
+  .tag-foam {
+    top: 15%;
+    right: 3%;
+  }
+  .tag-matcha {
+    top: 34%;
+    right: 3%;
+  }
+  .tag-milk {
+    top: 54%;
+    right: 3%;
+  }
+  .tag-choco {
+    top: 74%;
+    right: 3%;
+  }
+  
+  /* Bottom Controls Panel on Mobile */
+  .custom-left-panel {
+    min-height: auto;
+    overflow-y: visible;
+    padding: 1.4rem 1.1rem 5.5rem;
+  }
+  .custom-top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
+  }
+  .custom-back-btn {
+    width: 38px;
+    height: 38px;
+    margin: 0;
+  }
+  .custom-header {
+    max-width: 100%;
+    margin-bottom: 0.8rem;
+  }
+  .custom-drink-name {
+    font-size: clamp(1.4rem, 5.8vw, 1.85rem);
+    margin: 0;
+  }
+  .template-badge {
+    font-size: 0.66rem;
+    padding: 0.22rem 0.65rem;
+  }
+  .pantone-ref-code {
+    font-size: 0.68rem;
+  }
+  
+  /* Controls Form Spacing & Grids for Mobile */
+  .custom-controls-form {
+    max-width: 100%;
+    gap: 0.9rem;
+  }
+  .custom-section-title {
+    font-size: 0.8rem;
+    margin-bottom: 0.4rem;
+  }
+  .section-num {
+    font-size: 0.68rem;
+    padding: 0.12rem 0.38rem;
+  }
+  .topping-hint-badge {
+    font-size: 0.66rem;
+    padding: 0.18rem 0.55rem;
+  }
   .custom-pill-grid-4 {
     grid-template-columns: repeat(2, 1fr);
+    gap: 0.45rem;
+  }
+  .custom-pill-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+  }
+  .custom-pill-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.45rem;
+  }
+  .pill-box {
+    padding: 0.55rem 0.65rem;
+    font-size: 0.82rem;
+  }
+  .custom-pill-grid-4 .pill-box,
+  .custom-pill-grid-3 .pill-box {
+    padding: 0.5rem 0.35rem;
+  }
+  .custom-pill-grid-4 .pill-name,
+  .custom-pill-grid-3 .pill-name {
+    font-size: 0.82rem;
+  }
+  .custom-pill-grid-4 .pill-desc,
+  .custom-pill-grid-3 .pill-desc {
+    font-size: 0.66rem;
+  }
+  
+  /* Checkout Bar & Stacked Action Buttons on Mobile */
+  .custom-checkout-bar {
+    gap: 1rem;
+    padding-top: 1rem;
+  }
+  .breakdown-amount {
+    font-size: 1.85rem;
+  }
+  .breakdown-sub {
+    font-size: 0.74rem;
   }
   .custom-buttons-row {
     flex-direction: column;
-  }
-  .btn-submit-order, .btn-clear-custom {
+    gap: 0.65rem;
     width: 100%;
+  }
+  .btn-submit-order {
+    width: 100%;
+    padding: 0.95rem;
+    font-size: 0.94rem;
     justify-content: center;
+    box-sizing: border-box;
   }
-  .custom-glass-stage {
-    height: 480px;
+  .btn-clear-custom {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 0.84rem;
+    justify-content: center;
+    box-sizing: border-box;
   }
-  .cup-glass-wrapper {
-    width: 220px;
-    height: 380px;
+  
+  .custom-float-controls,
+  .custom-float-actions {
+    bottom: 1.2rem;
+    right: 1.2rem;
   }
-  .cup-glass-body {
-    width: 200px;
-    height: 350px;
+  .custom-cart-fab,
+  .custom-float-btn {
+    padding: 0.65rem 1.05rem;
+    font-size: 0.78rem;
+    gap: 0.5rem;
   }
-  .recipe-floating-tags {
-    display: none;
+}
+
+/* Compact / Narrow Mobile Phones (<= 360px - e.g. iPhone SE, Galaxy Fold outer screen) */
+@media (max-width: 360px) {
+  .custom-right-panel {
+    height: 230px;
+    padding: 0.8rem 0.6rem 0.4rem;
+  }
+  .tumbler-hero-img {
+    max-height: 175px;
+  }
+  .custom-left-panel {
+    padding: 1.2rem 0.85rem 4.5rem;
+  }
+  .custom-drink-name {
+    font-size: 1.35rem;
+  }
+  .breakdown-amount {
+    font-size: 1.65rem;
+  }
+  .pill-box {
+    padding: 0.5rem 0.65rem;
+    font-size: 0.78rem;
+  }
+  .custom-float-controls,
+  .custom-float-actions {
+    bottom: 0.85rem;
+    right: 0.85rem;
+  }
+  .custom-cart-fab,
+  .custom-float-btn {
+    padding: 0.55rem 0.85rem;
+    font-size: 0.72rem;
+    gap: 0.4rem;
   }
 }

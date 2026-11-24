@@ -2,6 +2,8 @@
  * Shopping Cart Manager & Modal Pop-Up
  * Handles item additions, quantity updates, total calculation, and modal toggling.
  */
+import { matchaDB } from './db.js';
+
 export class CartManager {
     constructor() {
         this.cartBtn = document.querySelector('#cart-toggle-btn');
@@ -27,16 +29,12 @@ export class CartManager {
             this.render();
         });
 
-        // Listen for storage / cross-page cart changes (e.g. from Customizer page)
+        // Listen for cross-page / cross-tab storage changes (e.g. from Customizer page)
         window.addEventListener('storage', (e) => {
             if (!e.key || e.key === 'matcha_cart') {
                 this.items = this.loadCart();
                 this.render();
             }
-        });
-        document.addEventListener('matcha:cart-updated', () => {
-            this.items = this.loadCart();
-            this.render();
         });
         document.addEventListener('matcha:kiosk-start', () => {
             this.items = this.loadCart();
@@ -62,10 +60,21 @@ export class CartManager {
     }
 
     bindEvents() {
-        // Toggle Cart Modal
-        if (this.cartBtn) {
-            this.cartBtn.addEventListener('click', () => this.open());
-        }
+        // Toggle Cart Modal from any cart button (Header button, Floating bottom-right FAB, etc.)
+        const openTriggers = [
+            this.cartBtn,
+            document.querySelector('#cart-floating-btn'),
+            document.querySelector('#pantone-cart-btn'),
+            ...document.querySelectorAll('.cart-btn, .cart-floating-fab, .pantone-cart-trigger')
+        ].filter(Boolean);
+
+        openTriggers.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.open();
+            });
+        });
 
         // Close Cart Modal
         if (this.closeBtn) {
@@ -117,37 +126,69 @@ export class CartManager {
 
         // Checkout Button
         if (this.checkoutBtn) {
-            this.checkoutBtn.addEventListener('click', () => {
+            this.checkoutBtn.addEventListener('click', async () => {
                 if (!this.items.length) {
-                    const emptyMsg = window.i18nManager?.t('cart_alert_empty') || 'Your cart is currently empty. Please add a matcha blend first!';
+                    const emptyMsg = window.i18nManager?.t('cart_alert_empty') || 'Keranjang pesanan masih kosong. Silakan pilih menu matcha terlebih dahulu!';
                     alert(emptyMsg);
                     return;
                 }
-                const total = this.calculateTotal().toFixed(2);
-                const successTemplate = window.i18nManager?.t('cart_alert_success') || 'Thank you! Your order of ${total} is now being prepared by our tea masters.';
 
-                // Save confirmed order to Admin Monitor database (localStorage)
-                const newOrder = {
-                    id: 'MTC-' + Math.floor(1000 + Math.random() * 9000),
-                    timestamp: new Date().toISOString(),
-                    timeFormatted: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                    dateFormatted: new Date().toLocaleDateString(),
-                    status: 'brewing',
-                    table: 'Kiosk Order',
-                    items: JSON.parse(JSON.stringify(this.items)),
-                    total: parseFloat(total)
-                };
+                // 1. Validate Customer Name (Nama Pemesan)
+                const nameInput = document.querySelector('#cart-customer-name');
+                const nameField = document.querySelector('#cart-customer-field');
+                const rawName = (nameInput ? nameInput.value : '').trim();
 
-                try {
-                    const existing = JSON.parse(localStorage.getItem('matcha_orders') || '[]');
-                    existing.unshift(newOrder);
-                    localStorage.setItem('matcha_orders', JSON.stringify(existing));
-                    window.dispatchEvent(new Event('storage'));
-                } catch (e) {
-                    console.warn('Failed to record order:', e);
+                if (!rawName) {
+                    if (nameField) {
+                        nameField.classList.add('error');
+                        setTimeout(() => nameField.classList.remove('error'), 1000);
+                    }
+                    if (nameInput) {
+                        nameInput.focus();
+                    }
+                    alert('Silakan masukkan Nama Pemesan terlebih dahulu untuk pencatatan di database!');
+                    return;
                 }
 
-                alert(successTemplate.replace('${total}', `$${total}`));
+                const total = this.calculateTotal().toFixed(2);
+                const totalIDR = this.calculateTotalIDR();
+                const totalQty = this.getTotalCount();
+                const orderId = 'MTC-' + Math.floor(1000 + Math.random() * 9000);
+
+                // 2. Prepare Structured Database Order Record
+                const newOrder = {
+                    id: orderId, // ID Pemesanan
+                    customerName: rawName, // Nama Pemesan
+                    status: 'brewing',
+                    table: 'Kiosk Order #' + Math.floor(1 + Math.random() * 20),
+                    items: JSON.parse(JSON.stringify(this.items)), // Nama Menu Yang Dipesan & Rincian
+                    totalQty: totalQty, // Jumlah
+                    total: parseFloat(total),
+                    totalIDR: totalIDR, // Total Harga
+                    totalFormattedIDR: `Rp ${totalIDR.toLocaleString('id-ID')}`,
+                    timestamp: new Date().toISOString(),
+                    timeFormatted: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    dateFormatted: new Date().toLocaleDateString('id-ID')
+                };
+
+                // 3. Save to Database (IndexedDB + Backend SQLite Server API + LocalStorage)
+                try {
+                    await matchaDB.saveOrder(newOrder);
+                } catch (e) {
+                    console.warn('[Cart] Database save error:', e);
+                }
+
+                // 4. Feedback Alert
+                const orderedSummary = this.items.map(i => `${i.qty}x ${i.name}`).join(', ');
+                alert(`✅ PESANAN BERHASIL DICATAT KE DATABASE!\n\n` +
+                      `• ID Pemesanan : #${newOrder.id}\n` +
+                      `• Nama Pemesan : ${newOrder.customerName}\n` +
+                      `• Menu Dipesan : ${orderedSummary}\n` +
+                      `• Jumlah Item  : ${totalQty} cup\n` +
+                      `• Total Harga  : Rp ${totalIDR.toLocaleString('id-ID')}\n\n` +
+                      `Pesanan telah tersimpan di database dan sedang disiapkan oleh barista.`);
+
+                if (nameInput) nameInput.value = '';
                 this.items = [];
                 this.saveCart();
                 this.render();
@@ -222,87 +263,109 @@ export class CartManager {
         return this.items.reduce((count, item) => count + item.qty, 0);
     }
 
+    calculateTotalIDR() {
+        return this.items.reduce((sum, item) => {
+            if (item.priceIDR) return sum + (item.priceIDR * item.qty);
+            return sum + (Math.round((item.price || 4.5) * 5300) * item.qty);
+        }, 0);
+    }
+
     triggerBadgeBump() {
-        if (!this.countBadge) return;
-        this.countBadge.classList.add('bump');
-        setTimeout(() => {
-            this.countBadge.classList.remove('bump');
-        }, 300);
+        const badges = document.querySelectorAll('#cart-count, #cart-floating-count, .cart-count-badge, .pantone-cart-badge');
+        badges.forEach(badge => {
+            badge.classList.add('bump');
+            setTimeout(() => {
+                badge.classList.remove('bump');
+            }, 300);
+        });
     }
 
     render() {
-        // 1. Update Badge Count
-        const totalCount = this.getTotalCount();
-        if (this.countBadge) {
-            this.countBadge.textContent = totalCount;
-        }
+        if (this._isRendering) return;
+        this._isRendering = true;
 
-        // Notify other components (e.g. Pantone Specimen Menu)
-        document.dispatchEvent(new CustomEvent('matcha:cart-updated', { detail: { count: totalCount } }));
+        try {
+            // 1. Update Badge Count on all badges across the interface
+            const totalCount = this.getTotalCount();
+            const badges = document.querySelectorAll('#cart-count, #cart-floating-count, .cart-count-badge, .pantone-cart-badge, .cart-fab-badge, #custom-cart-badge');
+            badges.forEach(badge => {
+                badge.textContent = totalCount;
+                badge.style.display = totalCount > 0 ? 'flex' : 'none';
+            });
 
-        // 2. Update Total Price
-        const totalPrice = this.calculateTotal();
-        if (this.totalPriceElem) {
-            this.totalPriceElem.textContent = `$${totalPrice.toFixed(2)}`;
-        }
+            // Notify other components (e.g. Pantone Specimen Menu)
+            document.dispatchEvent(new CustomEvent('matcha:cart-updated', { detail: { count: totalCount } }));
 
-        // 3. Render Items List
-        if (!this.itemsContainer) return;
+            // 2. Update Total Price (Indonesian Rupiah display)
+            const totalIDR = this.calculateTotalIDR();
+            const totalUSD = this.calculateTotal();
+            if (this.totalPriceElem) {
+                this.totalPriceElem.textContent = `Rp ${totalIDR.toLocaleString('id-ID')}`;
+            }
 
-        if (!this.items.length) {
-            const emptyTitle = window.i18nManager?.t('cart_empty_title') || 'Your cart is currently empty.';
-            const emptySub = window.i18nManager?.t('cart_empty_sub') || 'Craft a blend in the Simulation Lab or explore our Crafted Menu!';
-            this.itemsContainer.innerHTML = `
-                <div class="cart-empty-state">
-                    <p>${emptyTitle}</p>
-                    <span>${emptySub}</span>
-                </div>
-            `;
-            return;
-        }
+            // 3. Render Items List
+            if (!this.itemsContainer) return;
 
-        this.itemsContainer.innerHTML = '';
-        this.items.forEach((item, idx) => {
-            const itemElem = document.createElement('div');
-            itemElem.className = 'cart-item';
-            itemElem.innerHTML = `
-                <div class="cart-item-info">
-                    <span class="cart-item-name">${item.name}</span>
-                    <span class="cart-item-spec">${item.spec}</span>
-                </div>
-                <div class="cart-item-actions">
-                    <div class="cart-qty-ctrl">
-                        <button class="cart-qty-btn btn-minus" data-idx="${idx}">−</button>
-                        <span class="cart-qty-num">${item.qty}</span>
-                        <button class="cart-qty-btn btn-plus" data-idx="${idx}">+</button>
+            if (!this.items.length) {
+                const emptyTitle = window.i18nManager?.t('cart_empty_title') || 'Keranjang pesanan masih kosong.';
+                const emptySub = window.i18nManager?.t('cart_empty_sub') || 'Pilih salah satu menu untuk kustomisasi dan tambahkan ke pesanan!';
+                this.itemsContainer.innerHTML = `
+                    <div class="cart-empty-state">
+                        <p>${emptyTitle}</p>
+                        <span>${emptySub}</span>
                     </div>
-                    <span class="cart-item-price">$${(item.price * item.qty).toFixed(2)}</span>
-                    <button class="cart-item-remove" data-idx="${idx}" title="Remove">Remove</button>
-                </div>
-            `;
-            this.itemsContainer.appendChild(itemElem);
-        });
+                `;
+                return;
+            }
 
-        // Bind item actions (plus, minus, remove)
-        this.itemsContainer.querySelectorAll('.btn-plus').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const idx = parseInt(btn.dataset.idx, 10);
-                this.updateQty(idx, 1);
+            this.itemsContainer.innerHTML = '';
+            this.items.forEach((item, idx) => {
+                const itemElem = document.createElement('div');
+                itemElem.className = 'cart-item';
+                const itemPriceStr = item.priceIDR 
+                    ? `Rp ${(item.priceIDR * item.qty).toLocaleString('id-ID')}`
+                    : `Rp ${(Math.round(item.price * 5300) * item.qty).toLocaleString('id-ID')}`;
+                itemElem.innerHTML = `
+                    <div class="cart-item-info">
+                        <span class="cart-item-name">${item.name}</span>
+                        <span class="cart-item-spec">${item.spec}</span>
+                    </div>
+                    <div class="cart-item-actions">
+                        <div class="cart-qty-ctrl">
+                            <button class="cart-qty-btn btn-minus" data-idx="${idx}">−</button>
+                            <span class="cart-qty-num">${item.qty}</span>
+                            <button class="cart-qty-btn btn-plus" data-idx="${idx}">+</button>
+                        </div>
+                        <span class="cart-item-price">${itemPriceStr}</span>
+                        <button class="cart-item-remove" data-idx="${idx}" title="Remove">Hapus</button>
+                    </div>
+                `;
+                this.itemsContainer.appendChild(itemElem);
             });
-        });
 
-        this.itemsContainer.querySelectorAll('.btn-minus').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const idx = parseInt(btn.dataset.idx, 10);
-                this.updateQty(idx, -1);
+            // Bind item actions (plus, minus, remove)
+            this.itemsContainer.querySelectorAll('.btn-plus').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = parseInt(btn.dataset.idx, 10);
+                    this.updateQty(idx, 1);
+                });
             });
-        });
 
-        this.itemsContainer.querySelectorAll('.cart-item-remove').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const idx = parseInt(btn.dataset.idx, 10);
-                this.removeItem(idx);
+            this.itemsContainer.querySelectorAll('.btn-minus').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = parseInt(btn.dataset.idx, 10);
+                    this.updateQty(idx, -1);
+                });
             });
-        });
+
+            this.itemsContainer.querySelectorAll('.cart-item-remove').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = parseInt(btn.dataset.idx, 10);
+                    this.removeItem(idx);
+                });
+            });
+        } finally {
+            this._isRendering = false;
+        }
     }
 }
