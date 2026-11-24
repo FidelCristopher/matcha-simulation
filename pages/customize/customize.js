@@ -812,13 +812,29 @@ export class CustomizeManager {
     }
 
     this.syncCartBadge();
-    this.showToast(`Berhasil menambahkan ${itemTitle} ke pesanan!`);
+    this.showToast(`✓ Berhasil menambahkan ${itemTitle} ke keranjang!`);
 
-    // Button pulse feedback
-    this.submitBtn.style.transform = 'scale(1.04)';
+    // Immediate button confirmation feedback
+    if (navigator.vibrate) {
+      try { navigator.vibrate(40); } catch (_) {}
+    }
+
+    const mobileTextEl = this.submitBtn.querySelector('.btn-text-mobile');
+    const desktopTextEl = this.submitBtn.querySelector('.btn-text-desktop');
+    const originalMobileText = mobileTextEl ? mobileTextEl.textContent : '+ Keranjang';
+    const originalDesktopHtml = desktopTextEl ? desktopTextEl.innerHTML : '';
+
+    if (mobileTextEl) mobileTextEl.textContent = '✓ Ditambahkan!';
+    if (desktopTextEl) desktopTextEl.textContent = '✓ Berhasil Masuk Keranjang!';
+    this.submitBtn.style.backgroundColor = '#4d7c0f';
+    this.submitBtn.style.color = '#ffffff';
+
     setTimeout(() => {
-      this.submitBtn.style.transform = '';
-    }, 280);
+      if (mobileTextEl) mobileTextEl.textContent = originalMobileText;
+      if (desktopTextEl) desktopTextEl.innerHTML = originalDesktopHtml;
+      this.submitBtn.style.backgroundColor = '';
+      this.submitBtn.style.color = '';
+    }, 1800);
   }
 
   /**
