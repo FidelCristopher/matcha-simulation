@@ -558,6 +558,21 @@
     background: rgba(16, 55, 19, 0.45);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    z-index: 2000; /* ensure on top of all page elements */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    overflow: auto;
+
+    position: fixed;
+    inset: 0;
+    background: rgba(16, 55, 19, 0.45);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     z-index: 1200;
     display: flex;
     align-items: center;
@@ -575,6 +590,15 @@
 
 .payment-modal-dialog {
     width: 100%;
+    max-width: none;
+    height: 100%;
+    border-radius: 0;
+    max-height: none;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    justify-content: center;
+
+    width: 100%;
     max-width: 440px;
     background: #FFFFFF;
     border: 1.5px solid var(--color-bone, #E2DBD0);
@@ -588,6 +612,15 @@
 }
 
 .payment-modal-backdrop.active .payment-modal-dialog {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    border-radius: 0;
+    max-height: none;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    justify-content: center;
+
     transform: translateY(0) scale(1);
 }
 
@@ -772,6 +805,15 @@
 
 @media (max-width: 600px) {
     .payment-modal-dialog {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    border-radius: 0;
+    max-height: none;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    justify-content: center;
+
         border-radius: 20px;
     }
     .payment-modal-header,

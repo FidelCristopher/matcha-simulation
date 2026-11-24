@@ -1,5 +1,49 @@
 [
   {
+    "id": "MTC-8166",
+    "customerName": "testt",
+    "table": "Kiosk Order #20",
+    "status": "brewing",
+    "totalQty": 1,
+    "totalIDR": 25000,
+    "totalFormattedIDR": "Rp 25.000",
+    "timestamp": "2026-11-24T17:48:24.512Z",
+    "dateFormatted": "25/11/2026",
+    "timeFormatted": "12:48 AM",
+    "items": [
+      {
+        "id": "item-1795542502541",
+        "name": "ICE CHOCOLATE",
+        "spec": "Base Cokelat, Fresh Milk, 70% Gula, Normal Ice",
+        "price": 25000,
+        "priceIDR": 25000,
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "MTC-2017",
+    "customerName": "test",
+    "table": "Kiosk Order #7",
+    "status": "brewing",
+    "totalQty": 1,
+    "totalIDR": 25000,
+    "totalFormattedIDR": "Rp 25.000",
+    "timestamp": "2026-11-24T17:47:49.354Z",
+    "dateFormatted": "25/11/2026",
+    "timeFormatted": "12:47 AM",
+    "items": [
+      {
+        "id": "item-1795542464770",
+        "name": "ICE CHOCOLATE",
+        "spec": "Base Cokelat, Fresh Milk, 70% Gula, Normal Ice",
+        "price": 25000,
+        "priceIDR": 25000,
+        "qty": 1
+      }
+    ]
+  },
+  {
     "id": "MTC-5319",
     "customerName": "test",
     "table": "Kiosk Order #9",
