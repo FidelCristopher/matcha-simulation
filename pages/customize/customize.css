@@ -969,6 +969,15 @@ html {
   background: #3A1A0B;
 }
 
+.tag-brownsugar {
+  top: 78%;
+  right: 6%;
+}
+
+.tag-brownsugar .tag-dot {
+  background: #78350F;
+}
+
 /* ==========================================================================
    8. Bottom Right Floating Cart Trigger (Matching Menu Page)
    ========================================================================== */
@@ -1456,6 +1465,10 @@ html {
   }
   .tag-choco {
     top: 74%;
+    right: 3%;
+  }
+  .tag-brownsugar {
+    top: 80%;
     right: 3%;
   }
   

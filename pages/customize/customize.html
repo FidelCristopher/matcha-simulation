@@ -206,7 +206,7 @@
             </legend>
             <span class="topping-hint-badge">+Rp 3.000 / topping</span>
           </div>
-          <div class="custom-pill-group custom-pill-grid-2" id="topping-options">
+          <div class="custom-pill-group custom-pill-grid-3" id="topping-options">
             <!-- Vanilla Cloud Foam -->
             <label class="custom-pill custom-checkbox-pill">
               <input type="checkbox" name="custom_toppings" value="vanilla_foam" id="top-vanilla-foam">
@@ -226,6 +226,18 @@
                 <span class="pill-icon">🍫</span>
                 <div class="pill-content">
                   <span class="pill-name">Chocolate</span>
+                  <span class="pill-desc">+Rp 3.000</span>
+                </div>
+              </span>
+            </label>
+
+            <!-- Brown Sugar Syrup / Drizzle -->
+            <label class="custom-pill custom-checkbox-pill">
+              <input type="checkbox" name="custom_toppings" value="brown_sugar" id="top-brown-sugar">
+              <span class="pill-box">
+                <span class="pill-icon">🍯</span>
+                <div class="pill-content">
+                  <span class="pill-name">Brown Sugar</span>
                   <span class="pill-desc">+Rp 3.000</span>
                 </div>
               </span>
@@ -339,6 +351,13 @@
                 <stop offset="100%" stop-color="#1F0B03" />
               </linearGradient>
 
+              <!-- Brown Sugar Molasses Tiger Gradient -->
+              <linearGradient id="sketchBrownSugarGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#8C410B" />
+                <stop offset="45%" stop-color="#5C2605" />
+                <stop offset="100%" stop-color="#341200" />
+              </linearGradient>
+
               <!-- Soft sketch drop shadow -->
               <filter id="sketchShadow" x="-20%" y="-20%" width="140%" height="140%">
                 <feGaussianBlur stdDeviation="8" />
@@ -387,6 +406,26 @@
                 <path d="M142,322 Q145,306 143,296" fill="none" stroke="#3A1A0B" stroke-width="3" stroke-linecap="round" opacity="0.75" />
                 <!-- Bottom base rim depth shadow -->
                 <ellipse cx="160" cy="386" rx="55" ry="9" fill="#150802" opacity="0.65" />
+              </g>
+
+              <!-- Bottom Layer: Rich Caramelized Brown Sugar Syrup (Tiger Drips) -->
+              <g id="sketch-topping-brownsugar" class="sketch-topping-element" opacity="0">
+                <!-- Base bottom brown sugar mass filling the base of tumbler -->
+                <rect x="50" y="325" width="220" height="85" fill="url(#sketchBrownSugarGrad)" />
+                <!-- Organic hand-drawn syrup swirl & marbling top boundary -->
+                <path d="M70,330 Q105,316 145,332 T220,322 Q240,328 250,334 L250,410 L70,410 Z" fill="url(#sketchBrownSugarGrad)" />
+                <path d="M85,324 Q120,338 165,326 T235,328" fill="none" stroke="#3A1700" stroke-width="2.2" stroke-linecap="round" />
+                <!-- Sauce wave highlights & caramel sheen -->
+                <path d="M92,332 Q125,344 160,334 T225,336" fill="none" stroke="rgba(245, 180, 80, 0.45)" stroke-width="1.8" stroke-linecap="round" />
+                <!-- Tiger streaks climbing the glass walls -->
+                <path d="M92,340 Q88,285 94,250" fill="none" stroke="#5C2605" stroke-width="5" stroke-linecap="round" opacity="0.88" />
+                <circle cx="94" cy="247" r="3" fill="#5C2605" opacity="0.88" />
+                <path d="M226,338 Q230,280 224,245" fill="none" stroke="#5C2605" stroke-width="5" stroke-linecap="round" opacity="0.88" />
+                <circle cx="224" cy="242" r="3" fill="#5C2605" opacity="0.88" />
+                <path d="M152,330 Q156,295 150,270" fill="none" stroke="#6E3007" stroke-width="3.5" stroke-linecap="round" opacity="0.8" />
+                <circle cx="150" cy="268" r="2.5" fill="#6E3007" opacity="0.8" />
+                <!-- Bottom base rim depth shadow -->
+                <ellipse cx="160" cy="386" rx="55" ry="9" fill="#280F00" opacity="0.65" />
               </g>
 
               <!-- Upper / Base Liquid Layer (Matcha or Chocolate) -->
@@ -502,6 +541,10 @@
           <div class="live-tag tag-choco" id="tag-choco-label">
             <span class="tag-dot"></span>
             <span class="tag-text">🍫 Lapisan Cokelat Bawah (+Rp 3.000)</span>
+          </div>
+          <div class="live-tag tag-brownsugar" id="tag-brownsugar-label">
+            <span class="tag-dot"></span>
+            <span class="tag-text">🍯 Brown Sugar Syrup (+Rp 3.000)</span>
           </div>
           <div class="live-tag tag-milk" id="tag-milk-label">
             <span class="tag-dot"></span>

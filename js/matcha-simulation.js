@@ -30,7 +30,8 @@ export class MatchaSimulator {
         this.defaultState = {
             baseTea: 'uji',
             grams: 2.5,
-            milk: 'oat'
+            milk: 'oat',
+            brownSugar: 'none'
         };
         this.state = { ...this.defaultState };
 
@@ -90,6 +91,16 @@ export class MatchaSimulator {
                 this.updateSimulationUI();
             });
         });
+
+        // Brown Sugar Pills
+        document.querySelectorAll('[data-sim-brownsugar]').forEach(pill => {
+            pill.addEventListener('click', () => {
+                document.querySelectorAll('[data-sim-brownsugar]').forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                this.state.brownSugar = pill.dataset.simBrownsugar;
+                this.updateSimulationUI();
+            });
+        });
     }
 
     bind3DEvents() {
@@ -125,12 +136,18 @@ export class MatchaSimulator {
             this.addCartBtn.addEventListener('click', () => {
                 const baseNames = { uji: 'Uji Ceremonial', hojicha: 'Roasted Hojicha', soda: 'Mineral Soda' };
                 const milkNames = { oat: 'Oat Cloud', vanilla: 'Vanilla Foam', coconut: 'Coconut Velvet', none: 'Zero Milk' };
+                const bsNames = {
+                    none: '',
+                    light: ' • Light Brown Sugar',
+                    signature: ' • Signature Brown Sugar',
+                    extra: ' • Extra Brown Sugar'
+                };
 
                 const itemPrice = 4.50 + (this.state.grams > 2.5 ? (this.state.grams - 2.5) * 0.4 : 0);
 
                 const customItem = {
                     name: `Custom ${baseNames[this.state.baseTea]}`,
-                    spec: `${this.state.grams.toFixed(1)}g Matcha • ${milkNames[this.state.milk]}`,
+                    spec: `${this.state.grams.toFixed(1)}g Matcha • ${milkNames[this.state.milk]}${bsNames[this.state.brownSugar] || ''}`,
                     price: parseFloat(itemPrice.toFixed(2)),
                     qty: 1
                 };
@@ -187,6 +204,15 @@ export class MatchaSimulator {
         // Reset milk pills
         document.querySelectorAll('[data-sim-milk]').forEach(pill => {
             if (pill.dataset.simMilk === this.defaultState.milk) {
+                pill.classList.add('active');
+            } else {
+                pill.classList.remove('active');
+            }
+        });
+
+        // Reset brown sugar pills
+        document.querySelectorAll('[data-sim-brownsugar]').forEach(pill => {
+            if (pill.dataset.simBrownsugar === this.defaultState.brownSugar) {
                 pill.classList.add('active');
             } else {
                 pill.classList.remove('active');
@@ -258,6 +284,15 @@ export class MatchaSimulator {
             foamColor = '#ffffff';
         }
 
+        // Brown sugar adjustments
+        if (this.state.brownSugar === 'light') {
+            sweetness += 15;
+        } else if (this.state.brownSugar === 'signature') {
+            sweetness += 28;
+        } else if (this.state.brownSugar === 'extra') {
+            sweetness += 42;
+        }
+
         // Clamping (0 - 100)
         umami = Math.max(10, Math.min(100, umami));
         sweetness = Math.max(10, Math.min(100, sweetness));
@@ -290,6 +325,9 @@ export class MatchaSimulator {
                 } else {
                     desc = `Ceremonial Uji murni (${this.state.grams.toFixed(1)}g) dengan umami tebal dan sentuhan ${this.state.milk} foam.`;
                 }
+                if (this.state.brownSugar !== 'none') {
+                    desc += ` Dilengkapi infusi brown sugar caramel (${this.state.brownSugar}).`;
+                }
             } else {
                 if (this.state.baseTea === 'hojicha') {
                     desc = 'Nutty Roasted Hojicha with comforting warm aroma and soothing umami undertones.';
@@ -297,6 +335,9 @@ export class MatchaSimulator {
                     desc = 'Sparkling Zen Refreshment with crisp micro-carbonation and a clean, revitalizing finish.';
                 } else {
                     desc = `Pure Ceremonial Uji (${this.state.grams.toFixed(1)}g) with deep umami and silky ${this.state.milk} foam.`;
+                }
+                if (this.state.brownSugar !== 'none') {
+                    desc += ` Infused with rich caramelized tiger brown sugar (${this.state.brownSugar}).`;
                 }
             }
             this.summaryText.textContent = desc;

@@ -38,6 +38,7 @@ export class CustomizeManager {
     this.sketchWaterRipples = this.root.querySelector('#sketch-water-ripples');
     this.sketchFoam = this.root.querySelector('#sketch-topping-foam');
     this.sketchChoco = this.root.querySelector('#sketch-topping-choco');
+    this.sketchBrownSugar = this.root.querySelector('#sketch-topping-brownsugar');
     this.sketchIceLayer = this.root.querySelector('#sketch-ice-layer');
     this.sketchSteam = this.root.querySelector('#sketch-hot-steam');
     this.sketchIceCubes = this.root.querySelectorAll('.sketch-ice-cube');
@@ -46,6 +47,7 @@ export class CustomizeManager {
     // Live Dynamic Tag Callouts
     this.tagFoam = this.root.querySelector('#tag-foam-label');
     this.tagChoco = this.root.querySelector('#tag-choco-label');
+    this.tagBrownSugar = this.root.querySelector('#tag-brownsugar-label');
     this.tagMilk = this.root.querySelector('#tag-milk-label');
     this.tagMilkText = this.root.querySelector('#tag-milk-text');
     this.tagMatcha = this.root.querySelector('#tag-matcha-label');
@@ -168,6 +170,36 @@ export class CustomizeManager {
         name: 'ICE MATCHA VANILLA CLOUD FOAM',
         pantone: 'SPECIMEN 00997 C',
         basePrice: 28000,
+        base: 'matcha',
+        milk: 'fresh',
+        sugar: '70',
+        ice: 'normal',
+        toppings: []
+      },
+      'ice-matcha-brown-sugar': {
+        name: 'ICE MATCHA BROWN SUGAR',
+        pantone: 'SPECIMEN 731 C',
+        basePrice: 25000,
+        base: 'matcha',
+        milk: 'fresh',
+        sugar: '70',
+        ice: 'normal',
+        toppings: []
+      },
+      'matcha-brownsugar': {
+        name: 'ICE MATCHA BROWN SUGAR',
+        pantone: 'SPECIMEN 731 C',
+        basePrice: 25000,
+        base: 'matcha',
+        milk: 'fresh',
+        sugar: '70',
+        ice: 'normal',
+        toppings: []
+      },
+      'matcha-brown-sugar': {
+        name: 'ICE MATCHA BROWN SUGAR',
+        pantone: 'SPECIMEN 731 C',
+        basePrice: 25000,
         base: 'matcha',
         milk: 'fresh',
         sugar: '70',
@@ -454,11 +486,13 @@ export class CustomizeManager {
       }
       if (this.sketchFoam) this.sketchFoam.style.opacity = '0';
       if (this.sketchChoco) this.sketchChoco.style.opacity = '0';
+      if (this.sketchBrownSugar) this.sketchBrownSugar.style.opacity = '0';
 
       if (this.tagMilk) this.tagMilk.classList.remove('visible');
       if (this.tagMatcha) this.tagMatcha.classList.remove('visible');
       if (this.tagFoam) this.tagFoam.classList.remove('visible');
       if (this.tagChoco) this.tagChoco.classList.remove('visible');
+      if (this.tagBrownSugar) this.tagBrownSugar.classList.remove('visible');
       return;
     }
 
@@ -603,6 +637,29 @@ export class CustomizeManager {
           tagText.textContent = isChocoPreset ? '🍫 Extra Cokelat Bawah (+Rp 3.000)' : '🍫 Lapisan Cokelat Bawah (+Rp 3.000)';
         } else {
           tagText.textContent = '🍫 Lapisan Cokelat Bawah (Sudah Termasuk)';
+        }
+      }
+    }
+
+    // --- 5. TOPPING: BROWN SUGAR TIGER DRIPS ---
+    const isBrownSugarPreset = (
+      this.currentDrinkId === 'ice-matcha-brown-sugar' ||
+      this.currentDrinkId === 'matcha-brownsugar' ||
+      this.currentDrinkId === 'matcha-brown-sugar'
+    ) && !isCupCompletelyBlank;
+
+    const hasBrownSugar = selectedToppings.includes('brown_sugar') || isBrownSugarPreset;
+    if (this.sketchBrownSugar) {
+      this.sketchBrownSugar.style.opacity = hasBrownSugar ? '1' : '0';
+    }
+    if (this.tagBrownSugar) {
+      this.tagBrownSugar.classList.toggle('visible', hasBrownSugar);
+      const tagText = this.tagBrownSugar.querySelector('.tag-text');
+      if (tagText) {
+        if (selectedToppings.includes('brown_sugar')) {
+          tagText.textContent = isBrownSugarPreset ? '🍯 Extra Brown Sugar (+Rp 3.000)' : '🍯 Brown Sugar Syrup (+Rp 3.000)';
+        } else {
+          tagText.textContent = '🍯 Brown Sugar Syrup (Sudah Termasuk)';
         }
       }
     }
@@ -876,7 +933,8 @@ export class CustomizeManager {
     const iceNames = { hot: 'Hot (No Ice)', less: 'Less Ice', normal: 'Normal Ice', extra: 'Extra Ice' };
     const toppingNames = {
       vanilla_foam: 'Vanilla Cloud Foam (+3k)',
-      chocolate: 'Lapisan Cokelat Bawah (+3k)'
+      chocolate: 'Lapisan Cokelat Bawah (+3k)',
+      brown_sugar: 'Brown Sugar Syrup (+3k)'
     };
 
     const toppingsSummary = selectedToppings.map(t => toppingNames[t] || t).join(', ');
