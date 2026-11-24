@@ -63,20 +63,21 @@ export class MatchaDatabaseManager {
     }
 
     /**
-     * Check if Node.js SQLite server is reachable
+     * Check if Cloud API (/api/orders on Vercel) or Local SQLite server is reachable
      */
     async checkServerAvailability() {
         try {
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 1200);
-            const res = await fetch('/api/database/status', { signal: controller.signal });
+            const timeoutId = setTimeout(() => controller.abort(), 2500);
+            const res = await fetch('/api/orders', { signal: controller.signal, cache: 'no-store' });
             clearTimeout(timeoutId);
             if (res.ok) {
                 const data = await res.json();
-                this.isServerAvailable = true;
-                this.serverDriver = data.driver || 'SQLite 3';
-                console.log(`[MatchaDB] Backend SQLite Server active: ${this.serverDriver}`);
-                return true;
+                if (data && data.ok && data.synced !== false) {
+                    this.isServerAvailable = true;
+                    this.serverDriver = data.driver || 'Cloud Sync';
+                    return true;
+                }
             }
         } catch {
             this.isServerAvailable = false;
@@ -85,22 +86,24 @@ export class MatchaDatabaseManager {
     }
 
     /**
-     * Save an order to both IndexedDB and SQLite Server Database
+     * Save an order to Cloud API / SQLite Server, IndexedDB, and LocalStorage
      * @param {Object} order
      */
     async saveOrder(order) {
         await this.initPromise;
 
-        // Ensure proper fields
+        const totalIDR = Number(order.totalIDR || order.total || order.total_price || 0);
         const orderRecord = {
             id: order.id || ('MTC-' + Math.floor(1000 + Math.random() * 9000)),
             customerName: (order.customerName || order.nama || 'Pelanggan').trim(),
             table: order.table || 'Kiosk Order #' + Math.floor(1 + Math.random() * 20),
             status: order.status || 'brewing',
+            paymentStatus: order.paymentStatus || 'unpaid',
             items: Array.isArray(order.items) ? order.items : [],
             totalQty: order.totalQty || (order.items || []).reduce((s, i) => s + (i.qty || 1), 0),
-            totalIDR: order.totalIDR || order.total_price || 0,
-            totalFormattedIDR: order.totalFormattedIDR || `Rp ${(order.totalIDR || 0).toLocaleString('id-ID')}`,
+            total: totalIDR,
+            totalIDR: totalIDR,
+            totalFormattedIDR: order.totalFormattedIDR || `Rp ${totalIDR.toLocaleString('id-ID')}`,
             timestamp: order.timestamp || new Date().toISOString(),
             dateFormatted: order.dateFormatted || new Date().toLocaleDateString('id-ID'),
             timeFormatted: order.timeFormatted || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
@@ -121,17 +124,19 @@ export class MatchaDatabaseManager {
             }
         }
 
-        // 2. Save to Backend SQLite Server if connected
-        if (this.isServerAvailable) {
-            try {
-                await fetch('/api/orders', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(orderRecord)
-                });
-            } catch (err) {
-                console.warn('[MatchaDB] Server POST failed, order remains in IndexedDB:', err);
+        // 2. Always attempt to push to Cloud/Backend API (/api/orders)
+        try {
+            const res = await fetch('/api/orders', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(orderRecord)
+            });
+            if (res.ok) {
+                const data = await res.json();
+                if (data && data.synced) this.isServerAvailable = true;
             }
+        } catch (err) {
+            console.warn('[MatchaDB] Server POST failed, order remains in local storage:', err);
         }
 
         // 3. Sync to localStorage for instant cross-tab KDS events
@@ -150,26 +155,28 @@ export class MatchaDatabaseManager {
     }
 
     /**
-     * Retrieve all orders from database (Priority: SQLite Server -> IndexedDB -> LocalStorage)
+     * Retrieve all orders (Priority: Cloud/SQLite API -> IndexedDB -> LocalStorage)
      */
     async getAllOrders() {
         await this.initPromise;
 
-        // 1. Try Backend SQLite API
-        if (this.isServerAvailable) {
-            try {
-                const res = await fetch('/api/orders');
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data && Array.isArray(data.orders)) {
-                        // Mirror to IndexedDB
-                        this.syncToIndexedDB(data.orders);
-                        return data.orders;
-                    }
+        // 1. Try Cloud / SQLite API
+        try {
+            const res = await fetch('/api/orders', { cache: 'no-store' });
+            if (res.ok) {
+                const data = await res.json();
+                if (data && data.ok && data.synced !== false && Array.isArray(data.orders)) {
+                    this.isServerAvailable = true;
+                    this.serverDriver = data.driver || 'Cloud Sync';
+                    this.syncToIndexedDB(data.orders);
+                    try {
+                        localStorage.setItem('matcha_orders', JSON.stringify(data.orders));
+                    } catch {}
+                    return data.orders;
                 }
-            } catch (err) {
-                console.warn('[MatchaDB] Failed fetching from server:', err);
             }
+        } catch (err) {
+            // Fallback silently to local
         }
 
         // 2. Try IndexedDB
@@ -217,9 +224,9 @@ export class MatchaDatabaseManager {
     }
 
     /**
-     * Update order status
+     * Update order status and/or paymentStatus
      */
-    async updateOrderStatus(id, status) {
+    async updateOrder(id, fields = {}) {
         await this.initPromise;
 
         // 1. Update IndexedDB
@@ -232,7 +239,8 @@ export class MatchaDatabaseManager {
                     req.onsuccess = () => {
                         const order = req.result;
                         if (order) {
-                            order.status = status;
+                            if (fields.status) order.status = fields.status;
+                            if (fields.paymentStatus) order.paymentStatus = fields.paymentStatus;
                             store.put(order);
                         }
                         resolve(true);
@@ -242,16 +250,14 @@ export class MatchaDatabaseManager {
             } catch {}
         }
 
-        // 2. Update Server
-        if (this.isServerAvailable) {
-            try {
-                await fetch(`/api/orders/${encodeURIComponent(id)}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ status })
-                });
-            } catch {}
-        }
+        // 2. Update Cloud / SQLite Server
+        try {
+            await fetch(`/api/orders?id=${encodeURIComponent(id)}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(fields)
+            });
+        } catch {}
 
         // 3. Update localStorage
         try {
@@ -260,12 +266,17 @@ export class MatchaDatabaseManager {
                 const list = JSON.parse(raw);
                 const item = list.find(o => o.id === id);
                 if (item) {
-                    item.status = status;
+                    if (fields.status) item.status = fields.status;
+                    if (fields.paymentStatus) item.paymentStatus = fields.paymentStatus;
                     localStorage.setItem('matcha_orders', JSON.stringify(list));
                     window.dispatchEvent(new Event('storage'));
                 }
             }
         } catch {}
+    }
+
+    async updateOrderStatus(id, status) {
+        return this.updateOrder(id, { status });
     }
 
     /**
@@ -282,12 +293,10 @@ export class MatchaDatabaseManager {
             } catch {}
         }
 
-        // 2. Delete from Server
-        if (this.isServerAvailable) {
-            try {
-                await fetch(`/api/orders/${encodeURIComponent(id)}`, { method: 'DELETE' });
-            } catch {}
-        }
+        // 2. Delete from Cloud / SQLite Server
+        try {
+            await fetch(`/api/orders?id=${encodeURIComponent(id)}`, { method: 'DELETE' });
+        } catch {}
 
         // 3. Delete from localStorage
         try {
@@ -312,6 +321,10 @@ export class MatchaDatabaseManager {
                 tx.objectStore(this.storeName).clear();
             } catch {}
         }
+
+        try {
+            await fetch('/api/orders?all=true', { method: 'DELETE' });
+        } catch {}
 
         localStorage.removeItem('matcha_orders');
         window.dispatchEvent(new Event('storage'));

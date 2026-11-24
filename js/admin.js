@@ -1,7 +1,8 @@
 /**
  * Admin & Kitchen Order Monitor Engine (MatchaTcih KDS)
- * Handles real-time order tracking, status toggling, and live revenue analytics.
+ * Handles real-time cross-device order tracking, payment verification, status toggling, and Excel/PDF exports.
  */
+import { matchaDB } from './db.js';
 
 export class AdminOrderMonitor {
     constructor() {
@@ -36,11 +37,13 @@ export class AdminOrderMonitor {
         this.logoutBtn = document.querySelector('#admin-logout-btn');
         this.adminMain = document.querySelector('.admin-main');
         this.adminHeader = document.querySelector('.admin-header');
+        this.syncStatusText = document.querySelector('#sync-status-text');
 
         // State
-        this.currentFilter = 'all'; // 'all' | 'brewing' | 'completed'
+        this.currentFilter = 'all'; // 'all' | 'unpaid' | 'paid' | 'brewing' | 'completed'
         this.searchQuery = '';
         this.orders = this.loadOrders();
+        this.lastOrderIds = new Set(this.orders.map(o => o.id));
 
         this.init();
     }
@@ -51,6 +54,7 @@ export class AdminOrderMonitor {
         this.startClock();
         this.render();
         this.setupRealtimeSync();
+        this.syncFromCloud(false);
     }
 
     initAuth() {
@@ -242,10 +246,11 @@ export class AdminOrderMonitor {
 
         // Clear orders button
         if (this.clearBtn) {
-            this.clearBtn.addEventListener('click', () => {
+            this.clearBtn.addEventListener('click', async () => {
                 if (confirm('Apakah Anda yakin ingin menghapus seluruh riwayat pesanan monitor?')) {
                     this.orders = [];
                     this.saveOrders();
+                    await matchaDB.clearAllOrders();
                     this.render();
                 }
             });
@@ -273,12 +278,40 @@ export class AdminOrderMonitor {
         setInterval(update, 1000);
     }
 
+    async syncFromCloud(allowChime = true) {
+        try {
+            const fetched = await matchaDB.getAllOrders();
+            if (this.syncStatusText) {
+                this.syncStatusText.textContent = matchaDB.isServerAvailable
+                    ? `Live Sync • ${matchaDB.serverDriver || 'Cloud'}`
+                    : 'Live Monitor • Mode Lokal';
+            }
+            if (Array.isArray(fetched) && (matchaDB.isServerAvailable || fetched.length > 0)) {
+                const prevIds = this.lastOrderIds;
+                const hasNewOrder = fetched.some(o => !prevIds.has(o.id));
+                const serializedNext = JSON.stringify(fetched);
+                const serializedCurr = JSON.stringify(this.orders);
+                if (serializedNext !== serializedCurr) {
+                    this.orders = fetched;
+                    this.lastOrderIds = new Set(fetched.map(o => o.id));
+                    this.render();
+                    if (allowChime && hasNewOrder) {
+                        this.playChime();
+                    }
+                }
+            }
+        } catch (err) {
+            console.warn('[Admin] Sync warning:', err);
+        }
+    }
+
     setupRealtimeSync() {
         // Cross-tab storage synchronization
         window.addEventListener('storage', (e) => {
             if (!e.key || e.key === 'matcha_orders') {
                 const prevCount = this.orders.length;
                 this.orders = this.loadOrders();
+                this.lastOrderIds = new Set(this.orders.map(o => o.id));
                 this.render();
                 if (this.orders.length > prevCount) {
                     this.playChime();
@@ -286,21 +319,10 @@ export class AdminOrderMonitor {
             }
         });
 
-        // Light polling fallback
+        // Live Cloud / Backend polling every 3.5 seconds so all devices stay synced
         setInterval(() => {
-            const raw = localStorage.getItem('matcha_orders');
-            if (raw) {
-                const currentCount = this.orders.length;
-                const parsed = JSON.parse(raw);
-                if (parsed.length !== currentCount) {
-                    this.orders = parsed;
-                    this.render();
-                    if (parsed.length > currentCount) {
-                        this.playChime();
-                    }
-                }
-            }
-        }, 2000);
+            this.syncFromCloud(true);
+        }, 3500);
     }
 
     playChime() {
@@ -379,6 +401,7 @@ export class AdminOrderMonitor {
             timeFormatted: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
             dateFormatted: new Date().toLocaleDateString('id-ID'),
             status: 'brewing',
+            paymentStatus: 'unpaid',
             table: 'Kiosk Order #' + Math.floor(1 + Math.random() * 12),
             items: items,
             totalIDR: totalIDR,
@@ -386,26 +409,40 @@ export class AdminOrderMonitor {
         };
 
         this.orders.unshift(newOrder);
+        this.lastOrderIds.add(newOrder.id);
         this.saveOrders();
+        matchaDB.saveOrder(newOrder);
         this.render();
         this.playChime();
     }
 
-    toggleStatus(orderId) {
+    async toggleStatus(orderId) {
         const order = this.orders.find(o => o.id === orderId);
         if (!order) return;
 
         order.status = order.status === 'brewing' ? 'completed' : 'brewing';
         this.saveOrders();
         this.render();
+        await matchaDB.updateOrder(orderId, { status: order.status });
     }
 
-    deleteOrder(orderId) {
+    async togglePaymentStatus(orderId) {
+        const order = this.orders.find(o => o.id === orderId);
+        if (!order) return;
+
+        order.paymentStatus = order.paymentStatus === 'paid' ? 'unpaid' : 'paid';
+        this.saveOrders();
+        this.render();
+        await matchaDB.updateOrder(orderId, { paymentStatus: order.paymentStatus });
+    }
+
+    async deleteOrder(orderId) {
         if (!confirm(`Hapus tiket pesanan #${orderId}?`)) return;
 
         this.orders = this.orders.filter(o => o.id !== orderId);
         this.saveOrders();
         this.render();
+        await matchaDB.deleteOrder(orderId);
     }
 
     updateKPIs() {
@@ -438,7 +475,11 @@ export class AdminOrderMonitor {
         // Apply filters
         let filtered = this.orders;
 
-        if (this.currentFilter === 'brewing') {
+        if (this.currentFilter === 'unpaid') {
+            filtered = filtered.filter(o => (o.paymentStatus || 'unpaid') !== 'paid');
+        } else if (this.currentFilter === 'paid') {
+            filtered = filtered.filter(o => o.paymentStatus === 'paid');
+        } else if (this.currentFilter === 'brewing') {
             filtered = filtered.filter(o => o.status === 'brewing');
         } else if (this.currentFilter === 'completed') {
             filtered = filtered.filter(o => o.status === 'completed');
@@ -448,9 +489,10 @@ export class AdminOrderMonitor {
         if (this.searchQuery) {
             filtered = filtered.filter(o => {
                 const matchId = o.id.toLowerCase().includes(this.searchQuery);
+                const matchName = (o.customerName || '').toLowerCase().includes(this.searchQuery);
                 const matchTable = (o.table || '').toLowerCase().includes(this.searchQuery);
                 const matchItem = o.items && o.items.some(i => i.name.toLowerCase().includes(this.searchQuery) || (i.spec && i.spec.toLowerCase().includes(this.searchQuery)));
-                return matchId || matchTable || matchItem;
+                return matchId || matchName || matchTable || matchItem;
             });
         }
 
@@ -458,7 +500,7 @@ export class AdminOrderMonitor {
             this.ordersGrid.innerHTML = `
                 <div class="orders-empty-state">
                     <h3>Tidak Ada Pesanan</h3>
-                    <p>Pesanan baru yang dicheckout dari kiosk akan otomatis muncul di sini.</p>
+                    <p>Pesanan baru yang dicheckout dari web customer akan otomatis muncul di sini.</p>
                 </div>
             `;
             return;
@@ -467,6 +509,7 @@ export class AdminOrderMonitor {
         this.ordersGrid.innerHTML = '';
         filtered.forEach(order => {
             const isBrewing = order.status === 'brewing';
+            const isPaid = order.paymentStatus === 'paid';
             const card = document.createElement('article');
             card.className = `order-card status-${order.status}`;
             const totalAmountIDR = this.getOrderTotalIDR(order);
@@ -492,6 +535,9 @@ export class AdminOrderMonitor {
                         <span class="order-timestamp">${order.timeFormatted}${customerDisplay} • ${order.table || 'Kiosk'}</span>
                     </div>
                     <div class="order-header-right">
+                        <span class="payment-badge ${isPaid ? 'paid' : 'unpaid'}">
+                            ${isPaid ? 'Sudah Bayar' : 'Belum Bayar'}
+                        </span>
                         <span class="status-badge ${order.status}">
                             ${isBrewing ? 'Brewing' : 'Completed'}
                         </span>
@@ -510,13 +556,26 @@ export class AdminOrderMonitor {
                         <span class="order-total-label">Total Amount</span>
                         <span class="order-total-amount">${this.formatIDR(totalAmountIDR)}</span>
                     </div>
-                    <button class="order-action-btn ${isBrewing ? 'finish-btn' : 'reopen-btn'}" data-order-id="${order.id}">
-                        ${isBrewing ? 'Selesai Seduh' : 'Buka Ulang'}
-                    </button>
+                    <div class="order-card-actions">
+                        <button class="order-pay-btn ${isPaid ? 'mark-unpaid' : 'mark-paid'}" data-order-id="${order.id}">
+                            ${isPaid ? 'Sudah Bayar ✓' : 'Tandai Sudah Bayar'}
+                        </button>
+                        <button class="order-action-btn ${isBrewing ? 'finish-btn' : 'reopen-btn'}" data-order-id="${order.id}">
+                            ${isBrewing ? 'Selesai Seduh' : 'Buka Ulang'}
+                        </button>
+                    </div>
                 </div>
             `;
 
             this.ordersGrid.appendChild(card);
+        });
+
+        // Bind payment status toggle buttons
+        this.ordersGrid.querySelectorAll('.order-pay-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.dataset.orderId;
+                this.togglePaymentStatus(id);
+            });
         });
 
         // Bind status toggle buttons
@@ -585,6 +644,7 @@ export class AdminOrderMonitor {
                 'Nama Pemesan': order.customerName || 'Pelanggan',
                 'Tanggal': order.dateFormatted || new Date(order.timestamp).toLocaleDateString('id-ID'),
                 'Waktu': order.timeFormatted || new Date(order.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                'Pembayaran': order.paymentStatus === 'paid' ? 'Sudah Bayar' : 'Belum Bayar',
                 'Status': order.status === 'completed' ? 'Selesai (Completed)' : 'Sedang Diseduh (Brewing)',
                 'Sumber / Meja': order.table || 'Kiosk',
                 'Rincian Menu & Racikan': itemsSummary,
@@ -710,13 +770,14 @@ export class AdminOrderMonitor {
         const tableBody = this.orders.map(order => {
             const itemsText = (order.items || []).map(i => `${i.qty}x ${i.name}\n(${i.spec || 'Standard'})`).join('\n\n');
             const statusText = order.status === 'completed' ? 'Selesai' : 'Sedang Diseduh';
+            const payText = order.paymentStatus === 'paid' ? 'Sudah Bayar' : 'Belum Bayar';
             const customerStr = order.customerName ? `\n[${order.customerName}]` : '';
             const dateText = `${order.dateFormatted || ''}\n${order.timeFormatted || ''}${customerStr}`;
 
             return [
                 '#' + order.id,
                 dateText,
-                order.table || 'Kiosk',
+                payText,
                 statusText,
                 itemsText,
                 this.formatIDR(this.getOrderTotalIDR(order))
@@ -726,7 +787,7 @@ export class AdminOrderMonitor {
         // AutoTable
         doc.autoTable({
             startY: 65,
-            head: [['Order ID', 'Waktu', 'Lokasi', 'Status', 'Rincian Menu & Racikan', 'Total']],
+            head: [['Order ID', 'Waktu & Nama', 'Pembayaran', 'Status', 'Rincian Menu & Racikan', 'Total']],
             body: tableBody,
             theme: 'striped',
             headStyles: {

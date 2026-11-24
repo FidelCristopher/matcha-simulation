@@ -46,6 +46,10 @@ try {
     CREATE INDEX IF NOT EXISTS idx_orders_created ON orders(created_at DESC);
     CREATE INDEX IF NOT EXISTS idx_orders_customer ON orders(customer_name);
   `);
+  // Safe migration: add payment_status column if it does not exist yet
+  try {
+    db.exec("ALTER TABLE orders ADD COLUMN payment_status TEXT DEFAULT 'unpaid'");
+  } catch (_) {}
   console.log('✅ SQLite Database initialized:', DB_FILE);
 } catch (err) {
   console.warn('⚠️ node:sqlite unavailable, using JSON file database fallback:', err.message);
@@ -88,7 +92,9 @@ function getAllOrdersFromDb() {
         customerName: r.customer_name,
         table: r.table_number,
         status: r.status,
+        paymentStatus: r.payment_status || 'unpaid',
         totalQty: r.total_qty,
+        total: r.total_price,
         totalIDR: r.total_price,
         totalFormattedIDR: `Rp ${Number(r.total_price).toLocaleString('id-ID')}`,
         timestamp: r.created_at,
@@ -105,9 +111,10 @@ function insertOrderIntoDb(order) {
   const customerName = order.customerName || order.customer_name || 'Pelanggan';
   const table = order.table || order.table_number || 'Kiosk';
   const status = order.status || 'brewing';
+  const paymentStatus = order.paymentStatus || order.payment_status || 'unpaid';
   const items = Array.isArray(order.items) ? order.items : [];
   const totalQty = order.totalQty || items.reduce((s, i) => s + (i.qty || 1), 0);
-  const totalIDR = order.totalIDR || order.total_price || 0;
+  const totalIDR = order.totalIDR || order.total || order.total_price || 0;
   const createdAt = order.timestamp || order.created_at || new Date().toISOString();
   const dateFormatted = order.dateFormatted || new Date(createdAt).toLocaleDateString('id-ID');
   const timeFormatted = order.timeFormatted || new Date(createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -115,8 +122,8 @@ function insertOrderIntoDb(order) {
   if (!useJsonFallback && db) {
     const stmt = db.prepare(`
       INSERT OR REPLACE INTO orders 
-      (id, customer_name, menu_items, total_qty, total_price, status, table_number, created_at, date_formatted, time_formatted)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      (id, customer_name, menu_items, total_qty, total_price, status, payment_status, table_number, created_at, date_formatted, time_formatted)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
     stmt.run(
       order.id,
@@ -125,6 +132,7 @@ function insertOrderIntoDb(order) {
       totalQty,
       totalIDR,
       status,
+      paymentStatus,
       table,
       createdAt,
       dateFormatted,
@@ -139,7 +147,9 @@ function insertOrderIntoDb(order) {
     customerName,
     table,
     status,
+    paymentStatus,
     totalQty,
+    total: totalIDR,
     totalIDR,
     totalFormattedIDR: `Rp ${Number(totalIDR).toLocaleString('id-ID')}`,
     timestamp: createdAt,
@@ -155,19 +165,25 @@ function insertOrderIntoDb(order) {
     totalQty,
     totalIDR,
     status,
+    paymentStatus,
     timestamp: createdAt
   };
 }
 
-function updateOrderStatusInDb(id, status) {
+function updateOrderInDb(id, fields = {}) {
   if (!useJsonFallback && db) {
-    const stmt = db.prepare('UPDATE orders SET status = ? WHERE id = ?');
-    stmt.run(status, id);
+    if (fields.status) {
+      db.prepare('UPDATE orders SET status = ? WHERE id = ?').run(fields.status, id);
+    }
+    if (fields.paymentStatus) {
+      db.prepare('UPDATE orders SET payment_status = ? WHERE id = ?').run(fields.paymentStatus, id);
+    }
   }
   const currentJson = readJsonDb();
   const item = currentJson.find(o => o.id === id);
   if (item) {
-    item.status = status;
+    if (fields.status) item.status = fields.status;
+    if (fields.paymentStatus) item.paymentStatus = fields.paymentStatus;
     writeJsonDb(currentJson);
   }
 }
@@ -179,6 +195,13 @@ function deleteOrderFromDb(id) {
   }
   const currentJson = readJsonDb().filter(o => o.id !== id);
   writeJsonDb(currentJson);
+}
+
+function clearAllOrdersFromDb() {
+  if (!useJsonFallback && db) {
+    db.prepare('DELETE FROM orders').run();
+  }
+  writeJsonDb([]);
 }
 
 // MIME Types Map
@@ -223,7 +246,7 @@ const server = http.createServer((req, res) => {
   if (pathname === '/api/orders' && req.method === 'GET') {
     const orders = getAllOrdersFromDb();
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ ok: true, count: orders.length, orders }));
+    res.end(JSON.stringify({ ok: true, synced: true, driver: useJsonFallback ? 'JSON File' : 'SQLite 3', count: orders.length, orders }));
     return;
   }
 
@@ -239,7 +262,7 @@ const server = http.createServer((req, res) => {
         }
         const saved = insertOrderIntoDb(orderData);
         res.writeHead(201, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ ok: true, message: 'Pesanan berhasil disimpan ke database!', order: saved }));
+        res.end(JSON.stringify({ ok: true, synced: true, message: 'Pesanan berhasil disimpan ke database!', order: saved }));
       } catch (err) {
         res.writeHead(400, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ ok: false, error: err.message }));
@@ -248,17 +271,20 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // 3. PUT /api/orders/:id -> Update status
-  if (pathname.startsWith('/api/orders/') && req.method === 'PUT') {
-    const orderId = pathname.replace('/api/orders/', '');
+  // 3. PUT /api/orders/:id or /api/orders?id=... -> Update status / paymentStatus
+  if ((pathname === '/api/orders' || pathname.startsWith('/api/orders/')) && req.method === 'PUT') {
+    const orderId = pathname.startsWith('/api/orders/')
+      ? decodeURIComponent(pathname.replace('/api/orders/', ''))
+      : parsedUrl.searchParams.get('id');
     let body = '';
     req.on('data', chunk => { body += chunk; });
     req.on('end', () => {
       try {
-        const { status } = JSON.parse(body);
-        updateOrderStatusInDb(orderId, status);
+        const payload = JSON.parse(body || '{}');
+        const targetId = orderId || payload.id;
+        updateOrderInDb(targetId, payload);
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ ok: true, message: `Status pesanan #${orderId} diperbarui` }));
+        res.end(JSON.stringify({ ok: true, synced: true, message: `Pesanan #${targetId} diperbarui` }));
       } catch (err) {
         res.writeHead(400, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ ok: false, error: err.message }));
@@ -267,12 +293,20 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // 4. DELETE /api/orders/:id -> Delete order
-  if (pathname.startsWith('/api/orders/') && req.method === 'DELETE') {
-    const orderId = pathname.replace('/api/orders/', '');
+  // 4. DELETE /api/orders/:id or /api/orders?id=... or /api/orders?all=true
+  if ((pathname === '/api/orders' || pathname.startsWith('/api/orders/')) && req.method === 'DELETE') {
+    if (parsedUrl.searchParams.get('all') === 'true') {
+      clearAllOrdersFromDb();
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ ok: true, synced: true, cleared: true }));
+      return;
+    }
+    const orderId = pathname.startsWith('/api/orders/')
+      ? decodeURIComponent(pathname.replace('/api/orders/', ''))
+      : parsedUrl.searchParams.get('id');
     deleteOrderFromDb(orderId);
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ ok: true, message: `Pesanan #${orderId} dihapus dari database` }));
+    res.end(JSON.stringify({ ok: true, synced: true, message: `Pesanan #${orderId} dihapus dari database` }));
     return;
   }
 

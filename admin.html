@@ -25,9 +25,9 @@
                 <img src="assets/images/logo.webp" alt="MatchaTcih Logo" class="logo-mark-img" width="32" height="32">
                 <span>MatchaTcih<span class="dot">.</span></span>
             </div>
-            <div class="admin-live-badge">
+            <div class="admin-live-badge" id="sync-status-badge">
                 <span class="pulse-dot"></span>
-                <span>Live Kitchen Monitor</span>
+                <span id="sync-status-text">Live Kitchen Monitor</span>
             </div>
         </div>
 
@@ -76,6 +76,8 @@
         <section class="admin-filter-bar">
             <div class="filter-tabs">
                 <button class="filter-tab active" data-filter="all">Semua Pesanan</button>
+                <button class="filter-tab" data-filter="unpaid">Belum Bayar</button>
+                <button class="filter-tab" data-filter="paid">Sudah Bayar</button>
                 <button class="filter-tab" data-filter="brewing">Sedang Diseduh</button>
                 <button class="filter-tab" data-filter="completed">Selesai</button>
             </div>

@@ -128,8 +128,7 @@ export class CartManager {
         if (this.checkoutBtn) {
             this.checkoutBtn.addEventListener('click', async () => {
                 if (!this.items.length) {
-                    const emptyMsg = window.i18nManager?.t('cart_alert_empty') || 'Keranjang pesanan masih kosong. Silakan pilih menu matcha terlebih dahulu!';
-                    this.showNotice(emptyMsg, 'warning');
+                    this.showNotice('Keranjang masih kosong', 'warning');
                     return;
                 }
 
@@ -146,7 +145,7 @@ export class CartManager {
                     if (nameInput) {
                         nameInput.focus();
                     }
-                    this.showNotice('Silakan masukkan Nama Pemesan terlebih dahulu sebelum melanjutkan!', 'warning');
+                    this.showNotice('Masukkan Nama Pemesan dahulu', 'warning');
                     return;
                 }
 
@@ -159,6 +158,7 @@ export class CartManager {
                     id: orderId, // ID Pemesanan
                     customerName: rawName, // Nama Pemesan
                     status: 'brewing',
+                    paymentStatus: 'unpaid', // Default: Belum Bayar
                     table: 'Kiosk Order #' + Math.floor(1 + Math.random() * 20),
                     items: JSON.parse(JSON.stringify(this.items)), // Nama Menu Yang Dipesan & Rincian
                     totalQty: totalQty, // Jumlah
