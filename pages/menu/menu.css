@@ -540,23 +540,9 @@ body.menu-active #swipe-to-sim-hint {
   border-radius: 4px;
 }
 
-/* Faint Whisk Watermark Stamp in Bottom Right of Card */
+/* Faint Whisk Watermark Stamp - Hidden to avoid collision with price label */
 .pantone-card-stamp {
-  position: absolute;
-  right: 0.65rem;
-  bottom: 0.65rem;
-  width: 20px;
-  height: 20px;
-  opacity: 0.22;
-  color: #103713;
-  pointer-events: none;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.pantone-card:hover .pantone-card-stamp {
-  opacity: 0.45;
-  transform: rotate(15deg);
-  color: #628B35;
+  display: none !important;
 }
 
 /* ==========================================================================

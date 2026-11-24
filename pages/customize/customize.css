@@ -1507,6 +1507,23 @@ html {
     gap: 0.45rem;
     width: 100% !important;
     box-sizing: border-box !important;
+    align-items: stretch !important;
+  }
+  /* Topping Options Equal Height Stretch - Chocolate Matches Vanilla Cloud Foam Height */
+  #topping-options {
+    align-items: stretch !important;
+  }
+  #topping-options .custom-pill {
+    display: flex !important;
+    height: 100% !important;
+  }
+  #topping-options .pill-box {
+    height: 100% !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
   }
   .custom-pill {
     min-width: 0 !important;
@@ -1596,22 +1613,24 @@ html {
     overflow: hidden !important;
   }
   .custom-price-breakdown {
-    min-width: 78px;
+    min-width: 72px;
     flex-shrink: 0;
     gap: 0;
+    padding-right: 4px;
   }
   .breakdown-label {
-    font-size: 0.56rem;
+    font-size: 0.54rem;
     letter-spacing: 0.04em;
     color: rgba(244, 237, 229, 0.6);
     line-height: 1;
     margin-bottom: 2px;
   }
   .breakdown-amount {
-    font-size: 1.1rem;
+    font-size: 0.96rem !important;
     font-weight: 900;
     color: #F4EDE5;
     line-height: 1.1;
+    white-space: nowrap;
   }
   .breakdown-sub {
     display: none;
