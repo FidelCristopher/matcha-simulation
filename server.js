@@ -205,7 +205,7 @@ const MIME_TYPES = {
 // HTTP Request Handler
 const server = http.createServer((req, res) => {
   const parsedUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
-  const pathname = decodeURIComponent(parsedUrl.pathname);
+  let pathname = decodeURIComponent(parsedUrl.pathname);
 
   // Set CORS headers for local development flexibility
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -310,7 +310,7 @@ const server = http.createServer((req, res) => {
   }
 
   // STATIC ASSET SERVING
-  // If customer visits root '/', direct to Kiosk (with full Thumbnail Attract Screensaver)
+  // If customer visits root '/', redirect directly to Kiosk (with full Thumbnail Attract Screensaver)
   if (pathname === '/') {
     res.writeHead(302, { 'Location': '/pages/menu/menu.html' });
     res.end();

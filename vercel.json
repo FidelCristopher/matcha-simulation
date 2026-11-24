@@ -1,7 +1,12 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/", "destination": "/pages/menu/menu.html", "permanent": false }
+  ],
   "rewrites": [
-    { "source": "/menu", "destination": "/index.html" },
+    { "source": "/menu", "destination": "/pages/menu/menu.html" },
+    { "source": "/customize", "destination": "/pages/customize/customize.html" },
+    { "source": "/admin", "destination": "/admin.html" },
     { "source": "/simulation", "destination": "/index.html" },
     { "source": "/home", "destination": "/index.html" }
   ]
