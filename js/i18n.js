@@ -79,7 +79,7 @@ export const TRANSLATIONS = {
         cart_title: "Your Cart",
         cart_empty_title: "Your cart is currently empty.",
         cart_empty_sub: "Craft a blend in the Simulation Lab or explore our Crafted Menu!",
-        cart_total_label: "Estimated Total",
+        cart_total_label: "Total Price",
         cart_checkout_btn: "Proceed to Checkout",
         cart_alert_empty: "Your cart is currently empty. Please add a matcha blend first!",
         cart_alert_success: "Thank you! Your order of ${total} is now being prepared by our tea masters."
@@ -159,7 +159,7 @@ export const TRANSLATIONS = {
         cart_title: "Keranjang Pesanan",
         cart_empty_title: "Keranjang masih kosong.",
         cart_empty_sub: "Pilih racikan di Simulation Page atau Menu Racikan!",
-        cart_total_label: "Total Estimasi",
+        cart_total_label: "Total Harga",
         cart_checkout_btn: "Checkout Pesanan",
         cart_alert_empty: "Keranjang Anda masih kosong. Silakan tambahkan menu racikan terlebih dahulu!",
         cart_alert_success: "Terima kasih! Pesanan Anda senilai ${total} sedang disiapkan oleh tea master kami."
