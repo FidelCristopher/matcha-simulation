@@ -15,3 +15,8 @@ Thumbs.db
 *.blend1
 assets/models/originals/
 
+# Local databases and journals
+*.sqlite
+*.sqlite-journal
+
+
