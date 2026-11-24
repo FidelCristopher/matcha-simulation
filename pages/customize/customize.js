@@ -181,7 +181,7 @@ export class CustomizeManager {
       'ice-matcha-brown-sugar': {
         name: 'ICE MATCHA BROWN SUGAR',
         pantone: 'SPECIMEN 731 C',
-        basePrice: 25000,
+        basePrice: 28000,
         base: 'matcha',
         milk: 'fresh',
         sugar: '70',
@@ -191,7 +191,7 @@ export class CustomizeManager {
       'matcha-brownsugar': {
         name: 'ICE MATCHA BROWN SUGAR',
         pantone: 'SPECIMEN 731 C',
-        basePrice: 25000,
+        basePrice: 28000,
         base: 'matcha',
         milk: 'fresh',
         sugar: '70',
@@ -201,7 +201,7 @@ export class CustomizeManager {
       'matcha-brown-sugar': {
         name: 'ICE MATCHA BROWN SUGAR',
         pantone: 'SPECIMEN 731 C',
-        basePrice: 25000,
+        basePrice: 28000,
         base: 'matcha',
         milk: 'fresh',
         sugar: '70',
@@ -447,11 +447,19 @@ export class CustomizeManager {
       else breakdownText += ` + Tanpa Susu (Rp 0)`;
 
       if (pricing.signatureExtra > 0) {
-        const sigName = this.currentDrinkId === 'ice-matcha-vanilla-foam' ? 'Vanilla Cloud Foam' : 'Lapisan Cokelat';
+        const isBrownSugarDrink = (
+          this.currentDrinkId === 'ice-matcha-brown-sugar' ||
+          this.currentDrinkId === 'matcha-brownsugar' ||
+          this.currentDrinkId === 'matcha-brown-sugar'
+        );
+        const sigName = this.currentDrinkId === 'ice-matcha-vanilla-foam'
+          ? 'Vanilla Cloud Foam'
+          : (this.currentDrinkId === 'ice-matcha-chocolate' ? 'Lapisan Cokelat' : 'Brown Sugar Syrup');
         breakdownText += ` + ${sigName} (+Rp 3.000)`;
         const additionalToppings = selectedToppings.filter(t => 
           (this.currentDrinkId === 'ice-matcha-chocolate' && t !== 'chocolate') ||
-          (this.currentDrinkId === 'ice-matcha-vanilla-foam' && t !== 'vanilla_foam')
+          (this.currentDrinkId === 'ice-matcha-vanilla-foam' && t !== 'vanilla_foam') ||
+          (isBrownSugarDrink && t !== 'brown_sugar')
         );
         if (additionalToppings.length > 0) {
           breakdownText += ` + ${additionalToppings.length} Topping Tambahan`;
@@ -659,9 +667,15 @@ export class CustomizeManager {
     if (milkVal === 'fresh') milkCost = 3000;
     else if (milkVal === 'oat' || milkVal === 'almond') milkCost = 5000;
 
+    const isBrownSugarDrink = (
+      this.currentDrinkId === 'ice-matcha-brown-sugar' ||
+      this.currentDrinkId === 'matcha-brownsugar' ||
+      this.currentDrinkId === 'matcha-brown-sugar'
+    );
     const isSignatureWithLayer = (
       (this.currentDrinkId === 'ice-matcha-chocolate' && selectedToppings.includes('chocolate')) ||
-      (this.currentDrinkId === 'ice-matcha-vanilla-foam' && selectedToppings.includes('vanilla_foam'))
+      (this.currentDrinkId === 'ice-matcha-vanilla-foam' && selectedToppings.includes('vanilla_foam')) ||
+      (isBrownSugarDrink && selectedToppings.includes('brown_sugar'))
     );
     const signatureExtra = (baseVal && isSignatureWithLayer) ? 3000 : 0;
     const extraToppings = 0; // Topping gratis / tanpa biaya tambahan
