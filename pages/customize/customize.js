@@ -40,9 +40,9 @@ export class CustomizeManager {
     this.sketchChoco = this.root.querySelector('#sketch-topping-choco');
     this.sketchBrownSugar = this.root.querySelector('#sketch-topping-brownsugar');
     this.sketchIceLayer = this.root.querySelector('#sketch-ice-layer');
+    this.sketchExtraFrost = this.root.querySelector('#sketch-extra-frost');
     this.sketchSteam = this.root.querySelector('#sketch-hot-steam');
     this.sketchIceCubes = this.root.querySelectorAll('.sketch-ice-cube');
-    this.extraIceCube = this.root.querySelector('#ice-cube-5');
 
     // Live Dynamic Tag Callouts
     this.tagFoam = this.root.querySelector('#tag-foam-label');
@@ -481,6 +481,7 @@ export class CustomizeManager {
       if (this.sketchOatDoodles) this.sketchOatDoodles.style.opacity = '0';
       if (this.sketchWaterRipples) this.sketchWaterRipples.style.opacity = '0';
       if (this.sketchSteam) this.sketchSteam.style.opacity = '0';
+      if (this.sketchExtraFrost) this.sketchExtraFrost.style.opacity = '0';
       if (this.sketchIceCubes) {
         this.sketchIceCubes.forEach(c => c.style.opacity = '0');
       }
@@ -567,11 +568,13 @@ export class CustomizeManager {
     // --- 3. ICE & TEMPERATURE LEVEL ---
     if (!iceVal) {
       if (this.sketchSteam) this.sketchSteam.style.opacity = '0';
+      if (this.sketchExtraFrost) this.sketchExtraFrost.style.opacity = '0';
       if (this.sketchIceCubes) {
         this.sketchIceCubes.forEach(cube => cube.style.opacity = '0');
       }
     } else if (iceVal === 'hot') {
       if (this.sketchSteam) this.sketchSteam.style.opacity = '1';
+      if (this.sketchExtraFrost) this.sketchExtraFrost.style.opacity = '0';
       if (this.sketchIceCubes) {
         this.sketchIceCubes.forEach(cube => cube.style.opacity = '0');
       }
@@ -582,26 +585,43 @@ export class CustomizeManager {
       const cube3 = this.root.querySelector('#ice-cube-3');
       const cube4 = this.root.querySelector('#ice-cube-4');
       const cube5 = this.root.querySelector('#ice-cube-5');
+      const cube6 = this.root.querySelector('#ice-cube-6');
+      const cube7 = this.root.querySelector('#ice-cube-7');
+      const cube8 = this.root.querySelector('#ice-cube-8');
 
       if (iceVal === 'less') {
+        // Less Ice: only 2 cubes floating
         if (cube1) cube1.style.opacity = '1';
         if (cube2) cube2.style.opacity = '1';
         if (cube3) cube3.style.opacity = '0';
         if (cube4) cube4.style.opacity = '0';
         if (cube5) cube5.style.opacity = '0';
+        if (cube6) cube6.style.opacity = '0';
+        if (cube7) cube7.style.opacity = '0';
+        if (cube8) cube8.style.opacity = '0';
+        if (this.sketchExtraFrost) this.sketchExtraFrost.style.opacity = '0';
       } else if (iceVal === 'extra') {
+        // Extra Ice: all 8 cubes stacked to the brim + cold frost condensation on glass!
         if (cube1) cube1.style.opacity = '1';
         if (cube2) cube2.style.opacity = '1';
         if (cube3) cube3.style.opacity = '1';
         if (cube4) cube4.style.opacity = '1';
         if (cube5) cube5.style.opacity = '1';
+        if (cube6) cube6.style.opacity = '1';
+        if (cube7) cube7.style.opacity = '1';
+        if (cube8) cube8.style.opacity = '1';
+        if (this.sketchExtraFrost) this.sketchExtraFrost.style.opacity = '1';
       } else {
-        // Normal ice (default: 4 cubes)
+        // Normal Ice (default: 3 cubes balanced)
         if (cube1) cube1.style.opacity = '1';
         if (cube2) cube2.style.opacity = '1';
         if (cube3) cube3.style.opacity = '1';
-        if (cube4) cube4.style.opacity = '1';
+        if (cube4) cube4.style.opacity = '0';
         if (cube5) cube5.style.opacity = '0';
+        if (cube6) cube6.style.opacity = '0';
+        if (cube7) cube7.style.opacity = '0';
+        if (cube8) cube8.style.opacity = '0';
+        if (this.sketchExtraFrost) this.sketchExtraFrost.style.opacity = '0';
       }
     }
 
