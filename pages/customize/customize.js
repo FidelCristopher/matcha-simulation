@@ -339,6 +339,25 @@ export class CustomizeManager {
   bindFormChangeListeners() {
     if (!this.form) return;
 
+    // Bulletproof click handler for mobile and touch devices
+    this.form.querySelectorAll('.custom-pill').forEach(pill => {
+      pill.addEventListener('click', (e) => {
+        const input = pill.querySelector('input');
+        if (!input) return;
+        if (input.type === 'radio') {
+          if (!input.checked) {
+            input.checked = true;
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        } else if (input.type === 'checkbox') {
+          if (e.target !== input) {
+            input.checked = !input.checked;
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        }
+      });
+    });
+
     this.form.addEventListener('change', (e) => {
       const hasBase = !!this.form.querySelector('input[name="custom_base"]:checked');
       if (hasBase) {

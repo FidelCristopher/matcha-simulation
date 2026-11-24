@@ -291,17 +291,25 @@
   position: relative;
   display: block;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .custom-pill input {
   position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   opacity: 0;
-  width: 0;
-  height: 0;
   margin: 0;
+  cursor: pointer;
+  z-index: 2;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .pill-box {
+  pointer-events: none;
   background: rgba(244, 237, 229, 0.14);
   border: 1.5px solid rgba(244, 237, 229, 0.3);
   border-radius: 9px;
@@ -1128,7 +1136,9 @@
     display: flex;
     flex-direction: column-reverse;
     min-height: 100vh;
+    height: auto;
     overflow-y: auto;
+    overflow-x: hidden;
   }
   .custom-split-poster-brand {
     display: none;
@@ -1158,8 +1168,10 @@
   /* Bottom Customization Controls on Tablets */
   .custom-left-panel {
     min-height: auto;
+    height: auto;
+    max-height: none;
     overflow-y: visible;
-    padding: 2.5rem 2.2rem 8.5rem !important;
+    padding: 2.2rem 2rem 8.5rem !important;
   }
   .custom-controls-form {
     max-width: 100%;
@@ -1356,8 +1368,10 @@
   /* Bottom Controls Panel on Mobile */
   .custom-left-panel {
     min-height: auto;
+    height: auto;
+    max-height: none;
     overflow-y: visible;
-    padding: 1.4rem 1.1rem 5.5rem;
+    padding: 1.4rem 1.1rem calc(85px + env(safe-area-inset-bottom)) !important;
   }
   .custom-top-nav {
     display: flex;
