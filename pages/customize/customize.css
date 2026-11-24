@@ -10,6 +10,10 @@
 /* ==========================================================================
    1. Global Architecture & Reset
    ========================================================================== */
+html {
+  height: 100%;
+}
+
 .custom-page-body {
   margin: 0;
   padding: 0;
@@ -18,8 +22,12 @@
   background-color: #F4EDE5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  min-height: 100vh;
+  height: auto !important;
   user-select: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 .custom-page-wrapper {
@@ -1132,13 +1140,19 @@
 
 /* Tablets Portrait & Large Foldables (681px - 860px) */
 @media (max-width: 860px) {
+  html, body.custom-page-body {
+    overflow-y: auto !important;
+    height: auto !important;
+    min-height: 100% !important;
+  }
+
   .custom-page-wrapper {
-    display: flex;
-    flex-direction: column-reverse;
-    min-height: 100vh;
-    height: auto;
-    overflow-y: auto;
-    overflow-x: hidden;
+    display: flex !important;
+    flex-direction: column-reverse !important;
+    min-height: 100vh !important;
+    height: auto !important;
+    overflow: visible !important;
+    overflow-x: hidden !important;
   }
   .custom-split-poster-brand {
     display: none;
@@ -1146,9 +1160,9 @@
   
   /* Top Tumbler Preview Stage on Tablets */
   .custom-right-panel {
-    min-height: 340px;
-    height: 380px;
-    padding: 2rem 1.5rem 1.2rem;
+    min-height: 320px;
+    height: 360px;
+    padding: 1.8rem 1.4rem 1rem;
     flex-shrink: 0;
   }
   .custom-glass-stage {
@@ -1156,7 +1170,7 @@
     height: 100%;
   }
   .tumbler-hero-img {
-    max-height: 290px;
+    max-height: 270px;
   }
   .ref-tumbler-shadow {
     width: 140px;
@@ -1167,11 +1181,12 @@
   
   /* Bottom Customization Controls on Tablets */
   .custom-left-panel {
-    min-height: auto;
-    height: auto;
-    max-height: none;
-    overflow-y: visible;
-    padding: 2.2rem 2rem 8.5rem !important;
+    min-height: auto !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+    overflow-x: hidden !important;
+    padding: 2.2rem 2rem calc(105px + env(safe-area-inset-bottom)) !important;
   }
   .custom-controls-form {
     max-width: 100%;
@@ -1295,11 +1310,19 @@
 
 /* Standard Smartphones (361px - 680px) */
 @media (max-width: 680px) {
+  html, body.custom-page-body {
+    overflow-y: auto !important;
+    height: auto !important;
+    min-height: 100% !important;
+  }
+
   .custom-page-wrapper {
-    display: flex;
-    flex-direction: column-reverse;
-    min-height: 100vh;
-    overflow-y: auto;
+    display: flex !important;
+    flex-direction: column-reverse !important;
+    min-height: 100vh !important;
+    height: auto !important;
+    overflow: visible !important;
+    overflow-x: hidden !important;
   }
   .custom-split-poster-brand {
     display: none;
@@ -1367,11 +1390,12 @@
   
   /* Bottom Controls Panel on Mobile */
   .custom-left-panel {
-    min-height: auto;
-    height: auto;
-    max-height: none;
-    overflow-y: visible;
-    padding: 1.4rem 1.1rem calc(85px + env(safe-area-inset-bottom)) !important;
+    min-height: auto !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+    overflow-x: hidden !important;
+    padding: 1.4rem 1.1rem calc(95px + env(safe-area-inset-bottom)) !important;
   }
   .custom-top-nav {
     display: flex;
