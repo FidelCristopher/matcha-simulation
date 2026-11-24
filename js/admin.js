@@ -25,6 +25,18 @@ export class AdminOrderMonitor {
         this.pdfBtn = document.querySelector('#export-pdf-btn');
         this.exportCountLabel = document.querySelector('#export-orders-count');
 
+        // Authentication Elements
+        this.authOverlay = document.querySelector('#admin-auth-overlay');
+        this.authCard = document.querySelector('#auth-card');
+        this.authForm = document.querySelector('#admin-auth-form');
+        this.userInput = document.querySelector('#admin-auth-user');
+        this.passInput = document.querySelector('#admin-auth-pass');
+        this.feedback = document.querySelector('#admin-auth-feedback');
+        this.togglePassBtn = document.querySelector('#auth-toggle-pass');
+        this.logoutBtn = document.querySelector('#admin-logout-btn');
+        this.adminMain = document.querySelector('.admin-main');
+        this.adminHeader = document.querySelector('.admin-header');
+
         // State
         this.currentFilter = 'all'; // 'all' | 'brewing' | 'completed'
         this.searchQuery = '';
@@ -34,10 +46,108 @@ export class AdminOrderMonitor {
     }
 
     init() {
+        this.initAuth();
         this.bindEvents();
         this.startClock();
         this.render();
         this.setupRealtimeSync();
+    }
+
+    initAuth() {
+        this.bindAuthEvents();
+        const isAuth = sessionStorage.getItem('matchatcih_admin_auth') === 'verified';
+        if (isAuth) {
+            this.unlockDashboard(false);
+        } else {
+            this.lockDashboard();
+        }
+    }
+
+    unlockDashboard(smooth = true) {
+        if (!this.authOverlay) return;
+        this.authOverlay.classList.add('unlocked');
+        if (this.adminMain) this.adminMain.style.filter = '';
+        if (this.adminHeader) this.adminHeader.style.filter = '';
+        if (smooth) {
+            setTimeout(() => {
+                if (this.authOverlay) this.authOverlay.style.display = 'none';
+            }, 400);
+        } else {
+            this.authOverlay.style.display = 'none';
+        }
+    }
+
+    lockDashboard() {
+        if (!this.authOverlay) return;
+        this.authOverlay.style.display = 'flex';
+        // Force reflow
+        void this.authOverlay.offsetWidth;
+        this.authOverlay.classList.remove('unlocked');
+        if (this.adminMain) this.adminMain.style.filter = 'blur(12px)';
+        if (this.adminHeader) this.adminHeader.style.filter = 'blur(12px)';
+        if (this.passInput) this.passInput.value = '';
+        if (this.userInput) {
+            this.userInput.value = '';
+            setTimeout(() => this.userInput.focus(), 100);
+        }
+        if (this.feedback) {
+            this.feedback.style.display = 'none';
+            this.feedback.textContent = '';
+        }
+    }
+
+    bindAuthEvents() {
+        // Toggle password show/hide
+        if (this.togglePassBtn && this.passInput) {
+            this.togglePassBtn.addEventListener('click', () => {
+                const isPassword = this.passInput.type === 'password';
+                this.passInput.type = isPassword ? 'text' : 'password';
+                const eyeOpen = this.togglePassBtn.querySelector('.eye-open');
+                const eyeClosed = this.togglePassBtn.querySelector('.eye-closed');
+                if (eyeOpen) eyeOpen.style.display = isPassword ? 'none' : 'block';
+                if (eyeClosed) eyeClosed.style.display = isPassword ? 'block' : 'none';
+            });
+        }
+
+        // Form Submit Authentication
+        if (this.authForm) {
+            this.authForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const user = (this.userInput?.value || '').trim();
+                const pass = (this.passInput?.value || '').trim();
+
+                // Strict Credentials verification: admin / matchatcih.enak
+                if (user === 'admin' && pass === 'matchatcih.enak') {
+                    sessionStorage.setItem('matchatcih_admin_auth', 'verified');
+                    this.unlockDashboard(true);
+                    this.playChime();
+                } else {
+                    if (this.feedback) {
+                        this.feedback.textContent = 'Username atau password salah. Akses ditolak!';
+                        this.feedback.style.display = 'block';
+                    }
+                    if (this.authCard) {
+                        this.authCard.classList.remove('shake');
+                        void this.authCard.offsetWidth; // trigger reflow
+                        this.authCard.classList.add('shake');
+                    }
+                    if (this.passInput) {
+                        this.passInput.value = '';
+                        this.passInput.focus();
+                    }
+                }
+            });
+        }
+
+        // Logout Button
+        if (this.logoutBtn) {
+            this.logoutBtn.addEventListener('click', () => {
+                if (confirm('Kunci dan keluar dari sesi dashboard admin?')) {
+                    sessionStorage.removeItem('matchatcih_admin_auth');
+                    this.lockDashboard();
+                }
+            });
+        }
     }
 
     loadOrders() {
