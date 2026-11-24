@@ -315,6 +315,7 @@ export class CustomizeManager {
   loadTemplate(drinkKey) {
     const tpl = this.templates[drinkKey] || this.templates['custom-drink'];
     this.currentDrinkId = drinkKey;
+    this.baseTemplateName = tpl.name;
     this.isScratch = !!tpl.isScratch;
     this.currentBasePrice = this.isScratch ? 0 : (tpl.basePrice || 22000);
 
@@ -429,6 +430,11 @@ export class CustomizeManager {
     this.currentBasePrice = pricing.baseCost;
     const finalTotal = pricing.total;
 
+    // Update Dynamic Drink Title (Hot vs Ice, Chocolate vs Matcha base)
+    if (this.titleEl) {
+      this.titleEl.textContent = this.getDynamicDrinkTitle(baseVal, iceVal);
+    }
+
     // Update UI Price Displays
     if (this.totalPriceEl) this.totalPriceEl.textContent = this.formatIDR(finalTotal);
     if (this.btnPriceDisplay) this.btnPriceDisplay.textContent = this.formatIDR(finalTotal);
@@ -446,28 +452,8 @@ export class CustomizeManager {
       else if (milkVal === 'oat' || milkVal === 'almond') breakdownText += ` + Oat Milk (+Rp 5.000)`;
       else breakdownText += ` + Tanpa Susu (Rp 0)`;
 
-      if (pricing.signatureExtra > 0) {
-        const isBrownSugarDrink = (
-          this.currentDrinkId === 'ice-matcha-brown-sugar' ||
-          this.currentDrinkId === 'matcha-brownsugar' ||
-          this.currentDrinkId === 'matcha-brown-sugar'
-        );
-        const sigName = this.currentDrinkId === 'ice-matcha-vanilla-foam'
-          ? 'Vanilla Cloud Foam'
-          : (this.currentDrinkId === 'ice-matcha-chocolate' ? 'Lapisan Cokelat' : 'Brown Sugar Syrup');
-        breakdownText += ` + ${sigName} (+Rp 3.000)`;
-        const additionalToppings = selectedToppings.filter(t => 
-          (this.currentDrinkId === 'ice-matcha-chocolate' && t !== 'chocolate') ||
-          (this.currentDrinkId === 'ice-matcha-vanilla-foam' && t !== 'vanilla_foam') ||
-          (isBrownSugarDrink && t !== 'brown_sugar')
-        );
-        if (additionalToppings.length > 0) {
-          breakdownText += ` + ${additionalToppings.length} Topping Tambahan`;
-        }
-      } else {
-        if (selectedToppings.length > 0) {
-          breakdownText += ` + ${selectedToppings.length} Topping`;
-        }
+      if (selectedToppings.length > 0) {
+        breakdownText += ` + ${selectedToppings.length} Topping (+${this.formatIDR(pricing.toppingsCost)})`;
       }
     }
     if (this.breakdownSubEl) this.breakdownSubEl.textContent = breakdownText;
@@ -659,6 +645,53 @@ export class CustomizeManager {
   }
 
   /**
+   * Helper: Compute dynamic drink title based on selected base (Matcha/Chocolate) & temperature (Hot/Ice)
+   */
+  getDynamicDrinkTitle(baseVal, iceVal) {
+    if (this.isScratch || !baseVal) {
+      return this.baseTemplateName || 'CUSTOM DRINK CRAFT';
+    }
+
+    let name = this.baseTemplateName || 'CUSTOM DRINK CRAFT';
+
+    if (this.currentDrinkId === 'custom-drink') {
+      const tempPrefix = iceVal ? (iceVal === 'hot' ? 'HOT' : 'ICE') : 'CUSTOM';
+      const baseLabel = baseVal === 'chocolate' ? 'CHOCOLATE' : 'MATCHA';
+      return `${tempPrefix} ${baseLabel} CRAFT`;
+    }
+
+    // 1. Temperature prefix: Hot vs Ice
+    if (iceVal === 'hot') {
+      if (/^(ICED?|HOT)\s+/i.test(name)) {
+        name = name.replace(/^(ICED?|HOT)\s+/i, 'HOT ');
+      } else {
+        name = `HOT ${name}`;
+      }
+    } else if (iceVal) {
+      if (/^HOT\s+/i.test(name)) {
+        name = name.replace(/^HOT\s+/i, 'ICE ');
+      }
+    }
+
+    // 2. Base flavor: Chocolate vs Matcha
+    if (baseVal === 'chocolate') {
+      if (/MATCHARICANO/i.test(name)) {
+        name = name.replace(/MATCHARICANO/i, 'CHOCOLATE');
+      } else if (/MATCHA\s+CHOCOLATE/i.test(name)) {
+        name = name.replace(/MATCHA\s+CHOCOLATE/i, 'DOUBLE CHOCOLATE');
+      } else {
+        name = name.replace(/MATCHA/i, 'CHOCOLATE');
+      }
+    } else if (baseVal === 'matcha') {
+      if (this.currentDrinkId === 'ice-chocolate') {
+        name = name.replace(/CHOCOLATE/i, 'MATCHA');
+      }
+    }
+
+    return name;
+  }
+
+  /**
    * Helper currency formatter
    */
   calculatePriceBreakdown(baseVal, milkVal, selectedToppings = []) {
@@ -667,21 +700,10 @@ export class CustomizeManager {
     if (milkVal === 'fresh') milkCost = 3000;
     else if (milkVal === 'oat' || milkVal === 'almond') milkCost = 5000;
 
-    const isBrownSugarDrink = (
-      this.currentDrinkId === 'ice-matcha-brown-sugar' ||
-      this.currentDrinkId === 'matcha-brownsugar' ||
-      this.currentDrinkId === 'matcha-brown-sugar'
-    );
-    const isSignatureWithLayer = (
-      (this.currentDrinkId === 'ice-matcha-chocolate' && selectedToppings.includes('chocolate')) ||
-      (this.currentDrinkId === 'ice-matcha-vanilla-foam' && selectedToppings.includes('vanilla_foam')) ||
-      (isBrownSugarDrink && selectedToppings.includes('brown_sugar'))
-    );
-    const signatureExtra = (baseVal && isSignatureWithLayer) ? 3000 : 0;
-    const extraToppings = 0; // Topping gratis / tanpa biaya tambahan
-    const total = baseCost + milkCost + signatureExtra + extraToppings;
+    const toppingsCost = selectedToppings.length * 3000;
+    const total = baseCost + milkCost + toppingsCost;
 
-    return { baseCost, milkCost, signatureExtra, extraToppings, total };
+    return { baseCost, milkCost, toppingsCost, total };
   }
 
   formatIDR(num) {
@@ -716,9 +738,10 @@ export class CustomizeManager {
       this.resetBtn.addEventListener('click', () => {
         this.isScratch = true;
         this.currentDrinkId = 'custom-drink';
+        this.baseTemplateName = 'CUSTOM DRINK CRAFT';
         this.currentBasePrice = 0;
 
-        if (this.titleEl) this.titleEl.textContent = 'CUSTOM MATCHA CRAFT';
+        if (this.titleEl) this.titleEl.textContent = 'CUSTOM DRINK CRAFT';
         if (this.pantoneCodeEl) this.pantoneCodeEl.textContent = 'CRAFT LAB • DARI AWAL';
         if (this.badgeEl) this.badgeEl.textContent = 'Custom Craft • Dari Gelas Kosong';
 
