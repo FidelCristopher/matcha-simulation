@@ -241,9 +241,9 @@ export class CustomizeManager {
       }
     });
 
-    this.detectInitialPreset();
     this.bindFormChangeListeners();
     this.bindActions();
+    this.detectInitialPreset();
     this.syncCartBadge();
     this.updateRecipeAndVisuals();
   }
@@ -523,11 +523,9 @@ export class CustomizeManager {
       if (this.tagMilk) {
         this.tagMilk.classList.add('visible');
         if (this.tagMilkText) {
-          if (isCustomOrScratch || this.currentDrinkId === 'ice-matcharicano') {
-            this.tagMilkText.textContent = milkVal === 'oat' ? '🌾 Oatly Oat Milk Layer (+Rp 4.000)' : '🥛 Fresh Milk Layer (+Rp 2.000)';
-          } else {
-            this.tagMilkText.textContent = milkVal === 'oat' ? '🌾 Oatly Oat Milk Layer (+Rp 2.000)' : '🥛 Fresh Milk Layer';
-          }
+          this.tagMilkText.textContent = milkVal === 'oat'
+            ? '🌾 Oatly Oat Milk Layer (+Rp 5.000)'
+            : '🥛 Fresh Milk Layer (+Rp 3.000)';
         }
       }
     }
