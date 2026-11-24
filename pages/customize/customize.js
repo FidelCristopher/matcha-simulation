@@ -166,7 +166,7 @@ export class CustomizeManager {
         milk: 'fresh',
         sugar: '70',
         ice: 'normal',
-        toppings: []
+        toppings: ['chocolate']
       },
       'ice-matcha-vanilla-foam': {
         name: 'ICE MATCHA VANILLA CLOUD FOAM',
@@ -176,7 +176,7 @@ export class CustomizeManager {
         milk: 'fresh',
         sugar: '70',
         ice: 'normal',
-        toppings: []
+        toppings: ['vanilla_foam']
       },
       'ice-matcha-brown-sugar': {
         name: 'ICE MATCHA BROWN SUGAR',
@@ -186,7 +186,7 @@ export class CustomizeManager {
         milk: 'fresh',
         sugar: '70',
         ice: 'normal',
-        toppings: []
+        toppings: ['brown_sugar']
       },
       'matcha-brownsugar': {
         name: 'ICE MATCHA BROWN SUGAR',
@@ -196,7 +196,7 @@ export class CustomizeManager {
         milk: 'fresh',
         sugar: '70',
         ice: 'normal',
-        toppings: []
+        toppings: ['brown_sugar']
       },
       'matcha-brown-sugar': {
         name: 'ICE MATCHA BROWN SUGAR',
@@ -206,7 +206,7 @@ export class CustomizeManager {
         milk: 'fresh',
         sugar: '70',
         ice: 'normal',
-        toppings: []
+        toppings: ['brown_sugar']
       },
       'ice-chocolate': {
         name: 'ICE CHOCOLATE',
@@ -449,10 +449,17 @@ export class CustomizeManager {
       if (pricing.signatureExtra > 0) {
         const sigName = this.currentDrinkId === 'ice-matcha-vanilla-foam' ? 'Vanilla Cloud Foam' : 'Lapisan Cokelat';
         breakdownText += ` + ${sigName} (+Rp 3.000)`;
-      }
-
-      if (selectedToppings.length > 0) {
-        breakdownText += ` + ${selectedToppings.length} Topping`;
+        const additionalToppings = selectedToppings.filter(t => 
+          (this.currentDrinkId === 'ice-matcha-chocolate' && t !== 'chocolate') ||
+          (this.currentDrinkId === 'ice-matcha-vanilla-foam' && t !== 'vanilla_foam')
+        );
+        if (additionalToppings.length > 0) {
+          breakdownText += ` + ${additionalToppings.length} Topping Tambahan`;
+        }
+      } else {
+        if (selectedToppings.length > 0) {
+          breakdownText += ` + ${selectedToppings.length} Topping`;
+        }
       }
     }
     if (this.breakdownSubEl) this.breakdownSubEl.textContent = breakdownText;
@@ -605,10 +612,7 @@ export class CustomizeManager {
     }
 
     // --- 4. TOPPINGS (Vanilla Cloud Foam & Chocolate Bottom Layer) ---
-    const isVanillaPreset = (this.currentDrinkId === 'ice-matcha-vanilla-foam' && !isCupCompletelyBlank);
-    const isChocoPreset = (this.currentDrinkId === 'ice-matcha-chocolate' && !isCupCompletelyBlank);
-
-    const hasFoam = selectedToppings.includes('vanilla_foam') || isVanillaPreset;
+    const hasFoam = selectedToppings.includes('vanilla_foam');
     if (this.sketchFoam) {
       this.sketchFoam.style.opacity = hasFoam ? '1' : '0';
     }
@@ -620,7 +624,7 @@ export class CustomizeManager {
       }
     }
 
-    const hasChoco = selectedToppings.includes('chocolate') || isChocoPreset;
+    const hasChoco = selectedToppings.includes('chocolate');
     if (this.sketchChoco) {
       this.sketchChoco.style.opacity = hasChoco ? '1' : '0';
     }
@@ -633,13 +637,7 @@ export class CustomizeManager {
     }
 
     // --- 5. TOPPING: BROWN SUGAR TIGER DRIPS ---
-    const isBrownSugarPreset = (
-      this.currentDrinkId === 'ice-matcha-brown-sugar' ||
-      this.currentDrinkId === 'matcha-brownsugar' ||
-      this.currentDrinkId === 'matcha-brown-sugar'
-    ) && !isCupCompletelyBlank;
-
-    const hasBrownSugar = selectedToppings.includes('brown_sugar') || isBrownSugarPreset;
+    const hasBrownSugar = selectedToppings.includes('brown_sugar');
     if (this.sketchBrownSugar) {
       this.sketchBrownSugar.style.opacity = hasBrownSugar ? '1' : '0';
     }
@@ -662,8 +660,8 @@ export class CustomizeManager {
     else if (milkVal === 'oat' || milkVal === 'almond') milkCost = 5000;
 
     const isSignatureWithLayer = (
-      this.currentDrinkId === 'ice-matcha-chocolate' ||
-      this.currentDrinkId === 'ice-matcha-vanilla-foam'
+      (this.currentDrinkId === 'ice-matcha-chocolate' && selectedToppings.includes('chocolate')) ||
+      (this.currentDrinkId === 'ice-matcha-vanilla-foam' && selectedToppings.includes('vanilla_foam'))
     );
     const signatureExtra = (baseVal && isSignatureWithLayer) ? 3000 : 0;
     const extraToppings = 0; // Topping gratis / tanpa biaya tambahan
