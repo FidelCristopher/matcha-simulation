@@ -522,16 +522,12 @@ body.menu-active #swipe-to-sim-hint {
 .pantone-code-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 0.5rem;
 }
 
 .pantone-code {
-  font-family: 'DM Sans', monospace, sans-serif;
-  font-weight: 700;
-  font-size: clamp(0.75rem, 0.95vw, 0.84rem);
-  color: #628B35;
-  letter-spacing: 0.03em;
+  display: none !important;
 }
 
 .pantone-price {
