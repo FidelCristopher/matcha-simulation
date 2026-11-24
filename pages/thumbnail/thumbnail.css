@@ -494,6 +494,9 @@ body.thumbnail-active {
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     pointer-events: none;
     z-index: 3;
@@ -512,9 +515,10 @@ body.thumbnail-active {
 .thumb-backdrop-title span {
     display: inline-block;
     font-family: 'Syne', var(--font-heading, 'Outfit', sans-serif);
-    font-size: clamp(5.5rem, 18vw, 15rem);
+    font-size: clamp(4.5rem, 13.5vw, 12rem);
     font-weight: 900;
-    letter-spacing: clamp(0.08em, 2vw, 0.20em);
+    letter-spacing: clamp(0.06em, 1.4vw, 0.15em);
+    padding-left: clamp(0.06em, 1.4vw, 0.15em);
     text-transform: uppercase;
     line-height: 0.85;
     color: rgba(98, 139, 53, 0.20);
@@ -1304,6 +1308,7 @@ body.thumbnail-active {
     .thumb-backdrop-title span {
         font-size: clamp(3.2rem, 16vw, 6.5rem);
         letter-spacing: 0.10em;
+        padding-left: 0.10em;
         filter: blur(1.2px);
         -webkit-filter: blur(1.2px);
     }
@@ -1418,6 +1423,7 @@ body.thumbnail-active {
     .thumb-backdrop-title span {
         font-size: clamp(2.5rem, 15vw, 4.5rem);
         letter-spacing: 0.08em;
+        padding-left: 0.08em;
     }
     .thumb-cup-img {
         height: clamp(190px, 30vh, 255px);
