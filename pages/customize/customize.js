@@ -656,27 +656,17 @@ export class CustomizeManager {
     let name = this.baseTemplateName || 'CUSTOM DRINK CRAFT';
 
     if (this.currentDrinkId === 'custom-drink') {
-      const tempPrefix = iceVal ? (iceVal === 'hot' ? 'NO ICE' : 'ICE') : 'CUSTOM';
       const baseLabel = baseVal === 'chocolate'
         ? (hasChocoTopping ? 'DOUBLE CHOCOLATE' : 'CHOCOLATE')
         : 'MATCHA';
+      if (iceVal === 'hot') {
+        return `${baseLabel} CRAFT`;
+      }
+      const tempPrefix = iceVal ? 'ICE' : 'CUSTOM';
       return `${tempPrefix} ${baseLabel} CRAFT`;
     }
 
-    // 1. Temperature prefix: No Ice vs Ice
-    if (iceVal === 'hot') {
-      if (/^(ICED?|HOT|NO ICE)\s+/i.test(name)) {
-        name = name.replace(/^(ICED?|HOT|NO ICE)\s+/i, 'NO ICE ');
-      } else {
-        name = `NO ICE ${name}`;
-      }
-    } else if (iceVal) {
-      if (/^(HOT|NO ICE)\s+/i.test(name)) {
-        name = name.replace(/^(HOT|NO ICE)\s+/i, 'ICE ');
-      }
-    }
-
-    // 2. Base flavor: Chocolate vs Matcha
+    // 1. Base flavor: Chocolate vs Matcha
     if (baseVal === 'chocolate') {
       if (/MATCHARICANO/i.test(name)) {
         name = name.replace(/MATCHARICANO/i, 'CHOCOLATE');
@@ -691,13 +681,27 @@ export class CustomizeManager {
       } else if (!hasChocoTopping && /DOUBLE\s+CHOCOLATE/i.test(name)) {
         name = name.replace(/DOUBLE\s+CHOCOLATE/i, 'CHOCOLATE');
       }
+
+      // Drop "LATTE" when base is Chocolate (e.g. "ICE CHOCOLATE LATTE" -> "ICE CHOCOLATE")
+      name = name.replace(/\s+LATTE\b/i, '');
     } else if (baseVal === 'matcha') {
       if (this.currentDrinkId === 'ice-chocolate') {
         name = name.replace(/CHOCOLATE/i, 'MATCHA');
       }
     }
 
-    return name;
+    // 2. Temperature prefix: No Ice removes ICE/HOT prefix; Ice levels keep/add ICE prefix
+    if (iceVal === 'hot') {
+      name = name.replace(/^(ICED?|HOT|NO ICE)\s+/i, '');
+    } else if (iceVal) {
+      if (/^(HOT|NO ICE)\s+/i.test(name)) {
+        name = name.replace(/^(HOT|NO ICE)\s+/i, 'ICE ');
+      } else if (!/^ICED?\s+/i.test(name)) {
+        name = `ICE ${name}`;
+      }
+    }
+
+    return name.trim();
   }
 
   /**
