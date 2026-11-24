@@ -432,7 +432,7 @@ export class CustomizeManager {
 
     // Update Dynamic Drink Title (Hot vs Ice, Chocolate vs Matcha base)
     if (this.titleEl) {
-      this.titleEl.textContent = this.getDynamicDrinkTitle(baseVal, iceVal);
+      this.titleEl.textContent = this.getDynamicDrinkTitle(baseVal, iceVal, selectedToppings);
     }
 
     // Update UI Price Displays
@@ -645,18 +645,21 @@ export class CustomizeManager {
   }
 
   /**
-   * Helper: Compute dynamic drink title based on selected base (Matcha/Chocolate) & temperature (Hot/Ice)
+   * Helper: Compute dynamic drink title based on selected base (Matcha/Chocolate), temperature (Hot/Ice), & toppings
    */
-  getDynamicDrinkTitle(baseVal, iceVal) {
+  getDynamicDrinkTitle(baseVal, iceVal, selectedToppings = []) {
     if (this.isScratch || !baseVal) {
       return this.baseTemplateName || 'CUSTOM DRINK CRAFT';
     }
 
+    const hasChocoTopping = selectedToppings.includes('chocolate');
     let name = this.baseTemplateName || 'CUSTOM DRINK CRAFT';
 
     if (this.currentDrinkId === 'custom-drink') {
       const tempPrefix = iceVal ? (iceVal === 'hot' ? 'HOT' : 'ICE') : 'CUSTOM';
-      const baseLabel = baseVal === 'chocolate' ? 'CHOCOLATE' : 'MATCHA';
+      const baseLabel = baseVal === 'chocolate'
+        ? (hasChocoTopping ? 'DOUBLE CHOCOLATE' : 'CHOCOLATE')
+        : 'MATCHA';
       return `${tempPrefix} ${baseLabel} CRAFT`;
     }
 
@@ -681,6 +684,12 @@ export class CustomizeManager {
         name = name.replace(/MATCHA\s+CHOCOLATE/i, 'DOUBLE CHOCOLATE');
       } else {
         name = name.replace(/MATCHA/i, 'CHOCOLATE');
+      }
+
+      if (hasChocoTopping && !/DOUBLE\s+CHOCOLATE/i.test(name)) {
+        name = name.replace(/CHOCOLATE/i, 'DOUBLE CHOCOLATE');
+      } else if (!hasChocoTopping && /DOUBLE\s+CHOCOLATE/i.test(name)) {
+        name = name.replace(/DOUBLE\s+CHOCOLATE/i, 'CHOCOLATE');
       }
     } else if (baseVal === 'matcha') {
       if (this.currentDrinkId === 'ice-chocolate') {
