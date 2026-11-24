@@ -150,7 +150,6 @@ export class CartManager {
                     return;
                 }
 
-                const total = this.calculateTotal().toFixed(2);
                 const totalIDR = this.calculateTotalIDR();
                 const totalQty = this.getTotalCount();
                 const orderId = 'MTC-' + Math.floor(1000 + Math.random() * 9000);
@@ -163,7 +162,7 @@ export class CartManager {
                     table: 'Kiosk Order #' + Math.floor(1 + Math.random() * 20),
                     items: JSON.parse(JSON.stringify(this.items)), // Nama Menu Yang Dipesan & Rincian
                     totalQty: totalQty, // Jumlah
-                    total: parseFloat(total),
+                    total: totalIDR,
                     totalIDR: totalIDR, // Total Harga
                     totalFormattedIDR: `Rp ${totalIDR.toLocaleString('id-ID')}`,
                     timestamp: new Date().toISOString(),
@@ -217,14 +216,23 @@ export class CartManager {
     addItem(item) {
         // Check if identical item already exists (by name & spec)
         const existing = this.items.find(i => i.name === item.name && i.spec === item.spec);
+        let rawPrice = item.priceIDR || item.price || 25000;
+        if (typeof rawPrice === 'string') {
+            rawPrice = parseInt(rawPrice.replace(/[^0-9]/g, ''), 10) || 25000;
+        }
+        const priceIDR = (rawPrice > 0 && rawPrice < 500) ? Math.round(rawPrice * 5300) : Math.round(rawPrice);
+
         if (existing) {
             existing.qty += (item.qty || 1);
+            existing.priceIDR = priceIDR;
+            existing.price = priceIDR;
         } else {
             this.items.push({
                 id: 'item-' + Date.now(),
                 name: item.name || 'Matcha Blend',
                 spec: item.spec || 'Standard Spec',
-                price: parseFloat(item.price) || 4.50,
+                price: priceIDR,
+                priceIDR: priceIDR,
                 qty: item.qty || 1
             });
         }
@@ -256,7 +264,7 @@ export class CartManager {
     }
 
     calculateTotal() {
-        return this.items.reduce((sum, item) => sum + (item.price * item.qty), 0);
+        return this.calculateTotalIDR();
     }
 
     getTotalCount() {
@@ -265,8 +273,9 @@ export class CartManager {
 
     calculateTotalIDR() {
         return this.items.reduce((sum, item) => {
-            if (item.priceIDR) return sum + (item.priceIDR * item.qty);
-            return sum + (Math.round((item.price || 4.5) * 5300) * item.qty);
+            const raw = item.priceIDR || item.price || 25000;
+            const p = (raw > 0 && raw < 500) ? Math.round(raw * 5300) : Math.round(raw);
+            return sum + (p * item.qty);
         }, 0);
     }
 
@@ -322,9 +331,9 @@ export class CartManager {
             this.items.forEach((item, idx) => {
                 const itemElem = document.createElement('div');
                 itemElem.className = 'cart-item';
-                const itemPriceStr = item.priceIDR 
-                    ? `Rp ${(item.priceIDR * item.qty).toLocaleString('id-ID')}`
-                    : `Rp ${(Math.round(item.price * 5300) * item.qty).toLocaleString('id-ID')}`;
+                const raw = item.priceIDR || item.price || 25000;
+                const p = (raw > 0 && raw < 500) ? Math.round(raw * 5300) : Math.round(raw);
+                const itemPriceStr = `Rp ${(p * item.qty).toLocaleString('id-ID')}`;
                 itemElem.innerHTML = `
                     <div class="cart-item-info">
                         <span class="cart-item-name">${item.name}</span>

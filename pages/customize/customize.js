@@ -764,7 +764,7 @@ export class CustomizeManager {
       this.showToast('Silakan pilih bahan minuman terlebih dahulu!');
       return;
     }
-    const finalPriceUSD = parseFloat((finalPriceIDR / 5300).toFixed(2));
+    const finalPrice = Math.round(finalPriceIDR);
 
     const itemTitle = this.titleEl?.textContent || 'Custom Drink';
     const specDetails = `${baseNames[baseVal] || baseVal}, ${milkNames[milkVal] || milkVal}, ${sugarVal}% Gula, ${iceNames[iceVal] || iceVal}${toppingsSummary ? ' • ' + toppingsSummary : ''}`;
@@ -772,8 +772,8 @@ export class CustomizeManager {
     const orderItem = {
       name: itemTitle,
       spec: specDetails,
-      price: finalPriceUSD,
-      priceIDR: finalPriceIDR,
+      price: finalPrice,
+      priceIDR: finalPrice,
       qty: 1
     };
 
