@@ -295,14 +295,22 @@ export class CustomizeManager {
     this.form.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
     this.form.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
 
-    // Keep clean milk pill descriptions
+    // Keep clean milk pill descriptions:
+    // In Full Custom Craft, Fresh Milk is +Rp 2.000 (tidak termasuk otomatis) and Oat Milk is +Rp 4.000
     const descFresh = this.form.querySelector('#desc-milk-fresh');
     const descOat = this.form.querySelector('#desc-milk-oat');
     const descNone = this.form.querySelector('#desc-milk-none');
 
-    if (descFresh) descFresh.textContent = 'Termasuk';
-    if (descOat) descOat.textContent = '+Rp 2.000';
-    if (descNone) descNone.textContent = 'Rp 0';
+    const isCustomOrScratch = (this.isScratch || this.currentDrinkId === 'custom-drink');
+    if (isCustomOrScratch) {
+      if (descFresh) descFresh.textContent = '+Rp 2.000';
+      if (descOat) descOat.textContent = '+Rp 4.000';
+      if (descNone) descNone.textContent = 'Rp 0';
+    } else {
+      if (descFresh) descFresh.textContent = 'Termasuk';
+      if (descOat) descOat.textContent = '+Rp 2.000';
+      if (descNone) descNone.textContent = 'Rp 0';
+    }
 
     // If template has specific presets (e.g. Ice Matcha Latte), set them; if scratch, leave all empty!
     if (!this.isScratch) {
@@ -364,20 +372,8 @@ export class CustomizeManager {
         this.isScratch = false;
       }
 
-      // If user is in custom drink, and chooses chocolate (either base or topping),
-      // auto-pair with Fresh Milk if milk is not yet selected ("untuk yang chocolate itu pakai freshmilk")
-      const target = e.target;
-      if (this.currentDrinkId === 'custom-drink' || this.isScratch) {
-        if ((target.name === 'custom_base' && target.value === 'chocolate') ||
-            (target.name === 'custom_toppings' && target.value === 'chocolate' && target.checked)) {
-          const milkChecked = this.form.querySelector('input[name="custom_milk"]:checked');
-          if (!milkChecked) {
-            const freshRadio = this.form.querySelector('input[name="custom_milk"][value="fresh"]');
-            if (freshRadio) freshRadio.checked = true;
-          }
-        }
-      }
-
+      // In full custom craft, all ingredients are explicitly chosen by customer
+      // without auto-forcing milk addition
       this.updateRecipeAndVisuals();
     });
   }
@@ -410,16 +406,16 @@ export class CustomizeManager {
         let baseCost = baseVal ? 22000 : 0;
         this.currentBasePrice = baseCost;
         let milkCost = 0;
-        if (milkVal === 'fresh') milkCost = 3000;
-        else if (milkVal === 'oat' || milkVal === 'almond') milkCost = 5000; // Fresh Milk (3k) + Oatmilk (+2k) = 5k
+        if (milkVal === 'fresh') milkCost = 2000;
+        else if (milkVal === 'oat' || milkVal === 'almond') milkCost = 4000;
         else milkCost = 0; // none or null
         finalTotal = baseCost + milkCost + extraToppings;
       }
     } else if (this.currentDrinkId === 'ice-matcharicano') {
       this.currentBasePrice = 22000;
       let milkCost = 0;
-      if (milkVal === 'fresh') milkCost = 3000;
-      else if (milkVal === 'oat' || milkVal === 'almond') milkCost = 5000;
+      if (milkVal === 'fresh') milkCost = 2000;
+      else if (milkVal === 'oat' || milkVal === 'almond') milkCost = 4000;
       else milkCost = 0;
       finalTotal = this.currentBasePrice + milkCost + extraToppings;
     } else if (this.currentDrinkId === 'ice-matcha-latte' || this.currentDrinkId === 'hot-traditional' || this.currentDrinkId === 'ice-chocolate') {
@@ -457,8 +453,13 @@ export class CustomizeManager {
         baseLabel = 'Ice Matcha Chocolate (Termasuk Cokelat)';
       }
       breakdownText = `${baseLabel} ${this.formatIDR(this.currentBasePrice)}`;
-      if (milkVal === 'fresh') breakdownText += ` + Fresh Milk (+Rp 3.000)`;
-      else if (milkVal === 'oat') breakdownText += ` + Susu Oat (+Rp 5.000)`;
+      if (isCustomOrScratch || this.currentDrinkId === 'ice-matcharicano') {
+        if (milkVal === 'fresh') breakdownText += ` + Fresh Milk (+Rp 2.000)`;
+        else if (milkVal === 'oat') breakdownText += ` + Susu Oat (+Rp 4.000)`;
+      } else {
+        if (milkVal === 'fresh') breakdownText += ` + Fresh Milk (Termasuk)`;
+        else if (milkVal === 'oat') breakdownText += ` + Susu Oat (+Rp 2.000)`;
+      }
       if (selectedToppings.length > 0) {
         breakdownText += ` + ${selectedToppings.length} Topping Tambahan (${this.formatIDR(extraToppings)})`;
       } else {
@@ -567,7 +568,11 @@ export class CustomizeManager {
       if (this.tagMilk) {
         this.tagMilk.classList.add('visible');
         if (this.tagMilkText) {
-          this.tagMilkText.textContent = milkVal === 'oat' ? '🌾 Oatly Oat Milk Layer (+Rp 2.000)' : '🥛 Fresh Milk Layer';
+          if (isCustomOrScratch || this.currentDrinkId === 'ice-matcharicano') {
+            this.tagMilkText.textContent = milkVal === 'oat' ? '🌾 Oatly Oat Milk Layer (+Rp 4.000)' : '🥛 Fresh Milk Layer (+Rp 2.000)';
+          } else {
+            this.tagMilkText.textContent = milkVal === 'oat' ? '🌾 Oatly Oat Milk Layer (+Rp 2.000)' : '🥛 Fresh Milk Layer';
+          }
         }
       }
     }
@@ -743,8 +748,8 @@ export class CustomizeManager {
     // Readable Names
     const baseNames = { matcha: 'Base Matcha', chocolate: 'Base Cokelat' };
     const milkNames = {
-      fresh: 'Fresh Milk',
-      oat: 'Oat Milk (+2k)',
+      fresh: (isCustomOrScratch || this.currentDrinkId === 'ice-matcharicano') ? 'Fresh Milk (+2k)' : 'Fresh Milk',
+      oat: (isCustomOrScratch || this.currentDrinkId === 'ice-matcharicano') ? 'Oat Milk (+4k)' : 'Oat Milk (+2k)',
       none: 'Tanpa Susu'
     };
     const iceNames = { hot: 'Hot (No Ice)', less: 'Less Ice', normal: 'Normal Ice', extra: 'Extra Ice' };
@@ -761,8 +766,8 @@ export class CustomizeManager {
 
     if (isCustomOrScratch || this.currentDrinkId === 'ice-matcharicano') {
       let milkCost = 0;
-      if (milkVal === 'fresh') milkCost = 3000;
-      else if (milkVal === 'oat' || milkVal === 'almond') milkCost = 5000;
+      if (milkVal === 'fresh') milkCost = 2000;
+      else if (milkVal === 'oat' || milkVal === 'almond') milkCost = 4000;
       finalPriceIDR = (baseVal ? 22000 : 0) + milkCost + extraToppings;
     } else if (this.currentDrinkId === 'ice-matcha-latte' || this.currentDrinkId === 'hot-traditional' || this.currentDrinkId === 'ice-chocolate') {
       let milkCost = 0;
