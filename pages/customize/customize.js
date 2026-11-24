@@ -812,7 +812,7 @@ export class CustomizeManager {
     }
 
     this.syncCartBadge();
-    this.showToast(`✓ Berhasil menambahkan ${itemTitle} ke keranjang!`);
+    this.showToast('✓ Masuk keranjang!');
 
     // Immediate button confirmation feedback
     if (navigator.vibrate) {

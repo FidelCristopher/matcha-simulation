@@ -1081,28 +1081,28 @@ html {
    ========================================================================== */
 .custom-toast {
   position: fixed;
-  top: 1.5rem;
+  top: 1.25rem;
   bottom: auto !important;
   left: 50%;
-  transform: translateX(-50%) translateY(-80px);
+  transform: translateX(-50%) translateY(-60px);
   background: #192b11;
   color: #F4EDE5;
   border: 1.5px solid #84cc16;
-  padding: 0.75rem 1.4rem;
+  padding: 0.5rem 1.15rem;
   border-radius: 9999px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), 0 0 20px rgba(132, 204, 22, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 12px rgba(132, 204, 22, 0.2);
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.5rem;
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   font-weight: 800;
   z-index: 99999 !important;
   opacity: 0;
   pointer-events: none;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
   white-space: nowrap;
-  max-width: 90vw;
+  max-width: fit-content;
 }
 
 .custom-toast.show {
@@ -1385,6 +1385,11 @@ html {
     right: -5px;
     bottom: 2px;
     filter: blur(10px);
+  }
+  
+  /* Hide floating layer callout tags on mobile to keep illustration 100% clean & unobstructed */
+  .recipe-floating-tags {
+    display: none !important;
   }
   
   /* Compact Floating Ingredient Tags on Mobile */
