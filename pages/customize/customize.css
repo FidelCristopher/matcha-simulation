@@ -1328,36 +1328,60 @@ html {
     display: none;
   }
   
-  /* Top Tumbler Stage on Mobile */
+  /* Top Tumbler Stage on Mobile - Entire Glass Fully Contained Without Cropping */
   .custom-right-panel {
-    min-height: 250px;
-    max-height: 310px;
-    height: 34vh;
-    padding: 1.2rem 1rem 0.8rem;
+    min-height: 220px;
+    max-height: 260px;
+    height: 30vh;
+    padding: 0.8rem 1rem 0.6rem;
     flex-shrink: 0;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
   .custom-preview-tag {
-    top: 0.85rem;
+    top: 0.65rem;
     right: 0.85rem;
-    padding: 0.22rem 0.65rem;
+    padding: 0.2rem 0.55rem;
   }
   .preview-tag-text {
-    font-size: 0.64rem;
+    font-size: 0.62rem;
   }
   .custom-glass-stage {
     min-height: auto;
     height: 100%;
-    max-width: 320px;
+    width: 100%;
+    max-width: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sketch-craft-wrapper {
+    width: auto !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    max-height: 210px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 auto !important;
+  }
+  .sketch-tumbler-hero {
+    height: 100% !important;
+    max-height: 210px !important;
+    width: auto !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
   }
   .tumbler-hero-img {
-    max-height: clamp(190px, 28vh, 240px);
+    max-height: 200px;
   }
   .ref-tumbler-shadow {
-    width: 110px;
-    height: 130px;
-    right: -10px;
+    width: 90px;
+    height: 100px;
+    right: -5px;
     bottom: 2px;
-    filter: blur(12px);
+    filter: blur(10px);
   }
   
   /* Compact Floating Ingredient Tags on Mobile */
@@ -1470,9 +1494,9 @@ html {
     font-size: 0.66rem;
   }
   
-  /* Checkout Bar on Mobile - Sticky Bottom Bar */
+  /* Checkout Bar on Mobile - Sleek, Compact & Properly Padded */
   .custom-left-panel {
-    padding-bottom: calc(85px + env(safe-area-inset-bottom)) !important;
+    padding-bottom: calc(72px + env(safe-area-inset-bottom)) !important;
   }
   .custom-checkout-bar {
     position: fixed;
@@ -1480,30 +1504,39 @@ html {
     left: 0;
     right: 0;
     z-index: 990;
-    background: rgba(23, 35, 14, 0.96);
+    background: rgba(23, 35, 14, 0.98);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(244, 237, 229, 0.22);
-    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.55);
-    padding: 0.7rem 1rem max(0.85rem, env(safe-area-inset-bottom));
+    border-top: 1px solid rgba(244, 237, 229, 0.2);
+    box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.5);
+    padding: 0.55rem 1rem max(0.65rem, env(safe-area-inset-bottom)) !important;
     margin-top: 0;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    gap: 0.65rem;
+    gap: 0.75rem;
     box-sizing: border-box;
+    height: auto;
+    min-height: 56px;
   }
   .custom-price-breakdown {
-    min-width: 95px;
+    min-width: 85px;
     flex-shrink: 0;
+    gap: 0;
   }
   .breakdown-label {
-    font-size: 0.6rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.05em;
+    color: rgba(244, 237, 229, 0.6);
+    line-height: 1;
+    margin-bottom: 2px;
   }
   .breakdown-amount {
-    font-size: 1.25rem;
-    font-weight: 800;
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #F4EDE5;
+    line-height: 1.1;
   }
   .breakdown-sub {
     display: none;
@@ -1519,20 +1552,36 @@ html {
   .btn-submit-order {
     flex-grow: 1;
     width: auto;
-    padding: 0.75rem 0.9rem;
-    font-size: 0.82rem;
-    justify-content: center;
+    height: 42px !important;
+    padding: 0 0.9rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 800;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.4rem !important;
     box-sizing: border-box;
-    border-radius: 10px;
+    border-radius: 8px !important;
+    white-space: nowrap !important;
+  }
+  .btn-text-mobile {
+    white-space: nowrap !important;
+    display: inline-block !important;
+    font-size: 0.8rem !important;
   }
   .btn-clear-custom {
     width: auto;
-    padding: 0.75rem 0.75rem;
-    font-size: 0.78rem;
-    justify-content: center;
+    height: 42px !important;
+    padding: 0 0.75rem !important;
+    font-size: 0.76rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.35rem !important;
     box-sizing: border-box;
-    border-radius: 10px;
+    border-radius: 8px !important;
     flex-shrink: 0;
+    white-space: nowrap !important;
   }
   
   .custom-float-controls,
