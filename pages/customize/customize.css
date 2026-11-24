@@ -1160,23 +1160,53 @@ html {
   
   /* Top Tumbler Preview Stage on Tablets */
   .custom-right-panel {
-    min-height: 320px;
-    height: 360px;
-    padding: 1.8rem 1.4rem 1rem;
+    min-height: 290px;
+    height: 320px;
+    padding: 1rem 1.4rem;
     flex-shrink: 0;
+    width: 100%;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box;
   }
   .custom-glass-stage {
     min-height: auto;
     height: 100%;
+    width: 100%;
+    max-width: 100%;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .sketch-craft-wrapper {
+    width: 210px !important;
+    height: 288px !important;
+    max-width: 210px !important;
+    max-height: 288px !important;
+    flex-shrink: 0 !important;
+    display: block !important;
+    position: relative !important;
+    margin: 0 auto !important;
+  }
+  .sketch-tumbler-hero {
+    display: block !important;
+    width: 210px !important;
+    height: 288px !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    margin: 0 auto !important;
   }
   .tumbler-hero-img {
     max-height: 270px;
   }
   .ref-tumbler-shadow {
-    width: 140px;
-    height: 160px;
-    right: -20px;
-    bottom: 4px;
+    width: 120px;
+    height: 145px;
+    left: 50%;
+    right: auto;
+    bottom: 6px;
+    transform: translateX(-30%) rotate(34deg) skewX(24deg);
   }
   
   /* Bottom Customization Controls on Tablets */
@@ -1334,16 +1364,18 @@ html {
     display: none;
   }
   
-  /* Top Tumbler Stage on Mobile - Entire Glass Fully Contained Without Cropping */
+  /* Top Tumbler Stage on Mobile - Entire Glass Fully Contained & Centered on iOS Safari & Android */
   .custom-right-panel {
-    min-height: 220px;
+    min-height: 230px;
+    height: 245px;
     max-height: 260px;
-    height: 30vh;
-    padding: 0.8rem 1rem 0.6rem;
+    width: 100% !important;
+    padding: 0.75rem 1rem;
     flex-shrink: 0;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    box-sizing: border-box !important;
   }
   .custom-preview-tag {
     top: 0.65rem;
@@ -1354,39 +1386,43 @@ html {
     font-size: 0.62rem;
   }
   .custom-glass-stage {
-    min-height: auto;
-    height: 100%;
-    width: 100%;
-    max-width: 280px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .sketch-craft-wrapper {
-    width: auto !important;
-    max-width: 100% !important;
+    min-height: auto !important;
     height: 100% !important;
-    max-height: 210px !important;
+    width: 100% !important;
+    max-width: 100% !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    position: relative !important;
+  }
+  .sketch-craft-wrapper {
+    width: 160px !important;
+    height: 220px !important;
+    max-width: 160px !important;
+    max-height: 220px !important;
+    flex-shrink: 0 !important;
+    display: block !important;
+    position: relative !important;
     margin: 0 auto !important;
   }
   .sketch-tumbler-hero {
-    height: 100% !important;
-    max-height: 210px !important;
-    width: auto !important;
+    display: block !important;
+    width: 160px !important;
+    height: 220px !important;
     max-width: 100% !important;
-    object-fit: contain !important;
+    max-height: 100% !important;
+    margin: 0 auto !important;
   }
   .tumbler-hero-img {
     max-height: 200px;
   }
   .ref-tumbler-shadow {
     width: 90px;
-    height: 100px;
-    right: -5px;
-    bottom: 2px;
+    height: 105px;
+    left: 50%;
+    right: auto;
+    bottom: 4px;
+    transform: translateX(-30%) rotate(34deg) skewX(24deg);
     filter: blur(10px);
   }
   
@@ -1689,30 +1725,11 @@ html {
     height: 14px !important;
     flex-shrink: 0 !important;
   }
-  .btn-text-mobile {
-    white-space: nowrap !important;
-    display: inline-block !important;
-    font-size: 0.8rem !important;
-  }
-  .btn-clear-custom {
-    width: auto;
-    height: 42px !important;
-    padding: 0 0.75rem !important;
-    font-size: 0.76rem !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 0.35rem !important;
-    box-sizing: border-box;
-    border-radius: 8px !important;
-    flex-shrink: 0;
-    white-space: nowrap !important;
-  }
   
   .custom-float-controls,
   .custom-float-actions {
-    top: 1rem;
-    right: 1rem;
+    top: max(0.85rem, env(safe-area-inset-top));
+    right: 0.85rem;
     bottom: auto;
     z-index: 1000;
   }
@@ -1727,34 +1744,47 @@ html {
 /* Compact / Narrow Mobile Phones (<= 360px - e.g. iPhone SE, Galaxy Fold outer screen) */
 @media (max-width: 360px) {
   .custom-right-panel {
-    height: 230px;
-    padding: 0.8rem 0.6rem 0.4rem;
+    min-height: 195px;
+    height: 210px;
+    max-height: 215px;
+    padding: 0.5rem 0.75rem;
+  }
+  .sketch-craft-wrapper {
+    width: 138px !important;
+    height: 190px !important;
+    max-width: 138px !important;
+    max-height: 190px !important;
+  }
+  .sketch-tumbler-hero {
+    width: 138px !important;
+    height: 190px !important;
   }
   .tumbler-hero-img {
     max-height: 175px;
   }
   .custom-left-panel {
-    padding: 1.2rem 0.85rem 4.5rem;
+    padding: 1.15rem 12px calc(76px + env(safe-area-inset-bottom)) 12px !important;
   }
   .custom-drink-name {
-    font-size: 1.35rem;
+    font-size: 1.3rem;
   }
   .breakdown-amount {
-    font-size: 1.65rem;
+    font-size: 0.9rem !important;
   }
   .pill-box {
-    padding: 0.5rem 0.65rem;
-    font-size: 0.78rem;
+    padding: 0.48rem 0.4rem;
+    font-size: 0.76rem;
   }
   .custom-float-controls,
   .custom-float-actions {
-    bottom: 0.85rem;
-    right: 0.85rem;
+    top: max(0.75rem, env(safe-area-inset-top));
+    right: 0.75rem;
+    bottom: auto;
   }
   .custom-cart-fab,
   .custom-float-btn {
-    padding: 0.55rem 0.85rem;
-    font-size: 0.72rem;
-    gap: 0.4rem;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.7rem;
+    gap: 0.35rem;
   }
 }
