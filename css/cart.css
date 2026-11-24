@@ -784,6 +784,61 @@
     }
 }
 
+/* Clear & Bold Quantity Stepper (- / +) in Cart Modal (All Devices) */
+.cart-item-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 0.45rem;
+}
+
+.cart-qty-ctrl {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: #F4EDE5;
+    border: 1.5px solid rgba(16, 55, 19, 0.22);
+    border-radius: 10px;
+    padding: 0.2rem 0.25rem;
+}
+
+.cart-qty-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1.5px solid #628B35;
+    background: #FFFFFF;
+    color: #103713;
+    font-family: 'Outfit', 'DM Sans', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.18s ease, color 0.18s ease, transform 0.12s ease;
+    box-shadow: 0 2px 5px rgba(16, 55, 19, 0.1);
+}
+
+.cart-qty-btn:hover,
+.cart-qty-btn:active {
+    background: #103713;
+    border-color: #103713;
+    color: #FFFDF5;
+    transform: scale(0.95);
+}
+
+.cart-qty-num {
+    min-width: 24px;
+    text-align: center;
+    font-family: 'Outfit', 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #103713;
+}
+
 /* Highlighted Red Delete Button in Cart (All Devices) */
 .cart-item-remove {
     background: rgba(239, 68, 68, 0.14);

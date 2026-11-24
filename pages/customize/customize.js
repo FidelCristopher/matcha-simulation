@@ -700,6 +700,156 @@ export class CustomizeManager {
         }
       });
     }
+
+    // Bind Mobile/Tablet Quantity Confirmation Pop-up Modal
+    this.qtyModalBackdrop = document.querySelector('#custom-qty-modal-backdrop');
+    this.qtyModalTitle = document.querySelector('#qty-modal-title');
+    this.qtyModalSpec = document.querySelector('#qty-modal-spec');
+    this.qtyModalValue = document.querySelector('#qty-modal-value');
+    this.qtyModalSubtotal = document.querySelector('#qty-modal-subtotal');
+    this.qtyModalMinus = document.querySelector('#qty-modal-minus');
+    this.qtyModalPlus = document.querySelector('#qty-modal-plus');
+    this.qtyModalClose = document.querySelector('#qty-modal-close-btn');
+    this.qtyModalContinueBtn = document.querySelector('#qty-modal-continue-btn');
+    this.qtyModalCheckoutBtn = document.querySelector('#qty-modal-checkout-btn');
+    this.pendingOrderItem = null;
+    this.pendingQty = 1;
+
+    if (this.qtyModalMinus) {
+      this.qtyModalMinus.addEventListener('click', () => {
+        if (this.pendingQty > 1) {
+          this.pendingQty--;
+          this.updateQtyModalUI();
+        }
+      });
+    }
+
+    if (this.qtyModalPlus) {
+      this.qtyModalPlus.addEventListener('click', () => {
+        if (this.pendingQty < 99) {
+          this.pendingQty++;
+          this.updateQtyModalUI();
+        }
+      });
+    }
+
+    if (this.qtyModalClose) {
+      this.qtyModalClose.addEventListener('click', () => this.closeQtyModal());
+    }
+
+    if (this.qtyModalBackdrop) {
+      this.qtyModalBackdrop.addEventListener('click', (e) => {
+        if (e.target === this.qtyModalBackdrop) this.closeQtyModal();
+      });
+    }
+
+    if (this.qtyModalContinueBtn) {
+      this.qtyModalContinueBtn.addEventListener('click', () => {
+        if (this.pendingOrderItem) {
+          this.commitOrderToCart(this.pendingOrderItem, this.pendingQty);
+        }
+        this.closeQtyModal();
+        try {
+          sessionStorage.setItem('matcha_kiosk_active', 'true');
+        } catch {}
+        if (window.pageNavigator && typeof window.pageNavigator.goToPage === 'function') {
+          window.pageNavigator.goToPage('menu', true);
+        } else {
+          const isPages = window.location.pathname.includes('/pages/');
+          const menuUrl = isPages ? '../menu/menu.html?show=menu' : 'pages/menu/menu.html?show=menu';
+          window.location.href = menuUrl;
+        }
+      });
+    }
+
+    if (this.qtyModalCheckoutBtn) {
+      this.qtyModalCheckoutBtn.addEventListener('click', () => {
+        if (this.pendingOrderItem) {
+          this.commitOrderToCart(this.pendingOrderItem, this.pendingQty);
+        }
+        this.closeQtyModal();
+        if (window.cartManager && typeof window.cartManager.open === 'function') {
+          window.cartManager.open();
+        } else {
+          const cartModal = document.querySelector('#cart-modal-backdrop');
+          if (cartModal) {
+            cartModal.classList.add('open');
+            cartModal.classList.add('active');
+          }
+        }
+      });
+    }
+  }
+
+  openQtyModal(orderItem) {
+    if (!this.qtyModalBackdrop) {
+      this.commitOrderToCart(orderItem, 1);
+      return;
+    }
+    this.pendingOrderItem = orderItem;
+    this.pendingQty = 1;
+    if (this.qtyModalTitle) this.qtyModalTitle.textContent = orderItem.name;
+    if (this.qtyModalSpec) this.qtyModalSpec.textContent = orderItem.spec;
+    this.updateQtyModalUI();
+    this.qtyModalBackdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeQtyModal() {
+    if (!this.qtyModalBackdrop) return;
+    this.qtyModalBackdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  updateQtyModalUI() {
+    if (this.qtyModalValue) this.qtyModalValue.textContent = String(this.pendingQty);
+    if (this.qtyModalSubtotal && this.pendingOrderItem) {
+      this.qtyModalSubtotal.textContent = this.formatIDR(this.pendingOrderItem.priceIDR * this.pendingQty);
+    }
+  }
+
+  commitOrderToCart(orderItem, qty = 1) {
+    const itemToAdd = { ...orderItem, qty: Math.max(1, parseInt(qty, 10) || 1) };
+
+    if (window.cartManager && typeof window.cartManager.addItem === 'function') {
+      window.cartManager.addItem(itemToAdd);
+    } else {
+      try {
+        const saved = JSON.parse(localStorage.getItem('matcha_cart') || '[]');
+        saved.push(itemToAdd);
+        localStorage.setItem('matcha_cart', JSON.stringify(saved));
+        window.dispatchEvent(new Event('storage'));
+        document.dispatchEvent(new CustomEvent('matcha:cart-updated'));
+      } catch (e) {
+        console.warn('Failed to save cart:', e);
+      }
+    }
+
+    this.syncCartBadge();
+    this.showToast(`✓ ${itemToAdd.qty}x masuk keranjang!`);
+
+    if (navigator.vibrate) {
+      try { navigator.vibrate(40); } catch (_) {}
+    }
+
+    if (this.submitBtn) {
+      const mobileTextEl = this.submitBtn.querySelector('.btn-text-mobile');
+      const desktopTextEl = this.submitBtn.querySelector('.btn-text-desktop');
+      const originalMobileText = mobileTextEl ? mobileTextEl.textContent : '+ Keranjang';
+      const originalDesktopHtml = desktopTextEl ? desktopTextEl.innerHTML : '';
+
+      if (mobileTextEl) mobileTextEl.textContent = '✓ Ditambahkan!';
+      if (desktopTextEl) desktopTextEl.textContent = '✓ Berhasil Masuk Keranjang!';
+      this.submitBtn.style.backgroundColor = '#4d7c0f';
+      this.submitBtn.style.color = '#ffffff';
+
+      setTimeout(() => {
+        if (mobileTextEl) mobileTextEl.textContent = originalMobileText;
+        if (desktopTextEl) desktopTextEl.innerHTML = originalDesktopHtml;
+        this.submitBtn.style.backgroundColor = '';
+        this.submitBtn.style.color = '';
+      }, 1800);
+    }
   }
 
   /**
@@ -715,8 +865,6 @@ export class CustomizeManager {
     const sugarVal = this.form.querySelector('input[name="custom_sugar"]:checked')?.value || '70';
     const iceVal = this.form.querySelector('input[name="custom_ice"]:checked')?.value || 'normal';
     const selectedToppings = Array.from(this.form.querySelectorAll('input[name="custom_toppings"]:checked')).map(c => c.value);
-
-    const isCustomOrScratch = (this.currentDrinkId === 'custom-drink' || this.isScratch);
 
     // Readable Names
     const baseNames = { matcha: 'Base Matcha', chocolate: 'Base Cokelat' };
@@ -752,45 +900,14 @@ export class CustomizeManager {
       qty: 1
     };
 
-    // Add to Global Cart Manager if present
-    if (window.cartManager && typeof window.cartManager.addItem === 'function') {
-      window.cartManager.addItem(orderItem);
-    } else {
-      try {
-        const saved = JSON.parse(localStorage.getItem('matcha_cart') || '[]');
-        saved.push(orderItem);
-        localStorage.setItem('matcha_cart', JSON.stringify(saved));
-        window.dispatchEvent(new Event('storage'));
-        document.dispatchEvent(new CustomEvent('matcha:cart-updated'));
-      } catch (e) {
-        console.warn('Failed to save cart:', e);
-      }
+    // On Mobile & Tablet layouts (<= 860px), show Quantity Confirmation Pop-up Modal
+    if (window.matchMedia('(max-width: 860px)').matches && this.qtyModalBackdrop) {
+      this.openQtyModal(orderItem);
+      return;
     }
 
-    this.syncCartBadge();
-    this.showToast('✓ Masuk keranjang!');
-
-    // Immediate button confirmation feedback
-    if (navigator.vibrate) {
-      try { navigator.vibrate(40); } catch (_) {}
-    }
-
-    const mobileTextEl = this.submitBtn.querySelector('.btn-text-mobile');
-    const desktopTextEl = this.submitBtn.querySelector('.btn-text-desktop');
-    const originalMobileText = mobileTextEl ? mobileTextEl.textContent : '+ Keranjang';
-    const originalDesktopHtml = desktopTextEl ? desktopTextEl.innerHTML : '';
-
-    if (mobileTextEl) mobileTextEl.textContent = '✓ Ditambahkan!';
-    if (desktopTextEl) desktopTextEl.textContent = '✓ Berhasil Masuk Keranjang!';
-    this.submitBtn.style.backgroundColor = '#4d7c0f';
-    this.submitBtn.style.color = '#ffffff';
-
-    setTimeout(() => {
-      if (mobileTextEl) mobileTextEl.textContent = originalMobileText;
-      if (desktopTextEl) desktopTextEl.innerHTML = originalDesktopHtml;
-      this.submitBtn.style.backgroundColor = '';
-      this.submitBtn.style.color = '';
-    }, 1800);
+    // Desktop layout: directly add to cart
+    this.commitOrderToCart(orderItem, 1);
   }
 
   /**

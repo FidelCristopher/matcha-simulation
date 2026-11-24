@@ -1788,3 +1788,260 @@ html {
     gap: 0.35rem;
   }
 }
+
+/* ==========================================================================
+   11. Mobile & Tablet Quantity Confirmation Pop-up Modal
+   Consistent MatchaTcih Palette (#FFFDF5, #F4EDE5, #103713, #628B35) & Fonts
+   ========================================================================== */
+.custom-qty-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  background: rgba(16, 55, 19, 0.52);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.28s ease, visibility 0.28s ease;
+}
+
+.custom-qty-modal-backdrop.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.custom-qty-modal-dialog {
+  width: 100%;
+  max-width: 400px;
+  background: #FFFDF5;
+  color: #103713;
+  border: 1.5px solid rgba(16, 55, 19, 0.14);
+  border-radius: 22px;
+  box-shadow: 0 24px 60px rgba(16, 55, 19, 0.32);
+  overflow: hidden;
+  transform: translateY(18px) scale(0.97);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.custom-qty-modal-backdrop.open .custom-qty-modal-dialog {
+  transform: translateY(0) scale(1);
+}
+
+.custom-qty-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1.25rem 1.35rem 0.9rem;
+  background: #F4EDE5;
+  border-bottom: 1px solid rgba(16, 55, 19, 0.1);
+}
+
+.qty-modal-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.qty-modal-eyebrow {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #628B35;
+  text-transform: uppercase;
+}
+
+.qty-modal-drink-name {
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.22rem;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  color: #103713;
+  line-height: 1.15;
+}
+
+.qty-modal-close {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(16, 55, 19, 0.16);
+  background: #FFFDF5;
+  color: #103713;
+  font-size: 1.3rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.qty-modal-close:hover {
+  background: #103713;
+  color: #FFFDF5;
+}
+
+.custom-qty-modal-body {
+  padding: 1.15rem 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.qty-modal-spec {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: rgba(16, 55, 19, 0.78);
+  background: rgba(132, 145, 89, 0.1);
+  border: 1px solid rgba(132, 145, 89, 0.22);
+  border-radius: 12px;
+  padding: 0.7rem 0.9rem;
+}
+
+.qty-stepper-block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.35rem 0;
+}
+
+.qty-stepper-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #103713;
+}
+
+.qty-stepper-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: #F4EDE5;
+  border: 1.5px solid rgba(16, 55, 19, 0.2);
+  border-radius: 14px;
+  padding: 0.3rem;
+}
+
+.qty-stepper-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  border: 2px solid #628B35;
+  background: #FFFFFF;
+  color: #103713;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 900;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(16, 55, 19, 0.12);
+  transition: background-color 0.18s ease, color 0.18s ease, transform 0.12s ease;
+  touch-action: manipulation;
+}
+
+.qty-stepper-btn:hover,
+.qty-stepper-btn:active {
+  background: #103713;
+  border-color: #103713;
+  color: #FFFDF5;
+  transform: scale(0.95);
+}
+
+.qty-stepper-value {
+  min-width: 36px;
+  text-align: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #103713;
+}
+
+.qty-subtotal-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-top: 0.85rem;
+  border-top: 1px dashed rgba(16, 55, 19, 0.18);
+}
+
+.qty-subtotal-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(16, 55, 19, 0.68);
+}
+
+.qty-subtotal-amount {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #103713;
+}
+
+.custom-qty-modal-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+  padding: 0 1.35rem 1.35rem;
+}
+
+.qty-action-btn {
+  height: 46px;
+  border-radius: 9999px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.qty-btn-continue {
+  background: #F4EDE5;
+  color: #103713;
+  border: 1.5px solid #628B35;
+}
+
+.qty-btn-continue:hover,
+.qty-btn-continue:active {
+  background: #e7ddd0;
+  border-color: #103713;
+}
+
+.qty-btn-checkout {
+  background: #628B35;
+  color: #FFFDF5;
+  border: 1.5px solid #628B35;
+  box-shadow: 0 6px 18px rgba(98, 139, 53, 0.35);
+}
+
+.qty-btn-checkout:hover,
+.qty-btn-checkout:active {
+  background: #103713;
+  border-color: #103713;
+  transform: translateY(-1px);
+}
+

@@ -564,6 +564,46 @@
     <span class="toast-msg" id="custom-toast-msg">Resep diperbarui</span>
   </div>
 
+  <!-- Mobile & Tablet Quantity Confirmation Pop-up Modal -->
+  <div id="custom-qty-modal-backdrop" class="custom-qty-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="qty-modal-title">
+    <div class="custom-qty-modal-dialog">
+      <div class="custom-qty-modal-header">
+        <div class="qty-modal-title-group">
+          <span class="qty-modal-eyebrow">KONFIRMASI PESANAN</span>
+          <h3 id="qty-modal-title" class="qty-modal-drink-name">ICE MATCHA LATTE</h3>
+        </div>
+        <button type="button" class="qty-modal-close" id="qty-modal-close-btn" aria-label="Tutup">&times;</button>
+      </div>
+
+      <div class="custom-qty-modal-body">
+        <p id="qty-modal-spec" class="qty-modal-spec">Base Matcha, Fresh Milk (+3k), 70% Gula, Normal Ice</p>
+
+        <div class="qty-stepper-block">
+          <span class="qty-stepper-label">JUMLAH PESANAN</span>
+          <div class="qty-stepper-control">
+            <button type="button" class="qty-stepper-btn" id="qty-modal-minus" aria-label="Kurangi jumlah">&minus;</button>
+            <span class="qty-stepper-value" id="qty-modal-value">1</span>
+            <button type="button" class="qty-stepper-btn" id="qty-modal-plus" aria-label="Tambah jumlah">+</button>
+          </div>
+        </div>
+
+        <div class="qty-subtotal-row">
+          <span class="qty-subtotal-label">Total Harga</span>
+          <span class="qty-subtotal-amount" id="qty-modal-subtotal">Rp 25.000</span>
+        </div>
+      </div>
+
+      <div class="custom-qty-modal-footer">
+        <button type="button" class="qty-action-btn qty-btn-continue" id="qty-modal-continue-btn">
+          Lanjut Belanja
+        </button>
+        <button type="button" class="qty-action-btn qty-btn-checkout" id="qty-modal-checkout-btn">
+          Checkout &rarr;
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Cart Pop-up Modal (Identical to Menu Page & Main Simulation) -->
   <div id="cart-modal-backdrop" class="cart-modal-backdrop">
     <div class="cart-modal-dialog">
