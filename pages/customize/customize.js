@@ -40,9 +40,11 @@ export class CustomizeManager {
     this.sketchChoco = this.root.querySelector('#sketch-topping-choco');
     this.sketchBrownSugar = this.root.querySelector('#sketch-topping-brownsugar');
     this.sketchIceLayer = this.root.querySelector('#sketch-ice-layer');
+    this.iceGroupLess = this.root.querySelector('#ice-group-less');
+    this.iceGroupNormal = this.root.querySelector('#ice-group-normal');
+    this.iceGroupExtra = this.root.querySelector('#ice-group-extra');
     this.sketchExtraFrost = this.root.querySelector('#sketch-extra-frost');
     this.sketchSteam = this.root.querySelector('#sketch-hot-steam');
-    this.sketchIceCubes = this.root.querySelectorAll('.sketch-ice-cube');
 
     // Live Dynamic Tag Callouts
     this.tagFoam = this.root.querySelector('#tag-foam-label');
@@ -482,9 +484,9 @@ export class CustomizeManager {
       if (this.sketchWaterRipples) this.sketchWaterRipples.style.opacity = '0';
       if (this.sketchSteam) this.sketchSteam.style.opacity = '0';
       if (this.sketchExtraFrost) this.sketchExtraFrost.style.opacity = '0';
-      if (this.sketchIceCubes) {
-        this.sketchIceCubes.forEach(c => c.style.opacity = '0');
-      }
+      if (this.iceGroupLess) this.iceGroupLess.style.opacity = '0';
+      if (this.iceGroupNormal) this.iceGroupNormal.style.opacity = '0';
+      if (this.iceGroupExtra) this.iceGroupExtra.style.opacity = '0';
       if (this.sketchFoam) this.sketchFoam.style.opacity = '0';
       if (this.sketchChoco) this.sketchChoco.style.opacity = '0';
       if (this.sketchBrownSugar) this.sketchBrownSugar.style.opacity = '0';
@@ -569,58 +571,35 @@ export class CustomizeManager {
     if (!iceVal) {
       if (this.sketchSteam) this.sketchSteam.style.opacity = '0';
       if (this.sketchExtraFrost) this.sketchExtraFrost.style.opacity = '0';
-      if (this.sketchIceCubes) {
-        this.sketchIceCubes.forEach(cube => cube.style.opacity = '0');
-      }
+      if (this.iceGroupLess) this.iceGroupLess.style.opacity = '0';
+      if (this.iceGroupNormal) this.iceGroupNormal.style.opacity = '0';
+      if (this.iceGroupExtra) this.iceGroupExtra.style.opacity = '0';
     } else if (iceVal === 'hot') {
       if (this.sketchSteam) this.sketchSteam.style.opacity = '1';
       if (this.sketchExtraFrost) this.sketchExtraFrost.style.opacity = '0';
-      if (this.sketchIceCubes) {
-        this.sketchIceCubes.forEach(cube => cube.style.opacity = '0');
-      }
+      if (this.iceGroupLess) this.iceGroupLess.style.opacity = '0';
+      if (this.iceGroupNormal) this.iceGroupNormal.style.opacity = '0';
+      if (this.iceGroupExtra) this.iceGroupExtra.style.opacity = '0';
     } else {
       if (this.sketchSteam) this.sketchSteam.style.opacity = '0';
-      const cube1 = this.root.querySelector('#ice-cube-1');
-      const cube2 = this.root.querySelector('#ice-cube-2');
-      const cube3 = this.root.querySelector('#ice-cube-3');
-      const cube4 = this.root.querySelector('#ice-cube-4');
-      const cube5 = this.root.querySelector('#ice-cube-5');
-      const cube6 = this.root.querySelector('#ice-cube-6');
-      const cube7 = this.root.querySelector('#ice-cube-7');
-      const cube8 = this.root.querySelector('#ice-cube-8');
 
       if (iceVal === 'less') {
-        // Less Ice: only 2 cubes floating
-        if (cube1) cube1.style.opacity = '1';
-        if (cube2) cube2.style.opacity = '1';
-        if (cube3) cube3.style.opacity = '0';
-        if (cube4) cube4.style.opacity = '0';
-        if (cube5) cube5.style.opacity = '0';
-        if (cube6) cube6.style.opacity = '0';
-        if (cube7) cube7.style.opacity = '0';
-        if (cube8) cube8.style.opacity = '0';
+        // Less Ice: cluster of 5 floating cubes naturally clustered near surface
+        if (this.iceGroupLess) this.iceGroupLess.style.opacity = '1';
+        if (this.iceGroupNormal) this.iceGroupNormal.style.opacity = '0';
+        if (this.iceGroupExtra) this.iceGroupExtra.style.opacity = '0';
         if (this.sketchExtraFrost) this.sketchExtraFrost.style.opacity = '0';
       } else if (iceVal === 'extra') {
-        // Extra Ice: all 8 cubes stacked to the brim + cold frost condensation on glass!
-        if (cube1) cube1.style.opacity = '1';
-        if (cube2) cube2.style.opacity = '1';
-        if (cube3) cube3.style.opacity = '1';
-        if (cube4) cube4.style.opacity = '1';
-        if (cube5) cube5.style.opacity = '1';
-        if (cube6) cube6.style.opacity = '1';
-        if (cube7) cube7.style.opacity = '1';
-        if (cube8) cube8.style.opacity = '1';
+        // Extra Ice: 16 dense packed cubes mounded to brim + glass frost condensation!
+        if (this.iceGroupLess) this.iceGroupLess.style.opacity = '1';
+        if (this.iceGroupNormal) this.iceGroupNormal.style.opacity = '1';
+        if (this.iceGroupExtra) this.iceGroupExtra.style.opacity = '1';
         if (this.sketchExtraFrost) this.sketchExtraFrost.style.opacity = '1';
       } else {
-        // Normal Ice (default: 3 cubes balanced)
-        if (cube1) cube1.style.opacity = '1';
-        if (cube2) cube2.style.opacity = '1';
-        if (cube3) cube3.style.opacity = '1';
-        if (cube4) cube4.style.opacity = '0';
-        if (cube5) cube5.style.opacity = '0';
-        if (cube6) cube6.style.opacity = '0';
-        if (cube7) cube7.style.opacity = '0';
-        if (cube8) cube8.style.opacity = '0';
+        // Normal Ice (default): 10 interlocking cubes forming a full refreshing 65% column
+        if (this.iceGroupLess) this.iceGroupLess.style.opacity = '1';
+        if (this.iceGroupNormal) this.iceGroupNormal.style.opacity = '1';
+        if (this.iceGroupExtra) this.iceGroupExtra.style.opacity = '0';
         if (this.sketchExtraFrost) this.sketchExtraFrost.style.opacity = '0';
       }
     }
