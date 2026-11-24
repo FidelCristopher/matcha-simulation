@@ -457,10 +457,15 @@
 
 @media (max-width: 480px) {
     #simulation-page {
-        padding: 5.5rem 4% 4rem;
+        padding: 5.5rem 4% 5.5rem;
+        max-width: 100vw;
+        overflow-x: hidden;
+        box-sizing: border-box;
     }
     .sim-panel {
-        padding: 1.35rem;
+        padding: 1.25rem;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     .sim-pills {
         gap: 0.4rem;

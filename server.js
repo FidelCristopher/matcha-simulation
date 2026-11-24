@@ -29,6 +29,7 @@ let useJsonFallback = false;
 try {
   const { DatabaseSync } = await import('node:sqlite');
   db = new DatabaseSync(DB_FILE);
+  db.exec('PRAGMA journal_mode = WAL; PRAGMA busy_timeout = 5000;');
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS orders (
