@@ -61,29 +61,33 @@ export class AdminOrderMonitor {
         const seedOrders = [
             {
                 id: 'MTC-7241',
+                customerName: 'Alya Ramadhani',
                 timestamp: new Date(Date.now() - 6 * 60000).toISOString(),
                 timeFormatted: new Date(Date.now() - 6 * 60000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                dateFormatted: new Date().toLocaleDateString(),
+                dateFormatted: new Date().toLocaleDateString('id-ID'),
                 status: 'brewing',
                 table: 'Bar #2',
                 items: [
-                    { name: 'Custom Uji Ceremonial', spec: '2.5g Matcha • Oat Milk Cloud', price: 4.50, qty: 2 },
-                    { name: 'Matcha Yuzu Sparkle', spec: 'Citrus Botanical', price: 5.20, qty: 1 }
+                    { name: 'ICE MATCHA LATTE', spec: '2.5g Matcha • Fresh Milk • 70% Gula', priceIDR: 25000, price: 25000, qty: 2 },
+                    { name: 'ICE MATCHARICANO', spec: 'Americano Matcha • Normal Ice', priceIDR: 22000, price: 22000, qty: 1 }
                 ],
-                total: 14.20
+                totalIDR: 72000,
+                total: 72000
             },
             {
                 id: 'MTC-6819',
+                customerName: 'Dimas Prasetyo',
                 timestamp: new Date(Date.now() - 18 * 60000).toISOString(),
                 timeFormatted: new Date(Date.now() - 18 * 60000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                dateFormatted: new Date().toLocaleDateString(),
+                dateFormatted: new Date().toLocaleDateString('id-ID'),
                 status: 'completed',
                 table: 'Takeaway Kiosk',
                 items: [
-                    { name: 'Ceremonial Cold Foam', spec: 'Signature Cold', price: 4.80, qty: 1 },
-                    { name: 'Sakura Cloud Latte', spec: 'Floral Fusion', price: 5.50, qty: 1 }
+                    { name: 'ICE MATCHA CHOCOLATE', spec: 'Layer Cokelat Belgia • Oat Milk', priceIDR: 28000, price: 28000, qty: 1 },
+                    { name: 'ICE MATCHA VANILLA FOAM', spec: 'Cloud Foam • Less Sweet', priceIDR: 28000, price: 28000, qty: 1 }
                 ],
-                total: 10.30
+                totalIDR: 56000,
+                total: 56000
             }
         ];
 
@@ -211,12 +215,41 @@ export class AdminOrderMonitor {
         } catch {}
     }
 
+    formatIDR(amount) {
+        const val = Math.round(Number(amount) || 0);
+        return 'Rp ' + val.toLocaleString('id-ID');
+    }
+
+    getOrderTotalIDR(order) {
+        if (order.totalIDR && !isNaN(order.totalIDR) && Number(order.totalIDR) > 0) {
+            return Number(order.totalIDR);
+        }
+        if (order.total && !isNaN(order.total)) {
+            if (Number(order.total) > 1000) return Number(order.total);
+            return Math.round(Number(order.total) * 5300);
+        }
+        if (Array.isArray(order.items)) {
+            return order.items.reduce((sum, item) => sum + (this.getItemPriceIDR(item) * (item.qty || 1)), 0);
+        }
+        return 0;
+    }
+
+    getItemPriceIDR(item) {
+        if (item.priceIDR && !isNaN(item.priceIDR)) return Number(item.priceIDR);
+        if (item.price && !isNaN(item.price)) {
+            if (Number(item.price) > 1000) return Number(item.price);
+            return Math.round(Number(item.price) * 5300);
+        }
+        return 25000;
+    }
+
     generateTestOrder() {
         const sampleRecipes = [
-            { name: 'Custom Uji Ceremonial', spec: '3.0g Matcha • Oat Cloud', price: 4.70 },
-            { name: 'Matcha Yuzu Sparkle', spec: 'Citrus Botanical', price: 5.20 },
-            { name: 'Custom Hojicha Blend', spec: '2.5g Hojicha • Vanilla Foam', price: 4.50 },
-            { name: 'Ceremonial Cold Foam', spec: 'Signature Cold', price: 4.80 }
+            { name: 'ICE MATCHA LATTE', spec: '2.5g Matcha • Fresh Milk • 70% Gula', priceIDR: 25000 },
+            { name: 'ICE MATCHARICANO', spec: 'Americano Matcha • Normal Ice', priceIDR: 22000 },
+            { name: 'ICE MATCHA CHOCOLATE', spec: 'Layer Cokelat Belgia • Oat Milk', priceIDR: 28000 },
+            { name: 'ICE MATCHA VANILLA FOAM', spec: 'Cloud Foam • Less Sweet', priceIDR: 28000 },
+            { name: 'ICE CHOCOLATE', spec: 'Pure Dark Cocoa • Fresh Milk', priceIDR: 24000 }
         ];
 
         const pick1 = sampleRecipes[Math.floor(Math.random() * sampleRecipes.length)];
@@ -225,17 +258,21 @@ export class AdminOrderMonitor {
         const items = [{ ...pick1, qty: 1 }];
         if (pick2 && pick2.name !== pick1.name) items.push({ ...pick2, qty: 1 });
 
-        const total = items.reduce((sum, i) => sum + (i.price * i.qty), 0);
+        const totalIDR = items.reduce((sum, i) => sum + (i.priceIDR * i.qty), 0);
+        const sampleNames = ['Rian Pratama', 'Siti Rahma', 'Bagas Wijaya', 'Clara Anindya', 'Fajar Sidik'];
+        const randomName = sampleNames[Math.floor(Math.random() * sampleNames.length)];
 
         const newOrder = {
             id: 'MTC-' + Math.floor(1000 + Math.random() * 9000),
+            customerName: randomName,
             timestamp: new Date().toISOString(),
             timeFormatted: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-            dateFormatted: new Date().toLocaleDateString(),
+            dateFormatted: new Date().toLocaleDateString('id-ID'),
             status: 'brewing',
             table: 'Kiosk Order #' + Math.floor(1 + Math.random() * 12),
             items: items,
-            total: parseFloat(total.toFixed(2))
+            totalIDR: totalIDR,
+            total: totalIDR
         };
 
         this.orders.unshift(newOrder);
@@ -264,12 +301,12 @@ export class AdminOrderMonitor {
     updateKPIs() {
         const totalRevenue = this.orders
             .filter(o => o.status !== 'cancelled')
-            .reduce((sum, o) => sum + (parseFloat(o.total) || 0), 0);
+            .reduce((sum, o) => sum + this.getOrderTotalIDR(o), 0);
 
         const activeCount = this.orders.filter(o => o.status === 'brewing').length;
         const completedCount = this.orders.filter(o => o.status === 'completed').length;
 
-        if (this.statRevenue) this.statRevenue.textContent = `$${totalRevenue.toFixed(2)}`;
+        if (this.statRevenue) this.statRevenue.textContent = this.formatIDR(totalRevenue);
         if (this.statActive) this.statActive.textContent = activeCount;
         if (this.statCompleted) this.statCompleted.textContent = completedCount;
         if (this.statTotal) this.statTotal.textContent = this.orders.length;
@@ -322,22 +359,27 @@ export class AdminOrderMonitor {
             const isBrewing = order.status === 'brewing';
             const card = document.createElement('article');
             card.className = `order-card status-${order.status}`;
+            const totalAmountIDR = this.getOrderTotalIDR(order);
+            const customerDisplay = order.customerName ? ` • ${order.customerName}` : '';
 
-            const itemsHtml = (order.items || []).map(item => `
+            const itemsHtml = (order.items || []).map(item => {
+                const itemPrice = this.getItemPriceIDR(item);
+                return `
                 <div class="order-item-row">
                     <div class="order-item-main">
                         <span class="order-item-title">${item.qty}x ${item.name}</span>
                         <span class="order-item-spec">${item.spec || ''}</span>
                     </div>
-                    <span class="order-item-price">$${(item.price * item.qty).toFixed(2)}</span>
+                    <span class="order-item-price">${this.formatIDR(itemPrice * item.qty)}</span>
                 </div>
-            `).join('');
+            `;
+            }).join('');
 
             card.innerHTML = `
                 <div class="order-card-header">
                     <div class="order-id-wrap">
                         <span class="order-id">#${order.id}</span>
-                        <span class="order-timestamp">${order.timeFormatted} • ${order.table || 'Kiosk'}</span>
+                        <span class="order-timestamp">${order.timeFormatted}${customerDisplay} • ${order.table || 'Kiosk'}</span>
                     </div>
                     <div class="order-header-right">
                         <span class="status-badge ${order.status}">
@@ -356,7 +398,7 @@ export class AdminOrderMonitor {
                 <div class="order-card-footer">
                     <div class="order-total-block">
                         <span class="order-total-label">Total Amount</span>
-                        <span class="order-total-amount">$${parseFloat(order.total).toFixed(2)}</span>
+                        <span class="order-total-amount">${this.formatIDR(totalAmountIDR)}</span>
                     </div>
                     <button class="order-action-btn ${isBrewing ? 'finish-btn' : 'reopen-btn'}" data-order-id="${order.id}">
                         ${isBrewing ? 'Selesai Seduh' : 'Buka Ulang'}
@@ -403,16 +445,18 @@ export class AdminOrderMonitor {
         const summaryRows = this.orders.map(order => {
             const itemsSummary = (order.items || []).map(i => `${i.qty}x ${i.name} (${i.spec || ''})`).join('; ');
             const totalItemsQty = (order.items || []).reduce((sum, i) => sum + (i.qty || 1), 0);
+            const totalIDR = this.getOrderTotalIDR(order);
 
             return {
                 'Order ID': '#' + order.id,
-                'Tanggal': order.dateFormatted || new Date(order.timestamp).toLocaleDateString(),
+                'Nama Pemesan': order.customerName || 'Pelanggan',
+                'Tanggal': order.dateFormatted || new Date(order.timestamp).toLocaleDateString('id-ID'),
                 'Waktu': order.timeFormatted || new Date(order.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
                 'Status': order.status === 'completed' ? 'Selesai (Completed)' : 'Sedang Diseduh (Brewing)',
                 'Sumber / Meja': order.table || 'Kiosk',
                 'Rincian Menu & Racikan': itemsSummary,
                 'Total Qty': totalItemsQty,
-                'Total (USD)': parseFloat(order.total)
+                'Total (IDR)': totalIDR
             };
         });
 
@@ -420,16 +464,18 @@ export class AdminOrderMonitor {
         const itemizedRows = [];
         this.orders.forEach(order => {
             (order.items || []).forEach(item => {
+                const itemPrice = this.getItemPriceIDR(item);
                 itemizedRows.push({
                     'Order ID': '#' + order.id,
-                    'Tanggal': order.dateFormatted || new Date(order.timestamp).toLocaleDateString(),
+                    'Nama Pemesan': order.customerName || 'Pelanggan',
+                    'Tanggal': order.dateFormatted || new Date(order.timestamp).toLocaleDateString('id-ID'),
                     'Waktu': order.timeFormatted || new Date(order.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
                     'Status': order.status === 'completed' ? 'Selesai' : 'Sedang Diseduh',
                     'Nama Menu': item.name,
                     'Spesifikasi Racikan': item.spec || 'Standard',
                     'Jumlah (Qty)': item.qty,
-                    'Harga Satuan (USD)': parseFloat(item.price),
-                    'Subtotal (USD)': parseFloat((item.price * item.qty).toFixed(2))
+                    'Harga Satuan (IDR)': itemPrice,
+                    'Subtotal (IDR)': itemPrice * item.qty
                 });
             });
         });
@@ -440,13 +486,14 @@ export class AdminOrderMonitor {
         const wsSummary = XLSX.utils.json_to_sheet(summaryRows);
         wsSummary['!cols'] = [
             { wch: 14 }, // Order ID
+            { wch: 20 }, // Nama Pemesan
             { wch: 14 }, // Tanggal
             { wch: 10 }, // Waktu
             { wch: 24 }, // Status
             { wch: 18 }, // Meja
             { wch: 48 }, // Rincian
             { wch: 10 }, // Qty
-            { wch: 14 }  // Total
+            { wch: 16 }  // Total (IDR)
         ];
         XLSX.utils.book_append_sheet(wb, wsSummary, 'Ringkasan Pesanan');
 
@@ -454,6 +501,7 @@ export class AdminOrderMonitor {
         const wsItems = XLSX.utils.json_to_sheet(itemizedRows);
         wsItems['!cols'] = [
             { wch: 14 },
+            { wch: 20 },
             { wch: 14 },
             { wch: 10 },
             { wch: 16 },
@@ -461,7 +509,7 @@ export class AdminOrderMonitor {
             { wch: 35 },
             { wch: 14 },
             { wch: 18 },
-            { wch: 16 }
+            { wch: 18 }
         ];
         XLSX.utils.book_append_sheet(wb, wsItems, 'Detail Item');
 
@@ -507,7 +555,7 @@ export class AdminOrderMonitor {
         doc.text(`Waktu Cetak: ${nowStr}`, 14, 34);
 
         // Summary Statistics Cards
-        const totalRev = this.orders.reduce((sum, o) => sum + (parseFloat(o.total) || 0), 0);
+        const totalRev = this.orders.reduce((sum, o) => sum + this.getOrderTotalIDR(o), 0);
         const completedCount = this.orders.filter(o => o.status === 'completed').length;
         const brewingCount = this.orders.filter(o => o.status === 'brewing').length;
 
@@ -523,13 +571,14 @@ export class AdminOrderMonitor {
         doc.text(`• Selesai: ${completedCount} Tiket`, 115, 59);
         doc.setFont('helvetica', 'bold');
         doc.setTextColor(16, 120, 50);
-        doc.text(`• Total Pendapatan: $${totalRev.toFixed(2)}`, 155, 59);
+        doc.text(`• Total Pendapatan: ${this.formatIDR(totalRev)}`, 155, 59);
 
         // Table Data mapping
         const tableBody = this.orders.map(order => {
             const itemsText = (order.items || []).map(i => `${i.qty}x ${i.name}\n(${i.spec || 'Standard'})`).join('\n\n');
             const statusText = order.status === 'completed' ? 'Selesai' : 'Sedang Diseduh';
-            const dateText = `${order.dateFormatted || ''}\n${order.timeFormatted || ''}`;
+            const customerStr = order.customerName ? `\n[${order.customerName}]` : '';
+            const dateText = `${order.dateFormatted || ''}\n${order.timeFormatted || ''}${customerStr}`;
 
             return [
                 '#' + order.id,
@@ -537,7 +586,7 @@ export class AdminOrderMonitor {
                 order.table || 'Kiosk',
                 statusText,
                 itemsText,
-                `$${parseFloat(order.total).toFixed(2)}`
+                this.formatIDR(this.getOrderTotalIDR(order))
             ];
         });
 
