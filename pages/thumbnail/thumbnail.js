@@ -37,7 +37,30 @@ export class ThumbnailManager {
     init() {
         if (!this.screen) return;
 
-        // Ensure thumbnail screen is visible on page load/refresh
+        // Check if returning from customize, active kiosk session, or explicit show=menu param
+        let shouldBypass = false;
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
+            shouldBypass = urlParams.get('show') === 'menu' || 
+                           urlParams.get('view') === 'menu' || 
+                           urlParams.get('skip_thumbnail') === 'true' ||
+                           sessionStorage.getItem('matcha_kiosk_active') === 'true' ||
+                           (document.referrer && document.referrer.includes('/customize/'));
+        } catch {}
+
+        if (shouldBypass) {
+            // Instantly bypass screensaver & show menu cards directly!
+            this.screen.classList.add('hidden');
+            document.body.classList.remove('thumbnail-active');
+            this.isKioskActive = true;
+            try { sessionStorage.setItem('matcha_kiosk_active', 'true'); } catch {}
+            this.bindEvents();
+            this.setupIdleTimer();
+            this.resetIdleTimer();
+            return;
+        }
+
+        // Ensure thumbnail screen is visible on initial landing/idle load
         this.screen.style.display = '';
         this.screen.classList.remove('hidden');
         document.body.classList.add('thumbnail-active');
@@ -215,6 +238,7 @@ export class ThumbnailManager {
         this.screen.classList.add('hidden');
         document.body.classList.remove('thumbnail-active');
         this.isKioskActive = true;
+        try { sessionStorage.setItem('matcha_kiosk_active', 'true'); } catch {}
 
         // Cancel parallax RAF to free up 100% GPU budget for the app
         if (this.rafId) {
@@ -247,6 +271,7 @@ export class ThumbnailManager {
         this.screen.classList.remove('hidden');
         document.body.classList.add('thumbnail-active');
         this.isKioskActive = false;
+        try { sessionStorage.removeItem('matcha_kiosk_active'); } catch {}
 
         // Resume parallax RAF loop if not running
         if (!this.rafId && this.renderLoop) {

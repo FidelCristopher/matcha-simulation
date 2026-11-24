@@ -666,17 +666,20 @@ export class CustomizeManager {
    * 5. Button Actions: Back, Reset, Add to Cart
    */
   bindActions() {
-    // Back Button -> Always returns to the dedicated Menu List (pages/menu/menu.html)
+    // Back Button -> Always returns to the dedicated Menu List (pages/menu/menu.html?show=menu)
     if (this.backBtn) {
       this.backBtn.addEventListener('click', (e) => {
         e.preventDefault();
+        try {
+          sessionStorage.setItem('matcha_kiosk_active', 'true');
+        } catch {}
         // If embedded in SPA
         if (window.pageNavigator && typeof window.pageNavigator.goToPage === 'function') {
           window.pageNavigator.goToPage('menu', true);
         } else {
-          // Always return to the dedicated Daftar Menu page (pages/menu/menu.html)
+          // Always return to the dedicated Daftar Menu page (pages/menu/menu.html?show=menu)
           const isPages = window.location.pathname.includes('/pages/');
-          const menuUrl = isPages ? '../menu/menu.html' : 'pages/menu/menu.html';
+          const menuUrl = isPages ? '../menu/menu.html?show=menu' : 'pages/menu/menu.html?show=menu';
           window.location.href = menuUrl;
         }
       });

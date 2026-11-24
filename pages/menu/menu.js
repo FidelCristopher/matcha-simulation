@@ -160,9 +160,10 @@ export class MenuManager {
         const cardId = card.dataset.id || 'matcha-latte';
         const name = card.dataset.name || card.querySelector('.pantone-card-title')?.textContent.trim() || 'Matcha Drink';
 
-        // Save selected drink preset in storage
+        // Save selected drink preset in storage & persist active kiosk ordering session
         try {
           localStorage.setItem('matcha_selected_drink', cardId);
+          sessionStorage.setItem('matcha_kiosk_active', 'true');
         } catch {}
 
         // Visual feedback on card
