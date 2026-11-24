@@ -576,7 +576,7 @@ export class CustomizeManager {
       if (this.iceGroupNormal) this.iceGroupNormal.style.opacity = '0';
       if (this.iceGroupExtra) this.iceGroupExtra.style.opacity = '0';
     } else if (iceVal === 'hot') {
-      if (this.sketchSteam) this.sketchSteam.style.opacity = '1';
+      if (this.sketchSteam) this.sketchSteam.style.opacity = '0';
       if (this.sketchExtraFrost) this.sketchExtraFrost.style.opacity = '0';
       if (this.iceGroupLess) this.iceGroupLess.style.opacity = '0';
       if (this.iceGroupNormal) this.iceGroupNormal.style.opacity = '0';
@@ -656,23 +656,23 @@ export class CustomizeManager {
     let name = this.baseTemplateName || 'CUSTOM DRINK CRAFT';
 
     if (this.currentDrinkId === 'custom-drink') {
-      const tempPrefix = iceVal ? (iceVal === 'hot' ? 'HOT' : 'ICE') : 'CUSTOM';
+      const tempPrefix = iceVal ? (iceVal === 'hot' ? 'NO ICE' : 'ICE') : 'CUSTOM';
       const baseLabel = baseVal === 'chocolate'
         ? (hasChocoTopping ? 'DOUBLE CHOCOLATE' : 'CHOCOLATE')
         : 'MATCHA';
       return `${tempPrefix} ${baseLabel} CRAFT`;
     }
 
-    // 1. Temperature prefix: Hot vs Ice
+    // 1. Temperature prefix: No Ice vs Ice
     if (iceVal === 'hot') {
-      if (/^(ICED?|HOT)\s+/i.test(name)) {
-        name = name.replace(/^(ICED?|HOT)\s+/i, 'HOT ');
+      if (/^(ICED?|HOT|NO ICE)\s+/i.test(name)) {
+        name = name.replace(/^(ICED?|HOT|NO ICE)\s+/i, 'NO ICE ');
       } else {
-        name = `HOT ${name}`;
+        name = `NO ICE ${name}`;
       }
     } else if (iceVal) {
-      if (/^HOT\s+/i.test(name)) {
-        name = name.replace(/^HOT\s+/i, 'ICE ');
+      if (/^(HOT|NO ICE)\s+/i.test(name)) {
+        name = name.replace(/^(HOT|NO ICE)\s+/i, 'ICE ');
       }
     }
 
@@ -961,7 +961,7 @@ export class CustomizeManager {
       oat: 'Oat Milk (+5k)',
       none: 'Tanpa Susu'
     };
-    const iceNames = { hot: 'Hot (No Ice)', less: 'Less Ice', normal: 'Normal Ice', extra: 'Extra Ice' };
+    const iceNames = { hot: 'No Ice', less: 'Less Ice', normal: 'Normal Ice', extra: 'Extra Ice' };
     const toppingNames = {
       vanilla_foam: 'Vanilla Cloud Foam',
       chocolate: 'Lapisan Cokelat Bawah',
