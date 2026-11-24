@@ -177,21 +177,129 @@ export class CartManager {
                     console.warn('[Cart] Database save error:', e);
                 }
 
-                // 4. Feedback Alert
-                const orderedSummary = this.items.map(i => `${i.qty}x ${i.name}`).join(', ');
-                alert(`✅ PESANAN BERHASIL DICATAT KE DATABASE!\n\n` +
-                      `• ID Pemesanan : #${newOrder.id}\n` +
-                      `• Nama Pemesan : ${newOrder.customerName}\n` +
-                      `• Menu Dipesan : ${orderedSummary}\n` +
-                      `• Jumlah Item  : ${totalQty} cup\n` +
-                      `• Total Harga  : Rp ${totalIDR.toLocaleString('id-ID')}\n\n` +
-                      `Pesanan telah tersimpan di database dan sedang disiapkan oleh barista.`);
-
+                // 4. Reset Cart & Show Payment Info Pop-Up Modal
                 if (nameInput) nameInput.value = '';
                 this.items = [];
                 this.saveCart();
                 this.render();
                 this.close();
+
+                this.showPaymentModal(newOrder);
+            });
+        }
+    }
+
+    escapeHtml(str) {
+        return String(str || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    showPaymentModal(order) {
+        const existing = document.querySelector('#payment-modal-backdrop');
+        if (existing) existing.remove();
+
+        const backdrop = document.createElement('div');
+        backdrop.id = 'payment-modal-backdrop';
+        backdrop.className = 'payment-modal-backdrop';
+        backdrop.setAttribute('role', 'dialog');
+        backdrop.setAttribute('aria-modal', 'true');
+        backdrop.setAttribute('aria-labelledby', 'payment-modal-title');
+
+        backdrop.innerHTML = `
+            <div class="payment-modal-dialog">
+                <div class="payment-modal-header">
+                    <h3 class="payment-modal-title" id="payment-modal-title">Informasi Pembayaran</h3>
+                    <button type="button" class="payment-modal-close" id="payment-close-btn" aria-label="Tutup">&times;</button>
+                </div>
+
+                <div class="payment-modal-body">
+                    <p class="payment-order-note">
+                        Pesanan <strong>#${this.escapeHtml(order.id)}</strong> atas nama <strong>${this.escapeHtml(order.customerName)}</strong> telah dicatat.
+                    </p>
+
+                    <div class="payment-total-box">
+                        <span class="payment-total-label">Total Pembayaran</span>
+                        <span class="payment-total-value">${this.escapeHtml(order.totalFormattedIDR)}</span>
+                    </div>
+
+                    <div class="payment-bank-box">
+                        <span class="payment-bank-label">Transfer ke Rekening</span>
+                        <p class="payment-bank-detail" id="bca-acc-text">7820722005 - BCA - Aaron Faustine Suryanto</p>
+                        <button type="button" class="btn-copy-account" id="btn-copy-bca">
+                            <span class="copy-text">Salin No. Rekening (7820722005)</span>
+                        </button>
+                    </div>
+
+                    <p class="payment-hint">Silakan selesaikan pembayaran dan tunjukkan bukti transfer di kasir.</p>
+                </div>
+
+                <div class="payment-modal-footer">
+                    <button type="button" class="payment-finish-btn" id="payment-finish-btn">Selesai</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(backdrop);
+        document.body.style.overflow = 'hidden';
+
+        requestAnimationFrame(() => {
+            backdrop.classList.add('active');
+        });
+
+        const closePaymentModal = () => {
+            backdrop.classList.remove('active');
+            document.body.style.overflow = '';
+            window.removeEventListener('keydown', onEsc);
+            setTimeout(() => {
+                if (backdrop.parentNode) backdrop.remove();
+            }, 250);
+        };
+
+        const onEsc = (e) => {
+            if (e.key === 'Escape') closePaymentModal();
+        };
+        window.addEventListener('keydown', onEsc);
+
+        const closeBtn = backdrop.querySelector('#payment-close-btn');
+        const finishBtn = backdrop.querySelector('#payment-finish-btn');
+        const copyBtn = backdrop.querySelector('#btn-copy-bca');
+
+        if (closeBtn) closeBtn.addEventListener('click', closePaymentModal);
+        if (finishBtn) finishBtn.addEventListener('click', closePaymentModal);
+        backdrop.addEventListener('click', (e) => {
+            if (e.target === backdrop) closePaymentModal();
+        });
+
+        if (copyBtn) {
+            copyBtn.addEventListener('click', async () => {
+                const rekening = '7820722005';
+                try {
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        await navigator.clipboard.writeText(rekening);
+                    } else {
+                        const tmp = document.createElement('textarea');
+                        tmp.value = rekening;
+                        tmp.style.position = 'fixed';
+                        tmp.style.opacity = '0';
+                        document.body.appendChild(tmp);
+                        tmp.select();
+                        document.execCommand('copy');
+                        tmp.remove();
+                    }
+                    copyBtn.classList.add('copied');
+                    const textEl = copyBtn.querySelector('.copy-text');
+                    if (textEl) textEl.textContent = 'No. Rekening Tersalin!';
+                    setTimeout(() => {
+                        copyBtn.classList.remove('copied');
+                        if (textEl) textEl.textContent = 'Salin No. Rekening (7820722005)';
+                    }, 2000);
+                } catch (err) {
+                    console.warn('[Payment] Clipboard copy failed:', err);
+                }
             });
         }
     }

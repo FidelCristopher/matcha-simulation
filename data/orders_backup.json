@@ -1,5 +1,115 @@
 [
   {
+    "id": "MTC-8166",
+    "customerName": "testt",
+    "table": "Kiosk Order #20",
+    "status": "brewing",
+    "totalQty": 1,
+    "totalIDR": 25000,
+    "totalFormattedIDR": "Rp 25.000",
+    "timestamp": "2026-11-24T17:48:24.512Z",
+    "dateFormatted": "25/11/2026",
+    "timeFormatted": "12:48 AM",
+    "items": [
+      {
+        "id": "item-1795542502541",
+        "name": "ICE CHOCOLATE",
+        "spec": "Base Cokelat, Fresh Milk, 70% Gula, Normal Ice",
+        "price": 25000,
+        "priceIDR": 25000,
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "MTC-2017",
+    "customerName": "test",
+    "table": "Kiosk Order #7",
+    "status": "brewing",
+    "totalQty": 1,
+    "totalIDR": 25000,
+    "totalFormattedIDR": "Rp 25.000",
+    "timestamp": "2026-11-24T17:47:49.354Z",
+    "dateFormatted": "25/11/2026",
+    "timeFormatted": "12:47 AM",
+    "items": [
+      {
+        "id": "item-1795542464770",
+        "name": "ICE CHOCOLATE",
+        "spec": "Base Cokelat, Fresh Milk, 70% Gula, Normal Ice",
+        "price": 25000,
+        "priceIDR": 25000,
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "MTC-5319",
+    "customerName": "test",
+    "table": "Kiosk Order #9",
+    "status": "brewing",
+    "totalQty": 1,
+    "totalIDR": 22000,
+    "totalFormattedIDR": "Rp 22.000",
+    "timestamp": "2026-11-24T17:40:18.248Z",
+    "dateFormatted": "25/11/2026",
+    "timeFormatted": "12:40 AM",
+    "items": [
+      {
+        "id": "item-1795541926146",
+        "name": "ICE MATCHARICANO",
+        "spec": "Base Matcha, Tanpa Susu, 70% Gula, Normal Ice",
+        "price": 22000,
+        "priceIDR": 22000,
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "MTC-4800",
+    "customerName": "test",
+    "table": "Kiosk Order #7",
+    "status": "brewing",
+    "totalQty": 1,
+    "totalIDR": 22000,
+    "totalFormattedIDR": "Rp 22.000",
+    "timestamp": "2026-11-24T17:38:36.712Z",
+    "dateFormatted": "25/11/2026",
+    "timeFormatted": "12:38 AM",
+    "items": [
+      {
+        "id": "item-1795541913757",
+        "name": "ICE MATCHARICANO",
+        "spec": "Base Matcha, Tanpa Susu, 70% Gula, Normal Ice",
+        "price": 22000,
+        "priceIDR": 22000,
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "MTC-9392",
+    "customerName": "test",
+    "table": "Kiosk Order #15",
+    "status": "brewing",
+    "totalQty": 1,
+    "totalIDR": 25000,
+    "totalFormattedIDR": "Rp 25.000",
+    "timestamp": "2026-11-24T17:20:21.370Z",
+    "dateFormatted": "25/11/2026",
+    "timeFormatted": "00.20",
+    "items": [
+      {
+        "id": "item-1795540817760",
+        "name": "CUSTOM MATCHA CRAFT",
+        "spec": "Base Matcha, Fresh Milk, 70% Gula, Normal Ice",
+        "price": 25000,
+        "priceIDR": 25000,
+        "qty": 1
+      }
+    ]
+  },
+  {
     "id": "ORD-2026-001",
     "customerName": "Budi Santoso",
     "items": [
