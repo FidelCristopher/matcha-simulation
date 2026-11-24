@@ -422,13 +422,13 @@ body.menu-active #swipe-to-sim-hint {
 }
 
 .pantone-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 24px 48px rgba(16, 55, 19, 0.16), 0 8px 18px rgba(0, 0, 0, 0.06);
+  transform: none;
+  box-shadow: 0 14px 30px rgba(16, 55, 19, 0.12);
   border-color: rgba(98, 139, 53, 0.35);
 }
 
 .pantone-card:active {
-  transform: translateY(-2px) scale(0.99);
+  transform: none;
 }
 
 .pantone-card:focus-visible {
@@ -482,8 +482,8 @@ body.menu-active #swipe-to-sim-hint {
 }
 
 .pantone-card:hover .pantone-card-visual img {
-  transform: translateY(-32px) scale(1.05);
-  filter: drop-shadow(0 24px 32px rgba(16, 55, 19, 0.22)) drop-shadow(0 8px 14px rgba(0, 0, 0, 0.14));
+  transform: translateY(-24px);
+  filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.14)) drop-shadow(0 4px 8px rgba(16, 55, 19, 0.08));
 }
 
 /* Lower Swatch Label Area */
@@ -768,7 +768,18 @@ body.menu-active #swipe-to-sim-hint {
 /* Standard Mobile Phones (361px - 640px) */
 @media (max-width: 640px) {
   .pantone-menu-wrapper {
-    padding: 1.4rem 0.85rem 5.5rem;
+    padding: 1.4rem 12px 5.5rem !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+  }
+  .pantone-grid-stage {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
   }
   .pantone-menu-header {
     margin-bottom: 2rem;
@@ -788,23 +799,41 @@ body.menu-active #swipe-to-sim-hint {
     letter-spacing: 0.08em;
   }
   .pantone-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: clamp(0.65rem, 2.8vw, 0.95rem);
-    max-width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
   .pantone-card {
     aspect-ratio: 1 / 1.42;
-    border-radius: 10px;
+    border-radius: 12px;
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    transform: none !important;
+  }
+  .pantone-card:hover,
+  .pantone-card:active,
+  .pantone-card:focus {
+    transform: none !important;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06) !important;
   }
   .pantone-card-visual {
     margin-top: -8px;
     padding: 0 0.25rem;
+    overflow: hidden !important;
   }
   .pantone-card-visual img {
     height: clamp(145px, 32vw, 185px);
     max-height: 190px;
-    max-width: 120%;
-    transform: translateY(-4px);
+    max-width: 100% !important;
+    transform: translateY(-4px) !important;
+  }
+  .pantone-card:hover .pantone-card-visual img,
+  .pantone-card:active .pantone-card-visual img,
+  .pantone-card:focus .pantone-card-visual img {
+    transform: translateY(-4px) !important;
   }
   .pantone-card-info {
     padding: 0.6rem 0.75rem 0.85rem;
