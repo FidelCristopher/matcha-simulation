@@ -157,6 +157,12 @@ export class MenuManager {
         // Prevent click if clicking a specific sub-link
         if (e.target.closest('a')) return;
 
+        // Block interaction for SOLD OUT items
+        if (card.classList.contains('card-sold') || card.getAttribute('aria-disabled') === 'true') {
+          e.preventDefault();
+          return;
+        }
+
         const cardId = card.dataset.id || 'matcha-latte';
         const name = card.dataset.name || card.querySelector('.pantone-card-title')?.textContent.trim() || 'Matcha Drink';
 

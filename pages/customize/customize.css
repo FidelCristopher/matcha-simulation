@@ -2064,3 +2064,68 @@ html {
   transform: translateY(-1px);
 }
 
+/* ==========================================================================
+   12. Disabled / SOLD OUT Option Pill Styling (All Layouts)
+   ========================================================================== */
+.custom-pill.is-sold,
+.custom-pill.is-sold input {
+  cursor: not-allowed !important;
+}
+
+.custom-pill.is-sold .pill-box,
+.custom-pill input:disabled + .pill-box {
+  background: rgba(244, 237, 229, 0.08) !important;
+  border: 1.5px dashed rgba(244, 237, 229, 0.28) !important;
+  color: rgba(244, 237, 229, 0.55) !important;
+  opacity: 0.72;
+  transform: none !important;
+  box-shadow: none !important;
+  position: relative;
+}
+
+.custom-pill.is-sold:hover .pill-box {
+  background: rgba(244, 237, 229, 0.08) !important;
+  border-color: rgba(244, 237, 229, 0.28) !important;
+  transform: none !important;
+}
+
+.custom-pill.is-sold .pill-icon {
+  filter: grayscale(0.75);
+  opacity: 0.65;
+}
+
+.custom-pill.is-sold .pill-desc {
+  text-decoration: line-through;
+  opacity: 0.65;
+}
+
+.pill-sold-badge {
+  margin-left: auto;
+  flex-shrink: 0;
+  background: #dc2626;
+  color: #ffffff;
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: 0.64rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  line-height: 1;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.35);
+}
+
+@media (max-width: 680px) {
+  #topping-options .custom-pill.is-sold .pill-box {
+    padding-top: 0.55rem !important;
+    padding-bottom: 0.55rem !important;
+  }
+  .pill-sold-badge {
+    margin-left: 0;
+    margin-top: 0.28rem;
+    align-self: flex-start;
+    font-size: 0.6rem;
+    padding: 0.18rem 0.48rem;
+  }
+}
+

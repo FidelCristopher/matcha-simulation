@@ -362,7 +362,7 @@ export class CustomizeManager {
       if (Array.isArray(tpl.toppings)) {
         tpl.toppings.forEach(val => {
           const chk = this.form.querySelector(`input[name="custom_toppings"][value="${val}"]`);
-          if (chk) chk.checked = true;
+          if (chk && !chk.disabled) chk.checked = true;
         });
       }
     } else {
@@ -383,7 +383,10 @@ export class CustomizeManager {
     this.form.querySelectorAll('.custom-pill').forEach(pill => {
       pill.addEventListener('click', (e) => {
         const input = pill.querySelector('input');
-        if (!input) return;
+        if (!input || input.disabled || pill.classList.contains('is-sold')) {
+          e.preventDefault();
+          return;
+        }
         if (input.type === 'radio') {
           if (!input.checked) {
             input.checked = true;
@@ -391,6 +394,7 @@ export class CustomizeManager {
           }
         } else if (input.type === 'checkbox') {
           if (e.target !== input) {
+            e.preventDefault();
             input.checked = !input.checked;
             input.dispatchEvent(new Event('change', { bubbles: true }));
           }

@@ -954,3 +954,56 @@ body.menu-active #swipe-to-sim-hint {
   z-index: 5;
 }
 
+/* Sold Out Menu Card Styling (Responsive across Desktop, Tablet, Mobile) */
+.pantone-card.card-sold {
+  cursor: not-allowed;
+  opacity: 0.72;
+  background: #F4F3EE;
+  border-color: rgba(16, 55, 19, 0.1);
+}
+
+.pantone-card.card-sold:hover,
+.pantone-card.card-sold:active {
+  transform: none !important;
+  box-shadow: 0 8px 24px rgba(16, 55, 19, 0.06) !important;
+  border-color: rgba(16, 55, 19, 0.1) !important;
+}
+
+.pantone-card.card-sold .pantone-card-visual img {
+  filter: grayscale(0.55) opacity(0.75);
+  transform: none !important;
+}
+
+.pantone-card.card-sold .pantone-price {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.pantone-sold-badge {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  background: #dc2626;
+  color: #ffffff;
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.72rem;
+  border-radius: 9999px;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  z-index: 6;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .pantone-sold-badge {
+    top: 0.55rem;
+    right: 0.55rem;
+    font-size: 0.6rem;
+    padding: 0.22rem 0.55rem;
+  }
+}
+
