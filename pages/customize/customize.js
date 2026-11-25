@@ -952,6 +952,10 @@ export class CustomizeManager {
    * 6. Add Custom Recipe to Cart
    */
   handleAddToCart() {
+    if (this.submitBtn && this.submitBtn.disabled) {
+      this.showToast('Maaf, semua menu sedang sold out!');
+      return;
+    }
     const baseVal = this.form.querySelector('input[name="custom_base"]:checked')?.value;
     if (!baseVal) {
       this.showToast('Silakan pilih Base (Matcha atau Cokelat) terlebih dahulu!');

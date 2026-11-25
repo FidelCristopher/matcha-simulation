@@ -232,6 +232,15 @@
     transform: scale(0.98);
 }
 
+.sim-action-btn:disabled {
+    background: #9ca3af !important;
+    color: #f3f4f6 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+    opacity: 0.75;
+}
+
 .sim-reset-btn {
     flex: 1;
     display: flex;

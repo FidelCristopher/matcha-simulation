@@ -633,14 +633,15 @@
 
           <!-- CARD 5: Ice Chocolate -->
           <article
-            class="pantone-card"
+            class="pantone-card card-sold"
             data-id="ice-chocolate"
             data-name="ICE CHOCOLATE"
             data-pantone="4695 C"
             data-price="25000"
-            tabindex="0"
+            tabindex="-1"
             role="button"
-            aria-label="ICE CHOCOLATE, 4695 C, Rp 25.000. Klik untuk kustomisasi"
+            aria-disabled="true"
+            aria-label="ICE CHOCOLATE, 4695 C, Rp 25.000. SOLD OUT"
           >
             <div class="pantone-card-visual">
               <picture>
@@ -655,6 +656,7 @@
                   draggable="false"
                 />
               </picture>
+              <div class="pantone-sold-badge">SOLD OUT</div>
             </div>
             <div class="pantone-card-info">
               <div class="pantone-card-text">
@@ -683,14 +685,15 @@
 
           <!-- CARD 6: Custom Drink (Craft from Scratch) -->
           <article
-            class="pantone-card card-custom-craft"
+            class="pantone-card card-custom-craft card-sold"
             data-id="custom-drink"
             data-name="CUSTOM DRINK"
             data-pantone="3D LAB"
             data-price="0"
-            tabindex="0"
+            tabindex="-1"
             role="button"
-            aria-label="CUSTOM DRINK, Interactive Craft Lab, dari Rp 0. Klik untuk kustomisasi dari awal"
+            aria-disabled="true"
+            aria-label="CUSTOM DRINK, 3D Lab, SOLD OUT"
           >
             <div class="pantone-card-visual">
               <picture>
@@ -705,7 +708,7 @@
                   draggable="false"
                 />
               </picture>
-              <div class="pantone-custom-badge">✨ CRAFT LAB</div>
+              <div class="pantone-sold-badge">SOLD OUT</div>
             </div>
             <div class="pantone-card-info">
               <div class="pantone-card-text">

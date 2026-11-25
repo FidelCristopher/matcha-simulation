@@ -610,6 +610,16 @@ html {
   transform: translateY(0);
 }
 
+.btn-submit-order:disabled {
+  background: rgba(244, 237, 229, 0.12) !important;
+  color: rgba(244, 237, 229, 0.45) !important;
+  border-color: rgba(244, 237, 229, 0.15) !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+  opacity: 0.72;
+}
+
 .btn-text-mobile {
   display: none;
 }

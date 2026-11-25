@@ -936,6 +936,21 @@ body.menu-active #swipe-to-sim-hint {
   box-shadow: 0 22px 42px rgba(98, 139, 53, 0.2), 0 0 20px rgba(98, 139, 53, 0.12);
 }
 
+.pantone-card.card-custom-craft.card-sold {
+  border: 1px solid rgba(16, 55, 19, 0.1) !important;
+  background: #F4F3EE !important;
+  box-shadow: none !important;
+}
+
+.pantone-card.card-custom-craft.card-sold:hover {
+  border-color: rgba(16, 55, 19, 0.1) !important;
+  box-shadow: 0 8px 24px rgba(16, 55, 19, 0.06) !important;
+}
+
+.pantone-card.card-sold .pantone-custom-badge {
+  display: none !important;
+}
+
 .pantone-custom-badge {
   position: absolute;
   top: 0.85rem;

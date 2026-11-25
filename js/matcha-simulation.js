@@ -134,6 +134,7 @@ export class MatchaSimulator {
         // 1. "Add to Cart" Button
         if (this.addCartBtn) {
             this.addCartBtn.addEventListener('click', () => {
+                if (this.addCartBtn.disabled) return;
                 const baseNames = { uji: 'Uji Ceremonial', hojicha: 'Roasted Hojicha', soda: 'Mineral Soda' };
                 const milkNames = { oat: 'Oat Cloud', vanilla: 'Vanilla Foam', coconut: 'Coconut Velvet', none: 'Zero Milk' };
                 const bsNames = {
