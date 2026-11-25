@@ -996,6 +996,7 @@ body.menu-active #swipe-to-sim-hint {
   text-transform: uppercase;
   z-index: 6;
   pointer-events: none;
+  white-space: nowrap;
 }
 
 @media (max-width: 640px) {
