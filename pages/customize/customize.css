@@ -2070,6 +2070,7 @@ html {
 .custom-pill.is-sold,
 .custom-pill.is-sold input {
   cursor: not-allowed !important;
+  overflow: visible !important;
 }
 
 .custom-pill.is-sold .pill-box,
@@ -2077,10 +2078,11 @@ html {
   background: rgba(244, 237, 229, 0.08) !important;
   border: 1.5px dashed rgba(244, 237, 229, 0.28) !important;
   color: rgba(244, 237, 229, 0.55) !important;
-  opacity: 0.72;
+  opacity: 0.78;
   transform: none !important;
   box-shadow: none !important;
   position: relative;
+  overflow: visible !important;
 }
 
 .custom-pill.is-sold:hover .pill-box {
@@ -2100,32 +2102,33 @@ html {
 }
 
 .pill-sold-badge {
-  margin-left: auto;
-  flex-shrink: 0;
+  position: absolute;
+  top: -7px;
+  left: -6px;
+  transform: rotate(-12deg);
+  transform-origin: center;
+  z-index: 4;
+  pointer-events: none;
   background: #dc2626;
   color: #ffffff;
   font-family: 'Outfit', 'DM Sans', sans-serif;
-  font-size: 0.64rem;
+  font-size: 0.6rem;
   font-weight: 900;
   letter-spacing: 0.08em;
-  padding: 0.2rem 0.5rem;
-  border-radius: 9999px;
+  padding: 0.18rem 0.48rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
   text-transform: uppercase;
   line-height: 1;
-  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.35);
+  box-shadow: 0 3px 8px rgba(220, 38, 38, 0.4);
 }
 
 @media (max-width: 680px) {
-  #topping-options .custom-pill.is-sold .pill-box {
-    padding-top: 0.55rem !important;
-    padding-bottom: 0.55rem !important;
-  }
   .pill-sold-badge {
-    margin-left: 0;
-    margin-top: 0.28rem;
-    align-self: flex-start;
-    font-size: 0.6rem;
-    padding: 0.18rem 0.48rem;
+    top: -6px;
+    left: -5px;
+    font-size: 0.56rem;
+    padding: 0.15rem 0.42rem;
   }
 }
 
