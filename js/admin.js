@@ -802,23 +802,20 @@ export class AdminOrderMonitor {
                 textColor: [40, 40, 40]
             },
             columnStyles: {
-                0: { cellWidth: 22, fontStyle: 'bold' },
-                1: { cellWidth: 25 },
+                0: { cellWidth: 25, fontStyle: 'bold' },
+                1: { cellWidth: 26 },
                 2: { cellWidth: 22 },
-                3: { cellWidth: 26 },
+                3: { cellWidth: 22 },
                 4: { cellWidth: 'auto' },
-                5: { cellWidth: 22, halign: 'right', fontStyle: 'bold', textColor: [16, 120, 50] }
+                5: { cellWidth: 27, halign: 'right', fontStyle: 'bold', textColor: [16, 120, 50] }
             },
             alternateRowStyles: {
                 fillColor: [245, 250, 246]
             },
             foot: [[
-                'TOTAL PENDAPATAN',
-                '',
-                '',
-                '',
+                { content: 'TOTAL PENDAPATAN', colSpan: 4 },
                 `${this.orders.length} Tiket Pesanan`,
-                `$${totalRev.toFixed(2)}`
+                this.formatIDR(totalRev)
             ]],
             footStyles: {
                 fillColor: [6, 32, 16],
