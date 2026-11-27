@@ -1,5 +1,7 @@
 # MatchaTcih — Artisan Sparkling Matcha 3D Showcase & Crafting Atelier
 
+![MatchaTcih Landing Page](assets/images/landing-preview.png)
+
 Landing page interaktif generasi baru berbasis WebGL & 3D real-time untuk minuman seremonial **MatchaTcih**, mengusung estetika _editorial brutalist_ modern (terinspirasi dari Golda Coffee) dengan performa tinggi, visual bebas _AI slop_, dan pengalaman pengguna yang imersif.
 
 ---
@@ -117,9 +119,3 @@ Buka di browser Anda:
 
 Untuk mengakses Kitchen Display System (KDS):
 **http://localhost:3000/admin.html**
-
----
-
-## Lisensi
-
-MIT License © 2026 MatchaTcih. All rights reserved.
